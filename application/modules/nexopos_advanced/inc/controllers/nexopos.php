@@ -17,7 +17,7 @@ class NexoPOS_Main_Controller extends Tendoo_Module
         $file_name  =   $file_name == null ? $namespace : $file_name;
         $file_name  =   str_replace( '.js', '', $file_name );
         $namespace  =   str_replace( '.js', '', $namespace );
-        $this->load->module_view( 'nexopos_advanced', 'angular/' . $namespace . '/controllers/' . $file_name . 'Controller' );
+        $this->load->module_view( 'nexopos_advanced', 'angular/' . $namespace . '/controllers/' . $file_name . '-controller' );
     }
 
     /**
@@ -30,7 +30,7 @@ class NexoPOS_Main_Controller extends Tendoo_Module
     {
         $this->load->module_view(
             'nexopos_advanced',
-            'angular/' . $namespace . '/templates/' . $view
+            'angular/' . $namespace . '/templates/' . $view . '-template'
         );
     }
 
@@ -45,7 +45,7 @@ class NexoPOS_Main_Controller extends Tendoo_Module
         $view  =   str_replace( '.js', '', $view );
         $this->load->module_view(
             'nexopos_advanced',
-            'angular/' . $namespace . '/directives/' . $view
+            'angular/' . $namespace . '/directives/' . $view . '-directive'
         );
     }
 
@@ -60,7 +60,7 @@ class NexoPOS_Main_Controller extends Tendoo_Module
         $view  =   str_replace( '.js', '', $view );
         $this->load->module_view(
             'nexopos_advanced',
-            'angular/' . $namespace . '/factories/' . $view
+            'angular/' . $namespace . '/factories/' . $view . '-factory'
         );
     }
 
@@ -75,7 +75,7 @@ class NexoPOS_Main_Controller extends Tendoo_Module
         $view  =   str_replace( '.js', '', $view );
         $this->load->module_view(
             'nexopos_advanced',
-            'angular/' . $namespace . '/services/' . $view
+            'angular/' . $namespace . '/services/' . $view . '-service'
         );
     }
 
@@ -85,12 +85,72 @@ class NexoPOS_Main_Controller extends Tendoo_Module
      *  @return
     **/
 
-    public function shared( $ressource, $file )
+    public function shared_factories( $file )
     {
         $file  =   str_replace( '.js', '', $file );
         $this->load->module_view(
             'nexopos_advanced',
-            'angular/shared/' . $ressource . '/' . $file
+            'angular/shared/factories/' . $file . '-factory'
         );
     }
+
+    /**
+     *  Shared
+     *  @param
+     *  @return
+    **/
+
+    public function shared_config( $file )
+    {
+        $file  =   str_replace( '.js', '', $file );
+        $this->load->module_view(
+            'nexopos_advanced',
+            'angular/shared/config/' . $file . '-config'
+        );
+    }
+
+    /**
+     *  Shared
+     *  @param
+     *  @return
+    **/
+
+    public function shared_directives( $file )
+    {
+        $file  =   str_replace( '.js', '', $file );
+        $this->load->module_view(
+            'nexopos_advanced',
+            'angular/shared/directives/' . $file . '-directive'
+        );
+    }
+
+    /**
+     *  Shared
+     *  @param
+     *  @return
+    **/
+
+    public function shared_services( $file )
+    {
+        $file  =   str_replace( '.js', '', $file );
+        $this->load->module_view(
+            'nexopos_advanced',
+            'angular/shared/services/' . $file . '-service'
+        );
+    }
+
+    /*
+    *  Shared
+    *  @param
+    *  @return
+   **/
+
+   public function shared_templates( $file )
+   {
+       $file  =   str_replace( '.js', '', $file );
+       $this->load->module_view(
+           'nexopos_advanced',
+           'angular/shared/templates/' . $file . '-template'
+       );
+   }
 }

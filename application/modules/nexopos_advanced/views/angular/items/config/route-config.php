@@ -12,15 +12,15 @@
             return $ocLazyLoad.load({
                 name: 'Items',
                 files: [
-                    'controllers/items.js',
-                    'factories/items/itemTypes.js',
+                    'controllers/items/add.js',
+                    'factories/items/types.js',
                     'factories/items/barcode-options.js',
                     'factories/items/fields.js',
                     'factories/items/options.js',
                     'factories/items/providers.js',
                     'factories/items/raw-to-options.js',
                     'factories/items/tabs.js',
-                    'directives/items/item-variations.js'
+                    'directives/items/variations.js'
                 ]
             });
         }]

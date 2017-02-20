@@ -7,16 +7,16 @@
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 files: [
-                    'controllers/deliveries/deliveriesMain.js',
+                    'controllers/deliveries/main.js',
                     'factories/deliveries/crud.js',
-                    'factories/deliveries/deliveriesFields.js',
+                    'factories/deliveries/fields.js',
                     'factories/deliveries/resource.js',
-                    'factories/deliveries/factoryDeliveryTable.js',
-                    'shared/factories/options.js',
-                    'shared/factories/raw-to-options.js',
-                    'shared/factories/validate.js',
-                    'shared/factories/factoryTable.js',
-                    'shared/factories/paginationFactory.js'
+                    'factories/deliveries/table.js',
+                    'shared_factories/options.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js'
                 ]
             });
         }]
@@ -37,17 +37,16 @@
             return $ocLazyLoad.load({
                 name: 'Deliveries',
                 files: [
-                    'controllers/deliveries.js',
+                    'controllers/deliveries/add.js',
                     'factories/deliveries/crud.js',
-                    'factories/deliveries/deliveriesFields.js',
+                    'factories/deliveries/fields.js',
                     'factories/deliveries/resource.js',
-                    'factories/deliveries/factoryDeliveryTable.js',
-                    'shared/factories/options.js',
-                    'shared/factories/raw-to-options.js',
-                    'shared/factories/validate.js',
-                    'shared/factories/factoryTable.js',
-                    'shared/factories/paginationFactory.js'
-
+                    'factories/deliveries/table.js',
+                    'shared_factories/options.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js'
                 ]
             });
         }]

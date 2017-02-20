@@ -7,16 +7,16 @@
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 files: [
-                    'controllers/departments/departmentsMain.js',
+                    'controllers/departments/main.js',
                     'factories/departments/crud.js',
-                    'factories/departments/departmentsFields.js',
+                    'factories/departments/fields.js',
                     'factories/departments/resource.js',
-                    'factories/departments/departmentsTable.js',
+                    'factories/departments/table.js',
                     'shared/factories/options.js',
                     'shared/factories/raw-to-options.js',
                     'shared/factories/validate.js',
-                    'shared/factories/factoryTable.js',
-                    'shared/factories/paginationFactory.js'
+                    'shared/factories/table.js',
+                    'shared/factories/pagination.js'
                 ]
             });
         }]
@@ -37,16 +37,16 @@
             return $ocLazyLoad.load({
                 name: 'Deliveries',
                 files: [
-                    'controllers/departments/departmentsAdd.js',
+                    'controllers/departments/add.js',
                     'factories/departments/crud.js',
-                    'factories/departments/departmentsFields.js',
+                    'factories/departments/fields.js',
                     'factories/departments/resource.js',
-                    'factories/departments/factoryDeliveryTable.js',
+                    'factories/departments/table.js',
                     'shared/factories/options.js',
                     'shared/factories/raw-to-options.js',
                     'shared/factories/validate.js',
-                    'shared/factories/factoryTable.js',
-                    'shared/factories/paginationFactory.js'
+                    'shared/factories/table.js',
+                    'shared/factories/pagination.js'
                 ]
             });
         }]
