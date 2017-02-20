@@ -12,10 +12,10 @@
                 'angular.deliveries.config.route-config'
             );?>
 
-            <?php /** $this->load->module_view(
+            <?php $this->load->module_view(
                 'nexopos_advanced',
-                'angular.departments.config.departments-route-config'
-            );**/?>
+                'angular.departments.config.route-config'
+            );?>
 
             .otherwise({
                 redirectTo: '/'

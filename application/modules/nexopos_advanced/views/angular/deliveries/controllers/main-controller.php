@@ -1,9 +1,9 @@
-var deliveriesMain          =   function( crud, $scope, $http, deliveryResource, $location, validate, factoryTable, factoryDeliveryTable, paginationFactory ) {
+var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveryResource, $location, validate, table, deliveryTable, paginationFactory ) {
 
-    $scope.crud             =   crud;
+    $scope.textDomain       =   deliveriesTextDomain;
     $scope.validate         =   validate;
-    $scope.table            =   factoryTable;
-    $scope.table.columns    =   factoryDeliveryTable.columns;
+    $scope.table            =   table;
+    $scope.table.columns    =   deliveryTable.columns;
 
     /**
      *  Table Get
@@ -23,6 +23,6 @@ var deliveriesMain          =   function( crud, $scope, $http, deliveryResource,
     $scope.table.getPage(0);
 }
 
-deliveriesMain.$inject    =   [ 'crud', '$scope', '$http', 'deliveryResource', '$location', 'validate', 'factoryTable', 'factoryDeliveryTable', 'paginationFactory' ];
+deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveryResource', '$location', 'validate', 'table', 'deliveryTable', 'paginationFactory' ];
 
 tendooApp.controller( 'deliveriesMain', deliveriesMain );

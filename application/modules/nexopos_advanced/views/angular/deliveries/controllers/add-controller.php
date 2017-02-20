@@ -1,6 +1,6 @@
-var deliveries          =   function( crud, $scope, $http, deliveriesFields, deliveryResource, $location, validate ) {
+var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveryResource, $location, validate ) {
 
-    $scope.crud             =   crud;
+    $scope.textDomain       =   deliveriesTextDomain;
     $scope.fields           =   deliveriesFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
@@ -42,5 +42,5 @@ var deliveries          =   function( crud, $scope, $http, deliveriesFields, del
     }
 }
 
-deliveries.$inject    =   [ 'crud', '$scope', '$http', 'deliveriesFields', 'deliveryResource', '$location', 'validate' ];
+deliveries.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesFields', 'deliveryResource', '$location', 'validate' ];
 tendooApp.controller( 'deliveries', deliveries );

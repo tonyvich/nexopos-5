@@ -1,4 +1,4 @@
-tendooApp.factory( 'factoryTable', function(){
+tendooApp.factory( 'table', function(){
     return new function(){
         this.columns    =   [];
 

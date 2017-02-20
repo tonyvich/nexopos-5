@@ -1,8 +1,8 @@
 <div class="col-md-12">
-    <h3 style="margin-top:0px;">{{ crud.listTitle }}<a ng-href="{{ crud.addNewLink }}" class="btn btn-primary btn-sm pull-right">{{ crud.addNew }}</a></h3>
+    <h3 style="margin-top:0px;">{{ textDomain.listTitle }}<a ng-href="{{ textDomain.addNewLink }}" class="btn btn-primary btn-sm pull-right">{{ textDomain.addNew }}</a></h3>
     <div class="box">
         <div class="box-header">
-            <span class="box-title">{{ crud.listTitle }}</span>
+            <span class="box-title">{{ textDomain.listTitle }}</span>
         </div>
         <table class="table table-bordered" style="margin-bottom:-1px;">
             <thead>

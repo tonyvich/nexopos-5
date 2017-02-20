@@ -8,15 +8,15 @@
             return $ocLazyLoad.load({
                 files: [
                     'controllers/departments/main.js',
-                    'factories/departments/crud.js',
+                    'factories/departments/text-domain.js',
                     'factories/departments/fields.js',
                     'factories/departments/resource.js',
                     'factories/departments/table.js',
-                    'shared/factories/options.js',
-                    'shared/factories/raw-to-options.js',
-                    'shared/factories/validate.js',
-                    'shared/factories/table.js',
-                    'shared/factories/pagination.js'
+                    'shared_factories/options.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js'
                 ]
             });
         }]
@@ -42,11 +42,11 @@
                     'factories/departments/fields.js',
                     'factories/departments/resource.js',
                     'factories/departments/table.js',
-                    'shared/factories/options.js',
-                    'shared/factories/raw-to-options.js',
-                    'shared/factories/validate.js',
-                    'shared/factories/table.js',
-                    'shared/factories/pagination.js'
+                    'shared_factories/options.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js'
                 ]
             });
         }]
