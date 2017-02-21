@@ -21,5 +21,6 @@ tendooApp.factory( 'categoriesFields', [ 'options', function( options ){
         type    :   'textarea',
         label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',
         model   :   'description',
+        desc    :   '<?php echo _s( 'Fournir plus de détails sur la catégorie', 'nexopos_advanced' );?>'
     }]
 }]);
