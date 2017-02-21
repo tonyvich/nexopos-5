@@ -1,4 +1,4 @@
-var categories          =   function( categoriesTextDomain, $scope, $http, categoriesFields, categoryResource, $location, validate ) {
+var categories          =   function( categoriesTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate ) {
 
     $scope.textDomain       =   categoriesTextDomain;
     $scope.fields           =   categoriesFields;
@@ -14,7 +14,7 @@ var categories          =   function( categoriesTextDomain, $scope, $http, categ
 
         $scope.submitDisabled       =   true;
 
-        categoryResource.save(
+        categoriesResource.save(
             $scope.item,
             function(){
                 $location.url( '/categories?notice=done' );
@@ -25,5 +25,5 @@ var categories          =   function( categoriesTextDomain, $scope, $http, categ
     }
 }
 
-categories.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoriesFields', 'categoryResource', '$location', 'validate' ];
+categories.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoriesFields', 'categoriesResource', '$location', 'validate' ];
 tendooApp.controller( 'categories', categories );
