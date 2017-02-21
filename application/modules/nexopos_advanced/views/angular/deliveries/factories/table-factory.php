@@ -1,17 +1,17 @@
 tendooApp.factory( 'deliveriesTable', function(){
     return {
         columns     :   [
-            {
+            /** {
                 text    :   '<?php echo _s( 'Identifiant', 'nexopos_advanced' );?>',
                 namespace   :   'id'
-            },
+            }, */
             {
                 text    :   '<?php echo _s( 'Intitulé', 'nexopos_advanced' );?>',
                 namespace   :   'name'
             },
             {
                 text    :   '<?php echo _s( 'Coût d\'achat', 'nexopos_advanced' );?>',
-                namespace   :   'author_name'
+                namespace   :   'purchase_cost'
             },
             {
                 text    :   '<?php echo _s( 'Coût Automatique', 'nexopos_advanced' );?>',
