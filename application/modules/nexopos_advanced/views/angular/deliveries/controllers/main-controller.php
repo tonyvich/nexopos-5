@@ -1,9 +1,10 @@
-var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, table, deliveriesTable, paginationFactory ) {
+var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, table, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert ) {
 
     $scope.textDomain       =   deliveriesTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
     $scope.table.columns    =   deliveriesTable.columns;
+    $scope.table.actions    =   sharedTableActions;
 
     /**
      *  Table Get
@@ -18,11 +19,28 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
         });
     }
 
+    /**
+     *  Table Delete
+     *  @param object query
+     *  @return void
+    **/
+
+    $scope.table.delete     =   function( params ){
+        deliveriesResource.delete( params, function( data ) {
+            $scope.table.get();
+        },function(){
+            sharedAlert.warning( '<?php echo _s(
+                'Une erreur s\'est produite durant l\'operation',
+                'nexopos_advanced'
+            );?>' );
+        });
+    }
+
     // Get Results
     $scope.table.limit      =   10;
     $scope.table.getPage(0);
 }
 
-deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesResource', '$location', 'validate', 'table', 'deliveriesTable', 'paginationFactory' ];
+deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesResource', '$location', 'validate', 'table', 'deliveriesTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert' ];
 
 tendooApp.controller( 'deliveriesMain', deliveriesMain );

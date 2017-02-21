@@ -1,6 +1,9 @@
-tendooApp.factory( 'table', function(){
+tendooApp.factory( 'table', [ 'sharedAlert', function( sharedAlert ){
     return new function(){
-        this.columns    =   [];
+        this.columns            =   [];
+
+        // For select action for bulk operation
+        this.selectedAction     =   void(0);
 
         /**
          *  Order Columns
@@ -61,5 +64,49 @@ tendooApp.factory( 'table', function(){
             }
         }
 
+        /**
+         *  Toggle All Entry.
+         *  @param object entries
+         *  @return void
+        **/
+
+        this.toggleAllEntries         =   function( entries, headCheckbox ) {
+            _.each( entries, function( entry ) {
+                entry.checked  =   headCheckbox;
+            });
+        }
+
+        /**
+         *  Submit bulk Actions
+         *  @param void
+         *  @return void
+        **/
+
+        this.submitBulkActions          =   function() {
+            if( this.selectedAction != false ) {
+
+                var selectedEntries     =   [];
+
+                _.each( this.entries, function( entry ) {
+                    if( entry.checked == true ) {
+                        selectedEntries.push( entry.id );
+                    }
+                })
+
+                if( selectedEntries.length == 0 ) {
+                    sharedAlert.warning( '<?php echo _s( 'Vous devez au moins sélectionner un élément', 'nexopos_advanced' );?>' );
+                }
+
+                // Here perform actions
+                if( angular.isUndefined( this.delete ) ) {
+                    console.log( '"delete" method is not defined' );
+                    return;
+                }
+
+                this.delete({
+                    'ids[]'  :   selectedEntries
+                });
+            }
+        }
     }
-})
+}])
