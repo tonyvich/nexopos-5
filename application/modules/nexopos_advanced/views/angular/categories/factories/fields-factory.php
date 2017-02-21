@@ -12,7 +12,7 @@ tendooApp.factory( 'categoriesFields', [ 'options', function( options ){
         label   :   '<?php echo __( 'Catégorie Parente', 'nexopos_advanced' );?>',
         model   :   'ref_parent',
         options     :   options.yesOrNo,
-        desc    :   '<?php echo _s( 'Une catégorie peut appartenir à une autre Eg: Habit appartient à chaussure', 'nexopos_advanced' );?>'
+        desc    :   '<?php echo _s( 'Une catégorie peut appartenir à une autre Eg: Chaussure appartient à Habit ', 'nexopos_advanced' );?>'
     },{
         type    :   'image_select',
         label   :   '<?php echo _s( 'Image Descriptive', "nexopos_advanced" );?>',
