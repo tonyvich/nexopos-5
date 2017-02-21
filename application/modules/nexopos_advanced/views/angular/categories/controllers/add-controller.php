@@ -18,6 +18,10 @@ var categories          =   function( categoriesTextDomain, $scope, $http, categ
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
 
+        if($scope.item.ref_parent == null){
+            $scope.item.ref_parent = 0;
+        }
+
         if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
             return validate.blurAll( $scope.fields, $scope.item );
         }
