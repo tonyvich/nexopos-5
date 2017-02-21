@@ -194,18 +194,21 @@
 
                     </div>
 
-                    <div class="input-group" ng-if="field.type == 'image_select'">
-                      <span class="input-group-addon">{{ field.label }}</span>
-                      <input
-                        ng-blur="validate.focus( field, item )"
-                        ng-blur="validate.blur( field, item )"
-                        ng-model="item[ field.model ]"
-                        type="text"
-                        class="form-control"
-                        placeholder="">
-                      <p
-                        class="help-block {{ field.model }}"
-                        style="height:30px;font-size:12px;">{{ field.desc }}</p>
+                    <div class="form-group" ng-if="field.type == 'image_select'">
+                        <div class="input-group">
+                          <span class="input-group-addon">{{ field.label }}</span>
+                          <input
+                            ng-blur="validate.focus( field, item )"
+                            ng-blur="validate.blur( field, item )"
+                            ng-model="item[ field.model ]"
+                            type="text"
+                            class="form-control"
+                            placeholder="">
+
+                        </div>
+                        <p
+                          class="help-block {{ field.model }}"
+                          style="height:30px;font-size:12px;">{{ field.desc }}</p>
                     </div>
                 </div>
             </div>

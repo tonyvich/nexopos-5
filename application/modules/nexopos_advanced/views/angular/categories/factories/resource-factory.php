@@ -4,7 +4,7 @@ $this->load->config( 'rest' );
 ?>
 tendooApp.factory( 'categoriesResource', function( $resource ) {
     return $resource(
-        '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'categories:/id?order_by=:order_by&order_type=:order_type&limit=:limit' ]);?>',
+        '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'categories/:id?order_by=:order_by&order_type=:order_type&limit=:limit' ]);?>',
         {
             id              :   '@_id',
             order_by        :   '@_order_by',
