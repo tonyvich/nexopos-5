@@ -1,6 +1,9 @@
-var departmentsAddController = function($scope){
-    $scope.hello = "Department Add";
+var departmentsAddController = function($scope, departmentsTextDomain, departmentsFields, validate){
+    $scope.textDomain       =   departmentsTextDomain;
+    $scope.fields           =   departmentsFields;
+    $scope.item             =   {};
+    $scope.validate         =   validate;
 }
 
-departmentsAddController.$inject = ['$scope'];
+departmentsAddController.$inject = ['$scope', 'departmentsTextDomain', 'departmentsFields', 'validate'];
 tendooApp.controller('departmentsAdd',departmentsAddController);

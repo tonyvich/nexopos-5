@@ -16,6 +16,9 @@ class NexoPOS_Assets extends Tendoo_Module
         $this->enqueue->css( $root_url . 'angular-bootstrap-datetimepicker/src/css/datetimepicker' );
         $this->enqueue->css( $bower_url . 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min' );
 
+        // Sweet Alert CSS
+        $this->enqueue->css( $bower_url . 'sweetalert/dist/sweetalert' );
+
         $this->enqueue->js_namespace( 'dashboard_footer' );
         $this->enqueue->js( 'js/string.format', module_url( 'nexopos_advanced' ) );
         $this->enqueue->js( '../bower_components/angular-route/angular-route.min' );
@@ -33,5 +36,9 @@ class NexoPOS_Assets extends Tendoo_Module
         // bootstrap datetime picker
         $this->enqueue->js( $bower_url . 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min' );
         $this->enqueue->js( $bower_url . 'angular-eonasdan-datetimepicker/dist/angular-eonasdan-datetimepicker.min' );
+
+        // Sweeet Alert
+        $this->enqueue->js( $bower_url . 'ngSweetAlert/SweetAlert.min' );
+        $this->enqueue->js( $bower_url . 'sweetalert/dist/sweetalert.min' );
     }
 }

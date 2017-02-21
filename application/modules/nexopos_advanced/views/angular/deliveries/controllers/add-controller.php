@@ -1,4 +1,4 @@
-var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveryResource, $location, validate ) {
+var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveriesResource, $location, validate ) {
 
     $scope.textDomain       =   deliveriesTextDomain;
     $scope.fields           =   deliveriesFields;
@@ -31,7 +31,7 @@ var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliv
 
         $scope.submitDisabled       =   true;
 
-        deliveryResource.save(
+        deliveriesResource.save(
             $scope.item,
             function(){
                 $location.url( '/deliveries?notice=done' );
@@ -42,5 +42,5 @@ var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliv
     }
 }
 
-deliveries.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesFields', 'deliveryResource', '$location', 'validate' ];
+deliveries.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesFields', 'deliveriesResource', '$location', 'validate' ];
 tendooApp.controller( 'deliveries', deliveries );

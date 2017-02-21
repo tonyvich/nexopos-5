@@ -154,6 +154,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_categories` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
+          `image_url` varchar(200) NOT NULL,
           `description` text NOT NULL,
           `author` int(11) NOT NULL,
           `ref_parent` int(11) NOT NULL,

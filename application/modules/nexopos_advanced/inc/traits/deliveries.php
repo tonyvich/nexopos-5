@@ -55,4 +55,21 @@ Trait deliveries
 
         $this->__success();
     }
+
+    /**
+     *  delete
+     *  @param void
+     *  @return json
+    **/
+
+    public function deliveries_delete()
+    {
+        if( is_array( $_GET[ 'ids' ] ) ) {
+            foreach( $_GET[ 'ids' ] as $id ) {
+                $this->db->where( 'id', ( int ) $id )->delete( 'nexopos_deliveries' );
+            }
+            return $this->__success();
+        }
+        return $this->__failed();
+    }
 }
