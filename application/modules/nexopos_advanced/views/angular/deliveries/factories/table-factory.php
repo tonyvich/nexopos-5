@@ -1,4 +1,4 @@
-tendooApp.factory( 'deliveryTable', function(){
+tendooApp.factory( 'deliveriesTable', function(){
     return {
         columns     :   [
             {

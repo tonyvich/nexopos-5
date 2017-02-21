@@ -2,7 +2,7 @@
 global $Options;
 $this->load->config( 'rest' );
 ?>
-tendooApp.factory( 'deliveryResource', function( $resource ) {
+tendooApp.factory( 'deliveriesResource', function( $resource ) {
     return $resource(
         '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'deliveries/:id?order_by=:order_by&order_type=:order_type&limit=:limit' ]);?>',
         {

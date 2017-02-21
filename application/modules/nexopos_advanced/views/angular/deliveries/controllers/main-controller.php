@@ -1,9 +1,9 @@
-var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveryResource, $location, validate, table, deliveryTable, paginationFactory ) {
+var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, table, deliveriesTable, paginationFactory ) {
 
     $scope.textDomain       =   deliveriesTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
-    $scope.table.columns    =   deliveryTable.columns;
+    $scope.table.columns    =   deliveriesTable.columns;
 
     /**
      *  Table Get
@@ -12,7 +12,7 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
     **/
 
     $scope.table.get        =   function( params ){
-        deliveryResource.get( params,function( data ) {
+        deliveriesResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );
         });
@@ -23,6 +23,6 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
     $scope.table.getPage(0);
 }
 
-deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveryResource', '$location', 'validate', 'table', 'deliveryTable', 'paginationFactory' ];
+deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesResource', '$location', 'validate', 'table', 'deliveriesTable', 'paginationFactory' ];
 
 tendooApp.controller( 'deliveriesMain', deliveriesMain );
