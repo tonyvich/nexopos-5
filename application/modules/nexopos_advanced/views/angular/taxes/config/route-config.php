@@ -1,17 +1,17 @@
-.when('/categories', {
+.when('/taxes', {
     templateUrl: function( urlattr ) {
-        return 'templates/categories/main';
+        return 'templates/taxes/main';
     },
-    controller: 'categoriesMain',
+    controller: 'taxesMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 files: [
-                    'controllers/categories/main.js',
-                    'factories/categories/text-domain.js',
-                    'factories/categories/fields.js',
-                    'factories/categories/resource.js',
-                    'factories/categories/table.js',
+                    'controllers/taxes/main.js',
+                    'factories/taxes/text-domain.js',
+                    'factories/taxes/fields.js',
+                    'factories/taxes/resource.js',
+                    'factories/taxes/table.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',
@@ -26,24 +26,24 @@
 })
 
 
-.when('/categories/:page', {
+.when('/taxes/:page', {
     templateUrl: function( urlattr ) {
         if( typeof urlattr.page != 'undefined' ) {
-            return 'templates/categories/' + urlattr.page;
+            return 'templates/taxes/' + urlattr.page;
         }
-        return 'templates/categories/main';
+        return 'templates/taxes/main';
     },
-    controller: 'categories',
+    controller: 'taxes',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
-                name: 'Categories',
+                name: 'taxes',
                 files: [
-                    'controllers/categories/add.js',
-                    'factories/categories/text-domain.js',
-                    'factories/categories/fields.js',
-                    'factories/categories/resource.js',
-                    'factories/categories/table.js',
+                    'controllers/taxes/add.js',
+                    'factories/taxes/text-domain.js',
+                    'factories/taxes/fields.js',
+                    'factories/taxes/resource.js',
+                    'factories/taxes/table.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',

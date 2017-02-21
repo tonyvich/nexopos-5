@@ -1,0 +1,43 @@
+var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, taxesResource, $location, validate, rawToOptions ) {
+
+    $scope.textDomain       =   taxesTextDomain;
+    $scope.fields           =   taxesFields;
+    $scope.item             =   {};
+    $scope.validate         =   validate;
+
+    /**
+     *  Update Date
+     *  @param object date
+     *  @return void
+    **/
+
+    $scope.updateDate   =   function( date, key ){
+        $scope.item[ key ]    =   date;
+    }
+
+
+    //Submitting Form
+
+    $scope.submit       =   function(){
+        $scope.item.author          =   <?= User::id()?>;
+        $scope.item.date_creation   =   '<?php echo date_now();?>';
+
+        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
+            return validate.blurAll( $scope.fields, $scope.item );
+        }
+        
+        $scope.submitDisabled       =   true;
+
+        taxesResource.save(
+            $scope.item,
+            function(){
+                $location.url( '/taxes?notice=done' );
+            },function(){
+                $scope.submitDisabled       =   false;
+            }
+        )
+    }
+}
+
+taxes.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesFields', 'taxesResource', '$location', 'validate','rawToOptions'];
+tendooApp.controller( 'taxes', taxes );
