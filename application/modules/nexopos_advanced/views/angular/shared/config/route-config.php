@@ -17,6 +17,11 @@
                 'angular.departments.config.route-config'
             );?>
 
+            <?php $this->load->module_view(
+                'nexopos_advanced',
+                'angular.categories.config.route-config'
+            );?>
+
             .otherwise({
                 redirectTo: '/'
             });
