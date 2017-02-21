@@ -10,7 +10,7 @@ tendooApp.factory( 'taxesFields', [ 'options', function( options ){
     },{
         type    :   'select',
         label   :   '<?php echo __( 'Type de la taxe', 'nexopos_advanced' );?>',
-        model   :   'ref_parent',
+        model   :   'type',
         options     :   options.percentOrFlat,
         validation : {
             required : true
@@ -20,7 +20,8 @@ tendooApp.factory( 'taxesFields', [ 'options', function( options ){
         label   :   '<?php echo _s( 'Valeur', "nexopos_advanced" );?>',
         model   :   'value',
         validation : {
-            decimal : true
+            decimal : true,
+            required: true
         }
     },{
         type    :   'textarea',

@@ -5,10 +5,22 @@ var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, ta
     $scope.item             =   {};
     $scope.validate         =   validate;
 
+    /**
+     *  Update Date
+     *  @param object date
+     *  @return void
+    **/
+
+    $scope.updateDate   =   function( date, key ){
+        $scope.item[ key ]    =   date;
+    }
+
+
     //Submitting Form
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
+        $scope.item.date_creation   =   '<?php echo date_now();?>';
 
         if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
             return validate.blurAll( $scope.fields, $scope.item );

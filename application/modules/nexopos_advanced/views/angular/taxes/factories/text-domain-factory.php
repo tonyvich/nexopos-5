@@ -6,7 +6,7 @@ tendooApp.factory( 'taxesTextDomain', function(){
         itemTitle  :   '<?php echo __( 'nouvelle taxe', 'nexopos_advanced' );?>',
         saveBtnText :   '<?php echo __( 'Sauvegarder', 'nexopos_advanced' );?>',
         fieldsTitle :   '<?php echo __( 'Options', 'nexopos_advanced' );?>',
-        addNewLink  :   '<?php echo site_url( [ 'dashboard', 'nexopos', 'categories', 'add' ] );?>',
+        addNewLink  :   '<?php echo site_url( [ 'dashboard', 'nexopos', 'taxes', 'add' ] );?>',
         listTitle   :   '<?php echo __( 'Liste des taxes', 'nexopos_advanced' );?>',
         addNew  :   '<?php echo __( 'Nouvelle taxe', 'nexopos_advanced' );?>'
     }
