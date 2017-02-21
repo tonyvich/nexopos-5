@@ -8,14 +8,14 @@ tendooApp.factory( 'categoriesFields', [ 'options', function( options ){
             required        :   true
         }
     },{
-        type    :   'textarea',
-        label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',
-        model   :   'description',
-    },{
         type    :   'select',
         label   :   '<?php echo __( 'Catégorie Parente', 'nexopos_advanced' );?>',
         model   :   'ref_parent',
         options     :   options.yesOrNo,
         desc    :   '<?php echo _s( 'Une catégorie peut appartenir à une autre Eg: Habit appartient à chaussure', 'nexopos_advanced' );?>'
+    },{
+        type    :   'textarea',
+        label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',
+        model   :   'description',
     }]
 }]);
