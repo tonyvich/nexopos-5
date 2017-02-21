@@ -9,7 +9,7 @@ var categories          =   function( categoriesTextDomain, $scope, $http, categ
 
     categoriesResource.get(
         function(data){
-            console.log(rawToOptions(data.entries, 'id', 'name'));
+            $scope.fields[1].options = rawToOptions(data.entries, 'id', 'name');
         }
     );
 
