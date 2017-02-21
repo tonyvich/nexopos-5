@@ -14,7 +14,8 @@ tendooApp.factory( 'taxesFields', [ 'options', function( options ){
         options     :   options.percentOrFlat,
         validation : {
             required : true
-        }
+        },
+        desc        :   '<?php echo _s( 'Veuillez choisir le type de la taxe.', 'nexopos_advanced' );?>'
     },{
         type    :   'text',
         label   :   '<?php echo _s( 'Valeur', "nexopos_advanced" );?>',
@@ -22,10 +23,12 @@ tendooApp.factory( 'taxesFields', [ 'options', function( options ){
         validation : {
             decimal : true,
             required: true
-        }
+        },
+        desc        :   '<?php echo _s( 'Veuillez définir la valeur de la taxe. Vous devez définir une valeur qui correspond au type de taxe choisi plus tôt.', 'nexopos_advanced' );?>'
     },{
         type    :   'textarea',
         label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',
         model   :   'description',
+        desc        :   '<?php echo _s( 'Fournir une description à la taxe.', 'nexopos_advanced' );?>'
     }]
 }]);
