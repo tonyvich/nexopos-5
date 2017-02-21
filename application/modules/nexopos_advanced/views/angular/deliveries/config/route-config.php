@@ -38,7 +38,7 @@
                 name: 'Deliveries',
                 files: [
                     'controllers/deliveries/add.js',
-                    'factories/deliveries/crud.js',
+                    'factories/deliveries/text-domain.js',
                     'factories/deliveries/fields.js',
                     'factories/deliveries/resource.js',
                     'factories/deliveries/table.js',
