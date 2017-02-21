@@ -1,4 +1,4 @@
-var categories          =   function( categoriesTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions ) {
+var categories          =   function( categoriesTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions) {
 
     $scope.textDomain       =   categoriesTextDomain;
     $scope.fields           =   categoriesFields;

@@ -11,7 +11,8 @@ class Nexopos_advanced extends REST_Controller
 {
     use deliveries,
         categories,
-        departments;
+        departments,
+        taxes;
 
     public function __construct()
     {
