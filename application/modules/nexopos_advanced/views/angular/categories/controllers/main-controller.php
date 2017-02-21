@@ -1,4 +1,4 @@
-var categoriesMain          =   function( categoriesTextDomain, $scope, $http, categoryResource, $location, validate, table, categoryTable, paginationFactory ) {
+var categoriesMain          =   function( categoriesTextDomain, $scope, $http, categoriesResource, $location, validate, table, categoryTable, paginationFactory ) {
 
     $scope.textDomain       =   categoriesTextDomain;
     $scope.validate         =   validate;
@@ -12,7 +12,7 @@ var categoriesMain          =   function( categoriesTextDomain, $scope, $http, c
     **/
 
     $scope.table.get        =   function( params ){
-        categoryResource.get( params,function( data ) {
+        categoriesResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );
         });
@@ -24,6 +24,6 @@ var categoriesMain          =   function( categoriesTextDomain, $scope, $http, c
     $scope.table.getPage(0);
 }
 
-categoriesMain.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoryResource', '$location', 'validate', 'table', 'categoryTable', 'paginationFactory' ];
+categoriesMain.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoriesResource', '$location', 'validate', 'table', 'categoryTable', 'paginationFactory' ];
 
 tendooApp.controller( 'categoriesMain', categoriesMain );
