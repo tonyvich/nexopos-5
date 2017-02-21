@@ -14,7 +14,7 @@ tendooApp.factory( 'categoriesFields', [ 'options', function( options ){
         options     :   options.yesOrNo,
         desc    :   '<?php echo _s( 'Une catégorie peut appartenir à une autre Exemple : Femmes > Robes > Soirées.', 'nexopos_advanced' );?>'
     },{
-        type    :   'image_select',
+        type    :   'text',
         label   :   '<?php echo _s( 'Image Descriptive', "nexopos_advanced" );?>',
         model   :   'image_url',
         desc    :   '<?php echo _s( 'Veuillez une image à cette catégorie.', 'nexopos_advanced' );?>'

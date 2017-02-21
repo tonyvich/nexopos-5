@@ -11,10 +11,10 @@ tendooApp.factory( 'rawToOptions', function(){
     return function( raw, value, label ) {
         var DropdownOptions         =   [];
 
-        _.each( raw, function( value ) {
+        _.each( raw, function( data ) {
             DropdownOptions.push({
-                value       :   value[value],
-                label       :   value[label]
+                value       :   data[value],
+                label       :   data[label]
             })
         });
 
