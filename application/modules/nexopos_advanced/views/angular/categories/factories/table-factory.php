@@ -10,12 +10,16 @@ tendooApp.factory( 'categoryTable', function(){
                 namespace   :   'name'
             },
             {
-                text    :   '<?php echo _s( 'Description', 'nexopos_advanced' );?>',
-                namespace   :   'description'
-            },
-            {
                 text    :   '<?php echo _s( 'Parent', 'nexopos_advanced' );?>',
                 namespace   :   'ref_parent'
+            },
+            {
+                text    :   '<?php echo _s( 'Image', 'nexopos_advanced' );?>',
+                namespace   :   'image_url'
+            },
+            {
+                text    :   '<?php echo _s( 'Description', 'nexopos_advanced' );?>',
+                namespace   :   'description'
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
