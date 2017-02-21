@@ -11,7 +11,7 @@ tendooApp.factory( 'taxesFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo __( 'Type de la taxe', 'nexopos_advanced' );?>',
         model   :   'ref_parent',
-        options     :   options.yesOrNo,
+        options     :   options.percentOrFlat,
         validation : {
             required : true
         }

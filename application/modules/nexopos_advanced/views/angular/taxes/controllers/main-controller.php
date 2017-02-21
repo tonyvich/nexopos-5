@@ -1,4 +1,4 @@
-var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResource, $location, validate, table, taxTable, paginationFactory ) {
+var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResource, $location, validate, table, taxTable, paginationFactory,  sharedTableActions, sharedAlert) {
 
     $scope.textDomain       =   taxesTextDomain;
     $scope.validate         =   validate;
@@ -24,6 +24,6 @@ var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResour
     $scope.table.getPage(0);
 }
 
-taxesMain.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesResource', '$location', 'validate', 'table', 'taxTable', 'paginationFactory' ];
+taxesMain.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesResource', '$location', 'validate', 'table', 'taxTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert'];
 
 tendooApp.controller( 'taxesMain', taxesMain );
