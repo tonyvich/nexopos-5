@@ -1,17 +1,26 @@
-var categories          =   function( categoriesTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate ) {
+var categories          =   function( categoriesTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions ) {
 
     $scope.textDomain       =   categoriesTextDomain;
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
     $scope.validate         =   validate;
 
-   $scope.submit       =   function(){
+    // Setting options for ref_parent select
+
+    categoriesResource.get(
+        function(data){
+            console.log(rawToOptions(data.entries, 'id', 'name'));
+        }
+    );
+
+    //Submitting Form
+
+    $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
 
         if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
             return validate.blurAll( $scope.fields, $scope.item );
         }
-
         $scope.submitDisabled       =   true;
 
         categoriesResource.save(
@@ -25,5 +34,5 @@ var categories          =   function( categoriesTextDomain, $scope, $http, categ
     }
 }
 
-categories.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoriesFields', 'categoriesResource', '$location', 'validate' ];
+categories.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoriesFields', 'categoriesResource', '$location', 'validate','rawToOptions'];
 tendooApp.controller( 'categories', categories );
