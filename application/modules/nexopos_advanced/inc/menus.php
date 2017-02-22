@@ -64,6 +64,14 @@ class NexoPOS_Admin_Menus
             array(
                 'title' =>  __( 'New Tax', 'nexopos' ),
                 'href'  =>  site_url( [ 'dashboard', 'nexopos/taxes', 'add' ] )
+            ),
+            array(
+                'title' =>  __( 'Units', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/units' ] )
+            ),
+            array(
+                'title' =>  __( 'New Unit', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/units', 'add' ] )
             )
         ]);
 
