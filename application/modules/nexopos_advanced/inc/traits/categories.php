@@ -11,6 +11,18 @@ Trait categories
     public function categories_get( $id = null )
     {
         if( $id == null ) {
+            
+            $this->db->select( '
+                nexopos_categories.id as id,
+                nexopos_categories.name as name,
+                nexopos_categories.description as description,
+                nexopos_categories.image_url as image_url,
+                nexopos_categories.author as author,
+                nexopos_categories.ref_parent as ref_parent,
+                aauth_users.name        as author_name
+            ' );
+
+            $this->db->from( 'nexopos_categories' );
             // Order Request
             if( $this->get( 'order_by' ) ) {
                 $this->db->order_by( $this->get( 'order_by' ), $this->get( 'order_type' ) );
@@ -20,7 +32,8 @@ Trait categories
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
-            $query      =   $this->db->get( 'nexopos_categories' );
+            $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_categories.author' );
+            $query      =   $this->db->get();
 
             return $this->response([
                 'entries'   =>  $query->result(),

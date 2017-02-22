@@ -42,6 +42,14 @@ class NexoPOS_Admin_Menus
                 'href'  =>  site_url( [ 'dashboard', 'nexopos/categories', 'add' ] )
             ),
             array(
+                'title' =>  __( 'Providers', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/providers' ] )
+            ),
+            array(
+                'title' =>  __( 'New Provider', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/providers', 'add' ] )
+            ),
+            array(
                 'title' =>  __( 'Departments', 'nexopos' ),
                 'href'  =>  site_url( [ 'dashboard', 'nexopos/departments' ] )
             ),
