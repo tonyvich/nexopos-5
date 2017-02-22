@@ -4,6 +4,7 @@ var providersMain          =   function( providersTextDomain, $scope, $http, pro
     $scope.validate         =   validate;
     $scope.table            =   table;
     $scope.table.columns    =   providerTable.columns;
+    $scope.table.actions    =   sharedTableActions;
 
     /**
      *  Table Get
@@ -15,6 +16,17 @@ var providersMain          =   function( providersTextDomain, $scope, $http, pro
         providersResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );
+        });
+    }
+
+    $scope.table.delete     =   function( params ){
+        providersResource.delete( params, function( data ) {
+            $scope.table.get();
+        },function(){
+            sharedAlert.warning( '<?php echo _s(
+                'Une erreur s\'est produite durant l\'operation',
+                'nexopos_advanced'
+            );?>' );
         });
     }
 
