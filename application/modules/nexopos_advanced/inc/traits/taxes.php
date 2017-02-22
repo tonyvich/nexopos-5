@@ -64,7 +64,7 @@ Trait taxes
             'description'           =>  $this->post( 'description' ),
             'author'                =>  $this->post( 'author' ),
             'date_creation'         =>  $this->post( 'date_creation' ),
-            'type'                  =>  $this->post( 'type' ),
+            'type'                  =>  $this->post( 'type' )
         ]);
 
         $this->__success();
