@@ -83,6 +83,7 @@ tendooApp.factory( 'table', [ 'sharedAlert', function( sharedAlert ){
         **/
 
         this.submitBulkActions          =   function() {
+
             if( this.selectedAction != false ) {
 
                 var selectedEntries     =   [];
@@ -97,13 +98,13 @@ tendooApp.factory( 'table', [ 'sharedAlert', function( sharedAlert ){
                     sharedAlert.warning( '<?php echo _s( 'Vous devez au moins sélectionner un élément', 'nexopos_advanced' );?>' );
                 }
 
-                if( this.selectedAction == 'delete' ) {
+                if( this.selectedAction.namespace == 'delete' ) {
                     // Here perform actions
                     if( angular.isUndefined( this.delete ) ) {
                         console.log( '"delete" method is not defined' );
                         return;
                     }
-                    
+
                     this.delete({
                         'ids[]'  :   selectedEntries
                     });
