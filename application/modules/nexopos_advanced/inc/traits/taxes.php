@@ -17,6 +17,7 @@ Trait taxes
                 nexopos_taxes.name as name,
                 nexopos_taxes.type as type,
                 nexopos_taxes.value as value,
+                nexopos_taxes.description as description,
                 nexopos_taxes.date_creation as date_creation,
                 nexopos_taxes.date_modification as date_modification,
                 nexopos_taxes.author as author,
