@@ -65,4 +65,15 @@ Trait categories
 
         $this->__success();
     }
+
+    public function categories_delete()
+    {
+        if( is_array( $_GET[ 'ids' ] ) ) {
+            foreach( $_GET[ 'ids' ] as $id ) {
+                $this->db->where( 'id', ( int ) $id )->delete( 'nexopos_categories' );
+            }
+            return $this->__success();
+        }
+        return $this->__failed();
+    }
 }

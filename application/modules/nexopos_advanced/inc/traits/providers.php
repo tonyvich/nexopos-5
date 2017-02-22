@@ -69,4 +69,15 @@ Trait providers
 
         $this->__success();
     }
+
+    public function providers_delete()
+    {
+        if( is_array( $_GET[ 'ids' ] ) ) {
+            foreach( $_GET[ 'ids' ] as $id ) {
+                $this->db->where( 'id', ( int ) $id )->delete( 'nexopos_providers' );
+            }
+            return $this->__success();
+        }
+        return $this->__failed();
+    }
 }
