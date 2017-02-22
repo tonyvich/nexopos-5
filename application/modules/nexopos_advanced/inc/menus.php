@@ -88,11 +88,11 @@ class NexoPOS_Admin_Menus
             ),
             array(
                 'title'     =>      __( 'Groups', 'nexopos' ),
-                'href'      =>      site_url( [ 'dashboard', 'nexopos/customers-groups' ] )
+                'href'      =>      site_url( [ 'dashboard', 'nexopos/customer-groups' ] )
             ),
             array(
                 'title'     =>      __( 'New Group', 'nexopos' ),
-                'href'      =>      site_url( [ 'dashboard', 'nexopos/customers-groups', 'add' ] )
+                'href'      =>      site_url( [ 'dashboard', 'nexopos/customer-groups', 'add' ] )
             )
         ]);
 

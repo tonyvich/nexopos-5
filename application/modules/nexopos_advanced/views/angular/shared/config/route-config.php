@@ -39,6 +39,12 @@
 
             <?php $this->load->module_view(
                 'nexopos_advanced',
+                'angular.customer-groups.config.route-config'
+            );?>
+
+
+            <?php $this->load->module_view(
+                'nexopos_advanced',
                 'angular.pos.config.route-config'
             );?>
 
