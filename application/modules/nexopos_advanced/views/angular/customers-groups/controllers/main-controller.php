@@ -1,9 +1,9 @@
-var customerGroupsMain          =   function( customerGroupsTextDomain, $scope, $http, customerGroupsResource, $location, validate, table, customerGroupsTable, paginationFactory, sharedTableActions, sharedAlert ) {
+var customersGroupsMain          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsResource, $location, validate, table, customersGroupsTable, paginationFactory, sharedTableActions, sharedAlert ) {
 
-    $scope.textDomain       =   customerGroupsTextDomain;
+    $scope.textDomain       =   customersGroupsTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
-    $scope.table.columns    =   customerGroupsTable.columns;
+    $scope.table.columns    =   customersGroupsTable.columns;
     $scope.table.actions    =   sharedTableActions;
 
     /**
@@ -13,7 +13,7 @@ var customerGroupsMain          =   function( customerGroupsTextDomain, $scope, 
     **/
 
     $scope.table.get        =   function( params ){
-        customerGroupsResource.get( params,function( data ) {
+        customersGroupsResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );
         });
@@ -26,7 +26,7 @@ var customerGroupsMain          =   function( customerGroupsTextDomain, $scope, 
     **/
 
     $scope.table.delete     =   function( params ){
-        customerGroupsResource.delete( params, function( data ) {
+        customersGroupsResource.delete( params, function( data ) {
             $scope.table.get();
         },function(){
             sharedAlert.warning( '<?php echo _s(
@@ -41,6 +41,6 @@ var customerGroupsMain          =   function( customerGroupsTextDomain, $scope, 
     $scope.table.getPage(0);
 }
 
-customerGroupsMain.$inject    =   [ 'customerGroupsTextDomain', '$scope', '$http', 'customerGroupsResource', '$location', 'validate', 'table', 'customerGroupsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert' ];
+customersGroupsMain.$inject    =   [ 'customersGroupsTextDomain', '$scope', '$http', 'customersGroupsResource', '$location', 'validate', 'table', 'customersGroupsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert' ];
 
-tendooApp.controller( 'customerGroupsMain', customerGroupsMain );
+tendooApp.controller( 'customersGroupsMain', customersGroupsMain );

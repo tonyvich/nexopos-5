@@ -1,4 +1,4 @@
-tendooApp.factory( 'customerGroupsFields', [ 'options', function( options ){
+tendooApp.factory( 'customersGroupsFields', [ 'options', function( options ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Delivery Name', "nexopos_advanced" );?>',

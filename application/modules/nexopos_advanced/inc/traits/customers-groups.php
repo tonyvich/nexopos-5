@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-Trait customer_groups
+Trait customers_groups
 {
     /**
-     *  customerGroups Get
+     *  customersGroups Get
      *  @param int delivvery id
      *  @return json
     **/
 
-    public function customer_groups_get( $id = null )
+    public function customers_groups_get( $id = null )
     {
         if( $id == null ) {
 
@@ -54,7 +54,7 @@ Trait customer_groups
      *  @return json
     **/
 
-    public function customer_groups_post()
+    public function customers_groups_post()
     {
         if( $this->db->where( 'name', $this->post( 'name' ) )->get( 'nexopos_customers_groups' )->num_rows() ) {
             $this->__failed();
@@ -81,7 +81,7 @@ Trait customer_groups
      *  @return json
     **/
 
-    public function customer_groups_delete()
+    public function customers_groups_delete()
     {
         if( is_array( $_GET[ 'ids' ] ) ) {
             foreach( $_GET[ 'ids' ] as $id ) {

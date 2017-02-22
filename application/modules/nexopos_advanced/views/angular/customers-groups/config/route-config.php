@@ -1,17 +1,17 @@
-.when('/customer-groups', {
+.when('/customers-groups', {
     templateUrl: function( urlattr ) {
-        return 'templates/customer-groups/main';
+        return 'templates/customers-groups/main';
     },
-    controller: 'customerGroupsMain',
+    controller: 'customersGroupsMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 files: [
-                    'controllers/customer-groups/main.js',
-                    'factories/customer-groups/text-domain.js',
-                    'factories/customer-groups/fields.js',
-                    'factories/customer-groups/resource.js',
-                    'factories/customer-groups/table.js',
+                    'controllers/customers-groups/main.js',
+                    'factories/customers-groups/text-domain.js',
+                    'factories/customers-groups/fields.js',
+                    'factories/customers-groups/resource.js',
+                    'factories/customers-groups/table.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',
@@ -26,24 +26,24 @@
 })
 
 
-.when('/customer-groups/:page', {
+.when('/customers-groups/:page', {
     templateUrl: function( urlattr ) {
         if( typeof urlattr.page != 'undefined' ) {
-            return 'templates/customer-groups/' + urlattr.page;
+            return 'templates/customers-groups/' + urlattr.page;
         }
-        return 'templates/customer-groups/main';
+        return 'templates/customers-groups/main';
     },
-    controller: 'customerGroups',
+    controller: 'customersGroups',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
-                name: 'customer-groups',
+                name: 'customers-groups',
                 files: [
-                    'controllers/customer-groups/add.js',
-                    'factories/customer-groups/text-domain.js',
-                    'factories/customer-groups/fields.js',
-                    'factories/customer-groups/resource.js',
-                    'factories/customer-groups/table.js',
+                    'controllers/customers-groups/add.js',
+                    'factories/customers-groups/text-domain.js',
+                    'factories/customers-groups/fields.js',
+                    'factories/customers-groups/resource.js',
+                    'factories/customers-groups/table.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',

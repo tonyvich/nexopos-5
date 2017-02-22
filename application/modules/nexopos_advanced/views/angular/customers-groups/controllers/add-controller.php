@@ -1,7 +1,7 @@
-var customerGroups          =   function( customerGroupsTextDomain, $scope, $http, customerGroupsFields, customerGroupsResource, $location, validate ) {
+var customersGroups          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsFields, customersGroupsResource, $location, validate ) {
 
-    $scope.textDomain       =   customerGroupsTextDomain;
-    $scope.fields           =   customerGroupsFields;
+    $scope.textDomain       =   customersGroupsTextDomain;
+    $scope.fields           =   customersGroupsFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
     $scope.validate         =   validate;
@@ -27,10 +27,10 @@ var customerGroups          =   function( customerGroupsTextDomain, $scope, $htt
 
         $scope.submitDisabled       =   true;
 
-        customerGroupsResource.save(
+        customersGroupsResource.save(
             $scope.item,
             function(){
-                $location.url( '/customer-groups?notice=done' );
+                $location.url( '/customers-groups?notice=done' );
             },function(){
                 $scope.submitDisabled       =   false;
             }
@@ -38,5 +38,5 @@ var customerGroups          =   function( customerGroupsTextDomain, $scope, $htt
     }
 }
 
-customerGroups.$inject    =   [ 'customerGroupsTextDomain', '$scope', '$http', 'customerGroupsFields', 'customerGroupsResource', '$location', 'validate' ];
-tendooApp.controller( 'customerGroups', customerGroups );
+customersGroups.$inject    =   [ 'customersGroupsTextDomain', '$scope', '$http', 'customersGroupsFields', 'customersGroupsResource', '$location', 'validate' ];
+tendooApp.controller( 'customersGroups', customersGroups );

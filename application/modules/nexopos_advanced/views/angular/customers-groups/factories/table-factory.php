@@ -1,4 +1,4 @@
-tendooApp.factory( 'customerGroupsTable', function(){
+tendooApp.factory( 'customersGroupsTable', function(){
     return {
         columns     :   [
             {
