@@ -11,6 +11,19 @@ Trait taxes
     public function taxes_get( $id = null )
     {
         if( $id == null ) {
+            
+            $this->db->select( '
+                nexopos_taxes.id as id,
+                nexopos_taxes.name as name,
+                nexopos_taxes.type as type,
+                nexopos_taxes.value as value,
+                nexopos_taxes.date_creation as date_creation,
+                nexopos_taxes.date_modification as date_modification,
+                nexopos_taxes.author as author,
+                aauth_users.name        as author_name
+            ' );
+
+            $this->db->from( 'nexopos_taxes' );
             // Order Request
             if( $this->get( 'order_by' ) ) {
                 $this->db->order_by( $this->get( 'order_by' ), $this->get( 'order_type' ) );
@@ -20,7 +33,8 @@ Trait taxes
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
-            $query      =   $this->db->get( 'nexopos_taxes' );
+            $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_taxes.author' );
+            $query      =   $this->db->get();
 
             return $this->response([
                 'entries'   =>  $query->result(),

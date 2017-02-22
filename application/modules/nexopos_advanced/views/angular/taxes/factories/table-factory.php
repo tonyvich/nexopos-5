@@ -1,10 +1,10 @@
 tendooApp.factory( 'taxTable', function(){
     return {
         columns     :   [
-            {
-                text    :   '<?php echo _s( 'Identifiant', 'nexopos_advanced' );?>',
-                namespace   :   'id'
-            },
+            // {
+            //     text    :   '<?php echo _s( 'Identifiant', 'nexopos_advanced' );?>',
+            //     namespace   :   'id'
+            // },
             {
                 text    :   '<?php echo _s( 'Nom', 'nexopos_advanced' );?>',
                 namespace   :   'name'
@@ -31,7 +31,7 @@ tendooApp.factory( 'taxTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
-                namespace   :   'author'
+                namespace   :   'author_name'
             }
         ]
     }
