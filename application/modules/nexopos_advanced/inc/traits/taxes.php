@@ -68,4 +68,15 @@ Trait taxes
 
         $this->__success();
     }
+
+    public function taxes_delete()
+    {
+        if( is_array( $_GET[ 'ids' ] ) ) {
+            foreach( $_GET[ 'ids' ] as $id ) {
+                $this->db->where( 'id', ( int ) $id )->delete( 'nexopos_taxes' );
+            }
+            return $this->__success();
+        }
+        return $this->__failed();
+    }
 }
