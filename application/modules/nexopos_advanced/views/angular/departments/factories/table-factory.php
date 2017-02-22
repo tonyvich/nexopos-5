@@ -10,18 +10,6 @@ tendooApp.factory( 'departmentsTable', function(){
                 namespace   :   'name'
             },
             {
-                text    :   '<?php echo _s( 'Coût d\'achat', 'nexopos_advanced' );?>',
-                namespace   :   'author_name'
-            },
-            {
-                text    :   '<?php echo _s( 'Coût Automatique', 'nexopos_advanced' );?>',
-                namespace   :   'auto_cost'
-            },
-            {
-                text    :   '<?php echo _s( 'Livré le', 'nexopos_advanced' );?>',
-                namespace   :   'shipping_date'
-            },
-            {
                 text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation'
             },

@@ -9,7 +9,10 @@ include_once(APPPATH . '/modules/nexopos_advanced/inc/traits_loader.php'); // In
 
 class Nexopos_advanced extends REST_Controller
 {
-    use deliveries, categories, taxes;
+    use deliveries,
+        categories,
+        departments,
+        taxes;
 
     public function __construct()
     {
