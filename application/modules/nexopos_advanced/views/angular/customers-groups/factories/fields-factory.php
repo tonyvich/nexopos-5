@@ -1,7 +1,7 @@
 tendooApp.factory( 'customersGroupsFields', [ 'options', function( options ){
     return [{
         type    :   'hidden',
-        label   :   '<?php echo _s( 'Delivery Name', "nexopos_advanced" );?>',
+        label   :   '<?php echo _s( 'Nom du groupe', "nexopos_advanced" );?>',
         model   :   'name',
         desc    :   '',
         validation  :   {
