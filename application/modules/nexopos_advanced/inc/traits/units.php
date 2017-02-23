@@ -11,11 +11,11 @@ Trait units
     public function units_get( $id = null )
     {
         if( $id == null ) {
-            
+
             $this->db->select( '
                 nexopos_units.id as id,
                 nexopos_units.name as name,
-                nexopos_units.description as description,
+                nexopos_units.code as code,
                 nexopos_units.date_creation as date_creation,
                 nexopos_units.date_modification as date_modification,
                 nexopos_units.author as author,
@@ -58,6 +58,7 @@ Trait units
 
         $this->db->insert( 'nexopos_units', [
             'name'                  =>  $this->post( 'name' ),
+            'code'                  =>  $this->post( 'code' ),
             'description'           =>  $this->post( 'description' ),
             'author'                =>  $this->post( 'author' ),
             'date_creation'         =>  $this->post( 'date_creation' )
