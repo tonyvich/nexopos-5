@@ -382,7 +382,6 @@ class NexoPOS_Install extends Tendoo_Module
           `name` varchar(200) NOT NULL,
           `surname` varchar(200) NOT NULL,
           `description` text NOT NULL,
-          `status` varchar(200) NOT NULL,
           `author` int(11) NOT NULL,
           `sex` varchar(200) NOT NULL,
           `phone` varchar(200) NOT NULL,
