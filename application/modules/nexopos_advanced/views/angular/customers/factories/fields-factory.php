@@ -28,7 +28,7 @@ tendooApp.factory( 'customersFields', [ 'options', function( options ){
         label   :   '<?php echo _s( 'Téléphone', "nexopos_advanced" );?>',
         model   :   'phone',
         validation  :   {
-            digit       :   true,
+            number       :   true,
             required    :   true
         }
     },{

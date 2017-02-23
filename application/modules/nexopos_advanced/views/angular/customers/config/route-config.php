@@ -46,6 +46,7 @@
                     'factories/customers/table.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',
+                    'shared_factories/customers-groups-data.js',
                     'shared_factories/validate.js',
                     'shared_factories/table.js',
                     'shared_factories/pagination.js',

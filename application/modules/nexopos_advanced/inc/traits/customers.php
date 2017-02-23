@@ -24,7 +24,7 @@ Trait customers
                 nexopos_customers.description as description,
                 nexopos_customers.date_creation as date_creation,
                 nexopos_customers.date_modification as date_modification,
-                nexopos_customers_groups.name as group_name,
+                nexopos_customers_groups.name as customer_group_name,
                 aauth_users.name        as author_name
             ' );
 

@@ -1,4 +1,4 @@
-var customers          =   function( customersTextDomain, $scope, $http, customersFields, customersResource, $location, validate ) {
+var customers          =   function( customersTextDomain, $scope, $http, customersFields, customersResource, $location, validate, sharedCustomersGroupsResource, rawToOptions ) {
 
     $scope.textDomain       =   customersTextDomain;
     $scope.fields           =   customersFields;
@@ -6,6 +6,13 @@ var customers          =   function( customersTextDomain, $scope, $http, custome
     $scope.item.auto_cost   =   'no';
     $scope.validate         =   validate;
 
+    // Settings options for selecting parent group
+    
+    sharedCustomersGroupsResource.get(
+        function(data){
+            $scope.fields[7].options = rawToOptions(data.entries, 'id', 'name');
+        }
+    );
 
     /**
      *  Update Date
@@ -38,5 +45,5 @@ var customers          =   function( customersTextDomain, $scope, $http, custome
     }
 }
 
-customers.$inject    =   [ 'customersTextDomain', '$scope', '$http', 'customersFields', 'customersResource', '$location', 'validate' ];
+customers.$inject    =   [ 'customersTextDomain', '$scope', '$http', 'customersFields', 'customersResource', '$location', 'validate' , 'sharedCustomersGroupsResource', 'rawToOptions'];
 tendooApp.controller( 'customers', customers );
