@@ -25,6 +25,8 @@
                             </span>
 
                         </td>
+
+                        <td><strong><?php echo __( 'Actions', 'nexopos_advanced' );?></strong></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,10 +36,22 @@
                             <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
                         </td>
                         <td ng-repeat="col in table.columns">{{ entry[ col.namespace ] }}</td>
+
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle sr-only" type="button" id="" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <?php echo __( 'Options', 'nexopos_advanced' );?>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                    <li ng-click=""><a href="javascript:void(0)"><?php echo __( 'Modifier', 'nexopos_advanced' );?></a></li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
 
                     <tr ng-show="table.entries.length == 0">
-                        <td class="text-center" colspan="{{ table.columns.length }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
+                        <td class="text-center" colspan="{{ table.columns.length + 2 }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
                     </tr>
                 </tbody>
             </table>
