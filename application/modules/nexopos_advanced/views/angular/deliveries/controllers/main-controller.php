@@ -1,10 +1,10 @@
-var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, table, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert ) {
+var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, table, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions ) {
 
     $scope.textDomain       =   deliveriesTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
     $scope.table.columns    =   deliveriesTable.columns;
-    $scope.table.actions    =   sharedTableActions;
+    $scope.table.actions    =   sharedEntryActions;
 
     /**
      *  Table Get
@@ -41,6 +41,6 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
     $scope.table.getPage(0);
 }
 
-deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesResource', '$location', 'validate', 'table', 'deliveriesTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert' ];
+deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesResource', '$location', 'validate', 'table', 'deliveriesTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert', 'sharedEntryActions' ];
 
 tendooApp.controller( 'deliveriesMain', deliveriesMain );

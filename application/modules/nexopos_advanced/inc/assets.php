@@ -15,6 +15,7 @@ class NexoPOS_Assets extends Tendoo_Module
         $this->enqueue->css( $bower_url . 'angular-ui-notification/dist/angular-ui-notification.min' );
         $this->enqueue->css( $root_url . 'angular-bootstrap-datetimepicker/src/css/datetimepicker' );
         $this->enqueue->css( $bower_url . 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min' );
+        $this->enqueue->css( 'css/nexopos', module_url( 'nexopos_advanced' ) );
 
         // Sweet Alert CSS
         $this->enqueue->css( $bower_url . 'sweetalert/dist/sweetalert' );

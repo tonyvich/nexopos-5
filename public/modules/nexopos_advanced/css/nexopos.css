@@ -1,0 +1,9 @@
+.table-responsive {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
+.dropdown-menu.right-align {
+    right: 0;
+    left: auto;
+}
