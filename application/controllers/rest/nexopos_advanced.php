@@ -15,6 +15,7 @@ class Nexopos_advanced extends REST_Controller
         taxes,
         providers,
         units,
+        customers,
         customers_groups;
 
     public function __construct()

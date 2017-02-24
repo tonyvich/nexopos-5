@@ -17,6 +17,15 @@ tendooApp.factory( 'options', function(){
                 value       :   'flat',
                 label       :   '<?php echo _s( 'Fixe', 'nexo' );?>'
             }
+        ],
+        maleOrFemale       :   [
+            {
+                value       :   'male',
+                label       :   '<?php echo _s( 'Masculin', 'nexo' );?>'
+            },{
+                value       :   'female',
+                label       :   '<?php echo _s( 'Féminin', 'nexo' );?>'
+            }
         ]
     }
 });
