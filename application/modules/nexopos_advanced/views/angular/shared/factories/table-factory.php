@@ -1,6 +1,27 @@
-tendooApp.factory( 'table', [ 'sharedAlert', function( sharedAlert ){
+tendooApp.factory( 'table', [ 'sharedAlert', '$location', function( sharedAlert, $location ){
     return new function(){
         this.columns            =   [];
+        this.disabledFeatures   =   [];
+
+        /**
+         *  disable feature
+         *  @param string feature to disable
+         *  @return void
+        **/
+
+        this.disable            =   function( feature ) {
+            this.disabledFeatures.push( feature );
+        }
+
+        /**
+         *  Is Disable. checks whether an feature is enabeld or not
+         *  @param string feature
+         *  @return boolean
+        **/
+
+        this.isDisabled         =   function( feature ) {
+            return _.indexOf( this.disabledFeatures, feature ) > -1 ? true : false;
+        }
 
         // For select action for bulk operation
         this.selectedAction     =   void(0);
@@ -109,7 +130,29 @@ tendooApp.factory( 'table', [ 'sharedAlert', function( sharedAlert ){
                         'ids[]'  :   selectedEntries
                     });
                 }
+            }
+        }
 
+        /**
+         *  Submit Single Action
+         *  @param object entry
+         *  @param object action
+         *  @return void
+        **/
+
+        this.submitSingleAction          =   function( entry, action ) {
+            if( action.namespace == 'delete' ) {
+                // Here perform actions
+                if( angular.isUndefined( this.delete ) ) {
+                    console.log( '"delete" method is not defined' );
+                    return;
+                }
+
+                this.delete({
+                    'ids[]'  :   [ entry.id ]
+                });
+            } else if( action.namespace == 'edit' ) {
+                $location.url( action.path + entry.id );
             }
         }
     }

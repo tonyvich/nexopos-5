@@ -35,7 +35,7 @@ Trait deliveries
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
-            $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_deliveries.author' );
+            $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_deliveries.author', 'left' );
             $query      =   $this->db->get();
 
             return $this->response([
@@ -44,8 +44,11 @@ Trait deliveries
             ], 200 );
         }
 
-        $result     =   $this->db->where( 'id', $id )->get( 'nexopos_deliveries' )->result();
-        return $this->reponse( $result, 200 );
+        $result     =   $this->db->where( 'id', $id )
+        ->get( 'nexopos_deliveries' )
+        ->result();
+
+        return $this->response( $result[0], 200 );
     }
 
     /**
@@ -87,5 +90,35 @@ Trait deliveries
             return $this->__success();
         }
         return $this->__failed();
+    }
+
+    /**
+     *  Deliveries Update. Update a current delivery entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function deliveries_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->post( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_deliveries' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_deliveries', [
+            'name'                  =>  $this->put( 'name' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
+            'purchase_cost'         =>  $this->put( 'purchase_cost' ),
+            'auto_cost'             =>  $this->put( 'auto_cost' ),
+            'shipping_date'         =>  $this->put( 'shipping_date' ),
+        ]);
+
+        $this->__success();
     }
 }

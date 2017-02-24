@@ -30,7 +30,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `name` varchar(200) NOT NULL,
-		  `description` text NOT NULL,
+		  `description` text,
 		  `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
 		  `author` int(11) NOT NULL,
@@ -98,7 +98,7 @@ class NexoPOS_Install extends Tendoo_Module
           `image` varchar(200) NOT NULL,
           `ref_variation` int(11) NOT NULL,
           `name` varchar(200) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
@@ -137,7 +137,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_deliveries` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `author` int(11) NOT NULL,
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
@@ -155,7 +155,7 @@ class NexoPOS_Install extends Tendoo_Module
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
           `image_url` varchar(200) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `author` int(11) NOT NULL,
           `ref_parent` int(11) NOT NULL,
           PRIMARY KEY (`id`)
@@ -199,7 +199,7 @@ class NexoPOS_Install extends Tendoo_Module
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
           `type` varchar(100) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `value` float NOT NULL,
           `author` int(11) NOT NULL,
           `date_creation` datetime NOT NULL,
@@ -214,7 +214,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_providers` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `email` varchar(200) NOT NULL,
           `phone` varchar(200) NOT NULL,
           `author` int(11) NOT NULL,
@@ -242,7 +242,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_coupons` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `code` varchar(200) NOT NULL,
           `author` int NOT NULL,
           `discount_type` varchar(200) NOT NULL,
@@ -277,7 +277,7 @@ class NexoPOS_Install extends Tendoo_Module
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
           `author` int(11) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
           `gross_total` float NOT NULL,
@@ -349,7 +349,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `status` varchar(200) NOT NULL,
           `author` int(11) NOT NULL,
           `used_by` int(11) NOT NULL,
@@ -413,7 +413,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_groups` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           `enable_discount` varchar(200) NOT NULL,
           `discount_start` datetime NOT NULL,
           `discount_end` datetime NOT NULL,
@@ -433,10 +433,11 @@ class NexoPOS_Install extends Tendoo_Module
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `ref_category` int(11) NOT NULL,
           `amount` float NOT NULL,
+          `image_url` varchar(200),
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
           `author` int(11) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
@@ -446,12 +447,11 @@ class NexoPOS_Install extends Tendoo_Module
 
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_expenses_categories` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `ref_category` int(11) NOT NULL,
-          `amount` float NOT NULL,
+          `name` varchar(200) NOT NULL,
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
           `author` int(11) NOT NULL,
-          `description` text NOT NULL,
+          `description` text,
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 

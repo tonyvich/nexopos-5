@@ -26,7 +26,7 @@
 
                         </td>
 
-                        <td><strong><?php echo __( 'Actions', 'nexopos_advanced' );?></strong></td>
+                        <td ng-hide="table.isDisabled( 'entry-actions' )"><strong><?php echo __( 'Actions', 'nexopos_advanced' );?></strong></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,21 +37,30 @@
                         </td>
                         <td ng-repeat="col in table.columns">{{ entry[ col.namespace ] }}</td>
 
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle sr-only" type="button" id="" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                    <?php echo __( 'Options', 'nexopos_advanced' );?>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                    <li ng-click=""><a href="javascript:void(0)"><?php echo __( 'Modifier', 'nexopos_advanced' );?></a></li>
-                                </ul>
+                        <td ng-hide="table.isDisabled( 'entry-actions' )">
+                            <!-- Single button -->
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu right-align">
+                                <li ng-repeat="action in table.actions">
+                                    <a
+                                        ng-if="action.namespace != false"
+                                        href="javascript:void(0);"
+                                        ng-click="table.submitSingleAction( entry, action )"
+                                    >{{ action.name }}</a>
+                                </li>
+                              </ul>
                             </div>
                         </td>
                     </tr>
 
                     <tr ng-show="table.entries.length == 0">
-                        <td class="text-center" colspan="{{ table.columns.length + 2 }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
+                        <td class="text-center" colspan="{{
+                            table.columns.length + 1 +
+                            ( table.isDisabled( 'entry-actions' ) ? 1 : 0 )
+                        }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
                     </tr>
                 </tbody>
             </table>
