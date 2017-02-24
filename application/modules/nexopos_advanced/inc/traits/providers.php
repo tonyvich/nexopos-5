@@ -11,7 +11,7 @@ Trait providers
     public function providers_get( $id = null )
     {
         if( $id == null ) {
-            
+
             $this->db->select( '
                 nexopos_providers.id as id,
                 nexopos_providers.name as name,
@@ -44,7 +44,8 @@ Trait providers
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_providers' )->result();
-        return $this->response( $result[0], 200 );
+
+        return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
     /**

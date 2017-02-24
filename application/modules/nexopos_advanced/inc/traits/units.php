@@ -42,7 +42,8 @@ Trait units
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_units' )->result();
-        return $this->response( $result[0], 200 );
+
+        return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
     /**

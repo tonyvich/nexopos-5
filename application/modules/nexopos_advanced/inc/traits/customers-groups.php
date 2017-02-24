@@ -46,7 +46,8 @@ Trait customers_groups
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_customers_groups' )->result();
-        return $this->response( $result[0], 200 );
+
+        return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
     /**

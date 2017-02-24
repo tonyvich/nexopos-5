@@ -1,5 +1,6 @@
-var categories          =   function( categoriesAddTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions) {
+var categories          =   function( categoriesAddTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une catégorie', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesAddTextDomain;
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
@@ -39,5 +40,16 @@ var categories          =   function( categoriesAddTextDomain, $scope, $http, ca
     }
 }
 
-categories.$inject    =   [ 'categoriesAddTextDomain', '$scope', '$http', 'categoriesFields', 'categoriesResource', '$location', 'validate','rawToOptions'];
+categories.$inject    =   [
+    'categoriesAddTextDomain',
+    '$scope',
+    '$http',
+    'categoriesFields',
+    'categoriesResource',
+    '$location',
+    'validate',
+    'rawToOptions',
+    'sharedDocumentTitle'
+];
+
 tendooApp.controller( 'categories', categories );

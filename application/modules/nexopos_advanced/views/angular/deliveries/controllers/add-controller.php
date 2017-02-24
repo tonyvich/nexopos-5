@@ -1,5 +1,6 @@
-var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveriesResource, $location, validate ) {
+var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveriesResource, $location, validate, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une livraison', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   deliveriesTextDomain;
     $scope.fields           =   deliveriesFields;
     $scope.item             =   {};
@@ -42,5 +43,14 @@ var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliv
     }
 }
 
-deliveries.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesFields', 'deliveriesResource', '$location', 'validate' ];
+deliveries.$inject    =   [
+    'deliveriesTextDomain',
+    '$scope',
+    '$http',
+    'deliveriesFields',
+    'deliveriesResource',
+    '$location',
+    'validate',
+    'sharedDocumentTitle'
+];
 tendooApp.controller( 'deliveries', deliveries );

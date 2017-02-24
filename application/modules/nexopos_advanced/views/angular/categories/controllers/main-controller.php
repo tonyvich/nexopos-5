@@ -1,5 +1,6 @@
-var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, validate, table, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions ) {
+var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, validate, table, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesAddTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
@@ -51,6 +52,20 @@ var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http
     $scope.table.getPage(0);
 }
 
-categoriesMain.$inject    =   [ 'categoriesAddTextDomain', '$scope', '$http', 'categoriesResource', '$location', 'validate', 'table', 'categoryTable', 'paginationFactory','sharedTableActions', 'sharedAlert', 'sharedEntryActions' ];
+categoriesMain.$inject    =   [
+    'categoriesAddTextDomain',
+    '$scope',
+    '$http',
+    'categoriesResource',
+    '$location',
+    'validate',
+    'table',
+    'categoryTable',
+    'paginationFactory',
+    'sharedTableActions',
+    'sharedAlert',
+    'sharedEntryActions',
+    'sharedDocumentTitle'
+];
 
 tendooApp.controller( 'categoriesMain', categoriesMain );

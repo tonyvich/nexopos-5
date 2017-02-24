@@ -1,5 +1,6 @@
-var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, table, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions ) {
+var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, table, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des livraisons', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   deliveriesTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
@@ -50,6 +51,20 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
     $scope.table.getPage(0);
 }
 
-deliveriesMain.$inject    =   [ 'deliveriesTextDomain', '$scope', '$http', 'deliveriesResource', '$location', 'validate', 'table', 'deliveriesTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert', 'sharedEntryActions' ];
+deliveriesMain.$inject    =   [
+    'deliveriesTextDomain',
+    '$scope',
+    '$http',
+    'deliveriesResource',
+    '$location',
+    'validate',
+    'table',
+    'deliveriesTable',
+    'paginationFactory',
+    'sharedTableActions',
+    'sharedAlert',
+    'sharedEntryActions',
+    'sharedDocumentTitle'
+];
 
 tendooApp.controller( 'deliveriesMain', deliveriesMain );

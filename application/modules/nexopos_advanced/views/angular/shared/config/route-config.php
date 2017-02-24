@@ -26,7 +26,7 @@
                 'nexopos_advanced',
                 'angular.taxes.config.route-config'
             );?>
-            
+
             <?php $this->load->module_view(
                 'nexopos_advanced',
                 'angular.providers.config.route-config'
@@ -52,9 +52,25 @@
                 'angular.pos.config.route-config'
             );?>
 
-            
+
+            .when( '/nexopos/error/:code', {
+                templateUrl: function( urlattr ) {
+                    return 'templates/errors/404';
+                },
+                controller: 'error404',
+                resolve: {
+                    lazy: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'controllers/errors/404.js',
+                            ]
+                        });
+                    }]
+                }
+            })
+
             .otherwise({
-                redirectTo: '/'
-            });
+                redirectTo      :   '/nexopos/error/404'
+            })
     }]);
 </script>
