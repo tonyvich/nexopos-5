@@ -1,4 +1,4 @@
-tendooApp.factory( 'categoriesTextDomain', function(){
+tendooApp.factory( 'categoriesEditTextDomain', function(){
     return  {
         title   :   '<?php echo __( 'Créer une catégorie', 'nexopos_advanced' );?>',
         return  :   '<?php echo __( 'Revenir vers la liste', 'nexopos_advanced' );?>',

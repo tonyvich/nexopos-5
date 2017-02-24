@@ -100,7 +100,7 @@ Trait deliveries
 
     public function deliveries_put( $id )
     {
-        $alreadyExists      =   $this->db->where( 'name', $this->post( 'name' ) )
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
         ->where( 'id !=', $id )
         ->get( 'nexopos_deliveries' )
         ->num_rows();
