@@ -80,4 +80,35 @@ Trait providers
         }
         return $this->__failed();
     }
+
+
+    /**
+     *  providers Update. Update a current delivery entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function providers_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_providers' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_providers', [
+            'name'                  =>  $this->put( 'name' ),
+            'email'                 =>  $this->put( 'email' ),
+            'phone'                 =>  $this->post( 'phone' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'     =>  $this->put( 'date_modification' )
+         ]);
+
+        $this->__success();
+    }
+
 }

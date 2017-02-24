@@ -8,7 +8,7 @@
             return $ocLazyLoad.load({
                 files: [
                     'controllers/customers/main.js',
-                    'factories/customers/text-domain.js',
+                    'factories/customers/add-text-domain.js',
                     'factories/customers/fields.js',
                     'factories/customers/resource.js',
                     'factories/customers/table.js',
@@ -18,6 +18,40 @@
                     'shared_factories/table.js',
                     'shared_factories/pagination.js',
                     'shared_factories/table-actions.js',
+                    'shared_factories/alert.js',
+                    'shared_factories/entry-actions.js'
+                ]
+            });
+        }]
+    }
+})
+
+
+/**
+ * For Editing Purposes
+**/
+
+.when('/customers/edit/:id?', {
+    templateUrl: function( urlattr ) {
+        return 'templates/customers/edit';
+    },
+    controller: 'customersEdit',
+    resolve: {
+        lazy: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name: 'customersEdit',
+                files: [
+                    'controllers/customers/edit.js',
+                    'factories/customers/edit-text-domain.js',
+                    'factories/customers/fields.js',
+                    'factories/customers/resource.js',
+                    'factories/customers/table.js',
+                    'shared_factories/options.js',
+                    'shared_factories/customers-groups-data.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js',
                     'shared_factories/alert.js'
                 ]
             });
@@ -40,7 +74,7 @@
                 name: 'customers',
                 files: [
                     'controllers/customers/add.js',
-                    'factories/customers/text-domain.js',
+                    'factories/customers/add-text-domain.js',
                     'factories/customers/fields.js',
                     'factories/customers/resource.js',
                     'factories/customers/table.js',

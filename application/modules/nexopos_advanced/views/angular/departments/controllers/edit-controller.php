@@ -1,27 +1,17 @@
-var expensesEdit      =   function( expensesEditTextDomain, $scope, $http, $route, expensesFields, expensesResource, $location, validate, sharedExpensesCategoriesResource, rawToOptions) {
-    $scope.textDomain       =   expensesEditTextDomain;
-    $scope.fields           =   expensesFields;
+var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http, $route, departmentsFields, departmentsResource, $location, validate ) {
+    $scope.textDomain       =   departmentsEditTextDomain;
+    $scope.fields           =   departmentsFields;
     $scope.item             =   {};
-    $scope.item.auto_cost   =   'no';
     $scope.validate         =   validate;
-
-    // Settings options for selecting category parent
-
-    sharedExpensesCategoriesResource.get(
-        function(data){
-            $scope.fields[3].options = rawToOptions(data.entries, 'id', 'name');
-        }
-    );
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
-    expensesResource.get({
+    departmentsResource.get({
         id  :  $route.current.params.id // make sure route is added as dependency
     },function( entry ){
         $scope.submitDisabled   =   false;
         $scope.item             =   entry;
     })
-
 
     /**
      *  Update Date
@@ -37,6 +27,9 @@ var expensesEdit      =   function( expensesEditTextDomain, $scope, $http, $rout
         $scope.item.author              =   <?= User::id()?>;
         $scope.item.date_modification   =   tendoo.now();
 
+        if( angular.isDefined( $scope.item.shipping_date ) ) {
+            $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
+        }
 
         if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
             return validate.blurAll( $scope.fields, $scope.item );
@@ -44,12 +37,12 @@ var expensesEdit      =   function( expensesEditTextDomain, $scope, $http, $rout
 
         $scope.submitDisabled       =   true;
 
-        expensesResource.update({
+        departmentsResource.update({
                 id  :   $route.current.params.id // make sure route is added as dependency
             },
             $scope.item,
             function(){
-                $location.url( '/expenses?notice=done' );
+                $location.url( '/departments?notice=done' );
             },function(){
                 $scope.submitDisabled       =   false;
             }
@@ -57,5 +50,5 @@ var expensesEdit      =   function( expensesEditTextDomain, $scope, $http, $rout
     }
 }
 
-expensesEdit.$inject    =   [ 'expensesEditTextDomain', '$scope', '$http', '$route', 'expensesFields', 'expensesResource', '$location', 'validate','sharedExpensesCategoriesResource', 'rawToOptions'];
-tendooApp.controller( 'expensesEdit', expensesEdit );
+departmentsEdit.$inject    =   [ 'departmentsEditTextDomain', '$scope', '$http', '$route', 'departmentsFields', 'departmentsResource', '$location', 'validate' ];
+tendooApp.controller( 'departmentsEdit', departmentsEdit );

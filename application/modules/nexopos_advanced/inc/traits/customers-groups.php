@@ -91,4 +91,36 @@ Trait customers_groups
         }
         return $this->__failed();
     }
+
+    /**
+     *  customers_groups Update. Update a cuurent entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function customers_groups_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_customers_groups' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_customers_groups', [
+            'name'                  =>  $this->put( 'name' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
+            'enable_discount'         =>  $this->put( 'enable_discount' ),
+            'discount_start'             =>  $this->put( 'discount_start' ),
+            'discount_end'         =>  $this->put( 'discount_end' ),
+            'discount_type'         =>  $this->put( 'discount_type' ),
+            'discount_value'         =>  $this->put( 'discount_value' )
+        ]);
+
+        $this->__success();
+    }
 }

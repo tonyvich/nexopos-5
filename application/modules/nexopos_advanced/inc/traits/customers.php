@@ -96,4 +96,38 @@ Trait customers
         }
         return $this->__failed();
     }
+
+    /**
+     *  customers Update. Update a cuurent entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function customers_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_customers' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_customers', [
+            'name'                  =>  $this->put( 'name' ),
+            'surname'               =>  $this->put( 'surname' ),
+            'sex'                   =>  $this->put( 'sex' ),
+            'phone'                 =>  $this->put( 'phone' ),
+            'email'                 =>  $this->put( 'email' ),
+            'address'               =>  $this->put( 'address' ),
+            'pobox'                 =>  $this->put( 'pobox' ),
+            'ref_group'             =>  $this->put( 'ref_group' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'         =>  $this->put( 'date_modification' )
+        ]);
+
+        $this->__success();
+    }
 }

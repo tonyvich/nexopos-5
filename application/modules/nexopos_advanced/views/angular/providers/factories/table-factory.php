@@ -1,4 +1,4 @@
-tendooApp.factory( 'providerTable', function(){
+tendooApp.factory( 'providersTable', function(){
     return {
         columns     :   [
             {

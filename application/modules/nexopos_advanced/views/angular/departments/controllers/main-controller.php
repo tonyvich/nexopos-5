@@ -1,10 +1,21 @@
-var departmentsMain          =   function( departmentsTextDomain, $scope, $http, departmentsResource, $location, validate, table, departmentsTable, paginationFactory, sharedTableActions, sharedAlert) {
+var departmentsMain          =   function( departmentsTextDomain, $scope, $http, departmentsResource, $location, validate, table, departmentsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions) {
 
     $scope.textDomain       =   departmentsTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
     $scope.table.columns    =   departmentsTable.columns;
     $scope.table.actions    =   sharedTableActions;
+
+
+    /** Adjust Entry actions **/
+    _.each( sharedEntryActions, function( value, key ) {
+        if( value.namespace == 'edit' ) {
+            sharedEntryActions[ key ].path      =    '/departments/edit/';
+        }
+    });
+
+    $scope.table.entryActions   =   sharedEntryActions;
+    $scope.table.actions        =   sharedTableActions
 
     /**
      *  Table Get
@@ -42,6 +53,6 @@ var departmentsMain          =   function( departmentsTextDomain, $scope, $http,
     }
 }
 
-departmentsMain.$inject    =   [ 'departmentsTextDomain', '$scope', '$http', 'departmentsResource', '$location', 'validate', 'table', 'departmentsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert'];
+departmentsMain.$inject    =   [ 'departmentsTextDomain', '$scope', '$http', 'departmentsResource', '$location', 'validate', 'table', 'departmentsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert','sharedEntryActions'];
 
 tendooApp.controller( 'departmentsMain', departmentsMain );

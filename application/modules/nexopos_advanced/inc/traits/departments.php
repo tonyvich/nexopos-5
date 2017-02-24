@@ -84,4 +84,32 @@ Trait departments
         }
         return $this->__failed();
     }
+
+    /**
+     *  departments Update. Update a current delivery entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function departments_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_departments' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_departments', [
+            'name'                  =>  $this->put( 'name' ),
+            'image_url'                  =>  $this->put( 'image_url' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
+        ]);
+
+        $this->__success();
+    }
 }
