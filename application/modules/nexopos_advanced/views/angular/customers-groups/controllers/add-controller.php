@@ -19,7 +19,7 @@ var customersGroups          =   function( customersGroupsTextDomain, $scope, $h
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   '<?php echo date_now();?>';
+        $scope.item.date_creation   =   tendoo.now();
 
         if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
             return validate.blurAll( $scope.fields, $scope.item );

@@ -19,7 +19,7 @@ var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliv
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   '<?php echo date_now();?>';
+        $scope.item.date_creation   =   tendoo.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
