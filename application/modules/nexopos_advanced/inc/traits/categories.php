@@ -72,6 +72,7 @@ Trait categories
             'description'           =>  $this->post( 'description' ),
             'author'                =>  $this->post( 'author' ),
             'ref_parent'            =>  $this->post( 'ref_parent' ),
+            'date_creation'         =>  $this->post( 'date_creation' ),
         ]);
 
         $this->__success();
@@ -97,6 +98,7 @@ Trait categories
     public function categories_put( $id )
     {
         $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
         ->get( 'nexopos_categories' )
         ->num_rows();
 
@@ -109,6 +111,7 @@ Trait categories
             'description'           =>  $this->put( 'description' ),
             'author'                =>  $this->put( 'author' ),
             'ref_parent'            =>  $this->put( 'ref_parent' ),
+            'date_modification'     =>  $this->post( 'date_modification' ),
         ]);
 
         $this->__success();

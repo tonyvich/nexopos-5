@@ -12,7 +12,8 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
         }
     });
 
-    $scope.table.actions    =   sharedEntryActions;
+    $scope.table.entryActions   =   sharedEntryActions;
+    $scope.table.actions        =   sharedTableActions
 
     /**
      *  Table Get

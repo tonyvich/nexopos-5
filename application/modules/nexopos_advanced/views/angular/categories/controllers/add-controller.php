@@ -17,6 +17,7 @@ var categories          =   function( categoriesAddTextDomain, $scope, $http, ca
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
+        $scope.item.date_creation   =   tendoo.now();
 
         if($scope.item.ref_parent == null){
             $scope.item.ref_parent = 0;

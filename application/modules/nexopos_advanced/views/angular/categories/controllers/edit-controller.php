@@ -27,7 +27,8 @@ var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $htt
     //Submitting Form
 
     $scope.submit       =   function(){
-        $scope.item.author          =   <?= User::id()?>;
+        $scope.item.author              =   <?= User::id()?>;
+        $scope.item.date_modification   =   tendoo.now();
 
         if($scope.item.ref_parent == null){
             $scope.item.ref_parent = 0;
