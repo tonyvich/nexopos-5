@@ -44,7 +44,7 @@ Trait providers
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_providers' )->result();
-        return $this->reponse( $result, 200 );
+        return $this->response( $result[0], 200 );
     }
 
     /**

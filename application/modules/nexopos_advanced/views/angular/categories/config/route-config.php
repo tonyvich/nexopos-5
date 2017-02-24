@@ -8,7 +8,7 @@
             return $ocLazyLoad.load({
                 files: [
                     'controllers/categories/main.js',
-                    'factories/categories/text-domain.js',
+                    'factories/categories/add-text-domain.js',
                     'factories/categories/fields.js',
                     'factories/categories/resource.js',
                     'factories/categories/table.js',
@@ -18,13 +18,39 @@
                     'shared_factories/table.js',
                     'shared_factories/pagination.js',
                     'shared_factories/table-actions.js',
-                    'shared_factories/alert.js'
+                    'shared_factories/alert.js',
+                    'shared_factories/entry-actions.js'
                 ]
             });
         }]
     }
 })
 
+.when('/categories/edit/:id', {
+    templateUrl: function( urlattr ) {
+        return 'templates/categories/edit';
+    },
+    controller: 'categoriesEdit',
+    resolve: {
+        lazy: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name: 'CategoriesEdit',
+                files: [
+                    'controllers/categories/edit.js',
+                    'factories/categories/edit-text-domain.js',
+                    'factories/categories/fields.js',
+                    'factories/categories/resource.js',
+                    'factories/categories/table.js',
+                    'shared_factories/options.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js'
+                ]
+            });
+        }]
+    }
+})
 
 .when('/categories/:page', {
     templateUrl: function( urlattr ) {
@@ -40,7 +66,7 @@
                 name: 'Categories',
                 files: [
                     'controllers/categories/add.js',
-                    'factories/categories/text-domain.js',
+                    'factories/categories/add-text-domain.js',
                     'factories/categories/fields.js',
                     'factories/categories/resource.js',
                     'factories/categories/table.js',

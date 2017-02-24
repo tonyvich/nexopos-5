@@ -4,6 +4,14 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
     $scope.validate         =   validate;
     $scope.table            =   table;
     $scope.table.columns    =   deliveriesTable.columns;
+
+    /** Adjust Entry actions **/
+    _.each( sharedEntryActions, function( value, key ) {
+        if( value.namespace == 'edit' ) {
+            sharedEntryActions[ key ].path      =    '/deliveries/edit/';
+        }
+    });
+
     $scope.table.actions    =   sharedEntryActions;
 
     /**

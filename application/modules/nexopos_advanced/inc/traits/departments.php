@@ -44,7 +44,7 @@ Trait departments
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_departments' )->result();
-        return $this->reponse( $result, 200 );
+        return $this->response( $result[0], 200 );
     }
 
     /**

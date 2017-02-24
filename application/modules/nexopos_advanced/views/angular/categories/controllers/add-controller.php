@@ -1,6 +1,6 @@
-var categories          =   function( categoriesTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions) {
+var categories          =   function( categoriesAddTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions) {
 
-    $scope.textDomain       =   categoriesTextDomain;
+    $scope.textDomain       =   categoriesAddTextDomain;
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
     $scope.validate         =   validate;
@@ -38,5 +38,5 @@ var categories          =   function( categoriesTextDomain, $scope, $http, categ
     }
 }
 
-categories.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoriesFields', 'categoriesResource', '$location', 'validate','rawToOptions'];
+categories.$inject    =   [ 'categoriesAddTextDomain', '$scope', '$http', 'categoriesFields', 'categoriesResource', '$location', 'validate','rawToOptions'];
 tendooApp.controller( 'categories', categories );
