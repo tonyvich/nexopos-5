@@ -44,7 +44,7 @@
                                 Action <span class="caret"></span>
                               </button>
                               <ul class="dropdown-menu right-align">
-                                <li ng-repeat="action in table.actions">
+                                <li ng-repeat="action in table.entryActions">
                                     <a
                                         ng-if="action.namespace != false"
                                         href="javascript:void(0);"

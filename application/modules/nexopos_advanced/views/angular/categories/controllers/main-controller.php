@@ -12,7 +12,8 @@ var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http
         }
     });
 
-    $scope.table.actions    =   sharedEntryActions;
+    $scope.table.entryActions   =   sharedEntryActions;
+    $scope.table.actions        =   sharedTableActions
 
     /**
      *  Table Get
