@@ -32,15 +32,15 @@
                 <tbody>
 
                     <tr ng-repeat="entry in table.entries">
-                        <td ng-click="table.toggleThis( entry )">
+                        <td width="20" ng-click="table.toggleThis( entry )">
                             <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
                         </td>
                         <td ng-repeat="col in table.columns">{{ entry[ col.namespace ] }}</td>
 
-                        <td ng-hide="table.isDisabled( 'entry-actions' )">
+                        <td width="50" ng-hide="table.isDisabled( 'entry-actions' )">
                             <!-- Single button -->
                             <div class="btn-group">
-                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Action <span class="caret"></span>
                               </button>
                               <ul class="dropdown-menu right-align">

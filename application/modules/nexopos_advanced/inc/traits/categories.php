@@ -20,7 +20,9 @@ Trait categories
                 nexopos_categories.image_url as image_url,
                 nexopos_categories.author as author,
                 nexopos_categories.ref_parent as ref_parent,
-                parent_categories.name as parent_name
+                parent_categories.name as parent_name,
+                nexopos_categories.date_creation as date_creation,
+                nexopos_categories.date_modification as date_modification
             ' );
 
             $this->db->from( 'nexopos_categories' );
