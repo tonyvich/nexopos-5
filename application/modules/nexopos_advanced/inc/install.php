@@ -157,6 +157,8 @@ class NexoPOS_Install extends Tendoo_Module
           `image_url` varchar(200) NOT NULL,
           `description` text,
           `author` int(11) NOT NULL,
+          `date_creation` datetime NOT NULL,
+          `date_modification` datetime NOT NULL,
           `ref_parent` int(11) NOT NULL,
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');

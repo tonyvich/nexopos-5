@@ -13,6 +13,12 @@ tendooApp.factory( 'categoryTable', function(){
             },{
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
                 namespace   :   'author_name'
+            },{
+                text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
+                namespace   :   'date_creation'
+            },{
+                text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
+                namespace   :   'date_modification'
             }
         ]
     }
