@@ -19,7 +19,6 @@ Trait departments
                 nexopos_departments.image_url as image_url,
                 nexopos_departments.author as author,
                 nexopos_departments.date_creation as date_creation,
-                nexopos_departments.date_creation as date_creation,
                 nexopos_departments.date_modification as date_modification,
                 aauth_users.name        as author_name
             ' );
