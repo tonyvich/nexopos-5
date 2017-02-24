@@ -111,7 +111,7 @@ Trait categories
             'description'           =>  $this->put( 'description' ),
             'author'                =>  $this->put( 'author' ),
             'ref_parent'            =>  $this->put( 'ref_parent' ),
-            'date_modification'     =>  $this->post( 'date_modification' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
         ]);
 
         $this->__success();

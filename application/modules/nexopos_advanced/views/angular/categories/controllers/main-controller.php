@@ -28,6 +28,23 @@ var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http
         });
     }
 
+    /**
+     *  Table Delete
+     *  @param object query
+     *  @return void
+    **/
+
+    $scope.table.delete     =   function( params ){
+        categoriesResource.delete( params, function( data ) {
+            $scope.table.get();
+        },function(){
+            sharedAlert.warning( '<?php echo _s(
+                'Une erreur s\'est produite durant l\'operation',
+                'nexopos_advanced'
+            );?>' );
+        });
+    }
+
     // Get Results
     $scope.table.limit      =   10;
     $scope.table.order_type =   'asc';

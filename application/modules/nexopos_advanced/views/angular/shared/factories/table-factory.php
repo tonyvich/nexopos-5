@@ -1,5 +1,6 @@
 tendooApp.factory( 'table', [ 'sharedAlert', '$location', function( sharedAlert, $location ){
     return new function(){
+        var $this               =   this;
         this.columns            =   [];
         this.disabledFeatures   =   [];
 
@@ -116,7 +117,7 @@ tendooApp.factory( 'table', [ 'sharedAlert', '$location', function( sharedAlert,
                 })
 
                 if( selectedEntries.length == 0 ) {
-                    sharedAlert.warning( '<?php echo _s( 'Vous devez au moins sélectionner un élément', 'nexopos_advanced' );?>' );
+                    return sharedAlert.warning( '<?php echo _s( 'Vous devez au moins sélectionner un élément', 'nexopos_advanced' );?>' );
                 }
 
                 if( this.selectedAction.namespace == 'delete' ) {
@@ -126,8 +127,12 @@ tendooApp.factory( 'table', [ 'sharedAlert', '$location', function( sharedAlert,
                         return;
                     }
 
-                    this.delete({
-                        'ids[]'  :   selectedEntries
+                    sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ces éléments ?', 'nexopos_advanced' );?>', function( action ) {
+                        if( action ) {
+                            $this.delete({
+                                'ids[]'  :   selectedEntries
+                            });
+                        }
                     });
                 }
             }
@@ -148,9 +153,14 @@ tendooApp.factory( 'table', [ 'sharedAlert', '$location', function( sharedAlert,
                     return;
                 }
 
-                this.delete({
-                    'ids[]'  :   [ entry.id ]
+                sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer cet élément ?', 'nexopos_advanced' );?>', function( action ) {
+                    if( action ) {
+                        $this.delete({
+                            'ids[]'  :   [ entry.id ]
+                        });
+                    }
                 });
+
             } else if( action.namespace == 'edit' ) {
                 $location.url( action.path + entry.id );
             }
