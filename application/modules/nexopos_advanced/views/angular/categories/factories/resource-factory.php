@@ -10,7 +10,8 @@ tendooApp.factory( 'categoriesResource', function( $resource ) {
             order_by        :   '@_order_by',
             order_type      :   '@_order_type',
             limit           :   '@_limit',
-            current_page    :   '@_current_page'
+            current_page    :   '@_current_page',
+            exclude         :   '@_exclude'
         },{
             get  : {
                 method : 'GET',

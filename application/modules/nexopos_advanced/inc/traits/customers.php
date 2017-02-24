@@ -49,7 +49,7 @@ Trait customers
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_customers' )->result();
-        return $this->reponse( $result, 200 );
+        return $this->response( $result[0], 200 );
     }
 
     /**

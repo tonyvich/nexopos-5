@@ -11,18 +11,25 @@ Trait categories
     public function categories_get( $id = null )
     {
         if( $id == null ) {
-            
+
             $this->db->select( '
+                aauth_users.name        as author_name,
                 nexopos_categories.id as id,
                 nexopos_categories.name as name,
                 nexopos_categories.description as description,
                 nexopos_categories.image_url as image_url,
                 nexopos_categories.author as author,
                 nexopos_categories.ref_parent as ref_parent,
-                aauth_users.name        as author_name
+                parent_categories.name as parent_name
             ' );
 
             $this->db->from( 'nexopos_categories' );
+
+            // Exclude
+            if( $this->get( 'exclude' ) ) {
+                $this->db->where( 'nexopos_categories.id !=', $this->get( 'exclude' ) );
+            }
+
             // Order Request
             if( $this->get( 'order_by' ) ) {
                 $this->db->order_by( $this->get( 'order_by' ), $this->get( 'order_type' ) );
@@ -33,6 +40,8 @@ Trait categories
             }
 
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_categories.author' );
+            $this->db->join( 'nexopos_categories as parent_categories', 'parent_categories.id = nexopos_categories.ref_parent', 'left' );
+
             $query      =   $this->db->get();
 
             return $this->response([
@@ -42,7 +51,7 @@ Trait categories
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_categories' )->result();
-        return $this->reponse( $result, 200 );
+        return $this->response( $result[0], 200 );
     }
 
     /**
@@ -76,4 +85,32 @@ Trait categories
         }
         return $this->__failed();
     }
+
+    /**
+     *  Categorie Update
+     *  @param int category id
+     *  @return json
+    **/
+
+    public function categories_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->get( 'nexopos_categories' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_categories', [
+            'name'                  =>  $this->put( 'name' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'ref_parent'            =>  $this->put( 'ref_parent' ),
+        ]);
+
+        $this->__success();
+    }
+
+
 }

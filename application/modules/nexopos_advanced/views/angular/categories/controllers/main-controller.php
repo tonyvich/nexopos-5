@@ -1,9 +1,18 @@
-var categoriesMain          =   function( categoriesTextDomain, $scope, $http, categoriesResource, $location, validate, table, categoryTable, paginationFactory, sharedTableActions, sharedAlert ) {
+var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, validate, table, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions ) {
 
-    $scope.textDomain       =   categoriesTextDomain;
+    $scope.textDomain       =   categoriesAddTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
     $scope.table.columns    =   categoryTable.columns;
+
+    /** Adjust Entry actions **/
+    _.each( sharedEntryActions, function( value, key ) {
+        if( value.namespace == 'edit' ) {
+            sharedEntryActions[ key ].path      =    '/categories/edit/';
+        }
+    });
+
+    $scope.table.actions    =   sharedEntryActions;
 
     /**
      *  Table Get
@@ -24,6 +33,6 @@ var categoriesMain          =   function( categoriesTextDomain, $scope, $http, c
     $scope.table.getPage(0);
 }
 
-categoriesMain.$inject    =   [ 'categoriesTextDomain', '$scope', '$http', 'categoriesResource', '$location', 'validate', 'table', 'categoryTable', 'paginationFactory','sharedTableActions', 'sharedAlert'];
+categoriesMain.$inject    =   [ 'categoriesAddTextDomain', '$scope', '$http', 'categoriesResource', '$location', 'validate', 'table', 'categoryTable', 'paginationFactory','sharedTableActions', 'sharedAlert', 'sharedEntryActions' ];
 
 tendooApp.controller( 'categoriesMain', categoriesMain );
