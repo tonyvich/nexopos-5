@@ -72,6 +72,22 @@ class NexoPOS_Admin_Menus
             array(
                 'title' =>  __( 'New Unit', 'nexopos' ),
                 'href'  =>  site_url( [ 'dashboard', 'nexopos/units', 'add' ] )
+            ),
+            array(
+                'title' =>  __( 'Expenses categories', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses-categories' ] )
+            ),
+            array(
+                'title' =>  __( 'New Expense Category', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses-categories', 'add' ] )
+            ),
+            array(
+                'title' =>  __( 'Expenses', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses' ] )
+            ),
+            array(
+                'title' =>  __( 'New Expense', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses', 'add' ] )
             )
         ]);
 

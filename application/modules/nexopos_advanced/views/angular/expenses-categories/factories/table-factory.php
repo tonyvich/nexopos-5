@@ -1,4 +1,4 @@
-tendooApp.factory( 'departmentsTable', function(){
+tendooApp.factory( 'expensesCategoriesTable', function(){
     return {
         columns     :   [
             {
