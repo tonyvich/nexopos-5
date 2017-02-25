@@ -52,7 +52,7 @@ Trait expenses_categories
     public function expenses_categories_post()
     {
         if( $this->db->where( 'name', $this->post( 'name' ) )->get( 'nexopos_expenses_categories' )->num_rows() ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->insert( 'nexopos_expenses_categories', [
@@ -96,7 +96,7 @@ Trait expenses_categories
         ->num_rows();
 
         if( $alreadyExists ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->where( 'id', $id )->update( 'nexopos_expenses_categories', [

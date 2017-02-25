@@ -13,7 +13,6 @@ tendooApp.factory( 'providersFields', [ 'options', function( options ){
         model   :   'email',
         desc    :   '<?php echo _s( 'Email du fournisseur.', 'nexopos_advanced' );?>',
         validation : {
-            required : true,
             email : true
         }
     },{
@@ -22,8 +21,7 @@ tendooApp.factory( 'providersFields', [ 'options', function( options ){
         model   :   'phone',
         desc    :   '<?php echo _s( 'Numéro de téléphone du fournisseur.', 'nexopos_advanced' );?>',
         validation : {
-            decimal : true,
-            required: true
+            decimal : true
         }
     },{
         type    :   'textarea',

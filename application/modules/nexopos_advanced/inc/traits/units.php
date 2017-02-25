@@ -54,7 +54,7 @@ Trait units
     public function units_post()
     {
         if( $this->db->where( 'name', $this->post( 'name' ) )->get( 'nexopos_units' )->num_rows() ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->insert( 'nexopos_units', [
@@ -98,7 +98,7 @@ Trait units
         ->num_rows();
 
         if( $alreadyExists ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->where( 'id', $id )->update( 'nexopos_units', [

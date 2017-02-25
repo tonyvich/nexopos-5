@@ -1,6 +1,6 @@
-var providers          =   function( providersTextDomain, $scope, $http, providersFields, providersResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
+var providers          =   function( providersTextDomain, $scope, $http, providersFields, providersResource, $location, validate, rawToOptions, sharedDocumentTitle, sharedAlert ) {
 
-    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un fournisseur', 'nexopos_advanced' );?>')
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un fournisseur', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   providersTextDomain;
     $scope.fields           =   providersFields;
     $scope.item             =   {};
@@ -33,12 +33,33 @@ var providers          =   function( providersTextDomain, $scope, $http, provide
             $scope.item,
             function(){
                 $location.url( '/providers?notice=done' );
-            },function(){
-                $scope.submitDisabled       =   false;
+            },function( returned ){
+
+                $scope.submitDisabled   =   false;
+
+                if( returned.data.status === 'alreadyExists' ) {
+                    sharedAlert.warning( '<?php echo _s( 'Le nom de ce fournisseur est déjà en cours d\'utilisation, veuillez choisir un autre nom.', 'nexopos_advanced' );?>' );
+                }
+
+                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
+                    sharedAlert.warning( '<?php echo _s( 'Une erreur s\'est produite durant l\'opération.', 'nexopos_advanced' );?>' );
+                }
             }
         )
     }
 }
 
-providers.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersFields', 'providersResource', '$location', 'validate','rawToOptions', 'sharedDocumentTitle' ];
+providers.$inject    =   [
+    'providersTextDomain',
+    '$scope',
+    '$http',
+    'providersFields',
+    'providersResource',
+    '$location',
+    'validate',
+    'rawToOptions',
+    'sharedDocumentTitle',
+    'sharedAlert'
+];
+
 tendooApp.controller( 'providers', providers );
