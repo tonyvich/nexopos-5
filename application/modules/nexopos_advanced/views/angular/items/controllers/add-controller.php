@@ -1,4 +1,6 @@
-var items               =   function( $scope, $http, $location, itemTypes, item, fields, providers, $routeParams ) {
+var items               =   function( $scope, $http, $location, itemTypes, item, fields, providers, $routeParams, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
 
     /**
      *  Add Group. Duplicate group fields
@@ -266,6 +268,6 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
     });
 };
 
-items.$inject           =   [ '$scope', '$http', '$location', 'itemTypes', 'item', 'fields', 'providers', '$routeParams' ];
+items.$inject           =   [ '$scope', '$http', '$location', 'itemTypes', 'item', 'fields', 'providers', '$routeParams', 'sharedDocumentTitle' ];
 
 tendooApp.controller( 'items', items );

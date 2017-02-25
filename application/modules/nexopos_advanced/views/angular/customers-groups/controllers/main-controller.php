@@ -1,5 +1,6 @@
-var customersGroupsMain          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsResource, $location, validate, table, customersGroupsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions  ) {
+var customersGroupsMain          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsResource, $location, validate, table, customersGroupsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle  ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des groupes de clients', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   customersGroupsTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
@@ -53,6 +54,6 @@ var customersGroupsMain          =   function( customersGroupsTextDomain, $scope
     $scope.table.getPage(0);
 }
 
-customersGroupsMain.$inject    =   [ 'customersGroupsTextDomain', '$scope', '$http', 'customersGroupsResource', '$location', 'validate', 'table', 'customersGroupsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert','sharedEntryActions'];
+customersGroupsMain.$inject    =   [ 'customersGroupsTextDomain', '$scope', '$http', 'customersGroupsResource', '$location', 'validate', 'table', 'customersGroupsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert','sharedEntryActions', 'sharedDocumentTitle' ];
 
 tendooApp.controller( 'customersGroupsMain', customersGroupsMain );

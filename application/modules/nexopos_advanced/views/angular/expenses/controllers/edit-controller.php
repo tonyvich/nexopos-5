@@ -1,4 +1,6 @@
-var expensesEdit      =   function( expensesEditTextDomain, $scope, $http, $route, expensesFields, expensesResource, $location, validate, sharedExpensesCategoriesResource, rawToOptions) {
+var expensesEdit      =   function( expensesEditTextDomain, $scope, $http, $route, expensesFields, expensesResource, $location, validate, sharedExpensesCategoriesResource, rawToOptions, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Modifier une dépense', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   expensesEditTextDomain;
     $scope.fields           =   expensesFields;
     $scope.item             =   {};
@@ -57,5 +59,5 @@ var expensesEdit      =   function( expensesEditTextDomain, $scope, $http, $rout
     }
 }
 
-expensesEdit.$inject    =   [ 'expensesEditTextDomain', '$scope', '$http', '$route', 'expensesFields', 'expensesResource', '$location', 'validate','sharedExpensesCategoriesResource', 'rawToOptions'];
+expensesEdit.$inject    =   [ 'expensesEditTextDomain', '$scope', '$http', '$route', 'expensesFields', 'expensesResource', '$location', 'validate','sharedExpensesCategoriesResource', 'rawToOptions', 'sharedDocumentTitle' ];
 tendooApp.controller( 'expensesEdit', expensesEdit );

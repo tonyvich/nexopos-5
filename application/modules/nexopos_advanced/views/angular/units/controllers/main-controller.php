@@ -1,5 +1,6 @@
-var unitsMain          =   function( unitsTextDomain, $scope, $http, unitsResource, $location, validate, table, unitTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions) {
+var unitsMain          =   function( unitsTextDomain, $scope, $http, unitsResource, $location, validate, table, unitTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des unités', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
@@ -52,6 +53,6 @@ var unitsMain          =   function( unitsTextDomain, $scope, $http, unitsResour
     $scope.table.getPage(0);
 }
 
-unitsMain.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsResource', '$location', 'validate', 'table', 'unitTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions'];
+unitsMain.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsResource', '$location', 'validate', 'table', 'unitTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
 
 tendooApp.controller( 'unitsMain', unitsMain );

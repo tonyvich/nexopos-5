@@ -1,4 +1,6 @@
-var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, unitsFields, unitsResource, $location, validate ) {
+var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, unitsFields, unitsResource, $location, validate, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Editer une unité', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsEditTextDomain;
     $scope.fields           =   unitsFields;
     $scope.item             =   {};
@@ -51,5 +53,5 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
     }
 }
 
-unitsEdit.$inject    =   [ 'unitsEditTextDomain', '$scope', '$http', '$route', 'unitsFields', 'unitsResource', '$location', 'validate' ];
+unitsEdit.$inject    =   [ 'unitsEditTextDomain', '$scope', '$http', '$route', 'unitsFields', 'unitsResource', '$location', 'validate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'unitsEdit', unitsEdit );

@@ -1,4 +1,6 @@
-var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http, $route, departmentsFields, departmentsResource, $location, validate ) {
+var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http, $route, departmentsFields, departmentsResource, $location, validate, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Editer un rayon', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   departmentsEditTextDomain;
     $scope.fields           =   departmentsFields;
     $scope.item             =   {};
@@ -50,5 +52,5 @@ var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http,
     }
 }
 
-departmentsEdit.$inject    =   [ 'departmentsEditTextDomain', '$scope', '$http', '$route', 'departmentsFields', 'departmentsResource', '$location', 'validate' ];
+departmentsEdit.$inject    =   [ 'departmentsEditTextDomain', '$scope', '$http', '$route', 'departmentsFields', 'departmentsResource', '$location', 'validate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'departmentsEdit', departmentsEdit );

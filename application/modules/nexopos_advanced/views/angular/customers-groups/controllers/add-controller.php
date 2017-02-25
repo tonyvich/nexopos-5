@@ -1,5 +1,6 @@
-var customersGroups          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsFields, customersGroupsResource, $location, validate ) {
+var customersGroups          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsFields, customersGroupsResource, $location, validate, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un groupe de clients', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   customersGroupsTextDomain;
     $scope.fields           =   customersGroupsFields;
     $scope.item             =   {};
@@ -38,5 +39,15 @@ var customersGroups          =   function( customersGroupsTextDomain, $scope, $h
     }
 }
 
-customersGroups.$inject    =   [ 'customersGroupsTextDomain', '$scope', '$http', 'customersGroupsFields', 'customersGroupsResource', '$location', 'validate' ];
+customersGroups.$inject    =   [
+    'customersGroupsTextDomain',
+    '$scope',
+    '$http',
+    'customersGroupsFields',
+    'customersGroupsResource',
+    '$location',
+    'validate',
+    'sharedDocumentTitle'
+];
+
 tendooApp.controller( 'customersGroups', customersGroups );
