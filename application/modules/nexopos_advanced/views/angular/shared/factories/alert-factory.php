@@ -19,8 +19,7 @@ tendooApp.factory( 'sharedAlert', [ 'SweetAlert', function( SweetAlert ){
         **/
 
         this.confirm    =   function( message, callback ) {
-            return SweetAlert.swal(
-                {
+            return SweetAlert.swal({
                    title                : "<?php echo _s( 'Confirmez votre action', 'nexopos_advanced' );?>",
                    text                 : message,
                    type                 : "warning",
@@ -28,9 +27,9 @@ tendooApp.factory( 'sharedAlert', [ 'SweetAlert', function( SweetAlert ){
                    confirmButtonColor   : "#DD6B55",
                    confirmButtonText    : "<?php echo _s( 'Oui', 'nexopos_advanced' );?>",
                    closeOnConfirm       : typeof callback == 'function'
-               },
-               onClose( action )
-            );
+            }, function( isConfirm ) {
+                callback( isConfirm );
+            });
         }
 
         /**

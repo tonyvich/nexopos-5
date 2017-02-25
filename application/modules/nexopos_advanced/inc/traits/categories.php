@@ -53,7 +53,8 @@ Trait categories
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_categories' )->result();
-        return $this->response( $result[0], 200 );
+
+        return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
     /**
@@ -111,7 +112,7 @@ Trait categories
             'description'           =>  $this->put( 'description' ),
             'author'                =>  $this->put( 'author' ),
             'ref_parent'            =>  $this->put( 'ref_parent' ),
-            'date_modification'     =>  $this->post( 'date_modification' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
         ]);
 
         $this->__success();

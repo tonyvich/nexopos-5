@@ -1,5 +1,6 @@
-var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, validate, table, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions ) {
+var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, validate, table, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesAddTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
@@ -28,12 +29,43 @@ var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http
         });
     }
 
+    /**
+     *  Table Delete
+     *  @param object query
+     *  @return void
+    **/
+
+    $scope.table.delete     =   function( params ){
+        categoriesResource.delete( params, function( data ) {
+            $scope.table.get();
+        },function(){
+            sharedAlert.warning( '<?php echo _s(
+                'Une erreur s\'est produite durant l\'operation',
+                'nexopos_advanced'
+            );?>' );
+        });
+    }
+
     // Get Results
     $scope.table.limit      =   10;
     $scope.table.order_type =   'asc';
     $scope.table.getPage(0);
 }
 
-categoriesMain.$inject    =   [ 'categoriesAddTextDomain', '$scope', '$http', 'categoriesResource', '$location', 'validate', 'table', 'categoryTable', 'paginationFactory','sharedTableActions', 'sharedAlert', 'sharedEntryActions' ];
+categoriesMain.$inject    =   [
+    'categoriesAddTextDomain',
+    '$scope',
+    '$http',
+    'categoriesResource',
+    '$location',
+    'validate',
+    'table',
+    'categoryTable',
+    'paginationFactory',
+    'sharedTableActions',
+    'sharedAlert',
+    'sharedEntryActions',
+    'sharedDocumentTitle'
+];
 
 tendooApp.controller( 'categoriesMain', categoriesMain );

@@ -1,4 +1,6 @@
-var deliveriesEdit      =   function( deliveriesEditTextDomain, $scope, $http, $route, deliveriesFields, deliveriesResource, $location, validate ) {
+var deliveriesEdit      =   function( deliveriesEditTextDomain, $scope, $http, $route, deliveriesFields, deliveriesResource, $location, validate, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Editer une livraison', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   deliveriesEditTextDomain;
     $scope.fields           =   deliveriesFields;
     $scope.item             =   {};
@@ -12,7 +14,9 @@ var deliveriesEdit      =   function( deliveriesEditTextDomain, $scope, $http, $
     },function( entry ){
         $scope.submitDisabled   =   false;
         $scope.item             =   entry;
-    })
+    },function(){
+        $location.path( '/nexopos/error/404' )
+    });
 
     /**
      *  Update Date
@@ -51,5 +55,15 @@ var deliveriesEdit      =   function( deliveriesEditTextDomain, $scope, $http, $
     }
 }
 
-deliveriesEdit.$inject    =   [ 'deliveriesEditTextDomain', '$scope', '$http', '$route', 'deliveriesFields', 'deliveriesResource', '$location', 'validate' ];
+deliveriesEdit.$inject    =   [
+    'deliveriesEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'deliveriesFields',
+    'deliveriesResource',
+    '$location',
+    'validate'
+];
+
 tendooApp.controller( 'deliveriesEdit', deliveriesEdit );

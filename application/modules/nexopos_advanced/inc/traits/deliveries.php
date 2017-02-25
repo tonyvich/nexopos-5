@@ -48,7 +48,7 @@ Trait deliveries
         ->get( 'nexopos_deliveries' )
         ->result();
 
-        return $this->response( $result[0], 200 );
+        return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
     /**

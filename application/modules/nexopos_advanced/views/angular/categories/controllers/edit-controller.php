@@ -1,5 +1,6 @@
-var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $http, $route, categoriesFields, categoriesResource, $location, validate, rawToOptions) {
+var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $http, $route, categoriesFields, categoriesResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Editer une catégorie', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesEditTextDomain;
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
@@ -12,6 +13,8 @@ var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $htt
     },function( entry ){
         $scope.submitDisabled   =   false;
         $scope.item             =   entry;
+    },function(){
+        $location.path( '/nexopos/error/404' )
     })
 
     // Setting options for ref_parent select
@@ -52,5 +55,17 @@ var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $htt
     }
 }
 
-categoriesEdit.$inject    =   [ 'categoriesEditTextDomain', '$scope', '$http', '$route', 'categoriesFields', 'categoriesResource', '$location', 'validate','rawToOptions'];
+categoriesEdit.$inject    =   [
+    'categoriesEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'categoriesFields',
+    'categoriesResource',
+    '$location',
+    'validate',
+    'rawToOptions',
+    'sharedDocumentTitle'
+];
+
 tendooApp.controller( 'categoriesEdit', categoriesEdit );

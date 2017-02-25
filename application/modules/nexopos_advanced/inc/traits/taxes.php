@@ -11,7 +11,7 @@ Trait taxes
     public function taxes_get( $id = null )
     {
         if( $id == null ) {
-            
+
             $this->db->select( '
                 nexopos_taxes.id as id,
                 nexopos_taxes.name as name,
@@ -44,7 +44,8 @@ Trait taxes
         }
 
         $result     =   $this->db->where( 'id', $id )->get( 'nexopos_taxes' )->result();
-        return $this->response( $result[0], 200 );
+
+        return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
     /**
