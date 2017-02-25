@@ -61,7 +61,7 @@ Trait customers
     public function customers_post()
     {
         if( $this->db->where( 'name', $this->post( 'name' ) )->get( 'nexopos_customers' )->num_rows() ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->insert( 'nexopos_customers', [
@@ -112,7 +112,7 @@ Trait customers
         ->num_rows();
 
         if( $alreadyExists ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->where( 'id', $id )->update( 'nexopos_customers', [

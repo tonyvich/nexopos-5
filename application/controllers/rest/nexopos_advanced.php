@@ -88,4 +88,18 @@ class Nexopos_advanced extends REST_Controller
             'status'        =>    'forbidden'
         ), 403);
     }
+
+    /**
+     *  already exists
+     *  @param
+     *  @return
+    **/
+
+    private function __alreadyExists()
+    {
+        $this->response(array(
+            'status'        =>    'alreadyExists'
+        ), 403);
+    }
+
 }
