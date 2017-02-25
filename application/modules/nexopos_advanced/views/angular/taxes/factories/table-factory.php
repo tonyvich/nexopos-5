@@ -18,10 +18,6 @@ tendooApp.factory( 'taxTable', function(){
                 namespace   :   'value'
             },
             {
-                text    :   '<?php echo _s( 'Description', 'nexopos_advanced' );?>',
-                namespace   :   'description'
-            },
-            {
                 text    :   '<?php echo _s( 'Date de creation', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation'
             },
