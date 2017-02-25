@@ -1,4 +1,4 @@
-var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, unitsFields, unitsResource, $location, validate, sharedDocumentTitle ) {
+var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, unitsFields, unitsResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une unité', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsEditTextDomain;
@@ -34,8 +34,8 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

@@ -1,4 +1,4 @@
-var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, validate, sharedTable, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, sharedValidate, sharedTable, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des livraisons', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   deliveriesTextDomain;

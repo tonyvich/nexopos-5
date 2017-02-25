@@ -1,4 +1,4 @@
-var expensesCategoriesEdit      =   function( expensesCategoriesEditTextDomain, $scope, $http, $route, expensesCategoriesFields, expensesCategoriesResource, $location, validate, sharedDocumentTitle ) {
+var expensesCategoriesEdit      =   function( expensesCategoriesEditTextDomain, $scope, $http, $route, expensesCategoriesFields, expensesCategoriesResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une catéogrie de dépenses', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   expensesCategoriesEditTextDomain;
@@ -32,8 +32,8 @@ var expensesCategoriesEdit      =   function( expensesCategoriesEditTextDomain, 
         $scope.item.date_modification   =   tendoo.now();
 
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

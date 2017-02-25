@@ -1,4 +1,4 @@
-var customersGroupsMain          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsResource, $location, validate, sharedTable, customersGroupsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle  ) {
+var customersGroupsMain          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsResource, $location, sharedValidate, sharedTable, customersGroupsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle  ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des groupes de clients', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   customersGroupsTextDomain;

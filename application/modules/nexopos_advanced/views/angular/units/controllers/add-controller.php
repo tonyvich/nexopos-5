@@ -1,4 +1,4 @@
-var units          =   function( unitsTextDomain, $scope, $http, unitsFields, unitsResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
+var units          =   function( unitsTextDomain, $scope, $http, unitsFields, unitsResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une unité', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsTextDomain;
@@ -23,8 +23,8 @@ var units          =   function( unitsTextDomain, $scope, $http, unitsFields, un
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   tendoo.now();
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

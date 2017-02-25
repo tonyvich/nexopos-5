@@ -1,4 +1,4 @@
-var expenses          =   function( $scope, $http, expensesTextDomain,  expensesFields, expensesResource, $location, validate,sharedExpensesCategoriesResource, rawToOptions, sharedDocumentTitle ) {
+var expenses          =   function( $scope, $http, expensesTextDomain,  expensesFields, expensesResource, $location, sharedValidate,sharedExpensesCategoriesResource, rawToOptions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une dépense', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   expensesTextDomain;
@@ -19,8 +19,8 @@ var expenses          =   function( $scope, $http, expensesTextDomain,  expenses
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   tendoo.now();
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

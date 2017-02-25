@@ -1,4 +1,4 @@
-var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $http, $route, categoriesFields, categoriesResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
+var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $http, $route, categoriesFields, categoriesResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une catégorie', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesEditTextDomain;
@@ -37,8 +37,8 @@ var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $htt
             $scope.item.ref_parent = 0;
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
         $scope.submitDisabled       =   true;
 

@@ -1,4 +1,4 @@
-var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, validate, sharedTable, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, sharedValidate, sharedTable, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesAddTextDomain;

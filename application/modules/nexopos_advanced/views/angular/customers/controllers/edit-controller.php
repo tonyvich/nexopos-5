@@ -1,4 +1,4 @@
-var customersEdit      =   function( customersEditTextDomain, $scope, $http, $route, customersFields, customersResource, $location, validate, sharedCustomersGroupsResource, rawToOptions, sharedDocumentTitle ) {
+var customersEdit      =   function( customersEditTextDomain, $scope, $http, $route, customersFields, customersResource, $location, sharedValidate, sharedCustomersGroupsResource, rawToOptions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un client', 'nexopos_advanced' );?>')
     $scope.textDomain       =   customersEditTextDomain;
@@ -42,8 +42,8 @@ var customersEdit      =   function( customersEditTextDomain, $scope, $http, $ro
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

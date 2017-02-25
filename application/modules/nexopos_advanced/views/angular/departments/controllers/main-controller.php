@@ -1,4 +1,4 @@
-var departmentsMain          =   function( departmentsTextDomain, $scope, $http, departmentsResource, $location, validate, sharedTable, departmentsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle ) {
+var departmentsMain          =   function( departmentsTextDomain, $scope, $http, departmentsResource, $location, sharedValidate, sharedTable, departmentsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des rayons', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   departmentsTextDomain;

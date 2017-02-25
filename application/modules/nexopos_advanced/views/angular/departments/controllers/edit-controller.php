@@ -1,4 +1,4 @@
-var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http, $route, departmentsFields, departmentsResource, $location, validate, sharedDocumentTitle ) {
+var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http, $route, departmentsFields, departmentsResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un rayon', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   departmentsEditTextDomain;
@@ -33,8 +33,8 @@ var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http,
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

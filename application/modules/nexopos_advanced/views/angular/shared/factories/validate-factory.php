@@ -1,5 +1,5 @@
 tendooApp.factory( 'sharedValidate', function(){
-    return new function(){
+    return function(){
         var expression  =   {
             required: function(value) {
               return !!value;

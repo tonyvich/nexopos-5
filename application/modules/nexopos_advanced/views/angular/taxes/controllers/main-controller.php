@@ -1,4 +1,4 @@
-var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResource, $location, validate, sharedTable, taxTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResource, $location, sharedValidate, sharedTable, taxTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des taxes', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   taxesTextDomain;

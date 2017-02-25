@@ -1,4 +1,4 @@
-var unitsMain          =   function( unitsTextDomain, $scope, $http, unitsResource, $location, validate, sharedTable, unitTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var unitsMain          =   function( unitsTextDomain, $scope, $http, unitsResource, $location, sharedValidate, sharedTable, unitTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des unités', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsTextDomain;

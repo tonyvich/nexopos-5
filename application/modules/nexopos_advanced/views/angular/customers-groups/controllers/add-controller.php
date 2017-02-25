@@ -1,4 +1,4 @@
-var customersGroups          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsFields, customersGroupsResource, $location, validate, sharedDocumentTitle ) {
+var customersGroups          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsFields, customersGroupsResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un groupe de clients', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   customersGroupsTextDomain;
@@ -22,8 +22,8 @@ var customersGroups          =   function( customersGroupsTextDomain, $scope, $h
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   tendoo.now();
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

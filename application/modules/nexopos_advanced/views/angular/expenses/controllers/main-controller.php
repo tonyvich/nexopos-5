@@ -1,4 +1,4 @@
-var expensesMain          =   function( $scope, $http, expensesTextDomain, expensesResource, $location, validate, sharedTable, expensesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var expensesMain          =   function( $scope, $http, expensesTextDomain, expensesResource, $location, sharedValidate, sharedTable, expensesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des dépenses', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   expensesTextDomain;

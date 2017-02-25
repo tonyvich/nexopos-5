@@ -1,4 +1,4 @@
-var expensesCategoriesMain          =   function( $scope, $http, expensesCategoriesTextDomain, expensesCategoriesResource, $location, validate, sharedTable, expensesCategoriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var expensesCategoriesMain          =   function( $scope, $http, expensesCategoriesTextDomain, expensesCategoriesResource, $location, sharedValidate, sharedTable, expensesCategoriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories de dépenses', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   expensesCategoriesTextDomain;

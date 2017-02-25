@@ -1,4 +1,4 @@
-var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveriesResource, $location, validate, sharedDocumentTitle ) {
+var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveriesResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une livraison', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   deliveriesTextDomain;
@@ -26,8 +26,8 @@ var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliv
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;

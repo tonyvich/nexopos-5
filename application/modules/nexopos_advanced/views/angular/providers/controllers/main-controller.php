@@ -1,4 +1,4 @@
-var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, validate, sharedTable, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, sharedValidate, sharedTable, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des fournisseurs', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   providersTextDomain;
