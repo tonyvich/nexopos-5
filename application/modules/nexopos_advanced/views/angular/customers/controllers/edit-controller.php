@@ -9,7 +9,6 @@ var customersEdit      =   function( customersEditTextDomain, $scope, $http, $ro
 
     sharedCustomersGroupsResource.get(
         function(data){
-            alert('call');
             $scope.fields[7].options = rawToOptions(data.entries, 'id', 'name');
         }
     );
