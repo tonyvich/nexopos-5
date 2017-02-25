@@ -10,7 +10,6 @@ var customers          =   function( customersTextDomain, $scope, $http, custome
     
     sharedCustomersGroupsResource.get(
         function(data){
-            alert('call');
             $scope.fields[7].options = rawToOptions(data.entries, 'id', 'name');
         }
     );
