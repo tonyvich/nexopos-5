@@ -4,7 +4,7 @@ var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $htt
     $scope.textDomain       =   categoriesEditTextDomain;
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -63,7 +63,7 @@ categoriesEdit.$inject    =   [
     'categoriesFields',
     'categoriesResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'rawToOptions',
     'sharedDocumentTitle'
 ];

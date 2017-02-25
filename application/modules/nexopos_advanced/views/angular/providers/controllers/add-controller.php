@@ -4,7 +4,7 @@ var providers          =   function( providersTextDomain, $scope, $http, provide
     $scope.textDomain       =   providersTextDomain;
     $scope.fields           =   providersFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     /**
      *  Update Date
@@ -56,7 +56,7 @@ providers.$inject    =   [
     'providersFields',
     'providersResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'rawToOptions',
     'sharedDocumentTitle',
     'sharedAlert'

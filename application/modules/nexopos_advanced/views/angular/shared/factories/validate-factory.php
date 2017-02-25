@@ -1,4 +1,4 @@
-tendooApp.factory( 'validate', function(){
+tendooApp.factory( 'sharedValidate', function(){
     return new function(){
         var expression  =   {
             required: function(value) {

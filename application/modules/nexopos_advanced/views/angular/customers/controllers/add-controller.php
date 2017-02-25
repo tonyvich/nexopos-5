@@ -5,7 +5,7 @@ var customers          =   function( customersTextDomain, $scope, $http, custome
     $scope.fields           =   customersFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Settings options for selecting parent group
 
@@ -62,7 +62,7 @@ customers.$inject    =   [
     'customersFields',
     'customersResource',
     '$location',
-    'validate' ,
+    'sharedValidate' ,
     'sharedCustomersGroupsResource',
     'rawToOptions',
     'sharedDocumentTitle'

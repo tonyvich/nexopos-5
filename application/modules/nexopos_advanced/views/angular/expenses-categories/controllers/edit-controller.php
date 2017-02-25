@@ -5,7 +5,7 @@ var expensesCategoriesEdit      =   function( expensesCategoriesEditTextDomain, 
     $scope.fields           =   expensesCategoriesFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -51,5 +51,5 @@ var expensesCategoriesEdit      =   function( expensesCategoriesEditTextDomain, 
     }
 }
 
-expensesCategoriesEdit.$inject    =   [ 'expensesCategoriesEditTextDomain', '$scope', '$http', '$route', 'expensesCategoriesFields', 'expensesCategoriesResource', '$location', 'validate', 'sharedDocumentTitle' ];
+expensesCategoriesEdit.$inject    =   [ 'expensesCategoriesEditTextDomain', '$scope', '$http', '$route', 'expensesCategoriesFields', 'expensesCategoriesResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'expensesCategoriesEdit', expensesCategoriesEdit );

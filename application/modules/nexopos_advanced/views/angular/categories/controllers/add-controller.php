@@ -4,7 +4,7 @@ var categories          =   function( categoriesAddTextDomain, $scope, $http, ca
     $scope.textDomain       =   categoriesAddTextDomain;
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Setting options for ref_parent select
 
@@ -56,7 +56,7 @@ categories.$inject    =   [
     'categoriesFields',
     'categoriesResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'rawToOptions',
     'sharedDocumentTitle'
 ];

@@ -4,7 +4,7 @@ var departmentsAddController = function($scope, $location, departmentsResource, 
     $scope.textDomain       =   departmentsTextDomain;
     $scope.fields           =   departmentsFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     /**
      *  Update Date
@@ -46,5 +46,5 @@ var departmentsAddController = function($scope, $location, departmentsResource, 
     }
 }
 
-departmentsAddController.$inject = ['$scope','$location', 'departmentsResource','departmentsTextDomain', 'departmentsFields', 'validate', 'sharedDocumentTitle' ];
+departmentsAddController.$inject = ['$scope','$location', 'departmentsResource','departmentsTextDomain', 'departmentsFields', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller('departmentsAdd',departmentsAddController);

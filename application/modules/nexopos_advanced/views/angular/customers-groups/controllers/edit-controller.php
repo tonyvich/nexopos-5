@@ -5,7 +5,7 @@ var customersGroupsEdit      =   function( customersGroupsEditTextDomain, $scope
     $scope.fields           =   customersGroupsFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -53,5 +53,5 @@ var customersGroupsEdit      =   function( customersGroupsEditTextDomain, $scope
     }
 }
 
-customersGroupsEdit.$inject    =   [ 'customersGroupsEditTextDomain', '$scope', '$http', '$route', 'customersGroupsFields', 'customersGroupsResource', '$location', 'validate', 'sharedDocumentTitle' ];
+customersGroupsEdit.$inject    =   [ 'customersGroupsEditTextDomain', '$scope', '$http', '$route', 'customersGroupsFields', 'customersGroupsResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'customersGroupsEdit', customersGroupsEdit );

@@ -5,7 +5,7 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
     $scope.fields           =   unitsFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -53,5 +53,5 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
     }
 }
 
-unitsEdit.$inject    =   [ 'unitsEditTextDomain', '$scope', '$http', '$route', 'unitsFields', 'unitsResource', '$location', 'validate', 'sharedDocumentTitle' ];
+unitsEdit.$inject    =   [ 'unitsEditTextDomain', '$scope', '$http', '$route', 'unitsFields', 'unitsResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'unitsEdit', unitsEdit );

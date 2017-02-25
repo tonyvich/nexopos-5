@@ -4,7 +4,7 @@ var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http,
     $scope.textDomain       =   departmentsEditTextDomain;
     $scope.fields           =   departmentsFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -52,5 +52,5 @@ var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http,
     }
 }
 
-departmentsEdit.$inject    =   [ 'departmentsEditTextDomain', '$scope', '$http', '$route', 'departmentsFields', 'departmentsResource', '$location', 'validate', 'sharedDocumentTitle' ];
+departmentsEdit.$inject    =   [ 'departmentsEditTextDomain', '$scope', '$http', '$route', 'departmentsFields', 'departmentsResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'departmentsEdit', departmentsEdit );

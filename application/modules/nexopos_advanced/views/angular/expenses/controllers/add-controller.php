@@ -5,7 +5,7 @@ var expenses          =   function( $scope, $http, expensesTextDomain,  expenses
     $scope.fields           =   expensesFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Settings options for selecting category parent
 
@@ -45,5 +45,5 @@ var expenses          =   function( $scope, $http, expensesTextDomain,  expenses
     }
 }
 
-expenses.$inject    =   [ '$scope', '$http','expensesTextDomain', 'expensesFields', 'expensesResource', '$location', 'validate', 'sharedExpensesCategoriesResource', 'rawToOptions', 'sharedDocumentTitle' ];
+expenses.$inject    =   [ '$scope', '$http','expensesTextDomain', 'expensesFields', 'expensesResource', '$location', 'sharedValidate', 'sharedExpensesCategoriesResource', 'rawToOptions', 'sharedDocumentTitle' ];
 tendooApp.controller( 'expenses', expenses );

@@ -5,7 +5,7 @@ var customersEdit      =   function( customersEditTextDomain, $scope, $http, $ro
     $scope.fields           =   customersFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     //Setting options for selecting group
 
@@ -69,7 +69,7 @@ customersEdit.$inject    =   [
     'customersFields',
     'customersResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'sharedCustomersGroupsResource',
     'rawToOptions',
     'sharedDocumentTitle'

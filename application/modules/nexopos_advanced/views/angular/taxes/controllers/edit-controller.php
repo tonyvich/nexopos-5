@@ -5,7 +5,7 @@ var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, tax
     $scope.fields           =   taxesFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -53,5 +53,5 @@ var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, tax
     }
 }
 
-taxesEdit.$inject    =   [ 'taxesEditTextDomain', '$scope', '$http', '$route', 'taxesFields', 'taxesResource', '$location', 'validate', 'sharedDocumentTitle' ];
+taxesEdit.$inject    =   [ 'taxesEditTextDomain', '$scope', '$http', '$route', 'taxesFields', 'taxesResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'taxesEdit', taxesEdit );

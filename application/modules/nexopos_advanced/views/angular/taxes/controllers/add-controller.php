@@ -4,7 +4,7 @@ var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, ta
     $scope.textDomain       =   taxesTextDomain;
     $scope.fields           =   taxesFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     /**
      *  Update Date
@@ -49,5 +49,5 @@ var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, ta
     }
 }
 
-taxes.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesFields', 'taxesResource', '$location', 'validate','rawToOptions', 'sharedDocumentTitle' ];
+taxes.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesFields', 'taxesResource', '$location', 'sharedValidate','rawToOptions', 'sharedDocumentTitle' ];
 tendooApp.controller( 'taxes', taxes );

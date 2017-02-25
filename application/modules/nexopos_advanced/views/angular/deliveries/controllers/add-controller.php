@@ -5,7 +5,7 @@ var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliv
     $scope.fields           =   deliveriesFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
 
     /**
@@ -59,7 +59,7 @@ deliveries.$inject    =   [
     'deliveriesFields',
     'deliveriesResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'sharedDocumentTitle'
 ];
 tendooApp.controller( 'deliveries', deliveries );

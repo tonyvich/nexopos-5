@@ -4,7 +4,7 @@ var units          =   function( unitsTextDomain, $scope, $http, unitsFields, un
     $scope.textDomain       =   unitsTextDomain;
     $scope.fields           =   unitsFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     /**
      *  Update Date
@@ -49,5 +49,5 @@ var units          =   function( unitsTextDomain, $scope, $http, unitsFields, un
     }
 }
 
-units.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsFields', 'unitsResource', '$location', 'validate','rawToOptions', 'sharedDocumentTitle' ];
+units.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsFields', 'unitsResource', '$location', 'sharedValidate','rawToOptions', 'sharedDocumentTitle' ];
 tendooApp.controller( 'units', units );

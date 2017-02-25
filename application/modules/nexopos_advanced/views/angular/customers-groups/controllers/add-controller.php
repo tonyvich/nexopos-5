@@ -5,7 +5,7 @@ var customersGroups          =   function( customersGroupsTextDomain, $scope, $h
     $scope.fields           =   customersGroupsFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
 
     /**
@@ -55,7 +55,7 @@ customersGroups.$inject    =   [
     'customersGroupsFields',
     'customersGroupsResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'sharedDocumentTitle'
 ];
 

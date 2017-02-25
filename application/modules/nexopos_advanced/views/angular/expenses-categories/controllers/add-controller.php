@@ -5,7 +5,7 @@ var expensesCategories          =   function( $scope, $http, expensesCategoriesT
     $scope.fields           =   expensesCategoriesFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
 
 
@@ -39,5 +39,5 @@ var expensesCategories          =   function( $scope, $http, expensesCategoriesT
     }
 }
 
-expensesCategories.$inject    =   [ '$scope', '$http','expensesCategoriesTextDomain', 'expensesCategoriesFields', 'expensesCategoriesResource', '$location', 'validate', 'sharedDocumentTitle' ];
+expensesCategories.$inject    =   [ '$scope', '$http','expensesCategoriesTextDomain', 'expensesCategoriesFields', 'expensesCategoriesResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'expensesCategories', expensesCategories );
