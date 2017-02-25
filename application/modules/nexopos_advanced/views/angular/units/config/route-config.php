@@ -8,7 +8,7 @@
             return $ocLazyLoad.load({
                 files: [
                     'controllers/units/main.js',
-                    'factories/units/text-domain.js',
+                    'factories/units/add-text-domain.js',
                     'factories/units/fields.js',
                     'factories/units/resource.js',
                     'factories/units/table.js',
@@ -18,13 +18,45 @@
                     'shared_factories/table.js',
                     'shared_factories/pagination.js',
                     'shared_factories/table-actions.js',
-                    'shared_factories/alert.js'
+                    'shared_factories/alert.js',
+                    'shared_factories/entry-actions.js'
                 ]
             });
         }]
     }
 })
 
+
+/**
+ * For Editing Purposes
+**/
+
+.when('/units/edit/:id?', {
+    templateUrl: function( urlattr ) {
+        return 'templates/units/edit';
+    },
+    controller: 'unitsEdit',
+    resolve: {
+        lazy: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name: 'unitsEdit',
+                files: [
+                    'controllers/units/edit.js',
+                    'factories/units/edit-text-domain.js',
+                    'factories/units/fields.js',
+                    'factories/units/resource.js',
+                    'factories/units/table.js',
+                    'shared_factories/options.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js',
+                    'shared_factories/alert.js'
+                ]
+            });
+        }]
+    }
+})
 
 .when('/units/:page', {
     templateUrl: function( urlattr ) {
@@ -40,7 +72,7 @@
                 name: 'units',
                 files: [
                     'controllers/units/add.js',
-                    'factories/units/text-domain.js',
+                    'factories/units/add-text-domain.js',
                     'factories/units/fields.js',
                     'factories/units/resource.js',
                     'factories/units/table.js',

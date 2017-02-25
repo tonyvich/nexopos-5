@@ -19,7 +19,6 @@ Trait departments
                 nexopos_departments.image_url as image_url,
                 nexopos_departments.author as author,
                 nexopos_departments.date_creation as date_creation,
-                nexopos_departments.date_creation as date_creation,
                 nexopos_departments.date_modification as date_modification,
                 aauth_users.name        as author_name
             ' );
@@ -85,5 +84,33 @@ Trait departments
             return $this->__success();
         }
         return $this->__failed();
+    }
+
+    /**
+     *  departments Update. Update a current delivery entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function departments_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_departments' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_departments', [
+            'name'                  =>  $this->put( 'name' ),
+            'image_url'                  =>  $this->put( 'image_url' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
+        ]);
+
+        $this->__success();
     }
 }

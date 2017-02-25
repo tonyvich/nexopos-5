@@ -81,4 +81,35 @@ Trait taxes
         }
         return $this->__failed();
     }
+
+
+    /**
+     *  taxes Update. Update a current tax entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function taxes_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_taxes' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_taxes', [
+            'name'                  =>  $this->put( 'name' ),
+            'value'                  =>  $this->put( 'value' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
+            'type'                  =>  $this->put( 'type' )
+        ]);
+
+        $this->__success();
+    }
 }
+

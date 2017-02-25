@@ -2,10 +2,6 @@ tendooApp.factory( 'departmentsTable', function(){
     return {
         columns     :   [
             {
-                text    :   '<?php echo _s( 'Identifiant', 'nexopos_advanced' );?>',
-                namespace   :   'id'
-            },
-            {
                 text    :   '<?php echo _s( 'Intitulé', 'nexopos_advanced' );?>',
                 namespace   :   'name'
             },

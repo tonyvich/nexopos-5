@@ -68,6 +68,11 @@ Trait units
         $this->__success();
     }
 
+    /**
+    * Unit Delsete
+    *@return json
+    **/
+
     public function units_delete()
     {
         if( is_array( $_GET[ 'ids' ] ) ) {
@@ -77,5 +82,33 @@ Trait units
             return $this->__success();
         }
         return $this->__failed();
+    }
+
+    /**
+     *  Units Update. Update a current unit entry.
+     *  @param  int entry id
+     *  @return json
+    **/
+
+    public function units_put( $id )
+    {
+        $alreadyExists      =   $this->db->where( 'name', $this->put( 'name' ) )
+        ->where( 'id !=', $id )
+        ->get( 'nexopos_units' )
+        ->num_rows();
+
+        if( $alreadyExists ) {
+            $this->__failed();
+        }
+
+        $this->db->where( 'id', $id )->update( 'nexopos_units', [
+            'name'                  =>  $this->put( 'name' ),
+            'code'                  =>  $this->put( 'code' ),
+            'description'           =>  $this->put( 'description' ),
+            'author'                =>  $this->put( 'author' ),
+            'date_modification'     =>  $this->put( 'date_modification' ),
+        ]);
+
+        $this->__success();
     }
 }

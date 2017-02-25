@@ -1,10 +1,20 @@
-var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, validate, table, providerTable, paginationFactory,  sharedTableActions, sharedAlert) {
+var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, validate, table, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions) {
 
     $scope.textDomain       =   providersTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
-    $scope.table.columns    =   providerTable.columns;
+    $scope.table.columns    =   providersTable.columns;
     $scope.table.actions    =   sharedTableActions;
+
+    /** Adjust Entry actions **/
+    _.each( sharedEntryActions, function( value, key ) {
+        if( value.namespace == 'edit' ) {
+            sharedEntryActions[ key ].path      =    '/providers/edit/';
+        }
+    });
+
+    $scope.table.entryActions   =   sharedEntryActions;
+    $scope.table.actions        =   sharedTableActions;
 
     /**
      *  Table Get
@@ -36,6 +46,6 @@ var providersMain          =   function( providersTextDomain, $scope, $http, pro
     $scope.table.getPage(0);
 }
 
-providersMain.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersResource', '$location', 'validate', 'table', 'providerTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert'];
+providersMain.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersResource', '$location', 'validate', 'table', 'providersTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions'];
 
 tendooApp.controller( 'providersMain', providersMain );

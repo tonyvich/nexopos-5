@@ -1,6 +1,6 @@
 tendooApp.factory( 'departmentsTextDomain', function(){
     return  {
-        title   :   '<?php echo __( 'Créer une nouveau rayon', 'nexopos_advanced' );?>',
+        title   :   '<?php echo __( 'Créer un rayon', 'nexopos_advanced' );?>',
         return  :   '<?php echo __( 'Revenir vers la liste', 'nexopos_advanced' );?>',
         returnLink  :   '<?php echo site_url([ 'dashboard', 'nexopos', 'departments' ] );?>',
         itemTitle  :   '<?php echo __( 'nouveau rayon', 'nexopos_advanced' );?>',

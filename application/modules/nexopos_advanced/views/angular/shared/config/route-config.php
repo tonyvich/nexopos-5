@@ -49,6 +49,16 @@
 
             <?php $this->load->module_view(
                 'nexopos_advanced',
+                'angular.expenses-categories.config.route-config'
+            );?>
+
+            <?php $this->load->module_view(
+                'nexopos_advanced',
+                'angular.expenses.config.route-config'
+            );?>
+
+            <?php $this->load->module_view(
+                'nexopos_advanced',
                 'angular.pos.config.route-config'
             );?>
 
