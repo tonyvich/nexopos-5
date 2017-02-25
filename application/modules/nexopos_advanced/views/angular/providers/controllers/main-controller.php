@@ -1,5 +1,6 @@
-var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, validate, table, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions) {
+var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, validate, table, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des fournisseurs', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   providersTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
@@ -46,6 +47,6 @@ var providersMain          =   function( providersTextDomain, $scope, $http, pro
     $scope.table.getPage(0);
 }
 
-providersMain.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersResource', '$location', 'validate', 'table', 'providersTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions'];
+providersMain.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersResource', '$location', 'validate', 'table', 'providersTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
 
 tendooApp.controller( 'providersMain', providersMain );

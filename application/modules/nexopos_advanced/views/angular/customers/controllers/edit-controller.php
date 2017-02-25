@@ -1,4 +1,6 @@
-var customersEdit      =   function( customersEditTextDomain, $scope, $http, $route, customersFields, customersResource, $location, validate, sharedCustomersGroupsResource, rawToOptions) {
+var customersEdit      =   function( customersEditTextDomain, $scope, $http, $route, customersFields, customersResource, $location, validate, sharedCustomersGroupsResource, rawToOptions, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Editer un client', 'nexopos_advanced' );?>')
     $scope.textDomain       =   customersEditTextDomain;
     $scope.fields           =   customersFields;
     $scope.item             =   {};
@@ -59,5 +61,18 @@ var customersEdit      =   function( customersEditTextDomain, $scope, $http, $ro
     }
 }
 
-customersEdit.$inject    =   [ 'customersEditTextDomain', '$scope', '$http', '$route', 'customersFields', 'customersResource', '$location', 'validate','sharedCustomersGroupsResource', 'rawToOptions' ];
+customersEdit.$inject    =   [
+    'customersEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'customersFields',
+    'customersResource',
+    '$location',
+    'validate',
+    'sharedCustomersGroupsResource',
+    'rawToOptions',
+    'sharedDocumentTitle'
+];
+
 tendooApp.controller( 'customersEdit', customersEdit );

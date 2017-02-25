@@ -1,5 +1,6 @@
-var units          =   function( unitsTextDomain, $scope, $http, unitsFields, unitsResource, $location, validate, rawToOptions ) {
+var units          =   function( unitsTextDomain, $scope, $http, unitsFields, unitsResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une unité', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsTextDomain;
     $scope.fields           =   unitsFields;
     $scope.item             =   {};
@@ -25,7 +26,7 @@ var units          =   function( unitsTextDomain, $scope, $http, unitsFields, un
         if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
             return validate.blurAll( $scope.fields, $scope.item );
         }
-        
+
         $scope.submitDisabled       =   true;
 
         unitsResource.save(
@@ -39,5 +40,5 @@ var units          =   function( unitsTextDomain, $scope, $http, unitsFields, un
     }
 }
 
-units.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsFields', 'unitsResource', '$location', 'validate','rawToOptions'];
+units.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsFields', 'unitsResource', '$location', 'validate','rawToOptions', 'sharedDocumentTitle' ];
 tendooApp.controller( 'units', units );

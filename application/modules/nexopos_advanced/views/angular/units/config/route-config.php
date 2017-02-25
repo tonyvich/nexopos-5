@@ -19,7 +19,8 @@
                     'shared_factories/pagination.js',
                     'shared_factories/table-actions.js',
                     'shared_factories/alert.js',
-                    'shared_factories/entry-actions.js'
+                    'shared_factories/entry-actions.js',
+                    'shared_factories/document-title.js'
                 ]
             });
         }]
@@ -51,7 +52,8 @@
                     'shared_factories/validate.js',
                     'shared_factories/table.js',
                     'shared_factories/pagination.js',
-                    'shared_factories/alert.js'
+                    'shared_factories/alert.js',
+                    'shared_factories/document-title.js'
                 ]
             });
         }]
@@ -80,7 +82,8 @@
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',
                     'shared_factories/table.js',
-                    'shared_factories/pagination.js'
+                    'shared_factories/pagination.js',
+                    'shared_factories/document-title.js'
                 ]
             });
         }]

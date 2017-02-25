@@ -1,6 +1,8 @@
-var departmentsAddController = function($scope, $location, departmentsResource, departmentsTextDomain, departmentsFields, validate){
+var departmentsAddController = function($scope, $location, departmentsResource, departmentsTextDomain, departmentsFields, validate, sharedDocumentTitle ){
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un rayon', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   departmentsTextDomain;
-    $scope.fields           =   departmentsFields; 
+    $scope.fields           =   departmentsFields;
     $scope.item             =   {};
     $scope.validate         =   validate;
 
@@ -35,5 +37,5 @@ var departmentsAddController = function($scope, $location, departmentsResource, 
     }
 }
 
-departmentsAddController.$inject = ['$scope','$location', 'departmentsResource','departmentsTextDomain', 'departmentsFields', 'validate'];
+departmentsAddController.$inject = ['$scope','$location', 'departmentsResource','departmentsTextDomain', 'departmentsFields', 'validate', 'sharedDocumentTitle' ];
 tendooApp.controller('departmentsAdd',departmentsAddController);

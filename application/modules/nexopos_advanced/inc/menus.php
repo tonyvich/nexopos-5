@@ -42,14 +42,6 @@ class NexoPOS_Admin_Menus
                 'href'  =>  site_url( [ 'dashboard', 'nexopos/categories', 'add' ] )
             ),
             array(
-                'title' =>  __( 'Providers', 'nexopos' ),
-                'href'  =>  site_url( [ 'dashboard', 'nexopos/providers' ] )
-            ),
-            array(
-                'title' =>  __( 'New Provider', 'nexopos' ),
-                'href'  =>  site_url( [ 'dashboard', 'nexopos/providers', 'add' ] )
-            ),
-            array(
                 'title' =>  __( 'Departments', 'nexopos' ),
                 'href'  =>  site_url( [ 'dashboard', 'nexopos/departments' ] )
             ),
@@ -72,22 +64,6 @@ class NexoPOS_Admin_Menus
             array(
                 'title' =>  __( 'New Unit', 'nexopos' ),
                 'href'  =>  site_url( [ 'dashboard', 'nexopos/units', 'add' ] )
-            ),
-            array(
-                'title' =>  __( 'Expenses categories', 'nexopos' ),
-                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses-categories' ] )
-            ),
-            array(
-                'title' =>  __( 'New Expense Category', 'nexopos' ),
-                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses-categories', 'add' ] )
-            ),
-            array(
-                'title' =>  __( 'Expenses', 'nexopos' ),
-                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses' ] )
-            ),
-            array(
-                'title' =>  __( 'New Expense', 'nexopos' ),
-                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses', 'add' ] )
             )
         ]);
 
@@ -110,19 +86,6 @@ class NexoPOS_Admin_Menus
                 'title'     =>      __( 'New Group', 'nexopos' ),
                 'href'      =>      site_url( [ 'dashboard', 'nexopos/customers-groups', 'add' ] )
             )
-        ]);
-
-        // Coupon
-        $menus  =   array_insert_before( 'nexopos-customers', $menus, 'nexopos-coupons', [
-            array(
-                'title'     =>      __( 'Coupons', 'nexopos' ),
-                'href'      =>      site_url( [ 'dashboard', 'nexopos/coupons' ]),
-                'icon'      =>      'fa fa-gift'
-            ),
-            array(
-                'title'     =>      __( 'New Coupon', 'nexopos' ),
-                'href'      =>      site_url( [ 'dashboard', 'nexopos/coupons', 'add' ]),
-            ),
         ]);
 
         // settings
@@ -155,6 +118,31 @@ class NexoPOS_Admin_Menus
             array(
                 'title'     =>      __( 'Advanced', 'nexopos' ),
                 'href'      =>      site_url( [ 'dashboard', 'nexopos/settings', 'advanced' ]),
+            ),
+        ]);
+
+        $menus  =   array_insert_after( 'nexopos-inventory', $menus, 'nexopos-providers', [
+            array(
+                'title' =>  __( 'Providers', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/providers' ] ),
+                'icon'  =>  'fa fa-truck'
+            ),
+            array(
+                'title' =>  __( 'New Provider', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/providers', 'add' ] )
+            ),
+        ]);
+
+        // Coupon
+        $menus  =   array_insert_before( 'nexopos-customers', $menus, 'nexopos-coupons', [
+            array(
+                'title'     =>      __( 'Coupons', 'nexopos' ),
+                'href'      =>      site_url( [ 'dashboard', 'nexopos/coupons' ]),
+                'icon'      =>      'fa fa-gift'
+            ),
+            array(
+                'title'     =>      __( 'New Coupon', 'nexopos' ),
+                'href'      =>      site_url( [ 'dashboard', 'nexopos/coupons', 'add' ]),
             ),
         ]);
 
@@ -237,6 +225,27 @@ class NexoPOS_Admin_Menus
                 )
             ]);
         }
+
+        // Sales
+        $menus  =   array_insert_after( 'nexopos-sales', $menus, 'nexopos-expenses', [
+            array(
+                'title' =>  __( 'Dépenses', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses' ] ),
+                'icon'  =>  'fa fa-money'
+            ),
+            array(
+                'title' =>  __( 'Ajouter une dépense', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses', 'add' ] )
+            ),
+            array(
+                'title' =>  __( 'Catégories des dépenses', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses-categories' ] )
+            ),
+            array(
+                'title' =>  __( 'Ajouter une catégorie', 'nexopos' ),
+                'href'  =>  site_url( [ 'dashboard', 'nexopos/expenses-categories', 'add' ] )
+            )
+        ]);
 
         return $menus;
     }

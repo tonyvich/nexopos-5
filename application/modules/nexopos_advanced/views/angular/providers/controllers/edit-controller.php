@@ -1,4 +1,6 @@
-var providersEdit      =   function( providersEditTextDomain, $scope, $http, $route, providersFields, providersResource, $location, validate ) {
+var providersEdit      =   function( providersEditTextDomain, $scope, $http, $route, providersFields, providersResource, $location, validate, sharedDocumentTitle, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Editer un fournisseur', 'nexopos_advanced' );?>');
     $scope.textDomain       =   providersEditTextDomain;
     $scope.fields           =   providersFields;
     $scope.item             =   {};
@@ -51,5 +53,5 @@ var providersEdit      =   function( providersEditTextDomain, $scope, $http, $ro
     }
 }
 
-providersEdit.$inject    =   [ 'providersEditTextDomain', '$scope', '$http', '$route', 'providersFields', 'providersResource', '$location', 'validate' ];
+providersEdit.$inject    =   [ 'providersEditTextDomain', '$scope', '$http', '$route', 'providersFields', 'providersResource', '$location', 'validate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'providersEdit', providersEdit );

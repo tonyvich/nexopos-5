@@ -1,4 +1,6 @@
-var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, taxesFields, taxesResource, $location, validate ) {
+var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, taxesFields, taxesResource, $location, validate, sharedDocumentTitle ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Editer des taxes', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   taxesEditTextDomain;
     $scope.fields           =   taxesFields;
     $scope.item             =   {};
@@ -51,5 +53,5 @@ var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, tax
     }
 }
 
-taxesEdit.$inject    =   [ 'taxesEditTextDomain', '$scope', '$http', '$route', 'taxesFields', 'taxesResource', '$location', 'validate' ];
+taxesEdit.$inject    =   [ 'taxesEditTextDomain', '$scope', '$http', '$route', 'taxesFields', 'taxesResource', '$location', 'validate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'taxesEdit', taxesEdit );

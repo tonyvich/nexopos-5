@@ -1,5 +1,6 @@
-var customers          =   function( customersTextDomain, $scope, $http, customersFields, customersResource, $location, validate, sharedCustomersGroupsResource, rawToOptions ) {
+var customers          =   function( customersTextDomain, $scope, $http, customersFields, customersResource, $location, validate, sharedCustomersGroupsResource, rawToOptions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>');
     $scope.textDomain       =   customersTextDomain;
     $scope.fields           =   customersFields;
     $scope.item             =   {};
@@ -7,7 +8,7 @@ var customers          =   function( customersTextDomain, $scope, $http, custome
     $scope.validate         =   validate;
 
     // Settings options for selecting parent group
-    
+
     sharedCustomersGroupsResource.get(
         function(data){
             $scope.fields[7].options = rawToOptions(data.entries, 'id', 'name');
@@ -45,5 +46,16 @@ var customers          =   function( customersTextDomain, $scope, $http, custome
     }
 }
 
-customers.$inject    =   [ 'customersTextDomain', '$scope', '$http', 'customersFields', 'customersResource', '$location', 'validate' , 'sharedCustomersGroupsResource', 'rawToOptions'];
+customers.$inject    =   [
+    'customersTextDomain',
+    '$scope',
+    '$http',
+    'customersFields',
+    'customersResource',
+    '$location',
+    'validate' ,
+    'sharedCustomersGroupsResource',
+    'rawToOptions',
+    'sharedDocumentTitle'
+];
 tendooApp.controller( 'customers', customers );

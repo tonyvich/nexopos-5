@@ -1,5 +1,6 @@
-var departmentsMain          =   function( departmentsTextDomain, $scope, $http, departmentsResource, $location, validate, table, departmentsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions) {
+var departmentsMain          =   function( departmentsTextDomain, $scope, $http, departmentsResource, $location, validate, table, departmentsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle ) {
 
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des rayons', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   departmentsTextDomain;
     $scope.validate         =   validate;
     $scope.table            =   table;
@@ -53,6 +54,6 @@ var departmentsMain          =   function( departmentsTextDomain, $scope, $http,
     }
 }
 
-departmentsMain.$inject    =   [ 'departmentsTextDomain', '$scope', '$http', 'departmentsResource', '$location', 'validate', 'table', 'departmentsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert','sharedEntryActions'];
+departmentsMain.$inject    =   [ 'departmentsTextDomain', '$scope', '$http', 'departmentsResource', '$location', 'validate', 'table', 'departmentsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert','sharedEntryActions', 'sharedDocumentTitle' ];
 
 tendooApp.controller( 'departmentsMain', departmentsMain );
