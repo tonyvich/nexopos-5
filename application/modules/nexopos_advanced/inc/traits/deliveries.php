@@ -59,7 +59,7 @@ Trait deliveries
     public function deliveries_post()
     {
         if( $this->db->where( 'name', $this->post( 'name' ) )->get( 'nexopos_deliveries' )->num_rows() ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->insert( 'nexopos_deliveries', [
@@ -106,7 +106,7 @@ Trait deliveries
         ->num_rows();
 
         if( $alreadyExists ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->where( 'id', $id )->update( 'nexopos_deliveries', [

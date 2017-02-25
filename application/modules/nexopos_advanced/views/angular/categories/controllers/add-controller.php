@@ -33,8 +33,17 @@ var categories          =   function( categoriesAddTextDomain, $scope, $http, ca
             $scope.item,
             function(){
                 $location.url( '/categories?notice=done' );
-            },function(){
-                $scope.submitDisabled       =   false;
+            },function( returned ){
+
+                $scope.submitDisabled   =   false;
+
+                if( returned.data.status === 'alreadyExists' ) {
+                    sharedAlert.warning( '<?php echo _s( 'Le nom de cette catégorie est déjà en cours d\'utilisation, veuillez choisir un autre nom.', 'nexopos_advanced' );?>' );
+                }
+
+                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
+                    sharedAlert.warning( '<?php echo _s( 'Une erreur s\'est produite durant l\'opération.', 'nexopos_advanced' );?>' );
+                }
             }
         )
     }

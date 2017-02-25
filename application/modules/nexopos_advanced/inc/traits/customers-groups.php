@@ -58,7 +58,7 @@ Trait customers_groups
     public function customers_groups_post()
     {
         if( $this->db->where( 'name', $this->post( 'name' ) )->get( 'nexopos_customers_groups' )->num_rows() ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->insert( 'nexopos_customers_groups', [
@@ -107,7 +107,7 @@ Trait customers_groups
         ->num_rows();
 
         if( $alreadyExists ) {
-            $this->__failed();
+            $this->__alreadyExists();
         }
 
         $this->db->where( 'id', $id )->update( 'nexopos_customers_groups', [
