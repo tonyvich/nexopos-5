@@ -1,4 +1,6 @@
-var providersEdit      =   function( providersEditTextDomain, $scope, $http, $route, providersFields, providersResource, $location, validate, sharedDocumentTitle, sharedDocumentTitle ) {
+var providersEdit      =   function( providersEditTextDomain, $scope, $http, $route, providersFields, providersResource, $location, validate, sharedDocumentTitle ) {
+
+    console.log( sharedDocumentTitle );
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un fournisseur', 'nexopos_advanced' );?>');
     $scope.textDomain       =   providersEditTextDomain;
