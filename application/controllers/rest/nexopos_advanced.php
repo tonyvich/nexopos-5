@@ -91,8 +91,8 @@ class Nexopos_advanced extends REST_Controller
 
     /**
      *  already exists
-     *  @param
-     *  @return
+     *  @param void
+     *  @return json
     **/
 
     private function __alreadyExists()
