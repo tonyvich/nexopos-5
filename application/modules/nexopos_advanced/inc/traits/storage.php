@@ -36,7 +36,7 @@ Trait storage
         foreach( ( array ) $this->post( 'options' ) as $key => $option ) {
             $options[]      =   [
                 'key'       =>  $key,
-                'value'     =>  $value,
+                'value'     =>  $option,
                 'autoload'  =>  1,
                 'app'       =>  'nexopos'
             ];
@@ -44,7 +44,7 @@ Trait storage
 
         // Update Options first
         $options_keys    =   [];
-        $datas   =   $this->db->get( 'options' )->result();
+        $datas   =   $this->db->get( 'options' )->result_array();
         foreach( $datas as $data ) {
             $options_keys[]     =   $data[ 'key' ];
         }
@@ -53,7 +53,7 @@ Trait storage
         $toUpdate           =   [];
         $toCreate           =   [];
         foreach( $options as $option ) {
-            if( in_array( $options[ 'key' ], $options_keys ) ) {
+            if( in_array( $option[ 'key' ], $options_keys ) ) {
                 $toUpdate[] =   $option;
             } else {
                 $toCreate[] =   $option;
@@ -61,8 +61,10 @@ Trait storage
         }
 
         // Updating
-        $this->db->update_batch( 'options', $toUpdate, 'key' );
-        $this->db->insert_batch( 'options', $toCreate );
+        ( $toUpdate ) ? $this->db->update_batch( 'options', $toUpdate, 'key' ) : null;
+        ( $toCreate ) ? $this->db->insert_batch( 'options', $toCreate ) : null;
+
+        $this->__success();
     }
 
     /**

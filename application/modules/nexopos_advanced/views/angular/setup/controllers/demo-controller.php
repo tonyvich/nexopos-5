@@ -1,4 +1,4 @@
-var setupWelcome        =   function(
+var setupDemo        =   function(
     $scope,
     $http,
     $location,
@@ -10,13 +10,11 @@ var setupWelcome        =   function(
     sharedDocumentTitle
  ) {
      $scope.setup       =   setupData;
-     $scope.setup.reset();
-
      $scope.options     =   $scope.setup.options;
      $scope.siteType    =   setupSiteType;
 
      // Default
-     $scope.options[ 'site_type' ]      =   '';
+     $scope.options[ 'site_type' ]      =   $scope.siteType[0];
 
      /**
       *  GoTo
@@ -25,17 +23,11 @@ var setupWelcome        =   function(
      **/
 
      $scope.goto        =   function( string ){
-         sharedStorageResource.post( {}, {
-             options : $scope.options
-         }, function(){
-             $location.path( string );
-         },function(){
-             console.log( 'An Error occured' );
-         });
+         $location.path( string );
      }
 }
 
-setupWelcome.$inject    =   [
+setupDemo.$inject    =   [
     '$scope',
     '$http',
     '$location',
@@ -47,4 +39,4 @@ setupWelcome.$inject    =   [
     'sharedDocumentTitle'
 ];
 
-tendooApp.controller( 'setupWelcome', setupWelcome );
+tendooApp.controller( 'setupDemo', setupDemo );
