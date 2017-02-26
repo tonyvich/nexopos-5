@@ -14,95 +14,71 @@ Trait storage
      *  @return json
     **/
 
-    public function storage_get( $key = null )
+    public function storage_get()
     {
-        if( $key != null ) 
-        {
-            // Get Key parameter
-            $this->db->where('key',$key);
-
-            //Get value parameter
-            if ($this->get( 'value' )) { 
-                $this->db->where('value',$this->get( 'value' ));
-            }
-
-            // Fetching data
-            $query        =    $this->db->get('options');
-
-            //Response
-            return $this->response ([
-                'entries'   =>  $query->result()
-            ], 200 );
-        } else {
-            $result = $this->db->get('options')->result();
-
-            return $this->response([
-                'entries'   =>  $result,
-                'num_rows'  =>  $this->db->get( 'nexopos_categories' )->num_rows()
-            ], 200 );
+        $options    =   [];
+        $datas   =   $this->db->get( 'options' )->result();
+        foreach( $datas as $data ) {
+            $options[ $data[ 'key' ] ]  =   $data[ 'value' ];
         }
-        return null;
+
+        return $this->response( $options, 200 );
     }
 
     /**
-     *  options POST
+     *  options POST/Update
      *  @return json
     **/
 
     public function storage_post()
     {
-        if( $this->db->where( 'key', $this->post( 'key' ) )->get( 'options' )->num_rows() ) {
-            $this->__failed();
+        $options        =   [];
+        foreach( ( array ) $this->post( 'options' ) as $key => $option ) {
+            $options[]      =   [
+                'key'       =>  $key,
+                'value'     =>  $value,
+                'autoload'  =>  1,
+                'app'       =>  'nexopos'
+            ];
         }
 
-        $this->db->insert( 'options', [
-            'key'                   =>  $this->post( 'key' ),
-            'value'                 =>  $this->post( 'value' ),
-            'autoload'              =>  $this->post( 'autoload' ),
-            'user'                  =>  $this->post( 'user' ),
-            'app'                   =>  $this->post( 'app' ),
-        ]);
+        // Update Options first
+        $options_keys    =   [];
+        $datas   =   $this->db->get( 'options' )->result();
+        foreach( $datas as $data ) {
+            $options_keys[]     =   $data[ 'key' ];
+        }
 
-        $this->__success();
-    }
-
-    public function storage_delete()
-    {
-        if( is_array( $_GET[ 'ids' ] ) ) {
-            foreach( $_GET[ 'ids' ] as $id ) {
-                $this->db->where( 'id', ( int ) $id )->delete( 'options' );
+        // If option keys already exist, just update it
+        $toUpdate           =   [];
+        $toCreate           =   [];
+        foreach( $options as $option ) {
+            if( in_array( $options[ 'key' ], $options_keys ) ) {
+                $toUpdate[] =   $option;
+            } else {
+                $toCreate[] =   $option;
             }
-            return $this->__success();
         }
-        return $this->__failed();
+
+        // Updating
+        $this->db->update_batch( 'options', $toUpdate, 'key' );
+        $this->db->insert_batch( 'options', $toCreate );
     }
 
     /**
-     *  Options Update
-     *  @param int category id
-     *  @return json
+     *  delete
+     *  @param
+     *  @return
     **/
 
-    public function storage_put( $id )
+    public function storage_delete()
     {
-        $alreadyExists      =   $this->db->where( 'key', $this->put( 'key' ) )
-        ->where( 'id !=', $id )
-        ->get( 'options' )
-        ->num_rows();
-
-        if( $alreadyExists ) {
-            $this->__failed();
+        if( ( array ) $this->get( 'keys' ) ) {
+            foreach( ( array ) $this->get( 'keys' ) as $key ) {
+                $this->db->where( 'key', $key );
+            }
+            $this->db->delete( 'options' );
         }
-
-        $this->db->where( 'id', $id )->update( 'options', [
-            'key'                   =>  $this->put( 'key' ),
-            'value'                 =>  $this->put( 'value' ),
-            'autoload'              =>  $this->put( 'autoload' ),
-            'user'                  =>  $this->put( 'user' ),
-            'app'                   =>  $this->put( 'app' ),
-        ]);
-
-        $this->__success();
     }
 
 }

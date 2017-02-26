@@ -63,7 +63,8 @@ deliveriesEdit.$inject    =   [
     'deliveriesFields',
     'deliveriesResource',
     '$location',
-    'sharedValidate'
+    'sharedValidate',
+    'sharedDocumentTitle'
 ];
 
 tendooApp.controller( 'deliveriesEdit', deliveriesEdit );
