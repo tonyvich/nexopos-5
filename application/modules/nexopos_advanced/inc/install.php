@@ -254,6 +254,8 @@ class NexoPOS_Install extends Tendoo_Module
           `start_date` datetime NOT NULL,
           `end_date` datetime NOT NULL,
           `usage_limit` int(11) NOT NULL,
+          `date_creation` datetime NOT NULL,
+          `date_modification` datetime NOT NULL,
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
