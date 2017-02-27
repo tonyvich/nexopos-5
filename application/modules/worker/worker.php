@@ -11,6 +11,7 @@ class WorkerCTRL extends Tendoo_Module
 
     function dash_footer()
     {
+        $this->load->module_view( 'worker', 'worker-dom' );
     }
 }
 new WorkerCTRL;
