@@ -1,0 +1,9 @@
+<application>
+    <name>Worker</name>
+    <namespace>worker</namespace>
+    <version>1.0</version>
+    <author>Blair Jersyer</author>
+    <description>Service Worker Test</description>
+    <language>/language</language>
+    <main>worker.php</main>
+</application>
