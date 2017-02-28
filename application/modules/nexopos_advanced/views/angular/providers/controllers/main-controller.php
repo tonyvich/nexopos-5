@@ -1,9 +1,9 @@
-var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, validate, table, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, sharedValidate, sharedTable, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des fournisseurs', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   providersTextDomain;
-    $scope.validate         =   validate;
-    $scope.table            =   table;
+    $scope.validate         =   new sharedValidate();
+    $scope.table            =   new sharedTable();
     $scope.table.columns    =   providersTable.columns;
     $scope.table.actions    =   sharedTableActions;
 
@@ -47,6 +47,6 @@ var providersMain          =   function( providersTextDomain, $scope, $http, pro
     $scope.table.getPage(0);
 }
 
-providersMain.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersResource', '$location', 'validate', 'table', 'providersTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
+providersMain.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersResource', '$location', 'sharedValidate', 'sharedTable', 'providersTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
 
 tendooApp.controller( 'providersMain', providersMain );

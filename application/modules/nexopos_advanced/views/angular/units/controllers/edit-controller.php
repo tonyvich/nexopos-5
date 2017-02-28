@@ -1,11 +1,11 @@
-var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, unitsFields, unitsResource, $location, validate, sharedDocumentTitle ) {
+var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, unitsFields, unitsResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une unité', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsEditTextDomain;
     $scope.fields           =   unitsFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -34,8 +34,8 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;
@@ -53,5 +53,5 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
     }
 }
 
-unitsEdit.$inject    =   [ 'unitsEditTextDomain', '$scope', '$http', '$route', 'unitsFields', 'unitsResource', '$location', 'validate', 'sharedDocumentTitle' ];
+unitsEdit.$inject    =   [ 'unitsEditTextDomain', '$scope', '$http', '$route', 'unitsFields', 'unitsResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'unitsEdit', unitsEdit );

@@ -4,26 +4,19 @@ $this->load->config( 'rest' );
 ?>
 tendooApp.factory( 'sharedStorageResource', function( $resource ) {
     return $resource(
-        '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'storage/:key?value=:value' ]);?>',
+        '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'storage/:keys' ]);?>',
         {
-            key             :   '@_key',
-            value           :   '@_value'
+            keys             :   '@_keys'
         },{
             get  : {
-                method : 'GET',
+                method          : 'GET',
                 headers			:	{
                     '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
                 }
             },
-            save    :   {
-                method : 'POST',
-                headers : {
-                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
-                }
-            },
-            update :    {
-                method : 'PUT',
-                headers : {
+            post            :   {
+                method      :   'POST',
+                headers     :   {
                     '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
                 }
             },

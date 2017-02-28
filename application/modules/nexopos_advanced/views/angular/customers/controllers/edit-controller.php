@@ -1,11 +1,11 @@
-var customersEdit      =   function( customersEditTextDomain, $scope, $http, $route, customersFields, customersResource, $location, validate, sharedCustomersGroupsResource, rawToOptions, sharedDocumentTitle ) {
+var customersEdit      =   function( customersEditTextDomain, $scope, $http, $route, customersFields, customersResource, $location, sharedValidate, sharedCustomersGroupsResource, rawToOptions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un client', 'nexopos_advanced' );?>')
     $scope.textDomain       =   customersEditTextDomain;
     $scope.fields           =   customersFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     //Setting options for selecting group
 
@@ -42,8 +42,8 @@ var customersEdit      =   function( customersEditTextDomain, $scope, $http, $ro
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;
@@ -69,7 +69,7 @@ customersEdit.$inject    =   [
     'customersFields',
     'customersResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'sharedCustomersGroupsResource',
     'rawToOptions',
     'sharedDocumentTitle'

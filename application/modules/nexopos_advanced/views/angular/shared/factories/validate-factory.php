@@ -1,5 +1,5 @@
-tendooApp.factory( 'validate', function(){
-    return new function(){
+tendooApp.factory( 'sharedValidate', function(){
+    return function(){
         var expression  =   {
             required: function(value) {
               return !!value;

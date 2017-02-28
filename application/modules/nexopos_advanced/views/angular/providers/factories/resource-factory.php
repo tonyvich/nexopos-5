@@ -13,7 +13,7 @@ tendooApp.factory( 'providersResource', function( $resource ) {
             current_page    :   '@_current_page'
         },{
             get  : {
-                method : 'GET',
+                method          : 'GET',
                 headers			:	{
                     '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
                 }

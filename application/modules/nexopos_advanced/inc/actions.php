@@ -23,6 +23,24 @@ class NexoPOS_Actions extends Tendoo_Module
         $this->Gui->register_page_object( 'angular', new NexoPOS_Angular_Controller );
     }
 
+    /**
+     *  Do enable module
+     *  @param string module namespace
+     *  @return void
+    **/
+
+    public function do_enable_module( $module )
+    {
+        if( $module == 'nexopos_advanced' ) {
+            global $Options;
+
+            if( @$Options[ 'nexopos_tour' ] == null ) {
+                redirect([ 'dashboard', 'nexopos', 'setup', 'welcome' ]);
+            }
+        }
+    }
+
+
     public function dashboard_footer()
     {
         $this->load->module_view( 'nexopos_advanced', 'dashboard/footer' );

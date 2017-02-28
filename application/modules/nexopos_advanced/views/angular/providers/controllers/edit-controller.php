@@ -1,4 +1,4 @@
-var providersEdit      =   function( providersEditTextDomain, $scope, $http, $route, providersFields, providersResource, $location, validate, sharedDocumentTitle ) {
+var providersEdit      =   function( providersEditTextDomain, $scope, $http, $route, providersFields, providersResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     console.log( sharedDocumentTitle );
 
@@ -7,7 +7,7 @@ var providersEdit      =   function( providersEditTextDomain, $scope, $http, $ro
     $scope.fields           =   providersFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -36,8 +36,8 @@ var providersEdit      =   function( providersEditTextDomain, $scope, $http, $ro
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;
@@ -55,5 +55,5 @@ var providersEdit      =   function( providersEditTextDomain, $scope, $http, $ro
     }
 }
 
-providersEdit.$inject    =   [ 'providersEditTextDomain', '$scope', '$http', '$route', 'providersFields', 'providersResource', '$location', 'validate', 'sharedDocumentTitle' ];
+providersEdit.$inject    =   [ 'providersEditTextDomain', '$scope', '$http', '$route', 'providersFields', 'providersResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
 tendooApp.controller( 'providersEdit', providersEdit );

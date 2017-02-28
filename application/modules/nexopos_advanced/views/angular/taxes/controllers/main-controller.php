@@ -1,9 +1,9 @@
-var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResource, $location, validate, table, taxTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResource, $location, sharedValidate, sharedTable, taxTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des taxes', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   taxesTextDomain;
-    $scope.validate         =   validate;
-    $scope.table            =   table;
+    $scope.validate         =   new sharedValidate();
+    $scope.table            =   new sharedTable();
     $scope.table.columns    =   taxTable.columns;
     $scope.table.actions    =   sharedTableActions;
 
@@ -54,6 +54,6 @@ var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResour
     $scope.table.getPage(0);
 }
 
-taxesMain.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesResource', '$location', 'validate', 'table', 'taxTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
+taxesMain.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesResource', '$location', 'sharedValidate', 'sharedTable', 'taxTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
 
 tendooApp.controller( 'taxesMain', taxesMain );

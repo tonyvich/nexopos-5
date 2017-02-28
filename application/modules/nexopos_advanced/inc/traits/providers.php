@@ -103,7 +103,7 @@ Trait providers
         $this->db->where( 'id', $id )->update( 'nexopos_providers', [
             'name'                  =>  $this->put( 'name' ),
             'email'                 =>  $this->put( 'email' ),
-            'phone'                 =>  $this->post( 'phone' ),
+            'phone'                 =>  $this->put( 'phone' ),
             'description'           =>  $this->put( 'description' ),
             'author'                =>  $this->put( 'author' ),
             'date_modification'     =>  $this->put( 'date_modification' )
