@@ -1,10 +1,10 @@
-var categories          =   function( categoriesAddTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
+var categories          =   function( categoriesAddTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une catégorie', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesAddTextDomain;
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Setting options for ref_parent select
 
@@ -24,8 +24,8 @@ var categories          =   function( categoriesAddTextDomain, $scope, $http, ca
             $scope.item.ref_parent = 0;
         }
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
         $scope.submitDisabled       =   true;
 
@@ -56,7 +56,7 @@ categories.$inject    =   [
     'categoriesFields',
     'categoriesResource',
     '$location',
-    'validate',
+    'sharedValidate',
     'rawToOptions',
     'sharedDocumentTitle'
 ];

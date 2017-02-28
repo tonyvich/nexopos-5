@@ -67,6 +67,10 @@
                 'angular.pos.config.route-config'
             );?>
 
+            <?php $this->load->module_view(
+                'nexopos_advanced',
+                'angular.setup.config.route-config'
+            );?>
 
             .when( '/nexopos/error/:code', {
                 templateUrl: function( urlattr ) {

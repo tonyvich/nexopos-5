@@ -1,5 +1,6 @@
-tendooApp.factory( 'table', [ 'sharedAlert', '$location', function( sharedAlert, $location ){
-    return new function(){
+tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( sharedAlert, $location ){
+    return function(){
+
         var $this               =   this;
         this.columns            =   [];
         this.disabledFeatures   =   [];

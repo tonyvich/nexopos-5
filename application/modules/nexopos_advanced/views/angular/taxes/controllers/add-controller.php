@@ -1,10 +1,10 @@
-var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, taxesResource, $location, validate, rawToOptions, sharedDocumentTitle ) {
+var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, taxesResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une taxe', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   taxesTextDomain;
     $scope.fields           =   taxesFields;
     $scope.item             =   {};
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     /**
      *  Update Date
@@ -23,8 +23,8 @@ var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, ta
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   tendoo.now();
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;
@@ -49,5 +49,5 @@ var taxes          =   function( taxesTextDomain, $scope, $http, taxesFields, ta
     }
 }
 
-taxes.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesFields', 'taxesResource', '$location', 'validate','rawToOptions', 'sharedDocumentTitle' ];
+taxes.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesFields', 'taxesResource', '$location', 'sharedValidate','rawToOptions', 'sharedDocumentTitle' ];
 tendooApp.controller( 'taxes', taxes );

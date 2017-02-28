@@ -1,9 +1,9 @@
-var customersMain          =   function( customersTextDomain, $scope, $http, customersResource, $location, validate, table, customersTable, paginationFactory, sharedTableActions, sharedAlert ,sharedEntryActions, sharedDocumentTitle ) {
+var customersMain          =   function( customersTextDomain, $scope, $http, customersResource, $location, sharedValidate, sharedTable, customersTable, paginationFactory, sharedTableActions, sharedAlert ,sharedEntryActions, sharedDocumentTitle ) {
 
-    sharedDocumentTitle.set( '<?php echo _s( 'Liste des clients', 'nexopos_advanced' );?>')
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des clients', 'nexopos_advanced' );?>');
+    $scope.validate         =   new sharedValidate();
+    $scope.table            =   new sharedTable();
     $scope.textDomain       =   customersTextDomain;
-    $scope.validate         =   validate;
-    $scope.table            =   table;
     $scope.table.columns    =   customersTable.columns;
     $scope.table.actions    =   sharedTableActions;
 
@@ -57,8 +57,8 @@ customersMain.$inject    =   [
     '$http',
     'customersResource',
     '$location',
-    'validate',
-    'table',
+    'sharedValidate',
+    'sharedTable',
     'customersTable',
     'paginationFactory',
     'sharedTableActions',
