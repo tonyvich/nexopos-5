@@ -3,23 +3,29 @@ tendooApp.factory( 'customersFields', [ 'options', function( options ){
         type    :   'hidden',
         label   :   '<?php echo _s( 'Nom du client', "nexopos_advanced" );?>',
         model   :   'name',
-        desc    :   '',
-        validation  :   {
-            required        :   true
-        }
-    },{
-        type    :   'text',
-        label   :   '<?php echo _s( 'Prénom', "nexopos_advanced" );?>',
-        model   :   'surname',
-        desc    :   '',
+        desc    :   '<?php echo _s( 'Veuillez fournir le nom du client', 'nexopos_advanced' );?>',
         validation  :   {
             required        :   true
         }
     },{
         type    :   'select',
+        label   :   '<?php echo __( 'Groupe parent', 'nexopos_advanced' );?>',
+        model   :   'ref_group',
+        desc    :   '<?php echo _s( 'Veuillez déterminer à quel groupe appartient le client.', 'nexopos_advanced' );?>',
+        options     :   options.percentOrFlat,
+        validation : {
+            required : true
+        }
+    },{
+        type    :   'text',
+        label   :   '<?php echo _s( 'Prénom', "nexopos_advanced" );?>',
+        model   :   'surname',
+        desc    :   '<?php echo _s( 'Prénom du client. ce champ n\'est pas obligatoire.', 'nexopos_advanced' );?>'
+    },{
+        type    :   'select',
         label   :   '<?php echo __( 'Sexe', 'nexopos_advanced' );?>',
         model   :   'sex',
-        options     :   options.maleOrFemale,
+        options     :   options.maleOrFemale,desc    :   '<?php echo _s( 'Vous pouvez définir le genre du client.', 'nexopos_advanced' );?>',
         validation : {
             required : true
         }
@@ -27,40 +33,28 @@ tendooApp.factory( 'customersFields', [ 'options', function( options ){
         type    :   'text',
         label   :   '<?php echo _s( 'Téléphone', "nexopos_advanced" );?>',
         model   :   'phone',
+        desc    :   '<?php echo _s( 'Numéro de téléphone du client.', 'nexopos_advanced' );?>',
         validation  :   {
-            number       :   true,
-            required    :   true
+            number       :   true
         }
     },{
         type    :   'text',
         label   :   '<?php echo _s( 'Adresse email', "nexopos_advanced" );?>',
         model   :   'email',
+        desc    :   '<?php echo _s( 'Veuillez fournir une adresse email pour le client.', 'nexopos_advanced' );?>',
         validation  :   {
-            email      :   true,
-            required   :   true
+            email      :   true
         }
     },{
         type    :   'text',
         label   :   '<?php echo _s( 'Adresse', "nexopos_advanced" );?>',
         model   :   'address',
-        validation  :   {
-            required    :   true
-        }
+        desc    :   '<?php echo _s( 'Adresse du client.', 'nexopos_advanced' );?>'
     },{
         type    :   'text',
         label   :   '<?php echo _s( 'Boite postale', "nexopos_advanced" );?>',
         model   :   'pobox',
-        validation  :   {
-            required    :   true
-        }
-    },{
-        type    :   'select',
-        label   :   '<?php echo __( 'Groupe parent', 'nexopos_advanced' );?>',
-        model   :   'ref_group',
-        options     :   options.percentOrFlat,
-        validation : {
-            required : true
-        }
+        desc    :   '<?php echo _s( 'Boiet postale du client.', 'nexopos_advanced' );?>'
     },{
         type        :   'textarea',
         label       :   '<?php echo __( 'Description', 'nexopos_advanced' );?>',

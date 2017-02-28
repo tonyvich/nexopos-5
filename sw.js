@@ -22,8 +22,9 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.match(event.request).then(function(response) {
-        // Cache hit - return response
-            if (response) {
+            // Cache hit - return response
+            // Disable cache for rest routes
+            if ( response && event.request.url.search( '/rest/nexopos_advanced' ) == -1 ) {
               return response;
             }
             // IMPORTANT: Clone the request. A request is a stream and
@@ -45,10 +46,9 @@ self.addEventListener('fetch', function(event) {
                 // to clone it so we have two streams.
                 var responseToCache = response.clone();
 
-                caches.open(CACHE_NAME)
-                  .then(function(cache) {
+                caches.open(CACHE_NAME).then(function(cache) {
                     cache.put(event.request, responseToCache);
-                  });
+                });
 
                 return response;
               }

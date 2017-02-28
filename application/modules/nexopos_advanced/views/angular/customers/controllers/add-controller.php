@@ -6,7 +6,6 @@ var customers          =   function( customersTextDomain, $scope, $http, custome
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
     $scope.validate         =   new sharedValidate();
-
     // Settings options for selecting parent group
 
     sharedCustomersGroupsResource.get(
