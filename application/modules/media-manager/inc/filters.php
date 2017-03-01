@@ -19,6 +19,7 @@ class Media_Manager_Filters extends Tendoo_Module
         $menus  =   array_insert_after( 'dashboard', $menus, 'media-manager', [
             array(
                 'title'     =>      __( 'Media Manager', 'media-manager' ),
+                'href'      =>      site_url([ 'dashboard', 'medias' ])
             )
         ]);
 
