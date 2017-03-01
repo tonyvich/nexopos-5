@@ -31,7 +31,7 @@ class Media_Manager_Actions extends Tendoo_Module
             global $Options;
 
             if( @$Options[ 'media-installed' ] == null ) {
-                $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'media_files` (
+                $this->db->query('CREATE TABLE IF NOT EXISTS `'.$this->db->dbprefix.'media_files` (
         		  `id` int(11) NOT NULL AUTO_INCREMENT,
         		  `name` varchar(200) NOT NULL,
         		  `description`text,
