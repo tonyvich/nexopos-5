@@ -69,6 +69,15 @@ class Modules
                     get_instance()->config->set_item('text_domain', $text_domain);
                 }
             }
+
+            // @since 3.0.5
+            if (isset($config[ 'application' ][ 'language' ])) {
+                if (is_dir(APPPATH . 'mu-modules/' . $namespace . '/' . $config[ 'application' ][ 'language' ])) {
+                    $text_domain    =    get_instance()->config->item('text_domain');
+                    $text_domain[ $namespace ]     =    APPPATH . 'mu-modules/' . $namespace . '/' . $config[ 'application' ][ 'language' ];
+                    get_instance()->config->set_item('text_domain', $text_domain);
+                }
+            }
         }
     }
 

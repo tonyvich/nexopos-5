@@ -49,7 +49,6 @@ class Installation_Model extends CI_Model
 
         // Creating option table
         $this->db->query("DROP TABLE IF EXISTS `{$database_prefix}options`;");
-
         $this->db->query("CREATE TABLE `{$database_prefix}options` (
 		  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 		  `key` varchar(200) NOT NULL,
