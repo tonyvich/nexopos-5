@@ -28,6 +28,9 @@
  * shop_address :
  * contient l'adresse de la boutique
  *
+ * shop_country
+ * permet de définir l'emplacement de la boutique
+ *
  * shop_name :
  * Contient le nom du site
  *
@@ -36,6 +39,15 @@
  *
  * shop_currency_iso
  * content le format ISO de la devise
+ *
+ * shop_currency_position
+ * permet de définir la position de la devise
+ *
+ * shop_decimal_thousand_divider
+ * permet de définir le séparateur dans un valeur décimale
+ *
+ * shop_decimal_limit
+ * permet de définir combien de chiffres existent-ils après la virgule
  *
  * // Section Caisse
  *
@@ -56,6 +68,9 @@
  *
  * shop_checkout_vat_status
  * permet d'activer les taxes
+ *
+ * shop_checkout_shipping_status
+ * Permet d'accepter les livraisons
  *
  * shop_checkout_fullscreen_status
  * permet d'activer le mode plein écran
