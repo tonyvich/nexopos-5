@@ -86,6 +86,12 @@
                         <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                     </div>
 
+                    <!-- For multiselect -->
+
+                    <div class="form-group" ng-if="field.type == 'dropdown_multiselect'" >
+                        <multiselect ng-model="item[ field.model ]" options="field.options" display-prop="label" id-prop="id"></multiselect>
+                    </div>
+
                     <!-- <div class="form-group" ng-if="field.type == 'datetimepicker'">
                         <div class="dropup">
                             <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">

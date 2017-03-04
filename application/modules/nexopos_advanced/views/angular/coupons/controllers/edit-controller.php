@@ -1,11 +1,11 @@
-var couponsEdit      =   function( couponsEditTextDomain, $scope, $http, $route, couponsFields, couponsResource, $location, validate, sharedDocumentTitle ) {
+var couponsEdit      =   function( couponsEditTextDomain, $scope, $http, $route, couponsFields, couponsResource, $location, sharedValidate, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un coupon', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   couponsEditTextDomain;
     $scope.fields           =   couponsFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
-    $scope.validate         =   validate;
+    $scope.validate         =   new sharedValidate();
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -30,8 +30,8 @@ var couponsEdit      =   function( couponsEditTextDomain, $scope, $http, $route,
         $scope.item.author              =   <?= User::id()?>;
         $scope.item.date_modification   =   tendoo.now();
 
-        if( ! validate.run( $scope.fields, $scope.item ).isValid ) {
-            return validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
         $scope.submitDisabled       =   true;
@@ -58,7 +58,7 @@ couponsEdit.$inject    =
     'couponsFields', 
     'couponsResource', 
     '$location', 
-    'validate', 
+    'sharedValidate', 
     'sharedDocumentTitle' 
 ];
 tendooApp.controller( 'couponsEdit', couponsEdit );
