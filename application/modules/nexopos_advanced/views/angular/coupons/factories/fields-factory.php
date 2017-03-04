@@ -8,6 +8,27 @@ tendooApp.factory( 'couponsFields', [ 'options', function( options ){
             required        :   true
         }
     },{
+        type        :   'dropdown_multiselect',
+        label       :   '<?php echo __( 'Test multiselect', 'nexopos_advanced' );?>',
+        model       :   'test_multiselect',
+        options     :   [
+            {
+                "id": "1",
+                "label": "France",
+                "capital": "Paris"
+            },
+            {
+                "id": "2",
+                "label": "United Kingdom",
+                "capital": "London"
+            },
+            {
+                "id": "3",
+                "label": "Germany",
+                "capital": "Berlin"
+            }
+        ]
+    },{
         type        :   'text',
         label       :   '<?php echo __( 'Code', 'nexopos_advanced' );?>',
         model       :   'code',

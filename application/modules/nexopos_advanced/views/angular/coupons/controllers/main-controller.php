@@ -1,9 +1,9 @@
-var couponsMain          =   function( couponsTextDomain, $scope, $http, couponsResource, $location, validate, table, couponsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle  ) {
+var couponsMain          =   function( couponsTextDomain, $scope, $http, couponsResource, $location, sharedValidate, sharedTable, couponsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle  ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des coupons', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   couponsTextDomain;
-    $scope.validate         =   validate;
-    $scope.table            =   table;
+    $scope.validate         =   new sharedValidate();
+    $scope.table            =   new sharedTable();
     $scope.table.columns    =   couponsTable.columns;
     $scope.table.actions    =   sharedTableActions;
 
@@ -60,8 +60,8 @@ couponsMain.$inject    =   [
     '$http', 
     'couponsResource', 
     '$location', 
-    'validate', 
-    'table', 
+    'sharedValidate', 
+    'sharedTable', 
     'couponsTable', 
     'paginationFactory', 
     'sharedTableActions', 

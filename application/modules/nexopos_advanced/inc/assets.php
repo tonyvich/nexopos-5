@@ -41,5 +41,8 @@ class NexoPOS_Assets extends Tendoo_Module
         // Sweeet Alert
         $this->enqueue->js( $bower_url . 'ngSweetAlert/SweetAlert.min' );
         $this->enqueue->js( $bower_url . 'sweetalert/dist/sweetalert.min' );
+
+        // Multiselect
+        $this->enqueue->js( $bower_url . 'angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect');
     }
 }
