@@ -89,7 +89,9 @@
                     <!-- For multiselect -->
 
                     <div class="form-group" ng-if="field.type == 'dropdown_multiselect'" >
+                        <label>{{ field.label }}</label>
                         <multiselect ng-model="item[ field.model ]" options="field.options" display-prop="label" id-prop="id"></multiselect>
+                        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                     </div>
 
                     <!-- <div class="form-group" ng-if="field.type == 'datetimepicker'">
