@@ -21,7 +21,8 @@
                     'factories/items/raw-to-options.js',
                     'factories/items/tabs.js',
                     'directives/items/variations.js',
-                    'shared_factories/document-title.js'
+                    'shared_factories/document-title.js',
+                    'shared_factories/validate.js'
                 ]
             });
         }]

@@ -28,6 +28,9 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
                 desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit sera vendu.' ,'nexo' );?>',
                 show        :   function(){
                     return true;
+                },
+                validation  :   {
+                    required    :   true
                 }
             },{
                 type        :   'text',

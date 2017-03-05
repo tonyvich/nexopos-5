@@ -51,15 +51,25 @@
                 <div class="form-group" ng-if="field.type == 'text'">
                     <div class="input-group">
                       <span class="input-group-addon">{{ field.label }}</span>
-                      <input type="text" class="form-control" ng-model="variation[ field.model ]" placeholder="{{ field.placeholder }}">
+                      <input
+                        type="text"
+                        class="form-control"
+                        ng-model="variation[ field.model ]"
+                        placeholder="{{ field.placeholder }}"
+                        ng-blur="validate.blur( field, item, $event )"
+                        ng-focus="validate.focus( field, item, $event )"
+                        >
                     </div>
-                    <p class="help-block" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+                    <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                 </div>
 
                 <div class="form-group" ng-if="field.type == 'select'">
                     <div class="input-group">
                         <span class="input-group-addon">{{ field.label }}</span>
-                        <select class="form-control" ng-model="variation[ field.model ]">
+                        <select
+                            class="form-control"
+                            ng-model="variation[ field.model ]"
+                        >
                             <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
                     </div>

@@ -10,7 +10,7 @@
                 </span>
                 <input placeholder="<?php echo __( 'Nom du produit', 'nexo' );?>" type="text" class="form-control" style="line-height:40px;font-size:25px;" ng-model="item.name">
                 <span class="input-group-btn ">
-                    <button class="btn btn-primary" type="button"><?php echo __( 'Enregistrer', 'nexo' );?></button>
+                    <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexo' );?></button>
                     <span class="ng-hide"></span>
                 </span>
             </div>

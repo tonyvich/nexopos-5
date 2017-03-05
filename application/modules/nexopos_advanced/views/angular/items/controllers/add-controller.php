@@ -1,6 +1,7 @@
-var items               =   function( $scope, $http, $location, itemTypes, item, fields, providers, $routeParams, sharedDocumentTitle ) {
+var items               =   function( $scope, $http, $location, itemTypes, item, fields, providers, $routeParams, sharedDocumentTitle, sharedValidate ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
+    $scope.validate         =   new sharedValidate();
 
     /**
      *  Add Group. Duplicate group fields
@@ -218,6 +219,16 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
         return string.replace( '.', '/' );
     }
 
+    /**
+     *  Submit Items
+     *  @param
+     *  @return
+    **/
+
+    $scope.submitItem               =   function(){
+        // Pending
+    }
+
     // Yes No Options
     $scope.YesNoOptions     =   [{
         value       :   'yes',
@@ -268,6 +279,6 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
     });
 };
 
-items.$inject           =   [ '$scope', '$http', '$location', 'itemTypes', 'item', 'fields', 'providers', '$routeParams', 'sharedDocumentTitle' ];
+items.$inject           =   [ '$scope', '$http', '$location', 'itemTypes', 'item', 'fields', 'providers', '$routeParams', 'sharedDocumentTitle', 'sharedValidate' ];
 
 tendooApp.controller( 'items', items );

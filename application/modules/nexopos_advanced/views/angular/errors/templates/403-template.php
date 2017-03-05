@@ -5,10 +5,10 @@
 
         <div class="error-content">
             <br>
-          <h3><i class="fa fa-warning text-yellow"></i> <?php echo __( 'Impossible de trouver cette page.', 'nexopos_advanced' );?></h3>
+          <h3><i class="fa fa-warning text-yellow"></i> <?php echo __( 'Vous n\'avez pas accès à cette page.', 'nexopos_advanced' );?></h3>
 
           <p>
-              <?php _e( 'La page que vous recherchez n\'est pas disponible. Cette page est indisponible momentanément où définitivement.', 'nexopos_advanced' );?>
+              <?php _e( 'Vous n\'avez pas accès à la page que vous avez demandé. Si le problème persiste, veuillez contacter l\'administrateur.', 'nexopos_advanced' );?>
           </p>
 
         </div>

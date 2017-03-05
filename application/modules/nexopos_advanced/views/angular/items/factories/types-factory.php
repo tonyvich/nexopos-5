@@ -3,7 +3,7 @@ tendooApp.factory( 'itemTypes', function(){
         namespace    :   'add.clothes',
         icon    :   'shirt',
         text    :   '<?php echo __( 'Vêtements & Accessoires', 'nexo' );?>',
-        desc    :   '<?php echo _s( 'Produits pour boutique de vêtement : vestes, chemises, pantalon, chaussures, lunettes & tous les acccéssoires de mode.', 'nexo' );?>',
+        desc    :   '<?php echo _s( 'Vendez des vêtements et accéssoires de mode.', 'nexo' );?>',
         disableVariation   :   false
     },{
         namespace    :   'medecine',

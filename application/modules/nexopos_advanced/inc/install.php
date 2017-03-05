@@ -253,7 +253,6 @@ class NexoPOS_Install extends Tendoo_Module
           `type` varchar(200) NOT NULL,
           `start_date` datetime NOT NULL,
           `end_date` datetime NOT NULL,
-          `usage_limit` int(11) NOT NULL,
           `included_items_ids` varchar(200) NOT NULL,
           `excluded_items_ids` varchar(200) NOT NULL,
           `included_categories_ids` varchar(200) NOT NULL,
