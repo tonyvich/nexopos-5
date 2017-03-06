@@ -1,4 +1,18 @@
-var items               =   function( $scope, $http, $location, itemTypes, item, fields, providers, $routeParams, sharedDocumentTitle, sharedValidate ) {
+var items               =   function(
+    $scope,
+    $http,
+    $location,
+    itemTypes,
+    item,
+    fields,
+    providersResource,
+    categoriesResource,
+    $routeParams,
+    sharedDocumentTitle,
+    sharedValidate,
+    rawToOptions,
+    sharedFieldEditor
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
     $scope.validate         =   new sharedValidate();
@@ -238,10 +252,20 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
         label       :   '<?php echo _s( 'Non', 'nexo' );?>'
     }];
 
-    $scope.deliveries           =   <?php echo json_encode( $this->deliveries->get() );?>;
+    $scope.deliveries           =   [];
     $scope.categories           =   <?php echo json_encode( $this->categories->get() );?>;
     $scope.groupLengthLimit     =   10;
     $scope.itemTypes            =   itemTypes;
+
+    // Resources Loading
+    providersResource.get(function( data ) {
+        sharedFieldEditor( 'ref_provider', fields.stock ).options        =   rawToOptions( data.entries, 'id', 'name' );
+    });
+
+    // Categories Loading
+    categoriesResource.get(function( data ) {
+        $scope.categories   =   rawToOptions( data.entries, 'id', 'name' );
+    });
 
     // Item Status
     item.status                 =   $scope.YesNoOptions[0];
@@ -279,6 +303,20 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
     });
 };
 
-items.$inject           =   [ '$scope', '$http', '$location', 'itemTypes', 'item', 'fields', 'providers', '$routeParams', 'sharedDocumentTitle', 'sharedValidate' ];
+items.$inject           =   [
+    '$scope',
+    '$http',
+    '$location',
+    'itemTypes',
+    'item',
+    'fields',
+    'providersResource',
+    'categoriesResource',
+    '$routeParams',
+    'sharedDocumentTitle',
+    'sharedValidate',
+    'rawToOptions',
+    'sharedFieldEditor'
+];
 
 tendooApp.controller( 'items', items );

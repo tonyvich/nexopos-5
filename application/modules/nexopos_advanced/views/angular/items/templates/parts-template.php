@@ -11,7 +11,7 @@
         <li
             class="pull-right"
             ng-hide="item.selectedType.disableVariation"
-        >
+            >
             <span
                 ng-show="item.variations.length > 1"
                 title="<?php echo __( 'Supprimer une variation', 'nexo' );?>"
@@ -56,8 +56,8 @@
                         class="form-control"
                         ng-model="variation[ field.model ]"
                         placeholder="{{ field.placeholder }}"
-                        ng-blur="validate.blur( field, item, $event )"
-                        ng-focus="validate.focus( field, item, $event )"
+                        ng-blur="validate.blur( field, variation, $event )"
+                        ng-focus="validate.focus( field, variation, $event )"
                         >
                     </div>
                     <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
@@ -69,6 +69,8 @@
                         <select
                             class="form-control"
                             ng-model="variation[ field.model ]"
+                            ng-blur="validate.blur( field, variation, $event )"
+                            ng-focus="validate.focus( field, variation, $event )"
                         >
                             <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
@@ -82,7 +84,10 @@
                         <span class="input-group-addon">{{ field.label }}</span>
                         <input
                             class="form-control"
-                            placeholder="{{ field.placeholder }}" />
+                            placeholder="{{ field.placeholder }}"
+                            ng-blur="validate.blur( field, variation, $event )"
+                            ng-focus="validate.focus( field, variation, $event )"
+                             />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -115,12 +120,12 @@
                     class="row"
                     ng-if="field.type == 'group'"
                     ng-init="variation[ field.model ] = resetGroup( variation[ field.model ] )"
-                >
+                    >
 
                     <div
                         class="col-lg-6 col-sm-6 col-xs-12"
                         ng-repeat="(group_index,group_value) in variation[ field.model ]"
-                    >
+                        >
 
                         <div class="box box-primary" style="background:#F1F1F1;" >
                             <div class="box-header with-border">
@@ -183,7 +188,13 @@
 
                 <div class="input-group" ng-if="field.type == 'image_select'">
                   <span class="input-group-addon">{{ field.label }}</span>
-                  <input ng-model="variation[ field.model ]" type="text" class="form-control" placeholder="">
+                  <input
+                    ng-model="variation[ field.model ]"
+                    ng-blur="validate.blur( field, variation, $event )"
+                    ng-focus="validate.focus( field, variation, $event )"
+                    type="text"
+                    class="form-control"
+                    placeholder="">
 
                 </div>
             </div>

@@ -41,10 +41,10 @@
                     <br><br>
                     <div class="input-group">
                       <span class="input-group-addon"><?php echo __( 'Catégorie', 'nexo' );?></span>
-                      <select ng-model="item.category" class="form-control" placeholder="" ng-options="option as option.NOM for option in categories track by option.ID">
+                      <select ng-model="item.category" class="form-control" placeholder="" ng-options="option as option.label for option in categories track by option.value">
                       </select>
                       <span class="input-group-btn">
-                        <button ng-click="selectType( 'create/category' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                        <button ng-click="selectType( 'categories/add' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
                       </span>
                     </div>
                     <span><?php _e( 'Permet d\'assigner une catégorie à un produit', 'nexo' );?></span>

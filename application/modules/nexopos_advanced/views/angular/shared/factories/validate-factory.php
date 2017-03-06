@@ -125,7 +125,6 @@ tendooApp.factory( 'sharedValidate', function(){
         **/
 
         this.blur       =   function( field, item, $event ) {
-            console.log( $event );
             var validation      =   this.__run( field, item );
             var response        =   this.__response( validation );
             var errors          =   this.__replaceTemplate( response.errors );
