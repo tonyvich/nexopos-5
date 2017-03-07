@@ -65,11 +65,12 @@ class NexoPOS_Install extends Tendoo_Module
          * Crate Variation Table
         **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_variations` (
+        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `name` varchar(200) NOT NULL,
 		  `sale_price` float NOT NULL,
 		  `special_price` float NOT NULL,
+          `purchase_price` float NOT NULL,
           `discount_start` datetime NOT NULL,
           `discount_end` datetime NOT NULL,
           `sku` varchar(200) NOT NULL,
@@ -84,6 +85,9 @@ class NexoPOS_Install extends Tendoo_Module
           `capacity` varchar(200) NOT NULL,
           `volume` varchar(200) NOT NULL,
           `expiration_date` datetime NOT NULL,
+          `enable_special_price` varchar(200),
+          `special_price_starts` datetime,
+          `special_price_ends` datetime,
           `ref_item` int(11) NOT NULL,
           `featured_image` varchar(200) NOT NULL,
 		  PRIMARY KEY (`id`)
@@ -93,7 +97,7 @@ class NexoPOS_Install extends Tendoo_Module
          * Variation Gallery
         **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_variations_galleries` (
+        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_galleries` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `image` varchar(200) NOT NULL,
           `ref_variation` int(11) NOT NULL,
@@ -106,7 +110,7 @@ class NexoPOS_Install extends Tendoo_Module
          * Variation Meta
         **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_variations_metas` (
+        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_metas` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `key` varchar(200) NOT NULL,
           `value` varchar(200) NOT NULL,
@@ -118,7 +122,7 @@ class NexoPOS_Install extends Tendoo_Module
          * Stock
         **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_stock` (
+        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_stock` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `ref_provider` int(11) NOT NULL,
           `ref_variation` int(11) NOT NULL,
@@ -253,6 +257,14 @@ class NexoPOS_Install extends Tendoo_Module
           `type` varchar(200) NOT NULL,
           `start_date` datetime NOT NULL,
           `end_date` datetime NOT NULL,
+          `included_items_ids` varchar(200) NOT NULL,
+          `excluded_items_ids` varchar(200) NOT NULL,
+          `included_categories_ids` varchar(200) NOT NULL,
+          `excluded_categories_ids` varchar(200) NOT NULL,
+          `included_customers_groups_ids` varchar(200) NOT NULL,
+          `excluded_customers_groups_ids` varchar(200) NOT NULL,
+          `minimum_amount` float NOT NULL,
+          `maximum_amount` float NOT NULL,
           `usage_limit` int(11) NOT NULL,
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,

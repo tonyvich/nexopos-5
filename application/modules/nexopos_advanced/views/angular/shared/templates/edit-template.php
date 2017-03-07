@@ -51,7 +51,7 @@
                         <textarea
                             ng-model="item[ field.model ]"
                             ng-blur="validate.blur( field, item )"
-                            ng-blur="validate.focus( field, item )"
+                            ng-focus="validate.focus( field, item )"
                             placeholder="{{ field.placeholder }}" class="form-control"></textarea>
                         <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                     </div>
@@ -63,7 +63,7 @@
                                 class="form-control"
                                 ng-model="item[ field.model ]"
                                 ng-blur="validate.blur( field, item )"
-                                ng-blur="validate.focus( field, item )"
+                                ng-focus="validate.focus( field, item )"
                                 >
                                 <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                             </select>
@@ -77,7 +77,7 @@
                             <input
                                 class="form-control"
                                 ng-blur="validate.blur( field, item )"
-                                ng-blur="validate.focus( field, item )"
+                                ng-focus="validate.focus( field, item )"
                                 placeholder="{{ field.placeholder }}" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -89,7 +89,12 @@
                     <!-- For multiselect -->
 
                     <div class="form-group" ng-if="field.type == 'dropdown_multiselect'" >
-                        <multiselect ng-model="item[ field.model ]" options="field.options" display-prop="label" id-prop="id"></multiselect>
+                        <label>{{ field.label }}</label>
+                        <multiselect
+                            ng-blur="validate.blur( field, item )"
+                            ng-focus="validate.focus( field, item )"
+                            ng-model="item[ field.model ]" options="field.options" display-prop="label" id-prop="id"></multiselect>
+                        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                     </div>
 
                     <!-- <div class="form-group" ng-if="field.type == 'datetimepicker'">

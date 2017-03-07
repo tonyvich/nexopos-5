@@ -20,7 +20,28 @@
     }
 })
 
-.when('/setup/demo', {
+.when('/setup/details', {
+    templateUrl: 'templates/setup/details',
+    controller: 'setupDetails',
+    resolve: {
+        lazy: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                files: [
+                    'controllers/setup/details.js',
+                    'factories/setup/data.js',
+                    'shared_factories/options.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/alert.js',
+                    'shared_factories/document-title.js',
+                    'shared_factories/storage-resource.js'
+                ]
+            });
+        }]
+    }
+})
+
+.when('/setup/store', {
     templateUrl: 'templates/setup/demo',
     controller: 'setupDemo',
     resolve: {

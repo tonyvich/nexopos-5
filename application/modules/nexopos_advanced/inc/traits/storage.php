@@ -17,7 +17,7 @@ Trait storage
     public function storage_get()
     {
         $options    =   [];
-        $datas   =   $this->db->get( 'options' )->result();
+        $datas   =   $this->db->get( 'options' )->result_array();
         foreach( $datas as $data ) {
             $options[ $data[ 'key' ] ]  =   $data[ 'value' ];
         }

@@ -6,12 +6,12 @@
             ng-repeat="(k, tab) in variation.tabs"
             ng-hide="tab.hide( item )"
             class="{{ tabContentIsActive( tab.active ) ? 'active' : '' }}"
-        ><a href="javascript:void(0)" ng-click="activeTab( $event, index, k )">{{ tab.title }}</a></li>
+        ><a href="javascript:void(0)" ng-click="activeTab( $event, index, k )">{{ tab.title }} <span ng-show="tab.erros > 0" class="badge">{{ tab.errors }}</span></a></li>
 
         <li
             class="pull-right"
             ng-hide="item.selectedType.disableVariation"
-        >
+            >
             <span
                 ng-show="item.variations.length > 1"
                 title="<?php echo __( 'Supprimer une variation', 'nexo' );?>"
@@ -51,17 +51,32 @@
                 <div class="form-group" ng-if="field.type == 'text'">
                     <div class="input-group">
                       <span class="input-group-addon">{{ field.label }}</span>
-                      <input type="text" class="form-control" ng-model="variation[ field.model ]" placeholder="{{ field.placeholder }}">
+                      <input
+                        type="text"
+                        class="form-control"
+                        ng-model="variation[ field.model ]"
+                        placeholder="{{ field.placeholder }}"
+                        ng-blur="validate.blur( field, variation, $event )"
+                        ng-focus="validate.focus( field, variation, $event )"
+                        >
                     </div>
-                    <p class="help-block" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+                    <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                 </div>
 
                 <div class="form-group" ng-if="field.type == 'select'">
                     <div class="input-group">
                         <span class="input-group-addon">{{ field.label }}</span>
-                        <select class="form-control" ng-model="variation[ field.model ]">
+                        <select
+                            class="form-control"
+                            ng-model="variation[ field.model ]"
+                            ng-blur="validate.blur( field, variation, $event )"
+                            ng-focus="validate.focus( field, variation, $event )"
+                        >
                             <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
+                        <span class="input-group-btn" ng-if="field.buttons.length > 0">
+                            <button class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                        </span>
                     </div>
                     <p class="help-block" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                 </div>
@@ -72,7 +87,10 @@
                         <span class="input-group-addon">{{ field.label }}</span>
                         <input
                             class="form-control"
-                            placeholder="{{ field.placeholder }}" />
+                            placeholder="{{ field.placeholder }}"
+                            ng-blur="validate.blur( field, variation, $event )"
+                            ng-focus="validate.focus( field, variation, $event )"
+                             />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -105,12 +123,12 @@
                     class="row"
                     ng-if="field.type == 'group'"
                     ng-init="variation[ field.model ] = resetGroup( variation[ field.model ] )"
-                >
+                    >
 
                     <div
                         class="col-lg-6 col-sm-6 col-xs-12"
                         ng-repeat="(group_index,group_value) in variation[ field.model ]"
-                    >
+                        >
 
                         <div class="box box-primary" style="background:#F1F1F1;" >
                             <div class="box-header with-border">
@@ -139,6 +157,8 @@
                                             type="text"
                                             class="form-control"
                                             ng-model="variation[ field.model ][ group_index ][ subField.model ]"
+                                            ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event )"
+                                            ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event )"
                                             placeholder="{{ subField.placeholder }}"
                                             >
 
@@ -149,9 +169,15 @@
                                     <div class="form-group" ng-if="subField.type == 'select'">
                                         <div class="input-group">
                                             <span class="input-group-addon">{{ subField.label }}</span>
-                                            <select class="form-control" ng-model="variation[ field.model ][ group_index ][ subField.model ]">
+                                            <select class="form-control"
+                                                ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event )"
+                                                ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event )"
+                                                ng-model="variation[ field.model ][ group_index ][ subField.model ]">
                                                 <option ng-repeat="option in subField.options" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
+                                            <span class="input-group-btn" ng-if="subField.buttons.length > 0">
+                                                <button class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                                            </span>
                                         </div>
                                         <p class="help-block" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
                                     </div>
@@ -173,7 +199,13 @@
 
                 <div class="input-group" ng-if="field.type == 'image_select'">
                   <span class="input-group-addon">{{ field.label }}</span>
-                  <input ng-model="variation[ field.model ]" type="text" class="form-control" placeholder="">
+                  <input
+                    ng-model="variation[ field.model ]"
+                    ng-blur="validate.blur( field, variation, $event )"
+                    ng-focus="validate.focus( field, variation, $event )"
+                    type="text"
+                    class="form-control"
+                    placeholder="">
 
                 </div>
             </div>

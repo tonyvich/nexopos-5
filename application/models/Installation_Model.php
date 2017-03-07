@@ -56,8 +56,7 @@ class Installation_Model extends CI_Model
 		  `autoload` int(11) NOT NULL,
 		  `user` int(11) NOT NULL,
 		  `app` varchar(100) NOT NULL,
-		  PRIMARY KEY (`id`),
-          UNIQUE(`key`)
+		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 		");
 

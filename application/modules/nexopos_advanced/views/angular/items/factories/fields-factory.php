@@ -1,9 +1,21 @@
-tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item', function( options, barcodeOptions, providers, item ){
+tendooApp.factory( 'fields', [
+    'options',
+    'barcodeOptions',
+    'item',
+    'rawToOptions',
+    '$location',
+    function(
+        options,
+        barcodeOptions,
+        item,
+        rawToOptions,
+        $location
+    ){
     return {
         coupon          :   [
             {
                 type    :   'select',
-                model   :   'couponId',
+                model   :   'ref_coupon',
                 label   :   '<?php echo _s( 'Assigner à un coupon', 'nexo' );?>',
                 desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexo' );?>',
                 options   : options.yesOrNo,
@@ -24,15 +36,19 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Prix de vente', 'nexo' );?>',
-                model       :   'salePrice',
+                model       :   'sale_price',
                 desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit sera vendu.' ,'nexo' );?>',
                 show        :   function(){
                     return true;
+                },
+                validation  :   {
+                    required    :   true,
+                    numeric     :   true
                 }
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Prix d\'achat', 'nexo' );?>',
-                model       :   'purchasePrice',
+                model       :   'purchase_price',
                 desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit a été acheté.' ,'nexo' );?>',
                 show        :   function( variation, item ){
                     return _.indexOf( [ 'coupon' ], item.namespace ) == -1 ? true : false;
@@ -40,7 +56,7 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Activer les Promotion', 'nexo' );?>',
-                model       :   'enableSpecialPrice',
+                model       :   'enable_special_price',
                 desc        :   '<?php echo _s( 'Vous permet de vendre le produit à un prix spéciale.' ,'nexo' );?>',
                 options     :   options.yesOrNo,
                 show        :   function(){
@@ -49,10 +65,10 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Prix spécial', 'nexo' );?>',
-                model       :   'specialPrice',
+                model       :   'special_price',
                 desc        :   '<?php echo _s( 'Ce prix sera utilisé lorsque le prix promotionel sera valable.' ,'nexo' );?>',
                 show        :   function( variation, item, fields ){
-                    if( variation.enableSpecialPrice == 'yes' ) {
+                    if( variation.enable_special_price == 'yes' ) {
                         return true;
                     }
                     return false;
@@ -60,10 +76,10 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
             },{
                 type        :   'datepick',
                 label       :   '<?php echo _s( 'Date de départ', 'nexo' );?>',
-                model       :   'dateTimeStart',
+                model       :   'special_price_starts',
                 desc        :   '<?php echo _s( 'Vous permet de définir la date de début de la promotion.' ,'nexo' );?>',
                 show        :   function( variation ){
-                    if( variation.enableSpecialPrice == 'yes' ) {
+                    if( variation.enable_special_price == 'yes' ) {
                         return true;
                     }
                     return false;
@@ -88,10 +104,10 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
             },{
                 type        :   'datepick',
                 label       :   '<?php echo _s( 'Date de fin', 'nexo' );?>',
-                model       :   'dateTimeEnd',
+                model       :   'special_price_ends',
                 desc        :   '<?php echo _s( 'Vous permet de définir la date de fin de la promotion.' ,'nexo' );?>',
                 show        :   function( variation ){
-                    if( variation.enableSpecialPrice == 'yes' ) {
+                    if( variation.enable_special_price == 'yes' ) {
                         return true;
                     }
                     return false;
@@ -163,8 +179,16 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
                 show        :   function(){
                     return true;
                 },
-                model       :   'color',
+                model       :   'capacity',
                 desc        :   '<?php echo _s( 'Si le produit à une contenance liquide, vous pouvez la spécifier ici.', 'nexo' );?>'
+            },{
+                type        :   'text',
+                label       :   '<?php echo _s( 'Volume', 'nexo' );?>',
+                show        :   function(){
+                    return true;
+                },
+                model       :   'volume',
+                desc        :   '<?php echo _s( 'Si le produit se mesure en volume, vous pouvez le spécifier ici.', 'nexo' );?>'
             }
         ],
         stock           :   [{
@@ -178,13 +202,40 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
             subFields      :   [
                 {
                     type        :   'select',
-                    model       :   'providerId',
+                    model       :   'ref_delivery',
+                    label       :   '<?php echo _s( 'Livraison', 'nexo' );?>',
+                    show        :   function(){
+                        return true;
+                    },
+                    desc        :   '<?php echo _s( 'Les livraisons permettent de regrouper les approvisionnement.', 'nexo' );?>',
+                    validation  :   {
+                        required    :   true
+                    },
+                    buttons     :   [{
+                        class   :   'default',
+                        click   :   function() {
+                            $location.path( 'deliveries/add' );
+                        },
+                        icon    :   'fa fa-plus'
+                    }]
+                },{
+                    type        :   'select',
+                    model       :   'ref_provider',
                     label       :   '<?php echo _s( 'Fournisseur', 'nexo' );?>',
                     show        :   function(){
                         return true;
                     },
-                    options     :   providers.options,
-                    desc        :   '<?php echo _s( 'Si cette variation dispose d\'un stock provenant de plusieurs founisseurs, vous pouvez affecter chaque quantité à un fournisseur.', 'nexo' );?>'
+                    desc        :   '<?php echo _s( 'Si cette variation dispose d\'un stock provenant de plusieurs founisseurs, vous pouvez affecter chaque quantité à un fournisseur.', 'nexo' );?>',
+                    validation  :   {
+                        required    :   true
+                    },
+                    buttons     :   [{
+                        class   :   'default',
+                        click   :   function() {
+                            $location.path( 'providers/add' );
+                        },
+                        icon    :   'fa fa-plus'
+                    }]
                 },{
                     type        :   'text',
                     label       :   '<?php echo _s( 'Quantité', 'nexo' );?>',
@@ -192,7 +243,11 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
                     show        :   function(){
                         return true;
                     },
-                    desc        :   '<?php echo _s( 'Définissez une valeur numérique.', 'nexo' );?>'
+                    desc        :   '<?php echo _s( 'Définissez une valeur numérique.', 'nexo' );?>',
+                    validation  :   {
+                        required    :   true,
+                        numeric     :   true
+                    }
                 }
             ]
         }],
@@ -204,7 +259,10 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
                 show        :   function(){
                     return true;
                 },
-                desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexo' );?>',
+                validation  :   {
+                    required    :   true
+                }
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Type du Codebarre', 'nexo' );?>',
@@ -252,7 +310,10 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
                     value       :   'data_matrix',
                     label       :   'Data Matrix'
                 }],
-                desc        :   '<?php echo _s( 'Vous pouvez utiliser le type du code barre déjà dans le produit.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Vous pouvez utiliser le type du code barre déjà dans le produit.', 'nexo' );?>',
+                validation  :   {
+                    required    :   true
+                }
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Code Barre', 'nexo' );?>',
@@ -269,7 +330,10 @@ tendooApp.factory( 'fields', [ 'options', 'barcodeOptions', 'providers', 'item',
                     return true;
                 },
                 options     :   barcodeOptions,
-                desc        :   '<?php echo _s( 'Vous pouvez générer une étiquette pour ce produit durant l\'enregistrement.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Vous pouvez générer une étiquette pour ce produit durant l\'enregistrement.', 'nexo' );?>',
+                validation  :   {
+                    required    :   true
+                }
             }
         ],
         images          :   [

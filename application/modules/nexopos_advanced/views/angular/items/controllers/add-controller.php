@@ -1,6 +1,23 @@
-var items               =   function( $scope, $http, $location, itemTypes, item, fields, providers, $routeParams, sharedDocumentTitle ) {
+var items               =   function(
+    $scope,
+    $http,
+    $location,
+    itemTypes,
+    item,
+    fields,
+    providersResource,
+    categoriesResource,
+    deliveriesResource,
+    unitsResource,
+    $routeParams,
+    sharedDocumentTitle,
+    sharedValidate,
+    rawToOptions,
+    sharedFieldEditor
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
+    $scope.validate         =   new sharedValidate();
 
     /**
      *  Add Group. Duplicate group fields
@@ -218,6 +235,16 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
         return string.replace( '.', '/' );
     }
 
+    /**
+     *  Submit Items
+     *  @param
+     *  @return
+    **/
+
+    $scope.submitItem               =   function(){
+        // Pending
+    }
+
     // Yes No Options
     $scope.YesNoOptions     =   [{
         value       :   'yes',
@@ -227,10 +254,30 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
         label       :   '<?php echo _s( 'Non', 'nexo' );?>'
     }];
 
-    $scope.deliveries           =   <?php echo json_encode( $this->deliveries->get() );?>;
+    $scope.deliveries           =   [];
     $scope.categories           =   <?php echo json_encode( $this->categories->get() );?>;
     $scope.groupLengthLimit     =   10;
     $scope.itemTypes            =   itemTypes;
+
+    // Resources Loading
+    providersResource.get(function( data ) {
+        sharedFieldEditor( 'ref_provider', fields.stock ).options        =   rawToOptions( data.entries, 'id', 'name' );
+    });
+
+    // Categories Loading
+    categoriesResource.get(function( data ) {
+        $scope.categories   =   rawToOptions( data.entries, 'id', 'name' );
+    });
+
+    // Deliveries Loading
+    deliveriesResource.get(function( data ) {
+        sharedFieldEditor( 'ref_delivery', fields.stock ).options   =   rawToOptions( data.entries, 'id', 'name' );
+    });
+
+    // Loading Unit
+    unitsResource.get( function( data ) {
+        $scope.units        =   rawToOptions( data.entries, 'id', 'name' );
+    });
 
     // Item Status
     item.status                 =   $scope.YesNoOptions[0];
@@ -268,6 +315,22 @@ var items               =   function( $scope, $http, $location, itemTypes, item,
     });
 };
 
-items.$inject           =   [ '$scope', '$http', '$location', 'itemTypes', 'item', 'fields', 'providers', '$routeParams', 'sharedDocumentTitle' ];
+items.$inject           =   [
+    '$scope',
+    '$http',
+    '$location',
+    'itemTypes',
+    'item',
+    'fields',
+    'providersResource',
+    'categoriesResource',
+    'deliveriesResource',
+    'unitsResource',
+    '$routeParams',
+    'sharedDocumentTitle',
+    'sharedValidate',
+    'rawToOptions',
+    'sharedFieldEditor'
+];
 
 tendooApp.controller( 'items', items );
