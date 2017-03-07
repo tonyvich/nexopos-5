@@ -6,7 +6,7 @@
             ng-repeat="(k, tab) in variation.tabs"
             ng-hide="tab.hide( item )"
             class="{{ tabContentIsActive( tab.active ) ? 'active' : '' }}"
-        ><a href="javascript:void(0)" ng-click="activeTab( $event, index, k )">{{ tab.title }}</a></li>
+        ><a href="javascript:void(0)" ng-click="activeTab( $event, index, k )">{{ tab.title }} <span ng-show="tab.erros > 0" class="badge">{{ tab.errors }}</span></a></li>
 
         <li
             class="pull-right"
@@ -74,6 +74,9 @@
                         >
                             <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
+                        <span class="input-group-btn" ng-if="field.buttons.length > 0">
+                            <button class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                        </span>
                     </div>
                     <p class="help-block" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                 </div>
@@ -154,6 +157,8 @@
                                             type="text"
                                             class="form-control"
                                             ng-model="variation[ field.model ][ group_index ][ subField.model ]"
+                                            ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event )"
+                                            ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event )"
                                             placeholder="{{ subField.placeholder }}"
                                             >
 
@@ -164,9 +169,15 @@
                                     <div class="form-group" ng-if="subField.type == 'select'">
                                         <div class="input-group">
                                             <span class="input-group-addon">{{ subField.label }}</span>
-                                            <select class="form-control" ng-model="variation[ field.model ][ group_index ][ subField.model ]">
+                                            <select class="form-control"
+                                                ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event )"
+                                                ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event )"
+                                                ng-model="variation[ field.model ][ group_index ][ subField.model ]">
                                                 <option ng-repeat="option in subField.options" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
+                                            <span class="input-group-btn" ng-if="subField.buttons.length > 0">
+                                                <button class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                                            </span>
                                         </div>
                                         <p class="help-block" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
                                     </div>

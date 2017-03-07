@@ -7,6 +7,8 @@ var items               =   function(
     fields,
     providersResource,
     categoriesResource,
+    deliveriesResource,
+    unitsResource,
     $routeParams,
     sharedDocumentTitle,
     sharedValidate,
@@ -267,6 +269,16 @@ var items               =   function(
         $scope.categories   =   rawToOptions( data.entries, 'id', 'name' );
     });
 
+    // Deliveries Loading
+    deliveriesResource.get(function( data ) {
+        sharedFieldEditor( 'ref_delivery', fields.stock ).options   =   rawToOptions( data.entries, 'id', 'name' );
+    });
+
+    // Loading Unit
+    unitsResource.get( function( data ) {
+        $scope.units        =   rawToOptions( data.entries, 'id', 'name' );
+    });
+
     // Item Status
     item.status                 =   $scope.YesNoOptions[0];
     item.variations             =   new Array;
@@ -312,6 +324,8 @@ items.$inject           =   [
     'fields',
     'providersResource',
     'categoriesResource',
+    'deliveriesResource',
+    'unitsResource',
     '$routeParams',
     'sharedDocumentTitle',
     'sharedValidate',

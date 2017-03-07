@@ -30,18 +30,8 @@
                 </div>
                 <div class="box-body">
                     <div class="input-group">
-                      <span class="input-group-addon"><?php echo __( 'Livraisons', 'nexo' );?></span>
-                      <select ng-model="item.delivery" class="form-control" ng-options="option as option.name for option in deliveries track by option.ID">
-                      </select>
-                      <span class="input-group-btn">
-                        <button ng-click="selectType( 'deliveries/add' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
-                      </span>
-                    </div>
-                    <span><?php _e( 'Sélectionnez la collection à partir de laquelle le produit entre en stock.', 'nexo' );?></span>
-                    <br><br>
-                    <div class="input-group">
                       <span class="input-group-addon"><?php echo __( 'Catégorie', 'nexo' );?></span>
-                      <select ng-model="item.category" class="form-control" placeholder="" ng-options="option as option.label for option in categories track by option.value">
+                      <select ng-model="item.ref_category" class="form-control" placeholder="" ng-options="option as option.label for option in categories track by option.value">
                       </select>
                       <span class="input-group-btn">
                         <button ng-click="selectType( 'categories/add' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
@@ -51,10 +41,10 @@
                     <br><br>
                     <div class="input-group">
                       <span class="input-group-addon"><?php echo __( 'Unité', 'nexo' );?></span>
-                      <select ng-model="item.status" class="form-control" placeholder="" ng-options="option as option.label for option in YesNoOptions track by option.value">
+                      <select ng-model="item.ref_unit" class="form-control" placeholder="" ng-options="option as option.label for option in units track by option.value">
                       </select>
                       <span class="input-group-btn">
-                        <button ng-click="selectType( 'create/unit' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                        <button ng-click="selectType( 'units/add' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
                       </span>
                     </div>
                     <span><?php _e( 'Permet d\'assigner une unité de mesure à ce produit.', 'nexo' );?></span>
@@ -67,7 +57,6 @@
                     </div>
                     <span><?php _e( 'Permet de déterminer si oui ou non un produit est disponible pour la vente', 'nexo' );?></span>
                     <br><br>
-                    <span><?php echo __( 'Vous permet d\'ajouter plusieurs variations', 'nexo' );?></span>
                 </div>
             </div>
         </div>

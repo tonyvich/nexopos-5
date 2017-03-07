@@ -20,6 +20,8 @@
                     'factories/items/providers.js',
                     'factories/providers/resource.js',
                     'factories/categories/resource.js',
+                    'factories/deliveries/resource.js',
+                    'factories/units/resource.js',
                     'factories/items/tabs.js',
                     'directives/items/variations.js',
                     'shared_factories/document-title.js',
