@@ -4,7 +4,8 @@ var items               =   function(
     $location,
     itemTypes,
     item,
-    fields,
+    itemAdvancedFields,
+    itemFields,
     providersResource,
     categoriesResource,
     deliveriesResource,
@@ -13,11 +14,69 @@ var items               =   function(
     sharedDocumentTitle,
     sharedValidate,
     rawToOptions,
-    sharedFieldEditor
+    sharedFieldEditor,
+    sharedAlert
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
+
+    $scope.category_desc  =   '<?php echo __( 'Assigner une catégorie permet de regrouper les produits similaires.', 'nexopos_advanced' );?>';
     $scope.validate         =   new sharedValidate();
+
+    /**
+     *  Blue a specific field
+     *  @param object field
+     *  @param object field data
+     *  @param object dom
+     *  @param object tab
+     *  @return
+    **/
+
+    $scope.validate.blur    =   function( field, item, $event, tab ) {
+        var validation      =   this.__run( field, item );
+        var response        =   this.__response( validation );
+        var errors          =   this.__replaceTemplate( response.errors );
+
+        // console.log( tab );
+
+        if( angular.isDefined( tab ) ) {
+            if( ! angular.isArray( tab.errors ) ) {
+                tab.errors       =   [];
+            }
+
+            if( response.isValid == false ) {
+                _.extend( tab.errors, validation );
+            } else {
+                delete tab.errors[ field.model ];
+            }
+        }
+
+        var fieldClass      =   '.' + field.model;
+
+        if( ! response.isValid ) {
+            if( angular.isDefined( $event ) ) {
+                angular.element( $event.target ).closest( '.form-group' ).removeClass( 'has-success' );
+                angular.element( $event.target ).closest( '.form-group' ).find( 'p.help-block' ).text( errors[ field.model ].msg );
+                angular.element( $event.target ).closest( '.form-group' ).addClass( 'has-error' );
+            } else {
+                angular.element( fieldClass ).closest( '.form-group' ).removeClass( 'has-success' );
+                angular.element( fieldClass ).text( errors[ field.model ].msg );
+                angular.element( fieldClass ).closest( '.form-group' ).addClass( 'has-error' );
+            }
+        }
+    }
+
+    /**
+     *  Blur all fields to display errors
+     *  @param object fields
+     *  @return void
+    **/
+
+    $scope.validate.blurAll            =   function( fields, item, tab ) {
+        _.each( fields, function( field ) {
+            $scope.validate.blur( field, item, void(0), tab );
+        });
+    }
 
     /**
      *  Add Group. Duplicate group fields
@@ -100,8 +159,8 @@ var items               =   function(
         }
 
         // Save Namespace
-        item.typeNamespace  =   $location.path().substr(1).replace( '/', '.' );
-        item.rawNamespace   =   $location.path().substr(1);
+        // item.typeNamespace  =   $location.path().substr(1).replace( '/', '.' );
+        // item.rawNamespace   =   $location.path().substr(1);
 
         // Selected Type
         _.each( itemTypes, function( value, key ) {
@@ -171,6 +230,57 @@ var items               =   function(
      *  @return
     **/
 
+    /**
+     *  Submit Items
+     *  @param
+     *  @return
+    **/
+
+    $scope.submitItem               =   function(){
+
+        // validating
+        var validateDefaultFields       =   true;
+        if( validateDefaultFields   =   $scope.validate.run( itemFields, item ).isValid == false ) {
+            $scope.validate.blurAll( itemFields, item );
+        }
+
+        // Validating variations
+        var validateVariations          =   0;
+        _.each( itemAdvancedFields, function( tab, namespace ) {
+            _.each( item.variations, function( variation ) {
+                if( ! $scope.validate.run( tab, variation ).isValid ) {
+                    validateVariations++;
+                    $scope.validate.blurAll(
+                        tab,
+                        variation,
+                        $scope.selectTab( variation.tabs, namespace )
+                    );
+                }
+            });
+        });
+
+        if( validateDefaultFields == false || validateVariations != 0 ) {
+            return sharedAlert.warning( '<?php echo _s( 'Le formulaire comprend une ou plusieurs erreurs. Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>' );
+        }
+    }
+
+    /**
+     *  Select Tab
+     *  @param object tabs
+     *  @param string tab naemspace
+     *  @return object
+    **/
+
+    $scope.selectTab        =   function( tabs, namespace ) {
+        var tabToReturn;
+        _.each( tabs, function( tab, key ) {
+            if( tab.namespace == namespace ) {
+                tabToReturn =   key;
+            }
+        });
+        return tabs[ tabToReturn ];
+    }
+
     $scope.tabContentIsActive   =   function( tabActive, index ) {
         if( angular.isDefined( tabActive ) ) {
             return tabActive;
@@ -235,16 +345,6 @@ var items               =   function(
         return string.replace( '.', '/' );
     }
 
-    /**
-     *  Submit Items
-     *  @param
-     *  @return
-    **/
-
-    $scope.submitItem               =   function(){
-        // Pending
-    }
-
     // Yes No Options
     $scope.YesNoOptions     =   [{
         value       :   'yes',
@@ -254,36 +354,33 @@ var items               =   function(
         label       :   '<?php echo _s( 'Non', 'nexo' );?>'
     }];
 
-    $scope.deliveries           =   [];
-    $scope.categories           =   <?php echo json_encode( $this->categories->get() );?>;
     $scope.groupLengthLimit     =   10;
     $scope.itemTypes            =   itemTypes;
+    $scope.fields               =   itemFields;
 
     // Resources Loading
     providersResource.get(function( data ) {
-        sharedFieldEditor( 'ref_provider', fields.stock ).options        =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_provider', itemAdvancedFields.stock ).options        =   rawToOptions( data.entries, 'id', 'name' );
     });
 
     // Categories Loading
     categoriesResource.get(function( data ) {
-        $scope.categories   =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_category', $scope.fields ).options   =   rawToOptions( data.entries, 'id', 'name' );
     });
 
     // Deliveries Loading
     deliveriesResource.get(function( data ) {
-        sharedFieldEditor( 'ref_delivery', fields.stock ).options   =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_delivery', itemAdvancedFields.stock ).options   =   rawToOptions( data.entries, 'id', 'name' );
     });
 
     // Loading Unit
     unitsResource.get( function( data ) {
-        $scope.units        =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_unit', $scope.fields ).options        =   rawToOptions( data.entries, 'id', 'name' );
     });
 
     // Item Status
-    item.status                 =   $scope.YesNoOptions[0];
     item.variations             =   new Array;
-    item.name                   =   new String;
-    item.category               =   new Object;
+    item.name                   =   '';
 
     $scope.docHeight            =   ( parseFloat( angular.element( '.content-wrapper' ).css( 'min-height' ) ) - 100 ) + 'px';
 
@@ -300,7 +397,6 @@ var items               =   function(
         if( angular.isUndefined( item.variations[0].name ) ) {
             item.variations[0].name    =   '';
         }
-
     });
 
     // Detect item Namespace
@@ -321,7 +417,8 @@ items.$inject           =   [
     '$location',
     'itemTypes',
     'item',
-    'fields',
+    'itemAdvancedFields',
+    'itemFields',
     'providersResource',
     'categoriesResource',
     'deliveriesResource',
@@ -330,7 +427,8 @@ items.$inject           =   [
     'sharedDocumentTitle',
     'sharedValidate',
     'rawToOptions',
-    'sharedFieldEditor'
+    'sharedFieldEditor',
+    'sharedAlert'
 ];
 
 tendooApp.controller( 'items', items );

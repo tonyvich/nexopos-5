@@ -3,6 +3,9 @@
     tendooApp.run(function ($rootScope, $location) {
         var history = [];
 
+        // Expose Underscore;
+        $rootScope._        =   _;
+
         $rootScope.$on('$routeChangeSuccess', function() {
             // history.push($location.$$path);
             var $menu   =   false;

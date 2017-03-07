@@ -6,7 +6,7 @@
             ng-repeat="(k, tab) in variation.tabs"
             ng-hide="tab.hide( item )"
             class="{{ tabContentIsActive( tab.active ) ? 'active' : '' }}"
-        ><a href="javascript:void(0)" ng-click="activeTab( $event, index, k )">{{ tab.title }} <span ng-show="tab.erros > 0" class="badge">{{ tab.errors }}</span></a></li>
+        ><a href="javascript:void(0)" ng-click="activeTab( $event, index, k )">{{ tab.title }} <span  ng-show="_.keys( tab.errors ).length > 0" class="badge badge-warning">{{ _.keys( tab.errors ).length }}</span></a></li>
 
         <li
             class="pull-right"
@@ -43,9 +43,9 @@
 
 
             <div
-                ng-repeat="field in fields[ tab.namespace ]"
+                ng-repeat="field in itemAdvancedFields[ tab.namespace ]"
                 class="{{ field.class !== undefined ? field.class : 'col-lg-6 col-sm-6 col-xs-12' }}"
-                ng-show="field.show( variation, item, fields[ tab.namespace ] )"
+                ng-show="field.show( variation, item, itemAdvancedFields[ tab.namespace ] )"
             >
 
                 <div class="form-group" ng-if="field.type == 'text'">
@@ -56,8 +56,8 @@
                         class="form-control"
                         ng-model="variation[ field.model ]"
                         placeholder="{{ field.placeholder }}"
-                        ng-blur="validate.blur( field, variation, $event )"
-                        ng-focus="validate.focus( field, variation, $event )"
+                        ng-blur="validate.blur( field, variation, $event, tab )"
+                        ng-focus="validate.focus( field, variation, $event, tab )"
                         >
                     </div>
                     <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
@@ -69,8 +69,8 @@
                         <select
                             class="form-control"
                             ng-model="variation[ field.model ]"
-                            ng-blur="validate.blur( field, variation, $event )"
-                            ng-focus="validate.focus( field, variation, $event )"
+                            ng-blur="validate.blur( field, variation, $event, tab )"
+                            ng-focus="validate.focus( field, variation, $event, tab )"
                         >
                             <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
@@ -88,8 +88,8 @@
                         <input
                             class="form-control"
                             placeholder="{{ field.placeholder }}"
-                            ng-blur="validate.blur( field, variation, $event )"
-                            ng-focus="validate.focus( field, variation, $event )"
+                            ng-blur="validate.blur( field, variation, $event, tab )"
+                            ng-focus="validate.focus( field, variation, $event, tab )"
                              />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -157,8 +157,8 @@
                                             type="text"
                                             class="form-control"
                                             ng-model="variation[ field.model ][ group_index ][ subField.model ]"
-                                            ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event )"
-                                            ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event )"
+                                            ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event, tab )"
+                                            ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event, tab )"
                                             placeholder="{{ subField.placeholder }}"
                                             >
 
@@ -170,8 +170,8 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">{{ subField.label }}</span>
                                             <select class="form-control"
-                                                ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event )"
-                                                ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event )"
+                                                ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event, tab )"
+                                                ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event, tab )"
                                                 ng-model="variation[ field.model ][ group_index ][ subField.model ]">
                                                 <option ng-repeat="option in subField.options" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
@@ -186,7 +186,11 @@
 
                                     <div class="input-group" ng-if="subField.type == 'image_select'">
                                       <span class="input-group-addon">{{ subField.label }}</span>
-                                      <input ng-model="variation[ field.model ][ group_index ][ subField.model ]" type="text" class="form-control" placeholder="">
+                                      <input
+                                        ng-model="variation[ field.model ][ group_index ][ subField.model ]"
+                                        ng-focus="validate.focus( subField, variation[ field.model ][ group_index ], $event, tab )"
+                                        ng-blur="validate.blur( subField, variation[ field.model ][ group_index ], $event, tab )"
+                                        type="text" class="form-control" placeholder="">
                                     </div>
 
                                 </div>

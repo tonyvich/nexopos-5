@@ -29,34 +29,9 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="input-group">
-                      <span class="input-group-addon"><?php echo __( 'Catégorie', 'nexo' );?></span>
-                      <select ng-model="item.ref_category" class="form-control" placeholder="" ng-options="option as option.label for option in categories track by option.value">
-                      </select>
-                      <span class="input-group-btn">
-                        <button ng-click="selectType( 'categories/add' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
-                      </span>
+                    <div class="row">
+                      <?php $this->module_view( 'nexopos_advanced', 'angular.shared.templates.fields-template' );?>
                     </div>
-                    <span><?php _e( 'Permet d\'assigner une catégorie à un produit', 'nexo' );?></span>
-                    <br><br>
-                    <div class="input-group">
-                      <span class="input-group-addon"><?php echo __( 'Unité', 'nexo' );?></span>
-                      <select ng-model="item.ref_unit" class="form-control" placeholder="" ng-options="option as option.label for option in units track by option.value">
-                      </select>
-                      <span class="input-group-btn">
-                        <button ng-click="selectType( 'units/add' )" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
-                      </span>
-                    </div>
-                    <span><?php _e( 'Permet d\'assigner une unité de mesure à ce produit.', 'nexo' );?></span>
-                    <br><br>
-
-                    <div class="input-group">
-                      <span class="input-group-addon"><?php echo __( 'Statut', 'nexo' );?></span>
-                      <select ng-model="item.status" class="form-control" placeholder="" ng-options="option as option.label for option in YesNoOptions track by option.value">
-                      </select>
-                    </div>
-                    <span><?php _e( 'Permet de déterminer si oui ou non un produit est disponible pour la vente', 'nexo' );?></span>
-                    <br><br>
                 </div>
             </div>
         </div>

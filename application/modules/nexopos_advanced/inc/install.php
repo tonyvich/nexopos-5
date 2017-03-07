@@ -89,6 +89,7 @@ class NexoPOS_Install extends Tendoo_Module
           `special_price_starts` datetime,
           `special_price_ends` datetime,
           `ref_item` int(11) NOT NULL,
+          `available_quantity` int(11) NOT NULL,
           `featured_image` varchar(200) NOT NULL,
 		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
@@ -127,7 +128,7 @@ class NexoPOS_Install extends Tendoo_Module
           `ref_provider` int(11) NOT NULL,
           `ref_variation` int(11) NOT NULL,
           `ref_delivery` int(11) NOT NULL,
-          `stock` int(11) NOT NULL,
+          `quantity` int(11) NOT NULL,
           `stock_type` varchar(200) NOT NULL,
           `description` int(11) NOT NULL,
           `author` int(11) NOT NULL,

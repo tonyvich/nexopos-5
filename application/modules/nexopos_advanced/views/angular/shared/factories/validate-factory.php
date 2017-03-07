@@ -1,9 +1,7 @@
 tendooApp.factory( 'sharedValidate', function(){
     return function(){
         var expression  =   {
-            required: function(value) {
-              return !!value;
-            },
+            required: /^\s*$/,
             url: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/,
             email: /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
             number: /^\d+$/,
@@ -23,10 +21,15 @@ tendooApp.factory( 'sharedValidate', function(){
 
         this.__run          =   function( field, item ) {
             var errors      =   {};
+
             if( angular.isDefined( field.validation ) ) {
                 _.each( field.validation, function( value, rule ) {
                     if( rule == 'required' && value == true ) {
-                        if( ! angular.isDefined( item[ field.model ] ) ) {
+                        if( ! angular.isDefined( item[ field.model ] ) || item[ field.model ] == null ) {
+                            errors[ field.model ]           =   {};
+                            errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ est requis.', 'nexopos_advanced' );?>';
+                            errors[ field.model ].label     =   field.label;
+                        } else if( item[ field.model ].match( expression.required ) ) {
                             errors[ field.model ]           =   {};
                             errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ est requis.', 'nexopos_advanced' );?>';
                             errors[ field.model ].label     =   field.label;
