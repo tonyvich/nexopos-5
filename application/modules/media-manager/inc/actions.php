@@ -27,20 +27,23 @@ class Media_Manager_Actions extends Tendoo_Module
 
     public function enable_module( $string )
     {
-        if( $string =='media-manager' ){
+        if( $string =='media-manager' )
+        {
             global $Options;
-
-            if( @$Options[ 'media-installed' ] == null ) {
+            if( @$Options[ 'media-installed' ] == null ) 
+            {
                 $this->db->query('CREATE TABLE IF NOT EXISTS `'.$this->db->dbprefix.'media_files` (
-        		  `id` int(11) NOT NULL AUTO_INCREMENT,
-        		  `name` varchar(200) NOT NULL,
-        		  `description`text,
-        		  `date_creation` datetime NOT NULL,
-                  `date_modification` datetime NOT NULL,
-        		  `author` int(11) NOT NULL,
-                  `url` text NOT NULL,
-        		  PRIMARY KEY (`id`)
-        		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `name` varchar(200) NOT NULL,
+                        `description` text,
+                        `date_creation` datetime NOT NULL,
+                        `date_modification` datetime NOT NULL,
+                        `author` int(11) NOT NULL,
+                        `link` text NOT NULL,
+                        `slug` varchar(200) NOT NULL,
+                        `type` varchar(200) NOT NULL
+                        PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
                 $this->options->set( 'media-installed', true );
             }
         }
