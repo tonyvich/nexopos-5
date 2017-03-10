@@ -34,31 +34,38 @@ var items               =   function(
      *  @return
     **/
 
-    $scope.validate.blur    =   function( field, variation, ids ) {
+    $scope.validate.blur    =   function( field, variation_tab, ids ) {
+
+        if( ! angular.isDefined( variation_tab ) ) {
+            return false;
+        }
 
         // If visibility is hidden on some fields, validation will be skipped on that.
         if( typeof field.show == 'function' ) {
-            if( ! field.show( variation, item ) ) {
+            if( ! field.show( variation_tab.models, item ) ) {
                 return;
             }
         }
 
-        var validation      =   this.__run( field, variation );
+        if( ! angular.isDefined( variation_tab.models ) ) {
+            variation_tab.models    =   {};
+        }
+
+        var validation      =   this.__run( field, variation_tab.models );
         var response        =   this.__response( validation );
         var errors          =   this.__replaceTemplate( response.errors );
         var fieldClass      =   '.' + field.model + '-helper';
 
         if( ! response.isValid && angular.isDefined( ids ) ) {
 
-            var current_tab                 =   variation.tabs[ ids.variation_tab_id ];
             var variation_selector          =   $scope.getClass( ids ).variation;
             var variation_tab_selector      =   $scope.getClass( ids ).variation_tab_body;
 
-            if( angular.isUndefined( current_tab.$errors ) ) {
-                current_tab.$errors         =   {};
+            if( angular.isUndefined( variation_tab.errors ) ) {
+                variation_tab.errors         =   {};
             }
 
-            current_tab.$errors             =   _.extend( current_tab.$errors, validation );
+            variation_tab.errors             =   _.extend( variation_tab.errors, validation );
 
             angular.element( variation_tab_selector + ' ' + fieldClass )
             .closest( '.form-group' ).removeClass( 'has-success' );
@@ -134,11 +141,13 @@ var items               =   function(
 
     /**
      *  Focus on fields
-     *  @param
+     *  @param object field
+     *  @param object field model data
+     *  @param object ids
      *  @return
     **/
 
-    $scope.validate.focus      =   function( field, item, ids ) {
+    $scope.validate.focus      =   function( field, model, ids ) {
         var fieldClass                  =   '.' + field.model + '-helper';
         var variation_selector          =   $scope.getClass( ids ).variation;
         var variation_tab_selector      =   $scope.getClass( ids ).variation_tab_body;
@@ -173,11 +182,15 @@ var items               =   function(
         }
 
         var singleVariation         =   {
-            name        :   item.variations[
-                item.variations.length - 1
-            ].name,
             tabs        :   item.getTabs()
         };
+
+        // console.log( item.variations );
+        _.each( singleVariation, function( variation, $tab_id ) {
+            _.each( variation.tabs, function( tab, $tab_key ) {
+                tab.models      =   {};
+            });
+        });
 
         item.variations.push( singleVariation );
     }
@@ -216,8 +229,10 @@ var items               =   function(
         // Reset Variations if he comes from item selection
         if( $scope.previousPath == '/create' ) {
             item.variations         =   [{
-                name        :       item.name,
-                tabs        :       item.getTabs()
+                models          :       {
+                    name        :   item.name
+                },
+                tabs            :       item.getTabs()
             }];
         }
 
@@ -230,14 +245,10 @@ var items               =   function(
             break;
         }
 
-        // Save Namespace
-        // item.typeNamespace  =   $location.path().substr(1).replace( '/', '.' );
-        // item.rawNamespace   =   $location.path().substr(1);
-
         // Selected Type
-        _.each( itemTypes, function( value, key ) {
-            if( value.namespace == item.typeNamespace ) {
-                item.selectedType   =   value;
+        _.each( itemTypes, function( type, key ) {
+            if( type.namespace == item.typeNamespace ) {
+                item.selectedType   =   type;
             }
         });
     }
@@ -363,7 +374,7 @@ var items               =   function(
     }
 
     /**
-     *  Submit Items
+     *  Submit Items (needs review)
      *  @param
      *  @return
     **/
@@ -478,8 +489,8 @@ var items               =   function(
     });
 
     // Item Status
-    item.variations             =   new Array;
-    item.name                   =   '';
+    item.variations     =   new Array;
+    item.name           =   '';
 
     $scope.docHeight            =   ( parseFloat( angular.element( '.content-wrapper' ).css( 'min-height' ) ) - 100 ) + 'px';
 
@@ -487,15 +498,16 @@ var items               =   function(
     $scope.$watch( 'item.variations', function(){
         if( item.variations.length == 0 ) {
             item.variations.push({
-                name        :       item.name,
-                tabs        :       item.getTabs()
+                tabs    :   item.getTabs()
             });
         }
 
-        // Change Variation Name
-        if( angular.isUndefined( item.variations[0].name ) ) {
-            item.variations[0].name    =   '';
-        }
+        // console.log( item.variations );
+        _.each( item.variations, function( variation, $tab_id ) {
+            _.each( variation.tabs, function( tab, $tab_key ) {
+                tab.models      =   {};
+            });
+        });
     });
 
     // Detect item Namespace
