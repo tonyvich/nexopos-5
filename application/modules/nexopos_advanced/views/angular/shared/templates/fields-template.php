@@ -14,7 +14,7 @@
             ng-model="item[ field.model ]"
             placeholder="{{ field.placeholder }}">
         </div>
-        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div class="form-group" ng-if="field.type == 'textarea'">
@@ -24,7 +24,7 @@
             ng-blur="validate.blur( field, item )"
             ng-focus="validate.focus( field, item )"
             placeholder="{{ field.placeholder }}" class="form-control"></textarea>
-        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div class="form-group" ng-if="field.type == 'select'">
@@ -42,7 +42,7 @@
                 <button class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
             </span>
         </div>
-        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div class="form-group" ng-if="field.type == 'datepick'">
@@ -57,7 +57,7 @@
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
         </div>
-        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <!-- For multiselect -->
@@ -68,7 +68,7 @@
             ng-blur="validate.blur( field, item )"
             ng-focus="validate.focus( field, item )"
             ng-model="item[ field.model ]" options="field.options" display-prop="label" id-prop="id"></multiselect>
-        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <!-- <div class="form-group" ng-if="field.type == 'datetimepicker'">
@@ -89,7 +89,7 @@
                 </datetimepicker>
             </ul>
         </div>
-        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div> -->
 
     <div class="form-group" ng-if="field.type == 'datetime-popup'">
@@ -106,7 +106,7 @@
             <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
         </p>
-        <p class="help-block {{ field.model }}" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div
@@ -195,7 +195,7 @@
 
         </div>
         <p
-          class="help-block {{ field.model }}"
+          class="help-block {{ field.model }}-helper"
           style="height:30px;font-size:12px;">{{ field.desc }}</p>
     </div>
 

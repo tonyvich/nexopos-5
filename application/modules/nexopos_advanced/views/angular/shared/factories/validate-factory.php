@@ -11,7 +11,9 @@ tendooApp.factory( 'sharedValidate', function(){
             digit       :   /^[0-9]+$/,
             decimal       :   /^[+-]?\d+(\.\d+)?$/
         };
+
         var $this       =   this;
+
         /**
          *  Individual Validation
          *  @param object field
@@ -77,9 +79,9 @@ tendooApp.factory( 'sharedValidate', function(){
                     }
                 });
             }
-            else {
-                item[ field.model ]     =   angular.isUndefined( item[ field.model ]  ) ? '' : item[ field.model ];
-            }
+
+            item[ field.model ]     =   angular.isUndefined( item[ field.model ]  ) ? void(0) : item[ field.model ];
+
             return errors;
         }
 
