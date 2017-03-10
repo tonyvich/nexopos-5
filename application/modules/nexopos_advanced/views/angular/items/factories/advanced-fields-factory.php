@@ -75,7 +75,7 @@ tendooApp.factory( 'itemAdvancedFields', [
                 model       :   'special_price',
                 desc        :   '<?php echo _s( 'Ce prix sera utilisé lorsque le prix promotionel sera valable.' ,'nexo' );?>',
                 show        :   function( variation, item, fields ){
-                    if( variation.enable_special_price == 'yes' ) {
+                    if( _.propertyOf( variation.models )( 'enable_special_price' ) == 'yes' ) {
                         return true;
                     }
                     return false;
@@ -86,7 +86,7 @@ tendooApp.factory( 'itemAdvancedFields', [
                 model       :   'special_price_starts',
                 desc        :   '<?php echo _s( 'Vous permet de définir la date de début de la promotion.' ,'nexo' );?>',
                 show        :   function( variation ){
-                    if( variation.enable_special_price == 'yes' ) {
+                    if( _.propertyOf( variation.models )( 'enable_special_price' ) == 'yes' ) {
                         return true;
                     }
                     return false;
@@ -114,7 +114,7 @@ tendooApp.factory( 'itemAdvancedFields', [
                 model       :   'special_price_ends',
                 desc        :   '<?php echo _s( 'Vous permet de définir la date de fin de la promotion.' ,'nexo' );?>',
                 show        :   function( variation ){
-                    if( variation.enable_special_price == 'yes' ) {
+                    if( _.propertyOf( variation.models )( 'enable_special_price' ) == 'yes' ) {
                         return true;
                     }
                     return false;

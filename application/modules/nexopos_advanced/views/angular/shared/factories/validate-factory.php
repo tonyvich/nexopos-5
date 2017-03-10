@@ -26,6 +26,7 @@ tendooApp.factory( 'sharedValidate', function(){
 
             if( angular.isDefined( field.validation ) ) {
                 _.each( field.validation, function( value, rule ) {
+
                     if( rule == 'required' && value == true ) {
                         if( ! angular.isDefined( item[ field.model ] ) || item[ field.model ] == null ) {
                             errors[ field.model ]           =   {};
@@ -38,7 +39,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         }
                     }
 
-                    if( rule == 'email' && value == true && typeof item[ field.model ] != 'undefined' ) {
+                    if(
+                        rule == 'email' &&
+                        value == true &&
+                        typeof item[ field.model ] != 'undefined' &&
+                        angular.equals({}, errors )
+                    ) {
                         if( ! item[ field.model ].match( expression.email ) ) {
                             errors[ field.model ]           =   {};
                             errors[ field.model ].msg       =   '<?php echo _s( 'La valeur %% n\'est pas une adresse email valide.', 'nexopos_advanced' );?>';
@@ -46,7 +52,11 @@ tendooApp.factory( 'sharedValidate', function(){
                         }
                     }
 
-                    if( rule == 'min_value' && typeof item[ field.model ] != 'undefined' ) {
+                    if(
+                        rule == 'min_value' &&
+                        typeof item[ field.model ] != 'undefined' &&
+                        angular.equals({}, errors )
+                    ) {
                         if( item[ field.model ].length < value ) {
                             errors[ field.model ]           =   {};
                             errors[ field.model ].msg       =   '<?php echo _s( 'La longueur de ce champ ne doit pas être inférieure à {0}.', 'nexopos_advanced' );?>' . format( value );
@@ -54,7 +64,11 @@ tendooApp.factory( 'sharedValidate', function(){
                         }
                     }
 
-                    if( rule == 'max_value' && typeof item[ field.model ] != 'undefined' ) {
+                    if(
+                        rule == 'max_value' &&
+                        typeof item[ field.model ] != 'undefined' &&
+                        angular.equals({}, errors )
+                    ) {
                         if( item[ field.model ].length > value ) {
                             errors[ field.model ]           =   {};
                             errors[ field.model ].msg       =   '<?php echo _s( 'La longueur de ce champ ne doit pas excéder {0}', 'nexopos_advanced' );?>' . format( value );
@@ -62,7 +76,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         }
                     }
 
-                    if( rule == 'numeric' && value == true && typeof item[ field.model ] != 'undefined' ) {
+                    if(
+                        rule == 'numeric' &&
+                        value == true &&
+                        typeof item[ field.model ] != 'undefined' &&
+                        angular.equals({}, errors )
+                    ) {
                         if( ! item[ field.model ].match( expression.number ) ) {
                             errors[ field.model ]           =   {};
                             errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ devrait avoir une valeur numérique.', 'nexopos_advanced' );?>';
@@ -70,7 +89,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         }
                     }
 
-                    if( rule == 'decimal' && value == true && typeof item[ field.model ] != 'undefined' ) {
+                    if(
+                        rule == 'decimal' &&
+                        value == true &&
+                        typeof item[ field.model ] != 'undefined' &&
+                        angular.equals({}, errors )
+                    ) {
                         if( ! item[ field.model ].match( expression.decimal ) ) {
                             errors[ field.model ]           =   {};
                             errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ devrait avoir une valeur numérique/décimale.', 'nexopos_advanced' );?>';
@@ -80,7 +104,7 @@ tendooApp.factory( 'sharedValidate', function(){
                 });
             }
 
-            item[ field.model ]     =   angular.isUndefined( item[ field.model ]  ) ? void(0) : item[ field.model ];
+            item[ field.model ]     =   angular.isUndefined( item[ field.model ]  ) ? null : item[ field.model ];
 
             return errors;
         }
