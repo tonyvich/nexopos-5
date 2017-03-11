@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <h3 style="margin-top:0px;"><?php echo __( 'Créer un nouveau produit', 'nexo' );?><a href="<?php echo site_url([ 'dashboard', 'nexopos', 'items', 'types' ] );?>" class="btn btn-primary btn-sm pull-right"><?php echo __( 'Changer de type', 'nexo' );?></a></h3>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 advanced-fields-wrapper">
             <div class="input-group input-group-lg">
                 <span class="ng-hide input-group-btn ">
                     <span class="ng-hide"></span>
@@ -17,7 +17,7 @@
             <br>
             <item-variation></item-variation>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 default-fields-wrapper">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-title">

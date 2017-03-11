@@ -6,7 +6,7 @@
             ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs"
             ng-hide="variation_tab.hide( item )"
             class="{{ tabContentIsActive( variation_tab.active ) ? 'active' : '' }} variation-{{ variation_id }}-tab-header-{{ variation_tab_id }}"
-        ><a href="javascript:void(0)" ng-click="activeTab( $event, variation_id, variation_tab_id )">{{ variation_tab.title }} <span class="badge badge-warning" ng-show="_.keys( variation_tab.errors ).length > 0">{{ _.keys( variation_tab.errors ).length }}</span></a></li>
+        ><a href="javascript:void(0)" ng-click="activeTab( $event, variation_id, variation_tab_id )">{{ variation_tab.title }} <span class="badge badge-warning" ng-show="countAllErrors( variation_tab ) > 0">{{ countAllErrors( variation_tab ) }}</span></a></li>
 
         <li
             class="pull-right"
@@ -153,8 +153,26 @@
                                     {{ field.label }}
                                 </div>
                                 <div class="box-tools pull-right">
+
+                                    <span class="badge badge-warning" ng-show="_.keys( variation_tab.models[ field.model ][ variation_group_id ].errors ).length > 0">{{ _.keys( variation_tab.models[ field.model ][ variation_group_id ].errors ).length }}</span>
+
+                                    <button
+                                        ng-show="variation_tab.models[ field.model ].length > 1" type="button"
+
+                                        ng-click="removeGroup( variation_group_id, variation_tab.models[ field.model ], {
+                                            variation_id        :   variation_id,
+                                            variation_tab_id    :   variation_tab_id,
+                                            variation_group_id  :   variation_group_id,
+                                            variation_tab       :   variation_tab
+                                        })"
+
+                                        name="button"
+
+                                        class="btn btn-sm btn-danger"><i class="fa fa-remove"></i>
+                                    </button>
+
                                     <button ng-show="variation_tab.models[ field.model ].length <= groupLengthLimit" type="button" name="button" class="btn btn-sm btn-primary" ng-click="addGroup( variation_tab.models[ field.model ] )"><i class="fa fa-plus" ></i></button>
-                                    <button ng-show="variation_tab.models[ field.model ].length > 1" type="button" ng-click="removeGroup( variation_group_id, variation_tab.models[ field.model ] )" name="button" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i></button>
+
                                 </div>
                             </div>
                             <div class="box-body variation-{{ variation_id }}-tab-{{ variation_tab_id }}-group-body-{{ variation_group_id }}">
@@ -177,12 +195,14 @@
                                             ng-blur="validate.blur( subField, variation_tab.models[ field.model ][ variation_group_id ], {
                                                 variation_id        :   variation_id,
                                                 variation_tab_id    :   variation_tab_id,
-                                                variation_group_id  :   variation_group_id
+                                                variation_group_id  :   variation_group_id,
+                                                variation_tab       :   variation_tab
                                             })"
                                             ng-focus="validate.focus( subField, variation_tab.models[ field.model ][ variation_group_id ], {
                                               variation_id        :   variation_id,
                                               variation_tab_id    :   variation_tab_id,
-                                              variation_group_id  :   variation_group_id
+                                              variation_group_id  :   variation_group_id,
+                                              variation_tab       :   variation_tab
                                             })"
                                             placeholder="{{ subField.placeholder }}"
                                             >
@@ -198,12 +218,14 @@
                                                 ng-blur="validate.blur( subField, variation_tab.models[ field.model ][ variation_group_id ], {
                                                   variation_id        :   variation_id,
                                                   variation_tab_id    :   variation_tab_id,
-                                                  variation_group_id  :   variation_group_id
+                                                  variation_group_id  :   variation_group_id,
+                                                  variation_tab       :   variation_tab
                                                 })"
                                                 ng-focus="validate.focus( subField, variation_tab.models[ field.model ][ variation_group_id ], {
                                                   variation_id        :   variation_id,
                                                   variation_tab_id    :   variation_tab_id,
-                                                  variation_group_id  :   variation_group_id
+                                                  variation_group_id  :   variation_group_id,
+                                                  variation_tab       :   variation_tab
                                                 })"
                                                 ng-model="variation_tab.models[ field.model ][ variation_group_id ].models[ subField.model ]">
                                                 <option ng-repeat="option in subField.options" value="{{ option.value }}">{{ option.label }}</option>
@@ -224,12 +246,14 @@
                                             ng-focus="validate.focus( subField, variation_tab.models[ field.model ][ variation_group_id ], {
                                               variation_id        :   variation_id,
                                               variation_tab_id    :   variation_tab_id,
-                                              variation_group_id  :   variation_group_id
+                                              variation_group_id  :   variation_group_id,
+                                              variation_tab       :   variation_tab
                                             })"
                                             ng-blur="validate.blur( subField, variation_tab.models[ field.model ][ variation_group_id ], {
                                               variation_id        :   variation_id,
                                               variation_tab_id    :   variation_tab_id,
-                                              variation_group_id  :   variation_group_id
+                                              variation_group_id  :   variation_group_id,
+                                              variation_tab       :   variation_tab
                                             })"
                                             type="text" class="form-control" placeholder="">
                                         </div>

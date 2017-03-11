@@ -45,10 +45,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         typeof item[ field.model ] != 'undefined' &&
                         angular.equals({}, errors )
                     ) {
-                        if( ! item[ field.model ].match( expression.email ) ) {
-                            errors[ field.model ]           =   {};
-                            errors[ field.model ].msg       =   '<?php echo _s( 'La valeur %% n\'est pas une adresse email valide.', 'nexopos_advanced' );?>';
-                            errors[ field.model ].label     =   field.label;
+                        if( item[ field.model ] != null ) {
+                            if( ! item[ field.model ].match( expression.email ) ) {
+                                errors[ field.model ]           =   {};
+                                errors[ field.model ].msg       =   '<?php echo _s( 'La valeur %% n\'est pas une adresse email valide.', 'nexopos_advanced' );?>';
+                                errors[ field.model ].label     =   field.label;
+                            }
                         }
                     }
 
@@ -57,10 +59,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         typeof item[ field.model ] != 'undefined' &&
                         angular.equals({}, errors )
                     ) {
-                        if( item[ field.model ].length < value ) {
-                            errors[ field.model ]           =   {};
-                            errors[ field.model ].msg       =   '<?php echo _s( 'La longueur de ce champ ne doit pas être inférieure à {0}.', 'nexopos_advanced' );?>' . format( value );
-                            errors[ field.model ].label     =   field.label;
+                        if( item[ field.model ] != null ) {
+                            if( item[ field.model ].length < value ) {
+                                errors[ field.model ]           =   {};
+                                errors[ field.model ].msg       =   '<?php echo _s( 'La longueur de ce champ ne doit pas être inférieure à {0}.', 'nexopos_advanced' );?>' . format( value );
+                                errors[ field.model ].label     =   field.label;
+                            }
                         }
                     }
 
@@ -69,10 +73,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         typeof item[ field.model ] != 'undefined' &&
                         angular.equals({}, errors )
                     ) {
-                        if( item[ field.model ].length > value ) {
-                            errors[ field.model ]           =   {};
-                            errors[ field.model ].msg       =   '<?php echo _s( 'La longueur de ce champ ne doit pas excéder {0}', 'nexopos_advanced' );?>' . format( value );
-                            errors[ field.model ].label     =   field.label;
+                        if( item[ field.model ] != null ) {
+                            if( item[ field.model ].length > value ) {
+                                errors[ field.model ]           =   {};
+                                errors[ field.model ].msg       =   '<?php echo _s( 'La longueur de ce champ ne doit pas excéder {0}', 'nexopos_advanced' );?>' . format( value );
+                                errors[ field.model ].label     =   field.label;
+                            }
                         }
                     }
 
@@ -82,10 +88,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         typeof item[ field.model ] != 'undefined' &&
                         angular.equals({}, errors )
                     ) {
-                        if( ! item[ field.model ].match( expression.number ) ) {
-                            errors[ field.model ]           =   {};
-                            errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ devrait avoir une valeur numérique.', 'nexopos_advanced' );?>';
-                            errors[ field.model ].label     =   field.label;
+                        if( item[ field.model ] != null ) {
+                            if( ! item[ field.model ].match( expression.number ) ) {
+                                errors[ field.model ]           =   {};
+                                errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ devrait avoir une valeur numérique.', 'nexopos_advanced' );?>';
+                                errors[ field.model ].label     =   field.label;
+                            }
                         }
                     }
 
@@ -95,10 +103,12 @@ tendooApp.factory( 'sharedValidate', function(){
                         typeof item[ field.model ] != 'undefined' &&
                         angular.equals({}, errors )
                     ) {
-                        if( ! item[ field.model ].match( expression.decimal ) ) {
-                            errors[ field.model ]           =   {};
-                            errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ devrait avoir une valeur numérique/décimale.', 'nexopos_advanced' );?>';
-                            errors[ field.model ].label     =   field.label;
+                        if( item[ field.model ] != null ) {
+                            if( ! item[ field.model ].match( expression.decimal ) ) {
+                                errors[ field.model ]           =   {};
+                                errors[ field.model ].msg       =   '<?php echo _s( 'Ce champ devrait avoir une valeur numérique/décimale.', 'nexopos_advanced' );?>';
+                                errors[ field.model ].label     =   field.label;
+                            }
                         }
                     }
                 });
@@ -136,7 +146,7 @@ tendooApp.factory( 'sharedValidate', function(){
         }
 
         this.focus      =   function( field, item, $event ) {
-            var fieldClass      =   '.' + field.model;
+            var fieldClass      =   '.' + field.model + '-helper';
             if( angular.isDefined( $event ) ) {
                 angular.element( $event.target ).closest( '.form-group' ).removeClass( 'has-error' );
                 angular.element( $event.target ).closest( '.form-group' ).find( 'p.help-block' ).text( field.desc );
@@ -157,7 +167,7 @@ tendooApp.factory( 'sharedValidate', function(){
             var validation      =   this.__run( field, item );
             var response        =   this.__response( validation );
             var errors          =   this.__replaceTemplate( response.errors );
-            var fieldClass      =   '.' + field.model;
+            var fieldClass      =   '.' + field.model + '-helper';
             if( ! response.isValid ) {
                 if( angular.isDefined( $event ) ) {
                     angular.element( $event.target ).closest( '.form-group' ).removeClass( 'has-success' );

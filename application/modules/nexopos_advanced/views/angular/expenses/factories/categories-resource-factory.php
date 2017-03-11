@@ -1,8 +1,14 @@
+/**
+ * @action : require removal
+ * @reason : It's not required to have this as a shared resource
+**/
+
 <?php
 global $Options;
 $this->load->config( 'rest' );
 ?>
-tendooApp.factory( 'sharedExpensesCategoriesResource', function( $resource ) {
+
+tendooApp.factory( 'expensesCategoriesResource', function( $resource ) {
     return $resource(
         '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'expenses-categories/:id?order_by=:order_by&order_type=:order_type&limit=:limit' ]);?>',
         {
