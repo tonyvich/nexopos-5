@@ -19,11 +19,28 @@ class Media_Manager_Filters extends Tendoo_Module
         $menus  =   array_insert_after( 'dashboard', $menus, 'media-manager', [
             array(
                 'title'     =>      __( 'Media Manager', 'media-manager' ),
-                'href'      =>      site_url([ 'dashboard', 'medias' ])
+                'href'      =>      site_url([ 'dashboard', 'media-manager/items' ])
             )
         ]);
 
         return $menus;
     }
 
+    /**
+     *  Angular Dashboard dependency
+     *  @param array
+     *  @return array
+    **/
+
+    public function dependencies( $deps )
+    {
+        $deps[]     =   'ngRoute';
+        $deps[]     =   'ngResource';
+        $deps[]     =   'oc.lazyLoad';
+        $deps[]     =   'ui-notification';
+        $deps[]     =   'ui.bootstrap';
+        $deps[]     =   'ae-datetimepicker';
+        $deps[]     =   'oitozero.ngSweetAlert';
+        return $deps;
+    }
 }
