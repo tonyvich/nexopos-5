@@ -1,4 +1,15 @@
-var expenses          =   function( $scope, $http, expensesTextDomain,  expensesFields, expensesResource, $location, sharedValidate,sharedExpensesCategoriesResource, rawToOptions, sharedDocumentTitle ) {
+var expenses          =   function(
+    $scope,
+    $http,
+    $location,
+    expensesTextDomain,
+    expensesFields,
+    expensesResource,
+    expensesCategoriesResource,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une dépense', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   expensesTextDomain;
@@ -9,7 +20,7 @@ var expenses          =   function( $scope, $http, expensesTextDomain,  expenses
 
     // Settings options for selecting category parent
 
-    sharedExpensesCategoriesResource.get(
+    expensesCategoriesResource.get(
         function(data){
             $scope.fields[3].options = rawToOptions(data.entries, 'id', 'name');
         }
@@ -45,5 +56,17 @@ var expenses          =   function( $scope, $http, expensesTextDomain,  expenses
     }
 }
 
-expenses.$inject    =   [ '$scope', '$http','expensesTextDomain', 'expensesFields', 'expensesResource', '$location', 'sharedValidate', 'sharedExpensesCategoriesResource', 'rawToOptions', 'sharedDocumentTitle' ];
+expenses.$inject    =   [
+    '$scope',
+    '$http',
+    '$location',
+    'expensesTextDomain',
+    'expensesFields',
+    'expensesResource',
+    'expensesCategoriesResource',
+    'sharedValidate',
+    'rawToOptions',
+    'sharedDocumentTitle'
+];
+
 tendooApp.controller( 'expenses', expenses );
