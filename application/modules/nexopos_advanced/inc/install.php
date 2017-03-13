@@ -359,9 +359,9 @@ class NexoPOS_Install extends Tendoo_Module
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Registers
-        **/
+    /**
+     * Registers
+    **/
 
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -375,20 +375,36 @@ class NexoPOS_Install extends Tendoo_Module
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Register Activity
-        **/
+    /**
+     * Registers history
+    **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers_activities` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `amount` float NOT NULL,
-          `type` varchar(200) NOT NULL,
-          `author` int(11) NOT NULL,
-          `ref_register` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers_history` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `amount` float NOT NULL,
+        `type` varchar(200) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `author` int(11) NOT NULL,
+        `register` int(11) NOT NULL,
+        `description` text,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+
+  /**
+   * Register Activity
+  **/
+
+  $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers_activities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+      `amount` float NOT NULL,
+      `type` varchar(200) NOT NULL,
+      `author` int(11) NOT NULL,
+      `ref_register` int(11) NOT NULL,
+      `date_creation` datetime NOT NULL,
+      `date_modification` datetime NOT NULL,
+      PRIMARY KEY (`id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
         /**
          * Customers
@@ -459,19 +475,36 @@ class NexoPOS_Install extends Tendoo_Module
           PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Expense Category
-        **/
+    /**
+     * Expense Category
+    **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_expenses_categories` (
+    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_expenses_categories` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          `author` int(11) NOT NULL,
-          `description` text,
-          PRIMARY KEY (`id`)
+      `name` varchar(200) NOT NULL,
+      `date_creation` datetime NOT NULL,
+      `date_modification` datetime NOT NULL,
+      `author` int(11) NOT NULL,
+      `description` text,
+      PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+
+    /**
+    *  Stores
+    **/
+
+    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_stores` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `name` varchar(200) NOT NULL,
+      `image` varchar(200),
+      `authorized_users` varchar(200),
+      `status` varchar(200),
+      `date_creation` datetime NOT NULL,
+      `date_modification` datetime NOT NULL,
+      `author` int(11) NOT NULL,
+      `description` text,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
         $this->options->set( 'nexopos_installed', 'yes' );
     }
