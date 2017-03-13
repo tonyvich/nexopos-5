@@ -366,6 +366,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
+          `authorized_users` varchar(200),
           `description` text,
           `status` varchar(200) NOT NULL,
           `author` int(11) NOT NULL,
