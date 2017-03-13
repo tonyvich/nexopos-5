@@ -11,7 +11,7 @@
                     'factories/expenses/add-text-domain.js',
                     'factories/expenses/fields.js',
                     'factories/expenses/resource.js',
-                    'factories/expenses/categories-resource.js',
+                    'factories/expenses-categories/resource.js',
                     'factories/expenses/table.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',

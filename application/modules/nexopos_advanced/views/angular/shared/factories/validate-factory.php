@@ -114,7 +114,7 @@ tendooApp.factory( 'sharedValidate', function(){
                 });
             }
 
-            item[ field.model ]     =   angular.isUndefined( item[ field.model ]  ) ? null : item[ field.model ];
+            item[ field.model ]     =   angular.isUndefined( item[ field.model ]  ) ? '' : item[ field.model ];
 
             return errors;
         }
