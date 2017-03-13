@@ -22,6 +22,7 @@ class Nexopos_advanced extends REST_Controller
         coupons,
         storage,
         registers,
+        users,
         stores;
 
     public function __construct()
