@@ -20,7 +20,8 @@ class Nexopos_advanced extends REST_Controller
         expenses_categories,
         expenses,
         coupons,
-        storage;
+        storage,
+        registers;
 
     public function __construct()
     {
