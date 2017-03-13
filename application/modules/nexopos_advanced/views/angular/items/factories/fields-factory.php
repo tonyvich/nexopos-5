@@ -1,6 +1,15 @@
 tendooApp.factory( 'itemFields', [ '$location', 'options', function( $location, options ){
     return [
         {
+            type    :   'hidden',
+            model   :   'name',
+            validation  :   {
+                required    :   true
+            },
+            desc    :   '<?php echo _s( 'Le nom du produit permet de le distinguer des autres produits.', 'nexopos_advanced' );?>',
+            label   :   '<?php echo _s( 'Nom du produit', 'nexopos' );?>'
+        },
+        {
             type    :   'select',
             label   :   '<?php echo _s( 'Catégorie', "nexopos_advanced" );?>',
             model   :   'ref_category',

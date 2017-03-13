@@ -9,6 +9,7 @@ var items               =   function(
     item,
     itemAdvancedFields,
     itemFields,
+    itemResource,
     providersResource,
     categoriesResource,
     deliveriesResource,
@@ -47,11 +48,14 @@ var items               =   function(
             }
         }
 
-        if( ! angular.isDefined( variation_tab.models ) ) {
+        if( ! angular.isDefined( variation_tab.models ) && angular.isDefined( ids ) ) {
             variation_tab.models    =   {};
         }
 
-        var validation      =   this.__run( field, variation_tab.models );
+        // if validation runs on default fields, we don't fetch models from .models but directly on the object wrapper (specially for default fields)
+        var validation      =   angular.isDefined( ids ) ?
+            this.__run( field, variation_tab.models ) :
+            this.__run( field, variation_tab );
         var response        =   this.__response( validation );
         var errors          =   this.__replaceTemplate( response.errors );
         var fieldClass      =   '.' + field.model + '-helper';
@@ -122,10 +126,14 @@ var items               =   function(
                 .tabs[ ids.variation_tab_id ]
                 .groups_errors[ ids.variation_tab.namespace ];
 
-                delete groups_errors[ field.model ];
+                // suppression d'une erreur dans le groupe
+                delete groups_errors[ ids.variation_group_id ][ field.model ];
             }
 
-            delete variation_tab.errors[ field.model ]; // delete error for other fields
+            // delete if the tab has an error to avoid error
+            if( angular.isDefined( variation_tab.errors ) ) {
+                delete variation_tab.errors[ field.model ]; // delete error for other fields
+            }
         }
 
         return response.isValid ? null : validation;
@@ -219,7 +227,6 @@ var items               =   function(
         } else { // for default fields
             var variation_tab_selector      =   '.default-fields-wrapper';
         }
-
 
         angular.element( variation_tab_selector + ' ' + fieldClass )
         .closest( '.form-group' ).removeClass( 'has-error' );
@@ -360,6 +367,12 @@ var items               =   function(
     **/
 
     $scope.getClass         =   function( ids ) {
+
+        // if ids is not default, just return a non defined value.
+        if( typeof ids == 'undefined' ) {
+            return {};
+        }
+
         var classes_object          =   {
             variation               :   '.variation-' + ids.variation_id,
             variation_header        :   '.variation-header-' + ids.variation_id,
@@ -376,6 +389,16 @@ var items               =   function(
         }
 
         return classes_object;
+    }
+
+    /**
+     *  Purify Item
+     *  @param object item
+     *  @return object purified item
+    **/
+
+    $scope.purifyItem           =   function( item ) {
+
     }
 
     /**
@@ -483,12 +506,14 @@ var items               =   function(
 
         // validating
         var global_validation       =   $scope.validate.blurAll();
-        console.log( global_validation );
         var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
 
         if( global_validation.length > 0 ) {
             return sharedAlert.warning( warningMessage.format( global_validation.length ) );
         }
+
+        // When submiting item
+        console.log( item );
     }
 
     /**
@@ -612,6 +637,7 @@ items.$inject           =   [
     'item',
     'itemAdvancedFields',
     'itemFields',
+    'itemResource',
     'providersResource',
     'categoriesResource',
     'deliveriesResource',
