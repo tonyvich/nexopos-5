@@ -1,10 +1,10 @@
-var storesMain          =   function( storesAddTextDomain, $scope, $http, storesResource, $location, sharedValidate, sharedTable, registerTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var storesMain          =   function( storesAddTextDomain, $scope, $http, storesResource, $location, sharedValidate, sharedTable, storeTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des boutiques', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   storesAddTextDomain;
     $scope.validate         =   new sharedValidate();
     $scope.table            =   new sharedTable();
-    $scope.table.columns    =   registerTable.columns;
+    $scope.table.columns    =   storeTable.columns;
 
     /** Adjust Entry actions **/
     _.each( sharedEntryActions, function( value, key ) {
@@ -60,7 +60,7 @@ storesMain.$inject    =   [
     '$location',
     'sharedValidate',
     'sharedTable',
-    'registerTable',
+    'storeTable',
     'paginationFactory',
     'sharedTableActions',
     'sharedAlert',

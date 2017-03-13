@@ -1,3 +1,3 @@
-tendooApp.factory( 'taxesTableActions', function(){
+tendooApp.factory( 'storesTableActions', function(){
     return [];
 });
