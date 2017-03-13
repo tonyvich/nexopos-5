@@ -30,6 +30,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `name` varchar(200) NOT NULL,
+          `namespace` varchar(200) NOT NULL,
 		  `description` text,
 		  `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
