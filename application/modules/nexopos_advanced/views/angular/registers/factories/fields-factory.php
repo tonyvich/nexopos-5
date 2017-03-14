@@ -1,4 +1,4 @@
-tendooApp.factory( 'registersFields', [ 'options', function( options ){
+tendooApp.factory( 'registersFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Caisse Name', "nexopos_advanced" );?>',

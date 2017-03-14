@@ -1,4 +1,4 @@
-tendooApp.factory( 'departmentsFields', [ 'options', function( options ){
+tendooApp.factory( 'departmentsFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Nom du rayon', "nexopos_advanced" );?>',

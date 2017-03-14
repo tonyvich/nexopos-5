@@ -829,6 +829,20 @@ class Tendoo_Loader
         return get_instance()->config->load($file, $use_sections, $fail_gracefully);
     }
 
+    /**
+     *  Load Module Config
+     *  @param void
+     *  @return void
+    **/
+
+    public function module_config( $module_namespace, $file = '', $use_sections = false, $fail_gracefully = false)
+    {
+        if( $file == '' ) {
+            return get_instance()->config->load( '../modules/' . $module_namespace . '/inc/config/' . $module_namespace, $use_sections, $fail_gracefully);
+        }
+        return get_instance()->config->load( '../modules/' . $module_namespace . '/inc/config/' . $file, $use_sections, $fail_gracefully);
+    }
+
     // --------------------------------------------------------------------
 
     /**

@@ -1,4 +1,4 @@
-tendooApp.factory( 'deliveriesFields', [ 'options', function( options ){
+tendooApp.factory( 'deliveriesFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Delivery Name', "nexopos_advanced" );?>',
@@ -20,7 +20,7 @@ tendooApp.factory( 'deliveriesFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo __( 'Coût Automatique', 'nexopos_advanced' );?>',
         model   :   'auto_cost',
-        options     :   options.yesOrNo,
+        options     :   sharedOptions.yesOrNo,
         desc    :   '<?php echo _s( 'Chaque approvisionnement à un coût. Il peut être calculé automatiquement selon le coût de chaque produit, ou vous pouvez le définir manuellement', 'nexopos_advanced' );?>'
     },{
         type        :   'datepick',

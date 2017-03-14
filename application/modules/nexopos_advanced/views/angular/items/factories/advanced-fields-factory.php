@@ -1,11 +1,11 @@
 tendooApp.factory( 'itemAdvancedFields', [
-    'options',
+    'sharedOptions',
     'barcodeOptions',
     'item',
     'rawToOptions',
     '$location',
     function(
-        options,
+        sharedOptions,
         barcodeOptions,
         item,
         rawToOptions,
@@ -18,7 +18,7 @@ tendooApp.factory( 'itemAdvancedFields', [
                 model   :   'ref_coupon',
                 label   :   '<?php echo _s( 'Assigner à un coupon', 'nexo' );?>',
                 desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexo' );?>',
-                options   : options.yesOrNo,
+                options   : sharedOptions.yesOrNo,
                 show    :   function() {
                     return item.namespace == 'coupon' ? true : false;
                 }
@@ -42,7 +42,7 @@ tendooApp.factory( 'itemAdvancedFields', [
                 label       :   '<?php echo _s( 'Prix de vente', 'nexo' );?>',
                 model       :   'sale_price',
                 desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit sera vendu.' ,'nexo' );?>',
-                show        :   function(){
+                show        :   function( item ){
                     return true;
                 },
                 validation  :   {
@@ -65,7 +65,7 @@ tendooApp.factory( 'itemAdvancedFields', [
                 label       :   '<?php echo _s( 'Activer les Promotion', 'nexo' );?>',
                 model       :   'enable_special_price',
                 desc        :   '<?php echo _s( 'Vous permet de vendre le produit à un prix spéciale.' ,'nexo' );?>',
-                options     :   options.yesOrNo,
+                options     :   sharedOptions.yesOrNo,
                 show        :   function(){
                     return true;
                 }

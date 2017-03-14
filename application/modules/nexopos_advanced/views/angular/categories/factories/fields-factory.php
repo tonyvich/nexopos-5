@@ -1,4 +1,4 @@
-tendooApp.factory( 'categoriesFields', [ 'options', function( options ){
+tendooApp.factory( 'categoriesFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Categories Name', "nexopos_advanced" );?>',
@@ -11,7 +11,7 @@ tendooApp.factory( 'categoriesFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo __( 'Catégorie Parente', 'nexopos_advanced' );?>',
         model   :   'ref_parent',
-        options     :   options.yesOrNo,
+        options     :   sharedOptions.yesOrNo,
         desc    :   '<?php echo _s( 'Une catégorie peut appartenir à une autre Exemple : Femmes > Robes > Soirées.', 'nexopos_advanced' );?>'
     },{
         type    :   'text',

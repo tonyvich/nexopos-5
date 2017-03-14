@@ -1,4 +1,4 @@
-tendooApp.factory( 'itemFields', [ '$location', 'options', function( $location, options ){
+tendooApp.factory( 'itemFields', [ '$location', 'sharedOptions', function( $location, sharedOptions ){
     return [
         {
             type    :   'hidden',
@@ -41,13 +41,28 @@ tendooApp.factory( 'itemFields', [ '$location', 'options', function( $location, 
             }]
         },{
             type    :   'select',
+            label   :   '<?php echo _s( 'Taxe', "nexopos_advanced" );?>',
+            model   :   'ref_taxe',
+            desc    :   '<?php echo _s( 'Le prix de vente variera en fonction de la taxe que vous appliquerez au produit.', 'nexopos_advanced' );?>',
+            validation  :   {
+                required        :   true
+            },
+            buttons     :   [{
+                class   :   'default',
+                click   :   function() {
+                    $location.path( 'taxes/add' );
+                },
+                icon    :   'fa fa-plus'
+            }]
+        },{
+            type    :   'select',
             label   :   '<?php echo _s( 'Status', "nexopos_advanced" );?>',
             model   :   'status',
             desc    :   '<?php echo _s( 'Rendre le produit disponible pour la vente.', 'nexopos_advanced' );?>',
             validation  :   {
                 required        :   true
             },
-            options     :   options.yesOrNo
+            options     :   sharedOptions.yesOrNo
         }
 
     ]

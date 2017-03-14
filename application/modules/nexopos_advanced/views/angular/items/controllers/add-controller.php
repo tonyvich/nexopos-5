@@ -14,6 +14,7 @@ var items               =   function(
     categoriesResource,
     deliveriesResource,
     unitsResource,
+    taxesResource,
     $routeParams,
     sharedDocumentTitle,
     sharedValidate,
@@ -26,6 +27,7 @@ var items               =   function(
 
     $scope.category_desc  =   '<?php echo __( 'Assigner une catégorie permet de regrouper les produits similaires.', 'nexopos_advanced' );?>';
     $scope.validate         =   new sharedValidate();
+    $scope.taxes            =   new Array;
 
     /**
      *  Blue a specific field
@@ -596,6 +598,53 @@ var items               =   function(
         sharedFieldEditor( 'ref_unit', $scope.fields ).options        =   rawToOptions( data.entries, 'id', 'name' );
     });
 
+    // taxes Resource
+    taxesResource.get( function( data ) {
+        sharedFieldEditor( 'ref_taxe', $scope.fields ).options        =   rawToOptions( data.entries, 'id', 'name' );
+    });
+
+    // Display a dynamic price when a taxes is selected
+    sharedFieldEditor( 'sale_price', itemAdvancedFields.basic ).show          =   function( tab, item ) {
+        if( item.ref_taxe ) {
+            if( angular.isUndefined( $scope.taxes[ item.ref_taxe ] ) ) {
+                // To Avoid several calls to the database
+                $scope.taxes[ item.ref_taxe ]           =   {};
+                taxesResource.get({
+                    id      :   item.ref_taxe
+                },function( entries ) {
+                    $scope.taxes[ item.ref_taxe ]       =   entries;
+                });
+
+                if( angular.isDefined( tab.models.sale_price ) ) {
+                    if( $scope.taxes[ item.ref_taxe ].type == 'percent' ) {
+                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ item.ref_taxe ].value ) ) / 100;
+                        var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
+                        this.addon          =   newPrice;
+                    } else {
+                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ item.ref_taxe ].value );
+                        this.addon          =   newPrice;
+                    }
+                }
+            }
+
+            if( _.keys( $scope.taxes[ item.ref_taxe ] ).length > 0 ) {
+                if( angular.isDefined( tab.models.sale_price ) ) {
+                    if( $scope.taxes[ item.ref_taxe ].type == 'percent' ) {
+                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ item.ref_taxe ].value ) ) / 100;
+                        var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
+                        this.addon          =   newPrice;
+                    } else {
+                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ item.ref_taxe ].value );
+                        this.addon          =   newPrice;
+                    }
+                }
+            }
+
+
+        }
+        return true;
+    }
+
     // Item Status
     item.variations     =   new Array;
     item.name           =   '';
@@ -642,6 +691,7 @@ items.$inject           =   [
     'categoriesResource',
     'deliveriesResource',
     'unitsResource',
+    'taxesResource',
     '$routeParams',
     'sharedDocumentTitle',
     'sharedValidate',

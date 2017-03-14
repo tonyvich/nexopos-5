@@ -1,4 +1,4 @@
-tendooApp.factory( 'expensesFields', [ 'options', function( options ){
+tendooApp.factory( 'expensesFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Expense Name', "nexopos_advanced" );?>',
@@ -29,7 +29,7 @@ tendooApp.factory( 'expensesFields', [ 'options', function( options ){
         label       :   '<?php echo __( 'Catégorie', 'nexopos_advanced' );?>',
         model       :   'ref_category',
         desc        :   '<?php echo _s( 'Veuillez assigner cette dépense à une catégorie.', 'nexopos_advanced' );?>',
-        options     :    options.yesOrNo,
+        options     :    sharedOptions.yesOrNo,
         validation  :    {
             required   :   true
         }

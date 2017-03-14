@@ -68,29 +68,8 @@
             ng-blur="validate.blur( field, item )"
             ng-focus="validate.focus( field, item )"
             ng-model="item[ field.model ]" options="field.options" display-prop="label" id-prop="id"></multiselect>
-        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="font-size:12px;">{{ field.desc }}</p>
     </div>
-
-    <!-- <div class="form-group" ng-if="field.type == 'datetimepicker'">
-        <div class="dropup">
-            <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
-                <div class="input-group">
-                    <span class="input-group-addon">{{ field.label }}</span>
-                    <input type="text" id="date" name="date" class="form-control"  ng-model="item[ field.model ]">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <datetimepicker
-                    data-before-render="field.beforeRender( $dates, $view, $leftDate, $upDate, $rightDate, variation )"
-                    data-ng-model="item[ field.model ]"
-                    data-on-set-time="field.onSet( $broadcast )"
-                    data-datetimepicker-config="{ dropdownSelector: '#dropdown' }">
-                </datetimepicker>
-            </ul>
-        </div>
-        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
-    </div> -->
 
     <div class="form-group" ng-if="field.type == 'datetime-popup'">
         <p class="input-group">

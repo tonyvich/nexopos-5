@@ -92,3 +92,6 @@
  *
  * shop_checkout_vat_percent
  * permet de définir le pourcentage des taxes
+ * // Boutique
+ * shop_stores_enable
+ * Permet d'activer ou pas les fonctionnalité multi boutique
