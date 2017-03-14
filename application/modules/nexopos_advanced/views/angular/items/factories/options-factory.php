@@ -1,4 +1,4 @@
-tendooApp.factory( 'options', function(){
+tendooApp.factory( 'sharedOptions', function(){
     return {
         yesOrNo         :   [
             {

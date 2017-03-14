@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once( dirname( __FILE__ ) . '/controllers/nexopos.php' );
 include_once( dirname( __FILE__ ) . '/controllers/angular.php' );
+include_once( dirname( __FILE__ ) . '/controllers/settings.php' );
+include_once( dirname( __FILE__ ) . '/controllers/stores.php' );
 
 class NexoPOS_Actions extends Tendoo_Module
 {
@@ -21,6 +23,8 @@ class NexoPOS_Actions extends Tendoo_Module
     {
         $this->Gui->register_page_object( 'nexopos', new NexoPOS_Main_Controller );
         $this->Gui->register_page_object( 'angular', new NexoPOS_Angular_Controller );
+        $this->Gui->register_page_object( 'nexopos-settings', new NexoPOS_Settings_Controller );
+        $this->Gui->register_page_object( 'stores', new NexoPOS_Stores_Controller );
     }
 
     /**

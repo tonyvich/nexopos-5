@@ -1,4 +1,4 @@
-tendooApp.factory( 'couponsFields', [ 'options', function( options ){
+tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Nom du coupon', "nexopos_advanced" );?>',
@@ -19,7 +19,7 @@ tendooApp.factory( 'couponsFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo _s( 'Type de réduction', 'nexopos_advanced' );?>',
         model   :   'discount_type',
-        options     :   options.percentOrFlat,
+        options     :   sharedOptions.percentOrFlat,
         validation : {
             required : true
         },

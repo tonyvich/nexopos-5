@@ -1,4 +1,4 @@
-tendooApp.factory( 'customersFields', [ 'options', function( options ){
+tendooApp.factory( 'customersFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Nom du client', "nexopos_advanced" );?>',
@@ -12,7 +12,7 @@ tendooApp.factory( 'customersFields', [ 'options', function( options ){
         label   :   '<?php echo __( 'Groupe parent', 'nexopos_advanced' );?>',
         model   :   'ref_group',
         desc    :   '<?php echo _s( 'Veuillez déterminer à quel groupe appartient le client.', 'nexopos_advanced' );?>',
-        options     :   options.percentOrFlat,
+        options     :   sharedOptions.percentOrFlat,
         validation : {
             required : true
         }
@@ -25,7 +25,7 @@ tendooApp.factory( 'customersFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo __( 'Sexe', 'nexopos_advanced' );?>',
         model   :   'sex',
-        options     :   options.maleOrFemale,desc    :   '<?php echo _s( 'Vous pouvez définir le genre du client.', 'nexopos_advanced' );?>',
+        options     :   sharedOptions.maleOrFemale,desc    :   '<?php echo _s( 'Vous pouvez définir le genre du client.', 'nexopos_advanced' );?>',
         validation : {
             required : true
         }

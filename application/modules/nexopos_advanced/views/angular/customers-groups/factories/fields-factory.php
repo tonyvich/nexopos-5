@@ -1,4 +1,4 @@
-tendooApp.factory( 'customersGroupsFields', [ 'options', function( options ){
+tendooApp.factory( 'customersGroupsFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Nom du groupe', "nexopos_advanced" );?>',
@@ -11,7 +11,7 @@ tendooApp.factory( 'customersGroupsFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo __( 'Activer les réductions', 'nexopos_advanced' );?>',
         model   :   'enable_discount',
-        options     :   options.yesOrNo,
+        options     :   sharedOptions.yesOrNo,
         validation : {
             required : true
         }
@@ -45,7 +45,7 @@ tendooApp.factory( 'customersGroupsFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo __( 'Type de réduction', 'nexopos_advanced' );?>',
         model   :   'discount_type',
-        options     :   options.percentOrFlat,
+        options     :   sharedOptions.percentOrFlat,
         validation : {
             required : true
         }

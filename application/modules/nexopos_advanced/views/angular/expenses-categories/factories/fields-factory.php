@@ -1,4 +1,4 @@
-tendooApp.factory( 'expensesCategoriesFields', [ 'options', function( options ){
+tendooApp.factory( 'expensesCategoriesFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Expense Category Name', "nexopos_advanced" );?>',

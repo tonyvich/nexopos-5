@@ -17,6 +17,7 @@ class NexoPOS_Advanced_Init extends Tendoo_Module {
         $this->actions  =   new NexoPOS_Actions;
         $this->install  =   new NexoPOS_Install;
 
+        $this->load->module_config( 'nexopos_advanced' );
         $this->load->module_model( 'nexopos_advanced', 'nexopos_deliveries_model', 'deliveries' );
         $this->load->module_model( 'nexopos_advanced', 'nexopos_providers_model', 'providers' );
         $this->load->module_model( 'nexopos_advanced', 'nexopos_categories_model', 'categories' );
