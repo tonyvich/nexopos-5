@@ -1,4 +1,5 @@
-tendooApp.factory( 'taxesFields', [ 'options', function( options ){
+tendooApp.factory( 'taxesFields', [ 'sharedOptions', function( sharedOptions ){
+    console.log( sharedOptions );
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Taxes Name', "nexopos_advanced" );?>',
@@ -11,7 +12,7 @@ tendooApp.factory( 'taxesFields', [ 'options', function( options ){
         type    :   'select',
         label   :   '<?php echo __( 'Type de la taxe', 'nexopos_advanced' );?>',
         model   :   'type',
-        options     :   options.percentOrFlat,
+        options     :   sharedOptions.percentOrFlat,
         validation : {
             required : true
         },

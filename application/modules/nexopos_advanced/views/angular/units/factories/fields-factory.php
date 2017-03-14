@@ -1,4 +1,4 @@
-tendooApp.factory( 'unitsFields', [ 'options', function( options ){
+tendooApp.factory( 'unitsFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Taxes Name', "nexopos_advanced" );?>',

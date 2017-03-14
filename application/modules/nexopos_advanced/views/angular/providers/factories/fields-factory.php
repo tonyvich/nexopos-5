@@ -1,4 +1,4 @@
-tendooApp.factory( 'providersFields', [ 'options', function( options ){
+tendooApp.factory( 'providersFields', [ 'sharedOptions', function( sharedOptions ){
     return [{
         type    :   'hidden',
         label   :   '<?php echo _s( 'Provider Name', "nexopos_advanced" );?>',

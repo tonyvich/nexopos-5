@@ -17,7 +17,6 @@
                     'factories/items/barcode-options.js',
                     'factories/items/fields.js',
                     'factories/items/advanced-fields.js',
-                    'factories/items/options.js',
                     'factories/items/providers.js',
                     'factories/items/resource.js',
                     'factories/items/tabs.js',
@@ -25,10 +24,12 @@
                     'factories/categories/resource.js',
                     'factories/deliveries/resource.js',
                     'factories/units/resource.js',
+                    'factories/taxes/resource.js',
                     'directives/items/variations.js',
                     'shared_factories/document-title.js',
                     'shared_factories/validate.js',
                     'shared_factories/raw-to-options.js',
+                    'shared_factories/options.js',
                     'shared_factories/field-editor.js',
                     'shared_factories/alert.js'
                 ]

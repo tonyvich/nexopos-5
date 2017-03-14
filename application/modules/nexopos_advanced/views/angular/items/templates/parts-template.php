@@ -64,6 +64,7 @@
                             variation_tab_id    :   variation_tab_id
                         })"
                         >
+                        <span ng-show="field.addon" class="input-group-addon">{{ field.addon }}</span>
                     </div>
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                 </div>
@@ -206,6 +207,7 @@
                                             })"
                                             placeholder="{{ subField.placeholder }}"
                                             >
+                                            <span ng-show="subField.addon" class="input-group-addon">{{ subField.addon }}</span>
 
                                         </div>
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
