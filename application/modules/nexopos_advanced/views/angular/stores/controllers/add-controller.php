@@ -9,8 +9,9 @@ var stores          =   function( storesAddTextDomain, $scope, $http, storesFiel
     //Submitting Form
 
     $scope.submit       =   function(){
-    $scope.item.author          =   <?= User::id()?>;
-    $scope.item.date_creation   =   tendoo.now();
+    $scope.item.author           = <?= User::id()?>;
+    $scope.item.date_creation    = tendoo.now();
+    $scope.item.authorized_users = JSON.stringify($scope.item.authorized_users); // Converting array to string for database saving purpose
 
     if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
         return $scope.validate.blurAll( $scope.fields, $scope.item );

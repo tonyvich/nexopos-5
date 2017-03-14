@@ -32,6 +32,7 @@ var storesEdit          =   function( storesEditTextDomain, $scope, $http, $rout
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
         $scope.item.date_modification   =   tendoo.now();
+        $scope.item.authorized_users = JSON.stringify($scope.item.authorized_users); // Converting array to string for database saving purpose
 
         if($scope.item.ref_parent == null){
             $scope.item.ref_parent = 0;

@@ -11,7 +11,7 @@ tendooApp.factory( 'registersFields', [ 'options', function( options ){
         type    :   'dropdown_multiselect',
         label   :   '<?php echo __( 'Utilisateurs authorisés', 'nexopos_advanced' );?>',
         model   :   'authorized_users',
-        options :   [{id : 1, label: 'test'},{id : 2, label : 'test2'}]
+
     },{
         type    :   'textarea',
         label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',

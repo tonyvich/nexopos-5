@@ -1,9 +1,15 @@
-tendooApp.factory( 'registerTable', function(){
+tendooApp.factory( 'storeTable', function(){
     return {
         columns     :   [
             {
                 text    :   '<?php echo _s( 'Nom', 'nexopos_advanced' );?>',
                 namespace   :   'name'
+            },{
+                text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
+                namespace   :   'status'
+            },{
+                text    :   '<?php echo _s( 'Image', 'nexopos_advanced' );?>',
+                namespace   :   'image'
             },{
                 text    :   '<?php echo _s( 'Utilisateurs authorisés', 'nexopos_advanced' );?>',
                 namespace   :   'authorized_users'

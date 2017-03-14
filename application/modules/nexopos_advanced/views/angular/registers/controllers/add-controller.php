@@ -1,10 +1,18 @@
-var registers          =   function( registersAddTextDomain, $scope, $http, registersFields, registersResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
+var registers          =   function( registersAddTextDomain, $scope, $http, registersFields, registersResource, $location, sharedValidate, rawToOptions, rawToMultiselectOptions, sharedUserResource, sharedDocumentTitle) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une Caisse enregistreuse', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   registersAddTextDomain;
     $scope.fields           =   registersFields;
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
+
+    // Setting options for dropdown multiselect
+
+    sharedUserResource.get(
+        function(data){
+            $scope.fields[1].options = rawToMultiselectOptions(data.entries, 'id', 'name');
+        }
+    );
 
     //Submitting Form
 
@@ -52,6 +60,8 @@ registers.$inject    =   [
     '$location',
     'sharedValidate',
     'rawToOptions',
+    'rawToMultiselectOptions',
+    'sharedUserResource',
     'sharedDocumentTitle'
 ];
 
