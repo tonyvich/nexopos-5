@@ -29,6 +29,12 @@ tendooApp.factory( 'deliveriesTable', function(){
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
                 namespace   :   'author_name'
             }
+        ],
+        actions    : [
+            {
+                label : 'test',
+                url   : '/test/',
+            }
         ]
     }
 });

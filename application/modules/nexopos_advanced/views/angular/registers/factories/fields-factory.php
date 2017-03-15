@@ -8,14 +8,14 @@ tendooApp.factory( 'registersFields', [ 'sharedOptions', function( sharedOptions
             required        :   true
         }
     },{
-        type    :   'select',
-        label   :   '<?php echo __( 'Statut', 'nexopos_advanced' );?>',
-        model   :   'status',
-        options :   options.status
-    },{
         type    :   'dropdown_multiselect',
         label   :   '<?php echo __( 'Utilisateurs authorisés', 'nexopos_advanced' );?>',
         model   :   'authorized_users',
+    },{
+        type    :   'select',
+        label   :   '<?php echo __( 'Statut', 'nexopos_advanced' );?>',
+        model   :   'status',
+        options :   sharedOptions.status
     },{
         type    :   'textarea',
         label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',
