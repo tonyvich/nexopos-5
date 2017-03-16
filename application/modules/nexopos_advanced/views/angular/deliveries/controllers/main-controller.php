@@ -5,7 +5,6 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
     $scope.validate         =   new sharedValidate();
     $scope.table            =   new sharedTable();
     $scope.table.columns    =   deliveriesTable.columns;
-    $scope.table.customEntryActions = deliveriesTable.actions;
 
     /** Adjust Entry actions **/
     _.each( sharedEntryActions, function( value, key ) {
@@ -16,6 +15,13 @@ var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, d
 
     $scope.table.entryActions   =   sharedEntryActions;
     $scope.table.actions        =   sharedTableActions
+
+    /** Extends Table Entry Actions **/
+    $scope.table.entryActions.push({
+        'name'                  :   '<?php echo _s( 'Imprimer', 'nexopos_advanced' );?>',
+        'namespace'             :   'print',
+        'path'                  :   '/deliveries/print/'
+    });
 
     /**
      *  Table Get

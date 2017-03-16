@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/deliveries/main';
     },
-    controller: 'deliveriesMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -35,7 +34,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/deliveries/edit';
     },
-    controller: 'deliveriesEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -70,7 +68,6 @@
         }
         return 'templates/deliveries/main';
     },
-    controller: 'deliveries',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
