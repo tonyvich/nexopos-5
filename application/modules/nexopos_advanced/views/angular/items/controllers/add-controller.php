@@ -628,14 +628,16 @@ var items               =   function(
             }
 
             if( _.keys( $scope.taxes[ item.ref_taxe ] ).length > 0 ) {
-                if( angular.isDefined( tab.models.sale_price ) ) {
-                    if( $scope.taxes[ item.ref_taxe ].type == 'percent' ) {
-                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ item.ref_taxe ].value ) ) / 100;
-                        var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
-                        this.addon          =   newPrice;
-                    } else {
-                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ item.ref_taxe ].value );
-                        this.addon          =   newPrice;
+                if( angular.isDefined( tab.models ) ) {
+                    if( angular.isDefined( tab.models.sale_price ) ) {
+                        if( $scope.taxes[ item.ref_taxe ].type == 'percent' ) {
+                            var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ item.ref_taxe ].value ) ) / 100;
+                            var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
+                            this.addon          =   newPrice;
+                        } else {
+                            var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ item.ref_taxe ].value );
+                            this.addon          =   newPrice;
+                        }
                     }
                 }
             }

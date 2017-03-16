@@ -51,13 +51,13 @@
  *
  * // Section Caisse
  *
- * shop_checkout_soundfx :
+ * shop_checkout_soundfx_status :
  * permet d'activer les effets sonores sur la caisse
  *
- * shop_checkout_autoprint :
+ * shop_checkout_autoprint_status : (Deprecated)
  * permet d'activer l'impression automatique
  *
- * shop_checkout_register :
+ * shop_checkout_register_status :
  * permet l'utilisation des caisses
  *
  * shop_checkout_discount_status :
@@ -93,5 +93,21 @@
  * shop_checkout_vat_percent
  * permet de définir le pourcentage des taxes
  * // Boutique
- * shop_stores_enable
+ * shop_stores_enable_status
  * Permet d'activer ou pas les fonctionnalité multi boutique
+ *
+ * // Factures
+ *
+ *      // Fonctionnalités
+ *
+ * shop_invoices_email_status
+ * Activer l'envoi de facture par email
+ *
+ * shop_invoices_pdf_status
+ * Permet d'enregistrer les factures sur des fichiers pdf
+ *
+ * shop_invoices_autoprint_status
+ * Permet d'activer l'impression automatique des factures
+ *
+ * shop_invoices_template_status
+ * Permet de choisir dans un liste un modèle qui sert de template pour facture
