@@ -1,4 +1,19 @@
-var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, sharedValidate, sharedTable, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var categoriesMain          =   function(
+    categoriesAddTextDomain,
+    $scope,
+    $http,
+    categoriesResource,
+    $location,
+    sharedValidate,
+    sharedTable,
+    categoryTable,
+    paginationFactory,
+    sharedTableActions,
+    sharedTableHeaderButtons,
+    sharedAlert,
+    sharedEntryActions,
+    sharedDocumentTitle
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories', 'nexopos_advanced' );?>' );
     $scope.textDomain           =   categoriesAddTextDomain;
@@ -7,6 +22,8 @@ var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http
     $scope.table.columns        =   categoryTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.resource       =   categoriesResource;
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -62,6 +79,7 @@ categoriesMain.$inject    =   [
     'categoryTable',
     'paginationFactory',
     'sharedTableActions',
+    'sharedTableHeaderButtons',
     'sharedAlert',
     'sharedEntryActions',
     'sharedDocumentTitle'

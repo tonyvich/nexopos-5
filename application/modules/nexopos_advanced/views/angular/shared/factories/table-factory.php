@@ -5,6 +5,30 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
         this.columns            =   [];
         this.disabledFeatures   =   [];
 
+        // let the use hide a search input
+        this.hideSearch         =   false;
+
+        // Hide Header buttons
+        this.hideHeaderButtons  =   false;
+
+        /**
+         *  Cancel Search
+         *  @param void
+         *  @return void
+        **/
+
+        this.clear             =   function(){
+            var $this           =   this;
+            if( this.resource ) {
+                this.resource.get({},function( data ){
+
+                    $this.entries           =   data.entries;
+                    $this.pages             =   Math.ceil( data.num_rows / $this.limit );
+                    $this.searchModel       =   '';
+                });
+            }
+        }
+
         /**
          *  disable feature
          *  @param string feature to disable
@@ -61,6 +85,24 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
         }
 
         /**
+         *  Get Checked entries
+         *  @param void
+         *  @return array of object
+        **/
+
+        this.getChecked             =   function(){
+            var selectedEntries     =   [];
+
+            _.each( this.entries, function( entry ) {
+                if( entry.checked == true ) {
+                    selectedEntries.push( entry );
+                }
+            })
+
+            return selectedEntries;
+        }
+
+        /**
          *  Get Page
          *  @param int page id
          *  @return void
@@ -71,7 +113,7 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
             $this                   =   this;
             this.order(void(0),function( data ) {
                 $this.entries       =   data.entries;
-                $this.pages         =   Math.ceil( data.num_rows / $scope.table.limit );
+                $this.pages         =   Math.ceil( data.num_rows / $this.limit );
             });
         }
 
@@ -97,6 +139,24 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
             _.each( entries, function( entry ) {
                 entry.checked  =   headCheckbox;
             });
+        }
+
+        /**
+         *  Search
+         *  @param void
+         *  @return void
+        **/
+
+        this.search                     =   function(){
+            var $this           =   this;
+            if( this.resource ) {
+                this.resource.get({
+                    search  :   this.searchModel
+                },function( data ){
+                    $this.entries        =   data.entries;
+                    $this.pages          =   Math.ceil( data.num_rows / $this.limit );
+                });
+            }
         }
 
         /**
