@@ -430,6 +430,28 @@ class NexoPOS_Install extends Tendoo_Module
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
         /**
+         *Customers Adresses
+        **/
+
+    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_address` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `company` varchar(200) NOT NULL,
+      `first_address` varchar(200) NOT NULL,
+      `second_address` varchar(200) NOT NULL,
+      `pobox` varchar(200) NOT NULL,
+      `author` int(11) NOT NULL,
+      `town` varchar(200) NOT NULL,
+      `country` varchar(200) NOT NULL,
+      `state` varchar(200) NOT NULL,
+      `phone` varchar(200) NOT NULL,
+      `email` varchar(200) NOT NULL,
+      `ref_customer` varchar(200) NOT NULL,
+      `date_creation` datetime NOT NULL,
+      `date_modification` datetime NOT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+
+        /**
          * Customer Meta
         **/
 
