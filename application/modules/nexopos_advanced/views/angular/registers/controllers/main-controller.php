@@ -1,20 +1,19 @@
 var registersMain          =   function( registersAddTextDomain, $scope, $http, registersResource, $location, sharedValidate, sharedTable, registerTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des Caisse enregistreuse', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   registersAddTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   registerTable.columns;
+    $scope.textDomain           =   registersAddTextDomain;
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.columns        =   registerTable.columns;
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();
 
     /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/registers/edit/';
+            $scope.table.entryActions[ key ].path      =    '/registers/edit/';
         }
     });
-
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions
 
     /**
      *  Table Get
