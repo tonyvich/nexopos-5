@@ -38,6 +38,20 @@ Trait coupons
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.description', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.usage_limit', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.start_date', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.end_date', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.discount_type', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.discount_percent', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_coupons.discount_amount', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_coupons.author' );
             $query      =   $this->db->get();
 

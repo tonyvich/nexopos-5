@@ -41,6 +41,15 @@ Trait categories
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_categories.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_categories.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_categories.description', $this->get( 'search' ) );
+                $this->db->or_like( 'parent_categories.name', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_categories.author' );
             $this->db->join( 'nexopos_categories as parent_categories', 'parent_categories.id = nexopos_categories.ref_parent', 'left' );
 

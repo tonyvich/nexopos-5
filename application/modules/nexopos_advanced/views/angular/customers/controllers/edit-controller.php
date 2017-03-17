@@ -1,4 +1,17 @@
-var customersEdit      =   function( customersEditTextDomain, $scope, $http, $route, customersFields, customersResource, $location, sharedValidate, sharedCustomersGroupsResource, rawToOptions, sharedDocumentTitle ) {
+var customersEdit      =   function(
+    customersEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    customersFields,
+    customersResource,
+    $location,
+    sharedValidate,
+    sharedCustomersGroupsResource,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un client', 'nexopos_advanced' );?>')
     $scope.textDomain       =   customersEditTextDomain;
@@ -36,7 +49,7 @@ var customersEdit      =   function( customersEditTextDomain, $scope, $http, $ro
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
@@ -72,7 +85,8 @@ customersEdit.$inject    =   [
     'sharedValidate',
     'sharedCustomersGroupsResource',
     'rawToOptions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'customersEdit', customersEdit );

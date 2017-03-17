@@ -1,4 +1,13 @@
-var departmentsAddController = function($scope, $location, departmentsResource, departmentsTextDomain, departmentsFields, sharedValidate, sharedDocumentTitle ){
+var departmentsAddController = function(
+    $scope,
+    $location,
+    departmentsResource,
+    departmentsTextDomain,
+    departmentsFields,
+    sharedValidate,
+    sharedDocumentTitle,
+    sharedMoment
+){
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un rayon', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   departmentsTextDomain;
@@ -18,7 +27,7 @@ var departmentsAddController = function($scope, $location, departmentsResource, 
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -46,5 +55,14 @@ var departmentsAddController = function($scope, $location, departmentsResource, 
     }
 }
 
-departmentsAddController.$inject = ['$scope','$location', 'departmentsResource','departmentsTextDomain', 'departmentsFields', 'sharedValidate', 'sharedDocumentTitle' ];
+departmentsAddController.$inject = [
+    '$scope',
+    '$location',
+    'departmentsResource',
+    'departmentsTextDomain',
+    'departmentsFields',
+    'sharedValidate',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
 tendooApp.controller('departmentsAdd',departmentsAddController);

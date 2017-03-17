@@ -1,4 +1,14 @@
-var providersEdit      =   function( providersEditTextDomain, $scope, $http, $route, providersFields, providersResource, $location, sharedValidate, sharedDocumentTitle ) {
+var providersEdit      =   function(
+    providersEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    providersFields,
+    providersResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle
+) {
 
     console.log( sharedDocumentTitle );
 
@@ -30,7 +40,7 @@ var providersEdit      =   function( providersEditTextDomain, $scope, $http, $ro
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
@@ -55,5 +65,16 @@ var providersEdit      =   function( providersEditTextDomain, $scope, $http, $ro
     }
 }
 
-providersEdit.$inject    =   [ 'providersEditTextDomain', '$scope', '$http', '$route', 'providersFields', 'providersResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
+providersEdit.$inject    =   [
+    'providersEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'providersFields',
+    'providersResource',
+    '$location',
+    'sharedValidate',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
 tendooApp.controller( 'providersEdit', providersEdit );

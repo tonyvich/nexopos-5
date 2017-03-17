@@ -24,7 +24,8 @@ class NexoPOS_Filters extends Tendoo_Module
         $deps[]     =   'ui.bootstrap';
         $deps[]     =   'ae-datetimepicker';
         $deps[]     =   'oitozero.ngSweetAlert';
-        $deps[]     =   'btorfs.multiselect';
+        $deps[]     =   'ngNumeraljs';
+        $deps[]     =   'amo.multiselect';
         return $deps;
     }
 }

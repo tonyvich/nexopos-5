@@ -1,21 +1,19 @@
 var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, sharedValidate, sharedTable, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des fournisseurs', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   providersTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   providersTable.columns;
-    $scope.table.actions    =   sharedTableActions;
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();
+    $scope.table.columns        =   providersTable.columns;
+    $scope.textDomain           =   providersTextDomain;
 
     /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/providers/edit/';
+            $scope.table.entryActions[ key ].path      =    '/providers/edit/';
         }
     });
-
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions;
 
     /**
      *  Table Get

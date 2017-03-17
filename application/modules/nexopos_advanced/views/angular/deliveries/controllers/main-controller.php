@@ -1,21 +1,26 @@
 var deliveriesMain          =   function( deliveriesTextDomain, $scope, $http, deliveriesResource, $location, sharedValidate, sharedTable, deliveriesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des livraisons', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   deliveriesTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   deliveriesTable.columns;
-    $scope.table.customEntryActions = deliveriesTable.actions;
+    $scope.textDomain           =   deliveriesTextDomain;
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.columns        =   deliveriesTable.columns;
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();
 
     /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/deliveries/edit/';
+            $scope.table.entryActions[ key ].path      =    '/deliveries/edit/';
         }
     });
 
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions
+    /** Extends Table Entry Actions **/
+    $scope.table.entryActions.push({
+        'name'                  :   '<?php echo _s( 'Imprimer', 'nexopos_advanced' );?>',
+        'namespace'             :   'print',
+        'path'                  :   '/deliveries/print/'
+    });
 
     /**
      *  Table Get

@@ -1,4 +1,15 @@
-var stores          =   function( storesAddTextDomain, $scope, $http, storesFields, storesResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
+var stores          =   function(
+    storesAddTextDomain,
+    $scope,
+    $http,
+    storesFields,
+    storesResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une Boutique', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   storesAddTextDomain;
@@ -10,13 +21,13 @@ var stores          =   function( storesAddTextDomain, $scope, $http, storesFiel
 
     $scope.submit       =   function(){
     $scope.item.author           = <?= User::id()?>;
-    $scope.item.date_creation    = tendoo.now();
+    $scope.item.date_creation    = sharedMoment.now();
     $scope.item.authorized_users = JSON.stringify($scope.item.authorized_users); // Converting array to string for database saving purpose
 
     if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
         return $scope.validate.blurAll( $scope.fields, $scope.item );
     }
-    
+
     $scope.submitDisabled       =   true;
 
     storesResource.save(
@@ -48,7 +59,8 @@ stores.$inject    =   [
     '$location',
     'sharedValidate',
     'rawToOptions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'stores', stores );

@@ -53,12 +53,13 @@ Tendoo Version Required : 1.5
             echo $this->events->apply_filters('gui_opening_wrapper', '');
 
             // looping $col_data[ 'metas' ];
-            foreach (force_array(riake('metas', $col_data)) as $meta) {
-                $meta_class            =    riake('meta_class', $meta);
-                $attrs                =    riake('attrs', $meta);
+            foreach ( ( Array ) @$col_data[ 'metas' ] as $meta) {
+                $meta_class            	=    @$meta[ 'meta_class' ];
+                $attrs                	=    @$meta[ 'attrs' ];
                 // Disable loading from DB
-                $meta[ 'autoload' ]    =    riake('autoload', $meta, true);
-                /**
+                $meta[ 'autoload' ]    	=    riake('autoload', $meta, true);
+
+				/**
                  * Attrs String
                 **/
                 $attrs_string    =    '';

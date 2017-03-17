@@ -1,4 +1,15 @@
-var providers          =   function( providersTextDomain, $scope, $http, providersFields, providersResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle, sharedAlert ) {
+var providers          =   function(
+    providersTextDomain,
+    $scope,
+    $http,
+    providersFields,
+    providersResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedAlert
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un fournisseur', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   providersTextDomain;
@@ -21,7 +32,7 @@ var providers          =   function( providersTextDomain, $scope, $http, provide
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -59,7 +70,8 @@ providers.$inject    =   [
     'sharedValidate',
     'rawToOptions',
     'sharedDocumentTitle',
-    'sharedAlert'
+    'sharedAlert',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'providers', providers );

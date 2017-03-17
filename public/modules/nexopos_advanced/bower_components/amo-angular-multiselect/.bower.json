@@ -1,0 +1,36 @@
+{
+  "name": "amo-angular-multiselect",
+  "description": "AngularJS multiselect component based off ngOptions",
+  "license": "MIT",
+  "authors": [
+    "Nick Amoscato <nick@amoscato.com>"
+  ],
+  "keywords": [
+    "angular",
+    "angularjs",
+    "multiselect",
+    "angular-multiselect",
+    "angularjs-multiselect"
+  ],
+  "ignore": [
+    ".sass-cache",
+    ".travis.yml",
+    "gulpfile.js",
+    "karma.conf.js",
+    "node_modules",
+    "src",
+    "tests"
+  ],
+  "homepage": "https://github.com/namoscato/angular-multiselect",
+  "version": "1.2.3",
+  "_release": "1.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.3",
+    "commit": "38b0a56b6f8eadc0c57b7e82a81386116fc667ba"
+  },
+  "_source": "https://github.com/namoscato/angular-multiselect.git",
+  "_target": "^1.2.3",
+  "_originalSource": "amo-angular-multiselect",
+  "_direct": true
+}

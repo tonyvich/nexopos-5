@@ -77,44 +77,29 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
         label       :   '<?php echo _s( 'Produits concernés', 'nexopos_advanced' );?>',
         model       :   'included_items_ids',
         options     :   [],
-        validation      :   {
-            required    :   true
-        },
         desc            :   '<?php echo _s( 'Appliquer ce code à quelques produits spécifiques.', 'nexopos_advanced' );?>'
     },{
         type        :   'dropdown_multiselect',
         label       :   '<?php echo _s( 'Catégories concernés', 'nexopos_advanced' );?>',
         model       :   'included_catégories_ids',
         options     :   [],
-        validation      :   {
-            required    :   true
-        },
         desc            :   '<?php echo _s( 'Appliquer ce code à quelques catégories spécifiques.', 'nexopos_advanced' );?>'
     },{
         type        :   'dropdown_multiselect',
         label       :   '<?php echo _s( 'Groupe de clients concernés', 'nexopos_advanced' );?>',
         model       :   'included_customers_groups_ids',
         options     :   [],
-        validation      :   {
-            required    :   true
-        },
         desc            :   '<?php echo _s( 'Appliquer ce code à des groupes d\'utilisateurs spécifiques.', 'nexopos_advanced' );?>'
     },{
         type        :   'text',
         label       :   '<?php echo _s( 'Montant minimal', 'nexopos_advanced' );?>',
         model       :   'minimum_amount',
         desc        :    '<?php echo _s( 'le coupon ne sera utilisable que si le total de la commande ne soit égale à cette valeur.', 'nexopos_advanced' );?>',
-        validation  :   {
-            decimal  : true
-        }
     },{
         type        :   'text',
         label       :   '<?php echo _s( 'Montant maximal', 'nexopos_advanced' );?>',
         model       :   'maximum_amount',
         desc        :    '<?php echo _s( 'le coupon ne sera utilisable que si le total de la commande n\'excède pas cette valeur.', 'nexopos_advanced' );?>',
-        validation  :   {
-            decimal  : true
-        }
     },{
         type        :   'textarea',
         label       :   '<?php echo _s( 'Description', 'nexopos_advanced' );?>',

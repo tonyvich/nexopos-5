@@ -1,8 +1,33 @@
 <div class="col-md-12">
     <h3 style="margin-top:0px;">{{ textDomain.listTitle }}<a ng-href="{{ textDomain.addNewLink }}" class="btn btn-primary btn-sm pull-right">{{ textDomain.addNew }}</a></h3>
     <div class="box">
-        <div class="box-header">
-            <span class="box-title">{{ textDomain.listTitle }}</span>
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="input-group" ng-hide="table.hideSearch">
+                      <input ng-model="table.searchModel" placeholder="<?php echo _s( 'Rechercher des données...', 'nexopos_advanced' );?>" type="text" class="form-control" placeholder="">
+                      <div class="input-group-btn">
+                          <button ng-click="table.search()" type="button" name="button" class="btn btn-primary" alt="<?php echo _s( 'Rechercher', 'nexopos_advanced' );?>"><i class="fa fa-search"></i></button>
+                          <button ng-click="table.clear()" type="button" name="button" class="btn btn-default" alt="<?php echo _s( 'Annuler', 'nexopos_advanced' );?>"><i class="fa fa-remove"></i></button>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-3">
+                    <div class="btn-group btn-group-justified" ng-hide="table.hideHeaderButtons" role="group" aria-label="...">
+                        <div
+                        ng-show="
+                        ( button.show.singleSelect && table.getChecked().length == 1 ) ||
+                        ( button.show.multiSelect && table.getChecked().length > 1 ) ||
+                        ( button.show.noSelect && table.getChecked().length == 0 )"
+                        ng-repeat="button in table.headerButtons" class="btn-group" role="group">
+                            <button type="button" class="btn btn-default"><i class="{{ button.icon }}"></i> {{ button.text }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="box-body table-responsive no-padding">
             <table class="table table-bordered" style="margin-bottom:-1px;">
@@ -31,11 +56,16 @@
                 </thead>
                 <tbody>
 
-                    <tr ng-repeat="entry in table.entries">
+                    <tr ng-repeat="entry in table.entries" ng-class="{ 'success' : entry.checked }" ng-click="entry.checked = !entry.checked">
                         <td width="20" ng-click="table.toggleThis( entry )">
                             <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
                         </td>
-                        <td ng-repeat="col in table.columns">{{ entry[ col.namespace ] }}</td>
+
+                        <td ng-repeat="col in table.columns" style="line-height: 30px;" title="{{ entry[ col.namespace ] }}">
+                            {{
+                                table.filter( entry[ col.namespace ], col.is )
+                            }}
+                        </td>
 
                         <td width="50" ng-hide="table.isDisabled( 'entry-actions' )">
                             <!-- Single button -->
@@ -51,9 +81,6 @@
                                         ng-click="table.submitSingleAction( entry, action )"
                                     >{{ action.name }}</a>
                                 </li>
-                                <li ng-repeat="action in table.customEntryActions">
-                                    <a href="{{ action.url + entry.id}}">{{ action.label}}</a>
-                                </li>
                               </ul>
                             </div>
                         </td>
@@ -61,7 +88,7 @@
 
                     <tr ng-show="table.entries.length == 0">
                         <td class="text-center" colspan="{{
-                            table.columns.length + 1 +
+                            table.columns.length + 2 +
                             ( table.isDisabled( 'entry-actions' ) ? 1 : 0 )
                         }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
                     </tr>

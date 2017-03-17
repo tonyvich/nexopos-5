@@ -13,8 +13,8 @@ var storesMain          =   function( storesAddTextDomain, $scope, $http, stores
         }
     });
 
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions   =   new sharedTableActions();
 
     /**
      *  Table Get

@@ -82,7 +82,7 @@
                 'angular.setup.config.route-config'
             );?>
 
-            .when( '/nexopos/error/:code', {
+            .when( '/error/:code', {
                 templateUrl: function( urlattr ) {
                     return 'templates/errors/404';
                 },
@@ -99,7 +99,7 @@
             })
 
             .otherwise({
-                redirectTo      :   '/nexopos/error/404'
+                redirectTo      :   '/error/404'
             })
     }]);
 </script>

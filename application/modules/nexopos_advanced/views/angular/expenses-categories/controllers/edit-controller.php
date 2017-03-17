@@ -29,7 +29,7 @@ var expensesCategoriesEdit      =   function( expensesCategoriesEditTextDomain, 
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {

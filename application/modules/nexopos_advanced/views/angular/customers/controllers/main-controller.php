@@ -1,20 +1,19 @@
 var customersMain          =   function( customersTextDomain, $scope, $http, customersResource, $location, sharedValidate, sharedTable, customersTable, paginationFactory, sharedTableActions, sharedAlert ,sharedEntryActions, sharedDocumentTitle ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des clients', 'nexopos_advanced' );?>');
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.textDomain       =   customersTextDomain;
-    $scope.table.columns    =   customersTable.columns;
-    $scope.table.actions    =   sharedTableActions;
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();
+    $scope.textDomain           =   customersTextDomain;
+    $scope.table.columns        =   customersTable.columns;
 
-    _.each( sharedEntryActions, function( value, key ) {
+    /** Adjust Entry actions **/
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/customers/edit/';
+            $scope.table.entryActions[ key ].path      =    '/customers/edit/';
         }
     });
-
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions;
 
     /**
      *  Table Get

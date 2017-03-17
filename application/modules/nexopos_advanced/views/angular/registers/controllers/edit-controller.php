@@ -1,29 +1,40 @@
-var registersEdit          =   function( registersEditTextDomain, $scope, $http, $route, registersFields, registersResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
+var registersEdit          =   function(
+    registersEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    registersFields,
+    registersResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedUserResource,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une caisse', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   registersEditTextDomain;
     $scope.fields           =   registersFields;
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
+    $scope.fields[1].options    =   [];
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
     registersResource.get({
         id  :  $route.current.params.id // make sure route is added as dependency
     },function( entry ){
-        $scope.submitDisabled   =   false;
-        $scope.item             =   entry;
+        $scope.submitDisabled           =   false;
+        $scope.item                     =   entry;
+        $scope.item.authorized_users    =   angular.fromJson( entry.authorized_users );
     },function(){
-        $location.path( '/nexopos/error/404' )
-    })
-    
-    // Setting options for ref_parent select
-    registersResource.get({
-            exclude     :   $route.current.params.id
-        },
+        $location.path( '/error/404' )
+    });
+
+    sharedUserResource.get(
         function(data){
-            console.log( data.entries );
-            $scope.fields[1].options = rawToOptions( data.entries, 'id', 'name');
+            $scope.fields[1].options = rawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -31,7 +42,7 @@ var registersEdit          =   function( registersEditTextDomain, $scope, $http,
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
         $scope.item.authorized_users = JSON.stringify($scope.item.authorized_users); // Converting array to string for database saving purpose
 
         if($scope.item.ref_parent == null){
@@ -66,7 +77,9 @@ registersEdit.$inject    =   [
     '$location',
     'sharedValidate',
     'rawToOptions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedUserResource',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'registersEdit', registersEdit );

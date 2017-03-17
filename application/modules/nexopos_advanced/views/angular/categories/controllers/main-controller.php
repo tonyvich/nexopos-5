@@ -1,20 +1,36 @@
-var categoriesMain          =   function( categoriesAddTextDomain, $scope, $http, categoriesResource, $location, sharedValidate, sharedTable, categoryTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var categoriesMain          =   function(
+    categoriesAddTextDomain,
+    $scope,
+    $http,
+    categoriesResource,
+    $location,
+    sharedValidate,
+    sharedTable,
+    categoryTable,
+    paginationFactory,
+    sharedTableActions,
+    sharedTableHeaderButtons,
+    sharedAlert,
+    sharedEntryActions,
+    sharedDocumentTitle
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   categoriesAddTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   categoryTable.columns;
+    $scope.textDomain           =   categoriesAddTextDomain;
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.columns        =   categoryTable.columns;
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.resource       =   categoriesResource;
 
     /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/categories/edit/';
+            $scope.table.entryActions[ key ].path      =    '/categories/edit/';
         }
     });
-
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions
 
     /**
      *  Table Get
@@ -63,6 +79,7 @@ categoriesMain.$inject    =   [
     'categoryTable',
     'paginationFactory',
     'sharedTableActions',
+    'sharedTableHeaderButtons',
     'sharedAlert',
     'sharedEntryActions',
     'sharedDocumentTitle'
