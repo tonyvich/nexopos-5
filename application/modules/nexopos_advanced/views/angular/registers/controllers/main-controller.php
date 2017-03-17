@@ -1,4 +1,18 @@
-var registersMain          =   function( registersAddTextDomain, $scope, $http, registersResource, $location, sharedValidate, sharedTable, registerTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var registersMain          =   function(
+    registersAddTextDomain,
+    $scope,
+    $http,
+    registersResource,
+    $location,
+    sharedValidate,
+    sharedTable,
+    registerTable,
+    paginationFactory,
+    sharedTableActions,
+    sharedAlert,
+    sharedEntryActions,
+    sharedDocumentTitle
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des Caisse enregistreuse', 'nexopos_advanced' );?>' );
     $scope.textDomain           =   registersAddTextDomain;
