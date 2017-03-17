@@ -1,4 +1,15 @@
-tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( sharedAlert, $location ){
+<?php global $Options;?>
+tendooApp.factory( 'sharedTable', [
+    'sharedAlert',
+    '$location',
+    'sharedCurrency',
+    'sharedMoment',
+    function(
+        sharedAlert,
+        $location,
+        sharedCurrency,
+        sharedMoment
+    ){
     return function(){
 
         var $this               =   this;
@@ -10,6 +21,8 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
 
         // Hide Header buttons
         this.hideHeaderButtons  =   false;
+
+        this.sharedMoment       =   new sharedMoment();
 
         /**
          *  Array of Object To String
@@ -27,7 +40,6 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
                     stringToReturn  +=  entry.label + ', ';
                 }
             });
-
             return stringToReturn;
         }
 
@@ -56,6 +68,23 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
 
         this.disable            =   function( feature ) {
             this.disabledFeatures.push( feature );
+        }
+
+        /**
+         *  Filter Col Entry
+         *  @param string entry
+         *  @return string
+        **/
+
+        this.filter             =   function( value, filter ) {
+            if( filter == 'array_of_object' ) {
+                return this.arrayOfObjectToString( value )
+            } else if( filter == 'money' ) {
+                return numeral( value ).format( sharedCurrency.format() );
+            } else if( filter == 'date_span' ) {
+                return this.sharedMoment.timeFromNow( value );
+            }
+            return value;
         }
 
         /**

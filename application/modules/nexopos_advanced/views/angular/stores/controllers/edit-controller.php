@@ -1,4 +1,16 @@
-var storesEdit          =   function( storesEditTextDomain, $scope, $http, $route, storesFields, storesResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
+var storesEdit          =   function(
+    storesEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    storesFields,
+    storesResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une caisse', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   storesEditTextDomain;
@@ -16,7 +28,7 @@ var storesEdit          =   function( storesEditTextDomain, $scope, $http, $rout
     },function(){
         $location.path( '/nexopos/error/404' )
     })
-    
+
     // Setting options for ref_parent select
     storesResource.get({
             exclude     :   $route.current.params.id
@@ -31,7 +43,7 @@ var storesEdit          =   function( storesEditTextDomain, $scope, $http, $rout
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
         $scope.item.authorized_users = JSON.stringify($scope.item.authorized_users); // Converting array to string for database saving purpose
 
         if($scope.item.ref_parent == null){
@@ -66,7 +78,8 @@ storesEdit.$inject    =   [
     '$location',
     'sharedValidate',
     'rawToOptions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'storesEdit', storesEdit );

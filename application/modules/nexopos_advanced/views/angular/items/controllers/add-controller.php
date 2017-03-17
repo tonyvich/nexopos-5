@@ -20,7 +20,8 @@ var items               =   function(
     sharedValidate,
     rawToOptions,
     sharedFieldEditor,
-    sharedAlert
+    sharedAlert,
+    sharedMoment
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
@@ -699,7 +700,8 @@ items.$inject           =   [
     'sharedValidate',
     'rawToOptions',
     'sharedFieldEditor',
-    'sharedAlert'
+    'sharedAlert',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'items', items );

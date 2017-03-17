@@ -61,11 +61,9 @@
                             <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
                         </td>
 
-                        <td ng-repeat="col in table.columns">
+                        <td ng-repeat="col in table.columns" style="line-height: 30px;">
                             {{
-                                col.is == 'array_of_object' ?
-                                table.arrayOfObjectToString( entry[ col.namespace ] ) :
-                                entry[ col.namespace ]
+                                table.filter( entry[ col.namespace ], col.is )
                             }}
                         </td>
 

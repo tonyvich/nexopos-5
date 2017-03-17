@@ -1,4 +1,15 @@
-var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, unitsFields, unitsResource, $location, sharedValidate, sharedDocumentTitle ) {
+var unitsEdit      =   function(
+    unitsEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    unitsFields,
+    unitsResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une unité', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsEditTextDomain;
@@ -28,7 +39,7 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
@@ -53,5 +64,16 @@ var unitsEdit      =   function( unitsEditTextDomain, $scope, $http, $route, uni
     }
 }
 
-unitsEdit.$inject    =   [ 'unitsEditTextDomain', '$scope', '$http', '$route', 'unitsFields', 'unitsResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
+unitsEdit.$inject    =   [
+    'unitsEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'unitsFields',
+    'unitsResource',
+    '$location',
+    'sharedValidate',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
 tendooApp.controller( 'unitsEdit', unitsEdit );

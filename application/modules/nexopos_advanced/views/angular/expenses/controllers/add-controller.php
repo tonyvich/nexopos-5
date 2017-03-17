@@ -8,7 +8,8 @@ var expenses          =   function(
     expensesCategoriesResource,
     sharedValidate,
     rawToOptions,
-    sharedDocumentTitle
+    sharedDocumentTitle,
+    sharedMoment
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une dépense', 'nexopos_advanced' );?>' );
@@ -28,7 +29,7 @@ var expenses          =   function(
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -66,7 +67,8 @@ expenses.$inject    =   [
     'expensesCategoriesResource',
     'sharedValidate',
     'rawToOptions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'expenses', expenses );

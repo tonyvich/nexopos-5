@@ -1,4 +1,15 @@
-var units          =   function( unitsTextDomain, $scope, $http, unitsFields, unitsResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
+var units          =   function(
+    unitsTextDomain,
+    $scope,
+    $http,
+    unitsFields,
+    unitsResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une unité', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   unitsTextDomain;
@@ -21,7 +32,7 @@ var units          =   function( unitsTextDomain, $scope, $http, unitsFields, un
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -49,5 +60,16 @@ var units          =   function( unitsTextDomain, $scope, $http, unitsFields, un
     }
 }
 
-units.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsFields', 'unitsResource', '$location', 'sharedValidate','rawToOptions', 'sharedDocumentTitle' ];
+units.$inject    =   [
+    'unitsTextDomain',
+    '$scope',
+    '$http',
+    'unitsFields',
+    'unitsResource',
+    '$location',
+    'sharedValidate',
+    'rawToOptions',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
 tendooApp.controller( 'units', units );

@@ -1,4 +1,13 @@
-var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliveriesFields, deliveriesResource, $location, sharedValidate, sharedDocumentTitle ) {
+var deliveries          =   function(
+    deliveriesTextDomain,
+    $scope,
+    $http,
+    deliveriesFields,
+    deliveriesResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une livraison', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   deliveriesTextDomain;
@@ -20,7 +29,7 @@ var deliveries          =   function( deliveriesTextDomain, $scope, $http, deliv
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
@@ -60,6 +69,7 @@ deliveries.$inject    =   [
     'deliveriesResource',
     '$location',
     'sharedValidate',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 tendooApp.controller( 'deliveries', deliveries );

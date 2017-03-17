@@ -9,7 +9,8 @@ var registers          =   function(
     rawToOptions,
     sharedUserResource,
     sharedDocumentTitle,
-    sharedUserResource
+    sharedUserResource,
+    sharedMoment
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une Caisse enregistreuse', 'nexopos_advanced' );?>' );
@@ -30,7 +31,7 @@ var registers          =   function(
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
         $scope.item.authorized_users = JSON.stringify($scope.item.authorized_users); // Converting array to string for database saving purpose
 
         if($scope.item.ref_parent == null){
@@ -74,7 +75,8 @@ registers.$inject    =   [
     'rawToOptions',
     'sharedUserResource',
     'sharedDocumentTitle',
-    'sharedUserResource'
+    'sharedUserResource',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'registers', registers );

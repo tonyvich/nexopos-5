@@ -61,9 +61,9 @@ Trait expenses
 
         $this->db->insert( 'nexopos_expenses', [
             'name'                  =>  $this->post( 'name' ),
-            'amount'                  =>  $this->post( 'amount' ),
-            'image_url'                  =>  $this->post( 'image_url' ),
-            'ref_category'                  =>  $this->post( 'ref_category' ),
+            'amount'                =>  $this->post( 'amount' ),
+            'image_url'             =>  $this->post( 'image_url' ),
+            'ref_category'          =>  $this->post( 'ref_category' ),
             'description'           =>  $this->post( 'description' ),
             'author'                =>  $this->post( 'author' ),
             'date_creation'         =>  $this->post( 'date_creation' ),
@@ -108,9 +108,9 @@ Trait expenses
 
         $this->db->where( 'id', $id )->update( 'nexopos_expenses', [
             'name'                  =>  $this->put( 'name' ),
-            'amount'                  =>  $this->put( 'amount' ),
-            'image_url'                  =>  $this->put( 'image_url' ),
-            'ref_category'                  =>  $this->put( 'ref_category' ),
+            'amount'                =>  $this->put( 'amount' ),
+            'image_url'             =>  $this->put( 'image_url' ),
+            'ref_category'          =>  $this->put( 'ref_category' ),
             'description'           =>  $this->put( 'description' ),
             'author'                =>  $this->put( 'author' ),
             'date_modification'     =>  $this->put( 'date_modification' )
