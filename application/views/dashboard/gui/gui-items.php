@@ -1,26 +1,27 @@
 <?php
-$saver_enabled        =    riake('gui_saver', $meta);
-$autoload            =    riake('autoload', $meta);
+$saver_enabled          =    @$meta[ 'gui_saver' ];
+$autoload               =    @$meta[ 'autoload' ];
+
 // If Using namespace is enabled
-if ($saver_enabled && riake('use_namespace', $meta)) {
-    $form_option        =    $this->options->get(riake('namespace', $meta));
+if ( $saver_enabled == true && @$meta[ 'use_namespace' ] ) {
+    $form_option        =    $this->options->get( @$meta[ 'namespace' ] );
 }
 
-foreach (force_array(riake('items', $meta)) as $_item) {
-    $name           =    riake('name', $_item);
-    $type           =    riake('type', $_item);
-    $placeholder    =    riake('placeholder', $_item);
-    $value          =    riake('value', $_item);
-    $icon           =    riake('icon', $_item);
-    $label          =    riake('label', $_item);
-    $rows           =    riake('rows', $_item);
-    $disabled       =    riake('disabled', $_item);
-    $description    =    riake('description', $_item);
-    $active         =    riake('active', $_item);
+foreach ( ( Array ) @$meta[ 'items' ] as $_item) {
+    $name           =    @$_item[ 'name' ];
+    $type           =    @$_item[ 'type' ];
+    $placeholder    =    @$_item[ 'placeholder' ];
+    $value          =    @$_item[ 'value' ];
+    $icon           =    @$_item[ 'icon' ];
+    $label          =    @$_item[ 'label' ];
+    $rows           =    @$_item[ 'rows' ];
+    $disabled       =    @$_item[ 'disabled' ];
+    $description    =    @$_item[ 'description' ];
+    $active         =    @$_item[ 'active' ];
 
     // fetch option from dashboard
 
-    if ($saver_enabled && ! in_array($type, array( 'html-list', 'dom', 'file-input', 'html-error', 'table', 'buttons' ))) {
+    if ( $saver_enabled && ! in_array($type, array( 'html-list', 'dom', 'file-input', 'html-error', 'table', 'buttons' ))) {
         // if namespace is used
         if (riake('use_namespace', $meta) === true) {
             $value    =    ($db_value        =    riake($name, $form_option)) ? $db_value : $value;
@@ -35,6 +36,7 @@ foreach (force_array(riake('items', $meta)) as $_item) {
             }
         }
     }
+
     if (in_array($type, array( 'text', 'password', 'email', 'tel' ))) {
         if (riake('label', $_item)) {
             ?>
@@ -179,17 +181,14 @@ foreach (force_array(riake('items', $meta)) as $_item) {
     **/
         $multiple = $type == 'multiple' ? $type : '';
         ?>
+
         <div class="form-group">
-          <label><?php echo $label;
-        ?></label>
-          <select <?php echo $multiple;
-        ?> <?php echo $disabled === true ? 'disabled="disabled"' : '';
-        ?> class="form-control" name="<?php echo $name;
-        ?>">
+          <label><?php echo $label;?></label>
+          <select <?php echo $multiple;?> <?php echo $disabled === true ? 'disabled="disabled"' : '';?> class="form-control" name="<?php echo $name;       ?>">
           	<?php
-            foreach (force_array(riake('options', $_item)) as $value    =>    $text) {
+            foreach ( force_array(riake('options', $_item)) as $value    =>    $text) {
                 // Only when action is not changed (which send request to dashboard/options/set), Gui_saver is supported.
-                if ($saver_enabled === true  && in_array(riake('action', riake('custom', $meta)), array( null, false ))) {
+                if ( $saver_enabled === true  && in_array( @$meta[ 'custom' ][ 'action' ], [ null, false ], true ) ) {
                     // control check
                     $selected    =    $db_value == $value ? 'selected="selected"' : '';
                 } else {

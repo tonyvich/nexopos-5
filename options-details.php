@@ -43,10 +43,13 @@
  * shop_currency_position
  * permet de définir la position de la devise
  *
- * shop_decimal_thousand_divider
+ * shop_currency_formating
+ * Formattage de la monaie
+ *
+ * shop_decimal_thousand_divider [deprecated]
  * permet de définir le séparateur dans un valeur décimale
  *
- * shop_decimal_limit
+ * shop_decimal_limit [deprecated]
  * permet de définir combien de chiffres existent-ils après la virgule
  *
  * // Section Caisse

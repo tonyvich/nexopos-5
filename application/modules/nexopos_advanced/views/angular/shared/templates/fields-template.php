@@ -63,11 +63,13 @@
     <!-- For multiselect -->
 
     <div class="form-group" ng-if="field.type == 'dropdown_multiselect'" >
-        <label>{{ field.label }}</label>
-        <multiselect
+        <label>{{ field.label }}</label><br>
+        <amo-multiselect
             ng-blur="validate.blur( field, item )"
             ng-focus="validate.focus( field, item )"
-            ng-model="item[ field.model ]" options="field.options" display-prop="label" id-prop="id"></multiselect>
+            ng-model="item[ field.model ]"
+            options="option.label for option in field.options"> <!-- $scope.fields[1].options -->
+        </amo-multiselect>
         <p class="help-block {{ field.model }}-helper" style="font-size:12px;">{{ field.desc }}</p>
     </div>
 

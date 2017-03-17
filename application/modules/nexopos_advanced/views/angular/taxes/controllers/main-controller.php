@@ -14,8 +14,8 @@ var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResour
         }
     });
 
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions   =   new sharedTableActions();
 
 
     /**

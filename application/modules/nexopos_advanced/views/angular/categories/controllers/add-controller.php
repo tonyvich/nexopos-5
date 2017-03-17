@@ -1,4 +1,15 @@
-var categories          =   function( categoriesAddTextDomain, $scope, $http, categoriesFields, categoriesResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
+var categories          =   function(
+    categoriesAddTextDomain,
+    $scope,
+    $http,
+    categoriesFields,
+    categoriesResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une catégorie', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesAddTextDomain;
@@ -18,7 +29,7 @@ var categories          =   function( categoriesAddTextDomain, $scope, $http, ca
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if($scope.item.ref_parent == null){
             $scope.item.ref_parent = 0;
@@ -58,7 +69,8 @@ categories.$inject    =   [
     '$location',
     'sharedValidate',
     'rawToOptions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'categories', categories );

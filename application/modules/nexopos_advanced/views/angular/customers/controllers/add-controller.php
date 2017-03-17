@@ -12,7 +12,8 @@ var customersAdd               =   function(
     sharedValidate,
     rawToOptions,
     sharedFieldEditor,
-    sharedAlert
+    sharedAlert,
+    sharedMoment
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>' );
@@ -86,7 +87,7 @@ var customersAdd               =   function(
     $scope.submitItem               =   function(){
 
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -200,6 +201,8 @@ customersAdd.$inject           =   [
     'rawToOptions',
     'sharedFieldEditor',
     'sharedAlert'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'customersAdd', customersAdd );

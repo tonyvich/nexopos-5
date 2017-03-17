@@ -6,7 +6,8 @@ tendooApp.factory( 'registerTable', function(){
                 namespace   :   'name'
             },{
                 text    :   '<?php echo _s( 'Utilisateurs authorisés', 'nexopos_advanced' );?>',
-                namespace   :   'authorized_users'
+                namespace   :   'authorized_users',
+                is          :   'array_of_object'
             },{
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
                 namespace   :   'status'
@@ -15,10 +16,12 @@ tendooApp.factory( 'registerTable', function(){
                 namespace   :   'author_name'
             },{
                 text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
-                namespace   :   'date_creation'
+                namespace   :   'date_creation',
+                is          :   'date_span'
             },{
                 text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
-                namespace   :   'date_modification'
+                namespace   :   'date_modification',
+                is          :   'date_span'
             }
         ]
     }

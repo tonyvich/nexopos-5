@@ -1,4 +1,16 @@
-var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $http, $route, categoriesFields, categoriesResource, $location, sharedValidate, rawToOptions, sharedDocumentTitle ) {
+var categoriesEdit          =   function(
+    categoriesEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    categoriesFields,
+    categoriesResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une catégorie', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   categoriesEditTextDomain;
@@ -31,7 +43,7 @@ var categoriesEdit          =   function( categoriesEditTextDomain, $scope, $htt
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
         if($scope.item.ref_parent == null){
             $scope.item.ref_parent = 0;
@@ -65,7 +77,8 @@ categoriesEdit.$inject    =   [
     '$location',
     'sharedValidate',
     'rawToOptions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'categoriesEdit', categoriesEdit );

@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/registers/main';
     },
-    controller: 'registersMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -32,7 +31,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/registers/edit';
     },
-    controller: 'registersEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -46,7 +44,6 @@
                     'shared_factories/options.js',
                     'shared_factories/user-resource.js',
                     'shared_factories/raw-to-options.js',
-                    'shared_factories/raw-to-multiselect-options.js',
                     'shared_factories/validate.js',
                     'shared_factories/table.js',
                     'shared_factories/pagination.js',
@@ -64,7 +61,6 @@
         }
         return 'templates/registers/main';
     },
-    controller: 'registers',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -77,7 +73,6 @@
                     'factories/registers/table.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',
-                    'shared_factories/raw-to-multiselect-options.js',
                     'shared_factories/user-resource.js',
                     'shared_factories/validate.js',
                     'shared_factories/table.js',

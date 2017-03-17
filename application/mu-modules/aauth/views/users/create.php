@@ -10,9 +10,10 @@ $this->Gui->col_width(1, 2);
 $this->Gui->add_meta(array(
     'col_id'    =>    1,
     'namespace'    =>    'create_user',
-    'gui_saver'    =>    true,
+    'gui_saver'    =>    false,
     'custom'    =>    array(
-        'action'    =>    ''
+        'action'    =>    null,
+        'app'        =>    'users'
     ),
     'autoload'    =>    false,
     'footer'    =>    array(
@@ -59,9 +60,9 @@ $this->Gui->add_item(array(
     'name'        =>    'user_status',
     'label'        =>    __('User Status', 'aauth'),
     'options'    =>    array(
-        'defualt'   =>  __( 'Default', 'aauth'),
-        'active'    =>  __( 'Active' , 'aauth'),
-        'unactive'  =>  __( 'Unactive' , 'aauth')
+        'default'   =>  __( 'Default', 'aauth'),
+        '0'    =>  __( 'Active' , 'aauth'),
+        '1'  =>  __( 'Unactive' , 'aauth')
     )
 ), 'create_user',1 );
 

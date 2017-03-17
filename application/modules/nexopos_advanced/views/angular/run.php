@@ -1,5 +1,18 @@
+<?php global $Options;
+if( @$Options[ 'site_language' ] == 'en_US') {
+    $locale         =   'fr';
+} else if( @$Options[ 'site_language' ] == 'fr_FR') {
+    $$locale         =   'en';
+} else if( @$Options[ 'site_language' ] == 'es_ES') {
+    $locale         =   'es';
+} else {
+    $locale         =   'en';
+}
+?>
 <script type="text/javascript">
     "use strict";
+    moment.locale( '<?phpe echo $locale;?>' );
+
     tendooApp.run(function ($rootScope, $location) {
         var history = [];
 

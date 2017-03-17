@@ -268,6 +268,7 @@ class NexoPOS_Install extends Tendoo_Module
           `minimum_amount` float NOT NULL,
           `maximum_amount` float NOT NULL,
           `usage_limit` int(11) NOT NULL,
+          `usage_count` int(11) NOT NULL,
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
           PRIMARY KEY (`id`)

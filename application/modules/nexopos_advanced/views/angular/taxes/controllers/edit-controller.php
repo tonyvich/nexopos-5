@@ -1,4 +1,15 @@
-var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, taxesFields, taxesResource, $location, sharedValidate, sharedDocumentTitle ) {
+var taxesEdit      =   function(
+    taxesEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    taxesFields,
+    taxesResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer des taxes', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   taxesEditTextDomain;
@@ -28,7 +39,7 @@ var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, tax
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
@@ -53,5 +64,16 @@ var taxesEdit      =   function( taxesEditTextDomain, $scope, $http, $route, tax
     }
 }
 
-taxesEdit.$inject    =   [ 'taxesEditTextDomain', '$scope', '$http', '$route', 'taxesFields', 'taxesResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
+taxesEdit.$inject    =   [
+    'taxesEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'taxesFields',
+    'taxesResource',
+    '$location',
+    'sharedValidate',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
 tendooApp.controller( 'taxesEdit', taxesEdit );

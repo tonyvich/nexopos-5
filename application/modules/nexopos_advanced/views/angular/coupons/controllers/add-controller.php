@@ -1,4 +1,14 @@
-var coupons          =   function( couponsTextDomain, $scope, $http, couponsFields, couponsResource, $location, sharedValidate, sharedDocumentTitle) {
+var coupons          =   function(
+    couponsTextDomain,
+    $scope,
+    $http,
+    couponsFields,
+    couponsResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un coupon', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   couponsTextDomain;
@@ -20,7 +30,7 @@ var coupons          =   function( couponsTextDomain, $scope, $http, couponsFiel
 
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   tendoo.now();
+        $scope.item.date_creation   =   sharedMoment.now();
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -56,7 +66,8 @@ coupons.$inject    =   [
     'couponsResource',
     '$location',
     'sharedValidate',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedMoment'
 ];
 
 tendooApp.controller( 'coupons', coupons );

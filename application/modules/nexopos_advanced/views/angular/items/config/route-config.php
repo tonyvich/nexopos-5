@@ -6,7 +6,6 @@
         }
         return 'templates/items/';
     },
-    controller: 'items',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

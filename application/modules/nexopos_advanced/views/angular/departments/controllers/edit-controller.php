@@ -1,4 +1,15 @@
-var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http, $route, departmentsFields, departmentsResource, $location, sharedValidate, sharedDocumentTitle ) {
+var departmentsEdit      =   function(
+    departmentsEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    departmentsFields,
+    departmentsResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un rayon', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   departmentsEditTextDomain;
@@ -27,7 +38,7 @@ var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http,
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
@@ -52,5 +63,16 @@ var departmentsEdit      =   function( departmentsEditTextDomain, $scope, $http,
     }
 }
 
-departmentsEdit.$inject    =   [ 'departmentsEditTextDomain', '$scope', '$http', '$route', 'departmentsFields', 'departmentsResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
+departmentsEdit.$inject    =   [
+    'departmentsEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'departmentsFields',
+    'departmentsResource',
+    '$location',
+    'sharedValidate',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
 tendooApp.controller( 'departmentsEdit', departmentsEdit );

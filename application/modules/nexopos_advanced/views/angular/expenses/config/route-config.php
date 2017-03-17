@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/expenses/main';
     },
-    controller: 'expensesMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -21,7 +20,7 @@
                     'shared_factories/table-actions.js',
                     'shared_factories/alert.js',
                     'shared_factories/entry-actions.js',
-                    'shared_factories/document-title.js'
+                    'shared_factories/document-title.js',
                 ]
             });
         }]

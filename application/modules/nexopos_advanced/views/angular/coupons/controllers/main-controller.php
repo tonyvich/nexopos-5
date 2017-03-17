@@ -1,22 +1,20 @@
 var couponsMain          =   function( couponsTextDomain, $scope, $http, couponsResource, $location, sharedValidate, sharedTable, couponsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle  ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des coupons', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   couponsTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   couponsTable.columns;
-    $scope.table.actions    =   sharedTableActions;
-
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();
+    $scope.table.columns        =   couponsTable.columns;
+    $scope.textDomain           =   couponsTextDomain;
+    $scope.table.resource       =   couponsResource;
 
     /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/coupons/edit/';
+            $scope.table.entryActions[ key ].path      =    '/coupons/edit/';
         }
     });
-
-    $scope.table.entryActions   =   sharedEntryActions;
-    $scope.table.actions        =   sharedTableActions
 
 
     /**
@@ -54,20 +52,20 @@ var couponsMain          =   function( couponsTextDomain, $scope, $http, coupons
     $scope.table.getPage(0);
 }
 
-couponsMain.$inject    =   [ 
-    'couponsTextDomain', 
-    '$scope', 
-    '$http', 
-    'couponsResource', 
-    '$location', 
-    'sharedValidate', 
-    'sharedTable', 
-    'couponsTable', 
-    'paginationFactory', 
-    'sharedTableActions', 
+couponsMain.$inject    =   [
+    'couponsTextDomain',
+    '$scope',
+    '$http',
+    'couponsResource',
+    '$location',
+    'sharedValidate',
+    'sharedTable',
+    'couponsTable',
+    'paginationFactory',
+    'sharedTableActions',
     'sharedAlert',
-    'sharedEntryActions', 
-    'sharedDocumentTitle' 
+    'sharedEntryActions',
+    'sharedDocumentTitle'
 ];
 
 tendooApp.controller( 'couponsMain', couponsMain );

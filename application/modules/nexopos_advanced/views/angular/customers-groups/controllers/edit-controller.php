@@ -1,4 +1,15 @@
-var customersGroupsEdit      =   function( customersGroupsEditTextDomain, $scope, $http, $route, customersGroupsFields, customersGroupsResource, $location, sharedValidate, sharedDocumentTitle ) {
+var customersGroupsEdit      =   function(
+    customersGroupsEditTextDomain,
+    $scope,
+    $http,
+    $route,
+    customersGroupsFields,
+    customersGroupsResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un groupe de clients', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   customersGroupsEditTextDomain;
@@ -28,7 +39,7 @@ var customersGroupsEdit      =   function( customersGroupsEditTextDomain, $scope
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
-        $scope.item.date_modification   =   tendoo.now();
+        $scope.item.date_modification   =   sharedMoment.now();
 
         if( angular.isDefined( $scope.item.shipping_date ) ) {
             $scope.item.shipping_date   =   moment( $scope.item.shipping_date ).format();
@@ -53,5 +64,17 @@ var customersGroupsEdit      =   function( customersGroupsEditTextDomain, $scope
     }
 }
 
-customersGroupsEdit.$inject    =   [ 'customersGroupsEditTextDomain', '$scope', '$http', '$route', 'customersGroupsFields', 'customersGroupsResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
+customersGroupsEdit.$inject    =   [
+    'customersGroupsEditTextDomain',
+    '$scope',
+    '$http',
+    '$route',
+    'customersGroupsFields',
+    'customersGroupsResource',
+    '$location',
+    'sharedValidate',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
+
 tendooApp.controller( 'customersGroupsEdit', customersGroupsEdit );
