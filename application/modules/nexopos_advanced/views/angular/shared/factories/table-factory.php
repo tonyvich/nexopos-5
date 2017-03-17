@@ -22,8 +22,6 @@ tendooApp.factory( 'sharedTable', [
         // Hide Header buttons
         this.hideHeaderButtons  =   false;
 
-        this.sharedMoment       =   new sharedMoment();
-
         /**
          *  Array of Object To String
          *  @param
@@ -82,7 +80,7 @@ tendooApp.factory( 'sharedTable', [
             } else if( filter == 'money' ) {
                 return numeral( value ).format( sharedCurrency.format() );
             } else if( filter == 'date_span' ) {
-                return this.sharedMoment.timeFromNow( value );
+                return sharedMoment.timeFromNow( value );
             }
             return value;
         }
