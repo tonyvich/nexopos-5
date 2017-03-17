@@ -7,6 +7,7 @@ var couponsMain          =   function( couponsTextDomain, $scope, $http, coupons
     $scope.table.actions        =   new sharedTableActions();
     $scope.table.columns        =   couponsTable.columns;
     $scope.textDomain           =   couponsTextDomain;
+    $scope.table.resource       =   couponsResource;
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {

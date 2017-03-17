@@ -183,6 +183,17 @@ class aauth_dashboard extends CI_model
 
             $users                          =    $this->users->auth->list_users( false, $index, $config['per_page'], true);
 
+            $this->events->add_filter( 'gui_page_title', function( $filter ) {
+                $filter     =  '<section class="content-header">
+                  <h1>
+                        ' . str_replace('&mdash; ' . get('core_signature'), '', Html::get_title()) . '<small></small>
+                        <a class="btn btn-primary btn-sm pull-right ng-binding" href="' . site_url([ 'dashboard', 'users', 'create' ] ) . '">' . __( 'Add A user', 'aauth' ) . '</a>
+                  </h1>
+
+                </section>';
+                return $filter;
+            });
+
             $this->Gui->set_title(sprintf(__('Users &mdash; %s', 'aauth'), get('core_signature')));
 
             $this->load->mu_module_view( 'aauth', 'users/body', array(
@@ -221,6 +232,7 @@ class aauth_dashboard extends CI_model
             $this->events->do_action('user_creation_rules');
 
             if ($this->form_validation->run()) {
+
                 $exec    =    $this->users->edit(
                     $index,
                     $this->input->post('user_email'),
@@ -243,6 +255,17 @@ class aauth_dashboard extends CI_model
             if (! $user) {
                 redirect(array( 'dashboard', 'unknow-user' ));
             }
+
+            $this->events->add_filter( 'gui_page_title', function( $filter ) {
+                $filter     =  '<section class="content-header">
+                  <h1>
+                        ' . str_replace('&mdash; ' . get('core_signature'), '', Html::get_title()) . '<small></small>
+                        <a class="btn btn-primary btn-sm pull-right ng-binding" href="' . site_url([ 'dashboard', 'users' ] ) . '">' . __( 'Return to the list', 'aauth' ) . '</a>
+                  </h1>
+
+                </section>';
+                return $filter;
+            });
 
             $this->Gui->set_title(sprintf(__('Edit user &mdash; %s', 'aauth'), get('core_signature')));
             $this->load->mu_module_view( 'aauth', 'users/edit', array(
@@ -274,6 +297,7 @@ class aauth_dashboard extends CI_model
             $this->events->do_action('user_creation_rules');
 
             if ($this->form_validation->run()) {
+
                 $exec    =    $this->users->create(
                     $this->input->post('user_email'),
                     $this->input->post('password'),
@@ -294,6 +318,17 @@ class aauth_dashboard extends CI_model
 
             // selecting groups
             $groups                =    $this->users->auth->list_groups();
+
+            $this->events->add_filter( 'gui_page_title', function( $filter ) {
+                $filter     =  '<section class="content-header">
+                  <h1>
+                        ' . str_replace('&mdash; ' . get('core_signature'), '', Html::get_title()) . '<small></small>
+                        <a class="btn btn-primary btn-sm pull-right ng-binding" href="' . site_url([ 'dashboard', 'users' ] ) . '">' . __( 'Return to the list', 'aauth' ) . '</a>
+                  </h1>
+
+                </section>';
+                return $filter;
+            });
 
             $this->Gui->set_title(sprintf(__('Create a new user &mdash; %s', 'aauth'), get('core_signature')));
 

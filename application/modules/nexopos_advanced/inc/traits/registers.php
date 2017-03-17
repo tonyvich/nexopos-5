@@ -18,6 +18,7 @@ Trait registers
                 nexopos_registers.name as name,
                 nexopos_registers.description as description,
                 nexopos_registers.authorized_users as authorized_users,
+                nexopos_registers.status as status,
                 nexopos_registers.used_by as used_by,
                 nexopos_registers.author as author,
                 nexopos_registers.date_creation as date_creation,
@@ -41,7 +42,7 @@ Trait registers
             }
 
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_registers.author' );
-            
+
             $query      =   $this->db->get();
 
             return $this->response([
@@ -72,6 +73,7 @@ Trait registers
             'author'                =>  $this->post( 'author' ),
             'authorized_users'      =>  $this->post( 'authorized_users' ),
             'date_creation'         =>  $this->post( 'date_creation' ),
+            'status'                =>  $this->post( 'status' )
         ]);
 
         $this->__success();
@@ -110,7 +112,7 @@ Trait registers
             'description'           =>  $this->put( 'description' ),
             'author'                =>  $this->put( 'author' ),
             'authorized_users'      =>  $this->put( 'authorized_users' ),
-            'used_by'               =>  $this->put( 'used_by' ),
+            'status'                =>  $this->put( 'status' ),
             'date_modification'     =>  $this->put( 'date_modification' )
         ]);
 

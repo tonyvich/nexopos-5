@@ -6,7 +6,8 @@ tendooApp.factory( 'registerTable', function(){
                 namespace   :   'name'
             },{
                 text    :   '<?php echo _s( 'Utilisateurs authorisés', 'nexopos_advanced' );?>',
-                namespace   :   'authorized_users'
+                namespace   :   'authorized_users',
+                is          :   'array_of_object'
             },{
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
                 namespace   :   'status'

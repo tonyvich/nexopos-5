@@ -1,4 +1,16 @@
-var registers          =   function( registersAddTextDomain, $scope, $http, registersFields, registersResource, $location, sharedValidate, rawToOptions, rawToMultiselectOptions, sharedUserResource, sharedDocumentTitle) {
+var registers          =   function(
+    registersAddTextDomain,
+    $scope,
+    $http,
+    registersFields,
+    registersResource,
+    $location,
+    sharedValidate,
+    rawToOptions,
+    sharedUserResource,
+    sharedDocumentTitle,
+    sharedUserResource
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une Caisse enregistreuse', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   registersAddTextDomain;
@@ -6,11 +18,11 @@ var registers          =   function( registersAddTextDomain, $scope, $http, regi
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
 
-    // Setting options for dropdown multiselect
 
+    // Setting options for dropdown multiselect
     sharedUserResource.get(
         function(data){
-            $scope.fields[1].options = rawToMultiselectOptions(data.entries, 'id', 'name');
+            $scope.fields[1].options = rawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -28,7 +40,7 @@ var registers          =   function( registersAddTextDomain, $scope, $http, regi
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
-        
+
         $scope.submitDisabled       =   true;
 
         registersResource.save(
@@ -60,9 +72,9 @@ registers.$inject    =   [
     '$location',
     'sharedValidate',
     'rawToOptions',
-    'rawToMultiselectOptions',
     'sharedUserResource',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedUserResource'
 ];
 
 tendooApp.controller( 'registers', registers );

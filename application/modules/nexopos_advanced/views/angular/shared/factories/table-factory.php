@@ -12,6 +12,26 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
         this.hideHeaderButtons  =   false;
 
         /**
+         *  Array of Object To String
+         *  @param
+         *  @return
+        **/
+
+        this.arrayOfObjectToString      =   function( array ) {
+            var stringToReturn      =   '';
+            var arrayJson           =   angular.fromJson( array );
+            _.each( arrayJson, function( entry, index ) {
+                if( index + 1 == arrayJson.length ) {
+                    stringToReturn  +=  entry.label;
+                } else {
+                    stringToReturn  +=  entry.label + ', ';
+                }
+            });
+
+            return stringToReturn;
+        }
+
+        /**
          *  Cancel Search
          *  @param void
          *  @return void
@@ -21,7 +41,6 @@ tendooApp.factory( 'sharedTable', [ 'sharedAlert', '$location', function( shared
             var $this           =   this;
             if( this.resource ) {
                 this.resource.get({},function( data ){
-
                     $this.entries           =   data.entries;
                     $this.pages             =   Math.ceil( data.num_rows / $this.limit );
                     $this.searchModel       =   '';

@@ -60,7 +60,14 @@
                         <td width="20" ng-click="table.toggleThis( entry )">
                             <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
                         </td>
-                        <td ng-repeat="col in table.columns">{{ entry[ col.namespace ] }}</td>
+
+                        <td ng-repeat="col in table.columns">
+                            {{
+                                col.is == 'array_of_object' ?
+                                table.arrayOfObjectToString( entry[ col.namespace ] ) :
+                                entry[ col.namespace ]
+                            }}
+                        </td>
 
                         <td width="50" ng-hide="table.isDisabled( 'entry-actions' )">
                             <!-- Single button -->
@@ -83,7 +90,7 @@
 
                     <tr ng-show="table.entries.length == 0">
                         <td class="text-center" colspan="{{
-                            table.columns.length + 1 +
+                            table.columns.length + 2 +
                             ( table.isDisabled( 'entry-actions' ) ? 1 : 0 )
                         }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
                     </tr>

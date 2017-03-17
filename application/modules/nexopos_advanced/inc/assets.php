@@ -17,6 +17,9 @@ class NexoPOS_Assets extends Tendoo_Module
         $this->enqueue->css( $bower_url . 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min' );
         $this->enqueue->css( 'css/nexopos', module_url( 'nexopos_advanced' ) );
 
+        // Amo Multiselect CSS
+        $this->enqueue->css( $bower_url . 'amo-angular-multiselect/dist/multiselect');
+
         // Sweet Alert CSS
         $this->enqueue->css( $bower_url . 'sweetalert/dist/sweetalert' );
 
@@ -43,6 +46,10 @@ class NexoPOS_Assets extends Tendoo_Module
         $this->enqueue->js( $bower_url . 'sweetalert/dist/sweetalert.min' );
 
         // Multiselect
-        $this->enqueue->js( $bower_url . 'angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect');
+        // Deprecated
+        // $this->enqueue->js( $bower_url . 'angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect');
+
+        // Amo Multiselect
+        $this->enqueue->js( $bower_url . 'amo-angular-multiselect/dist/multiselect.min');
     }
 }
