@@ -413,7 +413,7 @@ class NexoPOS_Install extends Tendoo_Module
         **/
 
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		      `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
           `surname` varchar(200) NOT NULL,
           `description` text NOT NULL,
@@ -421,8 +421,6 @@ class NexoPOS_Install extends Tendoo_Module
           `sex` varchar(200) NOT NULL,
           `phone` varchar(200) NOT NULL,
           `email` varchar(200) NOT NULL,
-          `address` varchar(200) NOT NULL,
-          `pobox` varchar(200) NOT NULL,
           `ref_group` varchar(200) NOT NULL,
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
@@ -443,8 +441,6 @@ class NexoPOS_Install extends Tendoo_Module
       `town` varchar(200) NOT NULL,
       `country` varchar(200) NOT NULL,
       `state` varchar(200) NOT NULL,
-      `phone` varchar(200) NOT NULL,
-      `email` varchar(200) NOT NULL,
       `ref_customer` varchar(200) NOT NULL,
       `date_creation` datetime NOT NULL,
       `date_modification` datetime NOT NULL,
