@@ -20,11 +20,12 @@ class Media_Manager_Install extends Tendoo_Module
         $this->db->query( 'CREATE TABLE IF NOT EXISTS `' . $this->db->dbprefix . $prefix . 'media_manager` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `name` varchar(200) NOT NULL,
-          `desccription` text,
+          `description` text,
           `author` int(11) NOT NULL,
           `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
           `url` varchar(200) NOT NULL,
+          `mime` varchar(200) NOT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;' );
     }

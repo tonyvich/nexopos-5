@@ -1,10 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$config[ 'media-manager-upload-sizes' ]        =   [
-    'full'      =>  [],
-    'medium'    =>  [],
-    'small'     =>  [],
-    'thumb'     =>  [],
-    'original'  =>  []
+$config[ 'mm-upload-sizes' ]        =   [
+    'full'      =>  [ 625, 371 ],
+    'medium'    =>  [ 300, 168 ],
+    'thumb'     =>  [ 150, 150, 'thumbnail' ],
+    'original'  =>  true
 ];
+
+// upload path
+$config[ 'mm-upload-path' ]          =   UPLOADPATH;
+
+// Manager Mimes
+$config[ 'mm-supported-mime' ]       =   'gif|jpg|png';

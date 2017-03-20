@@ -33,7 +33,7 @@ class Media_Manager_Actions extends Tendoo_Module
     public function enable_module( $module_namespace )
     {
         global $Options;
-        if( $modume_namespace == 'media-manager' && @$Options[ 'media-manager-installed' ] == null ) {
+        if( $module_namespace == 'media-manager' && @$Options[ 'media-manager-installed' ] == null ) {
             $this->install->tables();
             $this->options->set( 'media-manager-installed', true, true );
         }

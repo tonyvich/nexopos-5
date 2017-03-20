@@ -25,4 +25,16 @@ class Media_Manager_Filters extends Tendoo_Module
 
         return $menus;
     }
+
+    /**
+     *  Dashboard Dependencies
+     *  @param array dependencies
+     *  @return array
+    **/
+
+    public function dependencies( $dependencies )
+    {
+        ! in_array( 'thatisuday.dropzone', $dependencies ) ? $dependencies[]  =   'thatisuday.dropzone' : null;
+        return $dependencies;
+    }
 }
