@@ -2,8 +2,8 @@
     <div class="col-md-12">
         <div class="nav-tabs-custom" style="margin-bottom:0px;">
             <ul class="nav nav-tabs">
-              <li ng-click="loadAssets()" class="active"><a href="#main_page" data-toggle="tab"><?php echo __( 'Medias', 'media-manager' );?></a></li>
-              <li><a href="#upload_tab" data-toggle="tab"><?php echo __( 'Upload', 'media-manager' );?></a></li>
+              <li ng-click="loadAssets();calculateHeight()" class="active"><a href="#main_page" data-toggle="tab"><?php echo __( 'Medias', 'media-manager' );?></a></li>
+              <li ng-click="calculateHeight()"><a href="#upload_tab" data-toggle="tab"><?php echo __( 'Upload', 'media-manager' );?></a></li>
               <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
             </ul>
             <div class="tab-content">
@@ -23,13 +23,13 @@
                                   </div>
                                   <br>
                               </div>
-                              <div class="md-col-12" style="overflow:scroll-y;height:300px;">
-                                  <div class="container-fluid">
+                              <div class="md-col-12">
+                                  <div class="container-fluid" style="padding-top:5px;overflow-y:scroll;height:300px;">
                                       <div
-                                        ng-click="selectEntry( entry )"
+                                        ng-click="selectEntry( entry, index )"
                                         ng-class="{ 'selected' : entry.selected }"
                                         class="media-manager-entry-box"
-                                        ng-repeat="entry in entries">
+                                        ng-repeat="(index, entry) in entries">
                                           <img ng-src="{{ entry.thumb }}"/>
                                       </div>
                                   </div>
@@ -37,7 +37,20 @@
                           </div>
                       </div>
                       <div class="col-md-3">
-
+                          <div ng-show="countSelected() == 1">
+                              <h2 class="page-header">
+                                <i class="fa fa-globe"></i> <?php echo __( 'Details', 'media-manager' );?>
+                              </h2>
+                                <p>
+                                    <strong><?php echo __( 'Name' , 'media-manager' );?> : </strong>
+                                    {{ entries[ selectedIndex ].name }}
+                                </p>
+                          </div>
+                          <div ng-show="countSelected() > 1">
+                              <h2 class="page-header">
+                                <i class="fa fa-globe"></i> <?php echo __( 'Details', 'media-manager' );?>
+                              </h2>
+                          </div>
                       </div>
                   </div>
               </div>
