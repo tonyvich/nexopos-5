@@ -21,7 +21,7 @@
                     </span>
                 </div>
                 <p class="help-block {{ fields[0].model }}-helper" style="font-size:12px;">{{ fields[0].desc }}</p>
-            </div>            
+            </div>
             <item-variation></item-variation>
         </div>
         <div class="col-md-3 default-fields-wrapper">
@@ -32,7 +32,7 @@
                     </div>
                     <div class="box-tools pull-right">
                         <button ng-click="" type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
+                        </button>
                     </div>
                 </div>
                 <div class="box-body">

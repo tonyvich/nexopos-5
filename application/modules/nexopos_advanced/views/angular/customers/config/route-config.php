@@ -5,13 +5,13 @@
         }
         return 'templates/customers/add';
     },
-    controller: 'customersAdd',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 name: 'customersAdd',
                 files: [
                     'controllers/customers/add.js',
+                    'directives/customers/customers-details.js',
                     'factories/customers/fields.js',
                     'factories/customers/advanced-fields.js',
                     'factories/customers/resource.js',

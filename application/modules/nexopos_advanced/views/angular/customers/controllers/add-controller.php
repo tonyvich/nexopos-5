@@ -2,12 +2,13 @@ var customersAdd               =   function(
     $scope,
     $http,
     $location,
-    customerTabs,
-    customerAdvancedFields,
+    $routeParams,
+    customersTabs,
+    customersAdvancedFields,
     customersGroupsResource,
     customersResource,
     customersAddressResource,
-    $routeParams,
+    customersFields,
     sharedDocumentTitle,
     sharedValidate,
     rawToOptions,
@@ -18,18 +19,241 @@ var customersAdd               =   function(
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>' );
 
-    $scope.item                 =   {};
-    $scope.item.general         =   {};
-    $scope.item.billing         =   {};
-    $scope.item.shipping        =   {};
+    $scope.item                 =   {
+        variations              :   []
+    };
+
+    $scope.item.disableVariation    =   true;
     $scope.validate             =   new sharedValidate();
     $scope.groupLengthLimit     =   10;
-    $scope.tabs                 =   customerTabs.getTabs();
-    $scope.advancedFields       =   customerAdvancedFields;
-   
+    $scope.tabs                 =   customersTabs.getTabs();
+    $scope.fields               =   customersFields;
+
+    /**
+     *  Blue a specific field
+     *  @param object field
+     *  @param object field data
+     *  @param object ids
+     *  @return
+    **/
+
+    $scope.validate.blur    =   function( field, variation_tab, ids ) {
+
+        if( ! angular.isDefined( variation_tab ) ) {
+            return false;
+        }
+
+        // If visibility is hidden on some fields, validation will be skipped on that.
+        if( typeof field.show == 'function' ) {
+            if( ! field.show( variation_tab.models, $scope.item ) ) {
+                return;
+            }
+        }
+
+        if( ! angular.isDefined( variation_tab.models ) && angular.isDefined( ids ) ) {
+            variation_tab.models    =   {};
+        }
+
+        // if validation runs on default fields, we don't fetch models from .models but directly on the object wrapper (specially for default fields)
+        var validation      =   angular.isDefined( ids ) ?
+            this.__run( field, variation_tab.models ) :
+            this.__run( field, variation_tab );
+        var response        =   this.__response( validation );
+        var errors          =   this.__replaceTemplate( response.errors );
+        var fieldClass      =   '.' + field.model + '-helper';
+
+        if( angular.isDefined( ids ) ) {
+
+            var variation_selector          =   $scope.getClass( ids ).variation;
+            var variation_tab_selector      =   $scope.getClass( ids ).variation_tab_body;
+
+            if( angular.isUndefined( variation_tab.errors ) ) {
+                variation_tab.errors         =   {};
+            }
+
+            variation_tab.errors             =   _.extend( variation_tab.errors, validation );
+
+            // If we're validating a form within a group, we just make sure that he group selector exists.
+            if( $scope.getClass( ids ).variation_group_body ) {
+
+                variation_tab_selector      =   $scope.getClass( ids ).variation_group_body;
+
+                // if tab groups_errors is not set
+                if( typeof $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors == 'undefined' ) {
+                    $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors     =   {};
+                }
+
+                // Bring validaiton error badge to the tab of the variation
+                // We just fetch the group name and use it to group errors
+                var groups_errors   =   $scope.item.variations[ ids.variation_id ]
+                .tabs[ ids.variation_tab_id ]
+                .groups_errors[ ids.variation_tab.namespace ];
+
+                if( typeof groups_errors == 'undefined' ) {
+                    groups_errors    =   [];
+                }
+
+                if( typeof groups_errors[ ids.variation_group_id ] == 'undefined' ) {
+                    groups_errors[ ids.variation_group_id ]     =   {};
+                }
+
+                groups_errors[ ids.variation_group_id ]     =     _.extend(
+                    groups_errors[ ids.variation_group_id ], validation
+                );
+
+                // let refresh variation groups errors;
+                $scope.item.variations[ ids.variation_id ]
+                .tabs[ ids.variation_tab_id ]
+                .groups_errors[ ids.variation_tab.namespace ]    =   groups_errors;
+
+            }
+        } else {
+            var variation_tab_selector      =   '.default-fields-wrapper';
+        }
+
+        if( ! response.isValid  ) {
+            angular.element( variation_tab_selector + ' ' + fieldClass )
+            .closest( '.form-group' ).removeClass( 'has-success' );
+
+            angular.element( variation_tab_selector + ' ' + fieldClass )
+            .text( errors[ field.model ].msg );
+
+            angular.element( variation_tab_selector + ' ' + fieldClass )
+            .closest( '.form-group' ).addClass( 'has-error' );
+        } else {
+            // delete error for grouped field
+            if( angular.isDefined( $scope.getClass( ids ).variation_group_body ) ) {
+                // Delete validaiton error for group in tab object;
+                var groups_errors   =   $scope.item.variations[ ids.variation_id ]
+                .tabs[ ids.variation_tab_id ]
+                .groups_errors[ ids.variation_tab.namespace ];
+
+                // suppression d'une erreur dans le groupe
+                delete groups_errors[ ids.variation_group_id ][ field.model ];
+            }
+
+            // delete if the tab has an error to avoid error
+            if( angular.isDefined( variation_tab.errors ) ) {
+                delete variation_tab.errors[ field.model ]; // delete error for other fields
+            }
+        }
+
+        return response.isValid ? null : validation;
+    }
+
+    /**
+     *  Blur all fields to display errors
+     *  @param object fields
+     *  @return void
+    **/
+
+    $scope.validate.blurAll         =   function() {
+
+        var global_validation       =   [];
+
+        _.each( $scope.fields, function( field ) {
+            var validationResult    =   $scope.validate.blur( field, $scope.item );
+            if( validationResult != null ) {
+                global_validation.push( validationResult );
+            }
+        });
+
+        _.each( $scope.item.variations, function( variation, variation_id ) {
+            _.each( variation.tabs, function( tab, variation_tab_id ) {
+                var ids             =   {
+                    variation_id        :   variation_id,
+                    variation_tab_id    :   variation_tab_id
+                };
+
+                // We won't validate hidden tabs
+                if( typeof tab.hide == 'function' ) {
+                    if( tab.hide( $scope.item ) == true ) {
+                        return false;
+                    }
+                }
+
+                var allFields       =   customersAdvancedFields[ tab.namespace ];
+
+                // We won't validate hidden field
+                _.each( allFields, function( field, variation_field_id ) {
+                    if( field.show( variation, $scope.item ) && field.type != 'group' ){
+
+                        var validationResult    =   $scope.validate.blur( field, tab, ids );
+                        if( validationResult != null ) {
+                            global_validation.push( validationResult );
+                        }
+
+                    } else if( field.show( variation, $scope.item ) && field.type == 'group' ) {
+                        _.each( field.subFields, function( subField ) {
+                            _.each( tab.models[ field.model ], function( group_model, variation_group_id ){
+
+                                ids.variation_group_id      =   variation_group_id;
+                                ids.variation_tab           =   tab;
+
+                                var validationResult    =   $scope.validate.blur( subField, group_model, ids );
+                                if( validationResult != null ) {
+                                    global_validation.push( validationResult );
+                                }
+
+                            })
+                        });
+                    }
+                })
+            });
+        });
+
+        return global_validation;
+    }
+
+    /**
+     *  Focus on fields
+     *  @param object field
+     *  @param object field model data
+     *  @param object ids
+     *  @return
+    **/
+
+    $scope.validate.focus      =   function( field, model, ids ) {
+
+        var fieldClass                  =   '.' + field.model + '-helper';
+
+        // for advanced fields
+        if( angular.isDefined( ids ) ) {
+            var variation_selector          =   $scope.getClass( ids ).variation;
+            var variation_tab_selector      =   $scope.getClass( ids ).variation_tab_body;
+
+            // If we're validating a form within a group, we just make sure that he group selector exists.
+            if( $scope.getClass( ids ).variation_group_body ) {
+                variation_tab_selector      =   $scope.getClass( ids ).variation_group_body;
+            }
+        } else { // for default fields
+            var variation_tab_selector      =   '.default-fields-wrapper';
+        }
+
+        angular.element( variation_tab_selector + ' ' + fieldClass )
+        .closest( '.form-group' ).removeClass( 'has-error' );
+
+        angular.element( variation_tab_selector + ' ' + fieldClass )
+        .text( field.desc );
+    }
+
+    $scope.$watch( 'item', function(){
+        if( $scope.item.variations.length == 0 ) {
+            $scope.item.variations.push({
+                tabs    :   customersTabs.getTabs()
+            });
+        }
+
+        _.each( $scope.item.variations, function( variation, $tab_id ) {
+            _.each( variation.tabs, function( tab, $tab_key ) {
+                tab.models      =   {};
+            });
+        });
+    });
+
     customersGroupsResource.get(
         function(data){
-            $scope.advancedFields['general'][6].options = rawToOptions(data.entries, 'id', 'name');
+            // $scope.fields['general'][6].options = rawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -86,49 +310,16 @@ var customersAdd               =   function(
     **/
 
     $scope.submitItem               =   function(){
-        if( ! $scope.validate.run( $scope.advancedFields.general, $scope.item.general).isValid ) {
-            return $scope.validate.blurAll( $scope.advancedFields.general, $scope.item.general );
+        // validating
+        var global_validation       =   $scope.validate.blurAll();
+        var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
+
+        if( global_validation.length > 0 ) {
+            return sharedAlert.warning( warningMessage.format( global_validation.length ) );
         }
 
-        $scope.item.general.date_creation  =   tendoo.now();
-        $scope.item.general.author    =   <?= User::id()?>;
-        $scope.item.billing.type      =   "billing";
-        $scope.item.shipping.type     =   "shipping"; 
-        console.log($scope.item);
-
-        customersResource.save(
-            $scope.item.general,
-            function(){
-                console.log('general : ok')
-            }, function( returned ){
-                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
-                    sharedAlert.warning( '<?php echo _s( 'Une erreur est produite durant opération.', 'nexopos_advanced' );?>' );
-                }
-                return;
-            }
-        );
-        customersAddressResource.save(
-            $scope.item.billing,
-            function(){
-                console.log('billing: ok')
-            }, function ( returned ){
-                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
-                    sharedAlert.warning( '<?php echo _s( 'Une erreur est produite durant billing', 'nexopos_advanced' );?>' );
-                }
-                return;
-            }
-        );
-        customersAddressResource.save(
-            $scope.item.shipping,
-            function(){
-                sharedAlert.warning( '<?php echo _s( 'Enregistrement effectué', 'nexopos_advanced' );?>' );        
-            },function ( returned ){
-                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
-                    sharedAlert.warning( '<?php echo _s( 'Une erreur est produite durant shipping', 'nexopos_advanced' );?>');
-                }
-                return;
-            }
-        );
+        // When submiting item
+        console.log( item );
     }
 
     /**
@@ -201,7 +392,7 @@ var customersAdd               =   function(
      *  @return
     **/
 
-    $scope.activeTab        =   function( $event, tabIndex ) {
+    $scope.activeTab        =   function( $event, variationIndex, tabIndex ) {
         angular.element( $event.currentTarget )
         .parent( 'li' )
         .siblings()
@@ -211,11 +402,11 @@ var customersAdd               =   function(
         .parent( 'li' )
         .addClass( 'active' );
 
-        _.each( $scope.tabs, function( value ) {
+        _.each( $scope.item.variations[variationIndex].tabs, function( value ) {
             value.active    =   false;
         });
 
-        $scope.tabs[ tabIndex ].active     =   true;
+        $scope.item.variations[variationIndex].tabs[ tabIndex ].active     =   true;
     }
 
 };
@@ -224,18 +415,18 @@ customersAdd.$inject           =   [
     '$scope',
     '$http',
     '$location',
-    'customerTabs',
-    'customerAdvancedFields',
+    '$routeParams',
+    'customersTabs',
+    'customersAdvancedFields',
     'customersGroupsResource',
     'customersResource',
     'customersAddressResource',
-    '$routeParams',
+    'customersFields',
     'sharedDocumentTitle',
     'sharedValidate',
     'rawToOptions',
     'sharedFieldEditor',
     'sharedAlert',
-    'sharedDocumentTitle',
     'sharedMoment'
 ];
 
