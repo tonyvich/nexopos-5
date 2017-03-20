@@ -16,15 +16,14 @@ Trait customers
                 nexopos_customers.id as id,
                 nexopos_customers.name as name,
                 nexopos_customers.surname as surname,
+                nexopos_customers.description as description,
+                nexopos_customers.status as status,
                 nexopos_customers.sex as sex,
                 nexopos_customers.phone as phone,
                 nexopos_customers.email as email,
-                nexopos_customers.address as address,
-                nexopos_customers.pobox as pobox,
-                nexopos_customers.description as description,
+                nexopos_customers_groups.name as customer_group_name,
                 nexopos_customers.date_creation as date_creation,
                 nexopos_customers.date_modification as date_modification,
-                nexopos_customers_groups.name as customer_group_name,
                 aauth_users.name        as author_name
             ' );
 
@@ -67,13 +66,12 @@ Trait customers
         $this->db->insert( 'nexopos_customers', [
             'name'                  =>  $this->post( 'name' ),
             'surname'               =>  $this->post( 'surname' ),
+            'description'           =>  $this->post( 'description' ),
             'sex'                   =>  $this->post( 'sex' ),
+            'status'                =>  $this->post( 'status' ),
             'phone'                 =>  $this->post( 'phone' ),
             'email'                 =>  $this->post( 'email' ),
-            'address'               =>  $this->post( 'address' ),
-            'pobox'                 =>  $this->post( 'pobox' ),
             'ref_group'             =>  $this->post( 'ref_group' ),
-            'description'           =>  $this->post( 'description' ),
             'author'                =>  $this->post( 'author' ),
             'date_creation'         =>  $this->post( 'date_creation' )
         ]);
@@ -118,15 +116,14 @@ Trait customers
         $this->db->where( 'id', $id )->update( 'nexopos_customers', [
             'name'                  =>  $this->put( 'name' ),
             'surname'               =>  $this->put( 'surname' ),
+            'description'           =>  $this->put( 'description' ),
+            'status'                =>  $this->put( 'status' ),
+            'author'                =>  $this->put( 'author' ),
             'sex'                   =>  $this->put( 'sex' ),
             'phone'                 =>  $this->put( 'phone' ),
             'email'                 =>  $this->put( 'email' ),
-            'address'               =>  $this->put( 'address' ),
-            'pobox'                 =>  $this->put( 'pobox' ),
             'ref_group'             =>  $this->put( 'ref_group' ),
-            'description'           =>  $this->put( 'description' ),
-            'author'                =>  $this->put( 'author' ),
-            'date_modification'         =>  $this->put( 'date_modification' )
+            'date_modification'     =>  $this->put( 'date_modification' )
         ]);
 
         $this->__success();

@@ -4,9 +4,9 @@ var customersAdd               =   function(
     $location,
     customerTabs,
     customerAdvancedFields,
-    customerFields,
-    customerResource,
     customersGroupsResource,
+    customersResource,
+    customersAddressResource,
     $routeParams,
     sharedDocumentTitle,
     sharedValidate,
@@ -18,13 +18,15 @@ var customersAdd               =   function(
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>' );
 
-    $scope.item                 =   [];
+    $scope.item                 =   {};
+    $scope.item.general         =   {};
+    $scope.item.billing         =   {};
+    $scope.item.shipping        =   {};
     $scope.validate             =   new sharedValidate();
     $scope.groupLengthLimit     =   10;
-    $scope.fields               =   customerFields;
     $scope.tabs                 =   customerTabs.getTabs();
     $scope.advancedFields       =   customerAdvancedFields;
-
+   
     customersGroupsResource.get(
         function(data){
             $scope.advancedFields['general'][6].options = rawToOptions(data.entries, 'id', 'name');
@@ -63,7 +65,6 @@ var customersAdd               =   function(
         return classes_object;
     }
 
-
     /**
      *  Show or Hide UI
      *  @param string ui namespace
@@ -85,16 +86,49 @@ var customersAdd               =   function(
     **/
 
     $scope.submitItem               =   function(){
-
-        $scope.item.author          =   <?= User::id()?>;
-        $scope.item.date_creation   =   sharedMoment.now();
-
-        if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
-            return $scope.validate.blurAll( $scope.fields, $scope.item );
+        if( ! $scope.validate.run( $scope.advancedFields.general, $scope.item.general).isValid ) {
+            return $scope.validate.blurAll( $scope.advancedFields.general, $scope.item.general );
         }
 
-        // When submiting item
-        console.log( item );
+        $scope.item.general.date_creation  =   tendoo.now();
+        $scope.item.general.author    =   <?= User::id()?>;
+        $scope.item.billing.type      =   "billing";
+        $scope.item.shipping.type     =   "shipping"; 
+        console.log($scope.item);
+
+        customersResource.save(
+            $scope.item.general,
+            function(){
+                console.log('general : ok')
+            }, function( returned ){
+                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
+                    sharedAlert.warning( '<?php echo _s( 'Une erreur est produite durant opération.', 'nexopos_advanced' );?>' );
+                }
+                return;
+            }
+        );
+        customersAddressResource.save(
+            $scope.item.billing,
+            function(){
+                console.log('billing: ok')
+            }, function ( returned ){
+                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
+                    sharedAlert.warning( '<?php echo _s( 'Une erreur est produite durant billing', 'nexopos_advanced' );?>' );
+                }
+                return;
+            }
+        );
+        customersAddressResource.save(
+            $scope.item.shipping,
+            function(){
+                sharedAlert.warning( '<?php echo _s( 'Enregistrement effectué', 'nexopos_advanced' );?>' );        
+            },function ( returned ){
+                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
+                    sharedAlert.warning( '<?php echo _s( 'Une erreur est produite durant shipping', 'nexopos_advanced' );?>');
+                }
+                return;
+            }
+        );
     }
 
     /**
@@ -192,15 +226,15 @@ customersAdd.$inject           =   [
     '$location',
     'customerTabs',
     'customerAdvancedFields',
-    'customerFields',
-    'customerResource',
     'customersGroupsResource',
+    'customersResource',
+    'customersAddressResource',
     '$routeParams',
     'sharedDocumentTitle',
     'sharedValidate',
     'rawToOptions',
     'sharedFieldEditor',
-    'sharedAlert'
+    'sharedAlert',
     'sharedDocumentTitle',
     'sharedMoment'
 ];

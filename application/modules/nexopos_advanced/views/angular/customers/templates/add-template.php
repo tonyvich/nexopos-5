@@ -10,18 +10,17 @@
                         <span class="ng-hide"></span>
                     </span>
                     <input
-                        placeholder="<?php echo __( 'Nom du Client', 'nexo' );?>"
-                        type="text" class="form-control" style="line-height:40px;font-size:25px;" 
-                        ng-model="item['general'][ fields[0].model ]"
-                        ng-blur="validate.blur( fields[0], item )"
-                        ng-focus="validate.focus( fields[0], item )"
-                        >
+                        placeholder="<?php echo __( 'Nom du client', 'nexopos_advanced' );?>"
+                        ng-blur="validate.blur( advancedFields['general'][0], item.general)"
+                        ng-focus="validate.focus( advancedFields['general'][0], item.general)"
+                        type="text" class="form-control"
+                        style="line-height:40px;font-size:25px;" ng-model="item.general['name']">
                     <span class="input-group-btn ">
                         <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexo' );?></button>
                         <span class="ng-hide"></span>
                     </span>
                 </div>
-                <p class="help-block {{ fields[0].model }}-helper" style="font-size:12px;">{{ fields[0].desc }}</p>
+                <p class="help-block {{ advancedFields['general'][0].model }}-helper" style="height:30px;font-size:12px;">{{ advancedFields['general'][0].desc }}</p>
             </div>            
             <div class="nav-tabs-custom variation">
                 <ul class="nav nav-tabs variation-header">
@@ -61,8 +60,8 @@
                                 class="form-control"
                                 ng-model="item[tab.namespace][field.model]"
                                 placeholder="{{ field.placeholder }}"
-                                ng-blur="validate.blur( field, item)"
-                                ng-focus="validate.focus( field, item)"
+                                ng-blur="validate.blur( field, item[tab.namespace])"
+                                ng-focus="validate.focus( field, item[tab.namespace])"
                                 >
                                 <span ng-show="field.addon" class="input-group-addon">{{ field.addon }}</span>
                             </div>
@@ -75,8 +74,8 @@
                                 <select
                                     class="form-control"
                                     ng-model="item[ tab.namespace ][ field.model ]"
-                                    ng-blur="validate.blur( field, item)"
-                                    ng-focus="validate.focus( field, item)"
+                                    ng-blur="validate.blur( field, item[tab.namespace])"
+                                    ng-focus="validate.focus( field, item[tab.namespace])"
                                 >
                                     <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                                 </select>
@@ -94,8 +93,8 @@
                                 <input
                                     class="form-control"
                                     placeholder="{{ field.placeholder }}"
-                                    ng-blur="validate.blur( field, item)"
-                                    ng-focus="validate.focus( field, item)"
+                                    ng-blur="validate.blur( field, item[tab.namespace])"
+                                    ng-focus="validate.focus( field, item[tab.namespace])"
                                      />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -109,8 +108,8 @@
                               <span class="input-group-addon">{{ field.label }}</span>
                               <input
                                 ng-model="item[ tab.namespace ][ field.model ]"
-                                ng-blur="validate.blur( field, item)"
-                                ng-focus="validate.focus( field, item)"
+                                ng-blur="validate.blur( field, item[tab.namespace])"
+                                ng-focus="validate.focus( field, item[tab.namespace])"
                                 type="text"
                                 class="form-control"
                                 placeholder="">
@@ -124,7 +123,7 @@
               </div>
             </div>
     <!-- /.tab-content -->
-</div>
+    </div>
         </div>
     </div>
 </div>

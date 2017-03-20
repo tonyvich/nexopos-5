@@ -438,14 +438,11 @@ class NexoPOS_Install extends Tendoo_Module
       `first_address` varchar(200),
       `second_address` varchar(200),
       `pobox` varchar(200),
-      `author` int(11),
       `town` varchar(200),
       `country` varchar(200),
       `state` varchar(200),
       `ref_customer` varchar(200),
       `type` varchar(200),
-      `date_creation` datetime,
-      `date_modification` datetime,
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 

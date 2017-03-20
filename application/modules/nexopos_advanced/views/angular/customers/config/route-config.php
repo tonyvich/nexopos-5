@@ -15,6 +15,7 @@
                     'factories/customers/fields.js',
                     'factories/customers/advanced-fields.js',
                     'factories/customers/resource.js',
+                    'factories/customers/resource-address.js',
                     'factories/customers/tabs.js',
                     'factories/customers-groups/resource.js',
                     'shared_factories/document-title.js',
@@ -22,7 +23,8 @@
                     'shared_factories/raw-to-options.js',
                     'shared_factories/options.js',
                     'shared_factories/field-editor.js',
-                    'shared_factories/alert.js'
+                    'shared_factories/alert.js',
+                    'shared_factories/moment.js'
                 ]
             });
         }]

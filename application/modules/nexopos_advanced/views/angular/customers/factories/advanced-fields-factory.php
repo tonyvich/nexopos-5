@@ -14,11 +14,11 @@ tendooApp.factory( 'customerAdvancedFields', [
         general         :   
         [
             {
-                type    :   'select',
-                model   :   'ref_coupon',
-                label   :   '<?php echo _s( 'Assigner à un coupon', 'nexo' );?>',
-                desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexo' );?>',
-                options   : sharedOptions.yesOrNo
+                type    :   'hidden',
+                model   :   'name',
+                validation  :   {
+                    required    :   true
+                }
             },{
                 type    :   'text',
                 model   :   'surname',
@@ -72,9 +72,6 @@ tendooApp.factory( 'customerAdvancedFields', [
                 type    :   'select',
                 model   :   'ref_group',
                 label   :   '<?php echo _s('Groupe', 'nexopos_advanced');?>',
-                validation   :   {
-                    required  :  true
-                },
                 show        :   function(){
                     return true;
                 },
@@ -133,20 +130,6 @@ tendooApp.factory( 'customerAdvancedFields', [
                 show        :   function(){
                     return true;
                 }
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Numéro de téléphone', 'nexopos_advanced' );?>',
-                model       :   'phone',
-                show        :   function(){
-                    return true;
-                }
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Email', 'nexopos_advanced' );?>',
-                model       :   'email',
-                show        :   function(){
-                    return true;
-                }
             }
         ],
         shipping        :   [
@@ -197,20 +180,6 @@ tendooApp.factory( 'customerAdvancedFields', [
                 type        :   'text',
                 label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
                 model       :   'state',
-                show        :   function(){
-                    return true;
-                }
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Numéro de téléphone', 'nexopos_advanced' );?>',
-                model       :   'phone',
-                show        :   function(){
-                    return true;
-                }
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Email', 'nexopos_advanced' );?>',
-                model       :   'email',
                 show        :   function(){
                     return true;
                 }
