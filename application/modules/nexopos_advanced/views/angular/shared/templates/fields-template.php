@@ -14,7 +14,7 @@
             ng-model="item[ field.model ]"
             placeholder="{{ field.placeholder }}">
         </div>
-        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div class="form-group" ng-if="field.type == 'textarea'">
@@ -24,7 +24,7 @@
             ng-blur="validate.blur( field, item )"
             ng-focus="validate.focus( field, item )"
             placeholder="{{ field.placeholder }}" class="form-control"></textarea>
-        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div class="form-group" ng-if="field.type == 'select'">
@@ -42,7 +42,7 @@
                 <button class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
             </span>
         </div>
-        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div class="form-group" ng-if="field.type == 'datepick'">
@@ -57,7 +57,7 @@
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
         </div>
-        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <!-- For multiselect -->
@@ -87,7 +87,7 @@
             <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
         </p>
-        <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
+        <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
     <div
@@ -132,7 +132,7 @@
                                 >
 
                             </div>
-                            <p class="help-block" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
+                            <p class="help-block" style="min-height:15px;font-size:12px;">{{ subField.desc }}</p>
                         </div>
 
                         <div class="form-group" ng-if="subField.type == 'select'">
@@ -145,7 +145,7 @@
                                     <button class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
                                 </span>
                             </div>
-                            <p class="help-block" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
+                            <p class="help-block" style="min-height:15px;font-size:12px;">{{ subField.desc }}</p>
                         </div>
 
                         <!--  Image Select -->
@@ -177,7 +177,7 @@
         </div>
         <p
           class="help-block {{ field.model }}-helper"
-          style="height:30px;font-size:12px;">{{ field.desc }}</p>
+          style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
 </div>
