@@ -1,6 +1,5 @@
 .when('/items/:slug?/:types?', {
     templateUrl: function( urlattr ) {
-        console.log( urlattr );
         if( typeof urlattr.slug != 'undefined' ) {
             return 'templates/items/' + urlattr.slug;
         }
@@ -30,7 +29,8 @@
                     'shared_factories/raw-to-options.js',
                     'shared_factories/options.js',
                     'shared_factories/field-editor.js',
-                    'shared_factories/alert.js'
+                    'shared_factories/alert.js',
+                    'shared_factories/filter-item.js'
                 ]
             });
         }]

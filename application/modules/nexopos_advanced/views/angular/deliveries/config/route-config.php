@@ -19,7 +19,8 @@
                     'shared_factories/table-actions.js',
                     'shared_factories/alert.js',
                     'shared_factories/entry-actions.js',
-                    'shared_factories/document-title.js'
+                    'shared_factories/document-title.js',
+                    'shared_factories/moment.js'
                 ]
             });
         }]

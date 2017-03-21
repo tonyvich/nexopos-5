@@ -8,7 +8,8 @@ var providers          =   function(
     sharedValidate,
     rawToOptions,
     sharedDocumentTitle,
-    sharedAlert
+    sharedAlert,
+    sharedMoment
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un fournisseur', 'nexopos_advanced' );?>' );

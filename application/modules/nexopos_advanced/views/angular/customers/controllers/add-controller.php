@@ -319,7 +319,7 @@ var customersAdd               =   function(
         }
 
         // When submiting item
-        console.log( item );
+        console.log( $scope.item );
     }
 
     /**

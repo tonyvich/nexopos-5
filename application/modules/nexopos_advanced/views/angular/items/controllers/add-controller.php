@@ -21,7 +21,8 @@ var items               =   function(
     rawToOptions,
     sharedFieldEditor,
     sharedAlert,
-    sharedMoment
+    sharedMoment,
+    sharedFilterItem
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
@@ -516,7 +517,22 @@ var items               =   function(
         }
 
         // When submiting item
-        console.log( item );
+        var itemToSubmit                    =   sharedFilterItem(
+            item,
+            itemFields,
+            itemAdvancedFields
+        );
+
+        itemToSubmit[ 'author' ]            =   '<?php User::id();?>';
+        itemToSubmit[ 'date_creation' ]     =   sharedMoment.now();
+        itemToSubmit[ 'namespace' ]         =   item.namespace;
+
+        console.log( itemToSubmit )
+
+        // Item Resource POST*
+        itemResource.save( itemToSubmit ).then( function( returned ){
+
+        });
     }
 
     /**
@@ -701,7 +717,8 @@ items.$inject           =   [
     'rawToOptions',
     'sharedFieldEditor',
     'sharedAlert',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedFilterItem'
 ];
 
 tendooApp.controller( 'items', items );
