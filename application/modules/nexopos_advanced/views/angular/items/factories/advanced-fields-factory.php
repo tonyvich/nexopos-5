@@ -362,12 +362,12 @@ tendooApp.factory( 'itemAdvancedFields', [
                     return true;
                 },
                 class       :   'col-lg-12 col-sm-12 col-xs-12',
-                model       :   'stock',
+                model       :   'images',
                 subFields   :   [
                     {
                         type        :   'image_select',
                         label       :   '<?php echo _s( 'Image', 'nexo' );?>',
-                        model       :   'image[]',
+                        model       :   'gallery',
                         show        :   function(){
                             return true;
                         },

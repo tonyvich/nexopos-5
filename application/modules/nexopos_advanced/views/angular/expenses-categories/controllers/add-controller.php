@@ -1,4 +1,14 @@
-var expensesCategories          =   function( $scope, $http, expensesCategoriesTextDomain,  expensesCategoriesFields, expensesCategoriesResource, $location, sharedValidate, sharedDocumentTitle ) {
+var expensesCategories          =   function(
+    $scope,
+    $http,
+    expensesCategoriesTextDomain,
+    expensesCategoriesFields,
+    expensesCategoriesResource,
+    $location,
+    sharedValidate,
+    sharedDocumentTitle,
+    sharedMoment
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une catégorie de dépenses', 'nexopos_advanced' );?>' );
     $scope.textDomain       =   expensesCategoriesTextDomain;
@@ -39,5 +49,15 @@ var expensesCategories          =   function( $scope, $http, expensesCategoriesT
     }
 }
 
-expensesCategories.$inject    =   [ '$scope', '$http','expensesCategoriesTextDomain', 'expensesCategoriesFields', 'expensesCategoriesResource', '$location', 'sharedValidate', 'sharedDocumentTitle' ];
+expensesCategories.$inject    =   [
+    '$scope',
+    '$http',
+    'expensesCategoriesTextDomain',
+    'expensesCategoriesFields',
+    'expensesCategoriesResource',
+    '$location',
+    'sharedValidate',
+    'sharedDocumentTitle',
+    'sharedMoment'
+];
 tendooApp.controller( 'expensesCategories', expensesCategories );

@@ -7,7 +7,8 @@ var providersEdit      =   function(
     providersResource,
     $location,
     sharedValidate,
-    sharedDocumentTitle
+    sharedDocumentTitle,
+    sharedMoment
 ) {
 
     console.log( sharedDocumentTitle );

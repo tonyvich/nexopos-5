@@ -6,7 +6,8 @@ var deliveries          =   function(
     deliveriesResource,
     $location,
     sharedValidate,
-    sharedDocumentTitle
+    sharedDocumentTitle,
+    sharedMoment
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une livraison', 'nexopos_advanced' );?>' );

@@ -7,7 +7,8 @@ tendooApp.factory( 'deliveriesTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Coût d\'achat', 'nexopos_advanced' );?>',
-                namespace   :   'purchase_cost'
+                namespace   :   'purchase_cost',
+                is      :   'money'
             },
             {
                 text    :   '<?php echo _s( 'Coût Automatique', 'nexopos_advanced' );?>',
