@@ -7,14 +7,15 @@ var customersAdd               =   function(
     customersAdvancedFields,
     customersGroupsResource,
     customersResource,
-    customersAddressResource,
     customersFields,
+    sharedFilterItem,
+    sharedMoment,
+    sharedCountries,
     sharedDocumentTitle,
     sharedValidate,
-    rawToOptions,
     sharedFieldEditor,
-    sharedAlert,
-    sharedMoment
+    rawToOptions,
+    sharedAlert
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>' );
@@ -24,11 +25,20 @@ var customersAdd               =   function(
     };
 
     $scope.item.disableVariation    =   true;
-    $scope.validate             =   new sharedValidate();
-    $scope.groupLengthLimit     =   10;
-    $scope.tabs                 =   customersTabs.getTabs();
-    $scope.fields               =   customersFields;
+    $scope.validate                 =   new sharedValidate();
+    $scope.groupLengthLimit         =   10;
+    $scope.tabs                     =   customersTabs.getTabs();
+    $scope.fields                   =   customersFields;
 
+    // Setting customer group options
+    customersGroupsResource.get(
+        function(data){
+            $scope.fields[5].options = rawToOptions(data.entries, 'id', 'name');            
+        }
+    );
+
+    // Setting customer address country
+    
     /**
      *  Blue a specific field
      *  @param object field
@@ -251,12 +261,6 @@ var customersAdd               =   function(
         });
     });
 
-    customersGroupsResource.get(
-        function(data){
-            // $scope.fields['general'][6].options = rawToOptions(data.entries, 'id', 'name');
-        }
-    );
-
     /**
      *  Get Class
      *  Access ids object and return all ui classe for selecting variation, variation header, variation vontent
@@ -317,9 +321,31 @@ var customersAdd               =   function(
         if( global_validation.length > 0 ) {
             return sharedAlert.warning( warningMessage.format( global_validation.length ) );
         }
+        
+        $scope.item.date_creation   =   sharedMoment.now();
+        $scope.finalItem = sharedFilterItem($scope.item, $scope.fields, $scope.itemAdvancedFields);
+        
 
-        // When submiting item
-        console.log( $scope.item );
+        $scope.finalItem.author = <?= User::id()?>;
+        $scope.finalItem.date_creation = sharedMoment.now();
+        console.log($scope.finalItem);
+        customersResource.save(
+            $scope.finalItem,
+            function(){
+                sharedAlert.warning( '<?php echo _s( 'Enregistrement effectué', 'nexopos_advanced' );?>' );
+            },function( returned ){
+
+                $scope.submitDisabled   =   false;
+
+                if( returned.data.status === 'alreadyExists' ) {
+                    sharedAlert.warning( '<?php echo _s( 'Le nom ce client est déjà en cours d\'utilisation, veuillez choisir un autre nom.', 'nexopos_advanced' );?>' );
+                }
+
+                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
+                    sharedAlert.warning( "<?php echo _s( "Une erreur s\'est produite durant l\'opération.", "nexopos_advanced" );?>" );
+                }
+            }
+        )
     }
 
     /**
@@ -420,14 +446,15 @@ customersAdd.$inject           =   [
     'customersAdvancedFields',
     'customersGroupsResource',
     'customersResource',
-    'customersAddressResource',
     'customersFields',
+    'sharedFilterItem',
+    'sharedMoment',
+    'sharedCountries',
     'sharedDocumentTitle',
     'sharedValidate',
-    'rawToOptions',
     'sharedFieldEditor',
-    'sharedAlert',
-    'sharedMoment'
+    'rawToOptions',
+    'sharedAlert'
 ];
 
 tendooApp.controller( 'customersAdd', customersAdd );

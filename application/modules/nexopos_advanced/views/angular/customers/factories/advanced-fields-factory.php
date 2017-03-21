@@ -16,7 +16,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             {
                 type        :   'text',
                 label       :   '<?php echo _s( 'Entreprise', 'nexopos_advanced' );?>',
-                model       :   'company',
+                model       :   'billing_company',
                 show        :   function(){
                     return true;
                 },
@@ -24,7 +24,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 1', 'nexopos_advanced' );?>',
-                model       :   'first_address',
+                model       :   'billing_first_address',
                 show        :   function(){
                     return true;
                 },
@@ -32,7 +32,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 2', 'nexopos_advanced' );?>',
-                model       :   'second_address',
+                model       :   'billing_second_address',
                 show        :   function(){
                     return true;
                 },
@@ -40,7 +40,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Boite postale', 'nexopos_advanced' );?>',
-                model       :   'pobox',
+                model       :   'billing_pobox',
                 show        :   function(){
                     return true;
                 },
@@ -48,7 +48,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
-                model       :   'country',
+                model       :   'billing_country',
                 options     :   sharedOptions.yesOrNo,
                 show        :   function(){
                     return true;
@@ -57,7 +57,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
-                model       :   'town',
+                model       :   'billing_town',
                 show        :   function(){
                     return true;
                 },
@@ -65,7 +65,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
-                model       :   'state',
+                model       :   'billing_state',
                 show        :   function(){
                     return true;
                 },
@@ -76,7 +76,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             {
                 type        :   'text',
                 label       :   '<?php echo _s( 'Entreprise', 'nexopos_advanced' );?>',
-                model       :   'company',
+                model       :   'delivery_company',
                 show        :   function(){
                     return true;
                 },
@@ -84,7 +84,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 1', 'nexopos_advanced' );?>',
-                model       :   'first_address',
+                model       :   'delivery_first_address',
                 show        :   function(){
                     return true;
                 },
@@ -92,7 +92,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 2', 'nexopos_advanced' );?>',
-                model       :   'second_address',
+                model       :   'delivery_second_address',
                 show        :   function(){
                     return true;
                 },
@@ -100,7 +100,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Boite postale', 'nexopos_advanced' );?>',
-                model       :   'pobox',
+                model       :   'delivery_pobox',
                 show        :   function(){
                     return true;
                 },
@@ -108,7 +108,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
-                model       :   'country',
+                model       :   'delivery_country',
                 options     :   sharedOptions.yesOrNo,
                 show        :   function(){
                     return true;
@@ -117,7 +117,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
-                model       :   'town',
+                model       :   'delivery_town',
                 show        :   function(){
                     return true;
                 },
@@ -125,7 +125,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
-                model       :   'state',
+                model       :   'delivery_state',
                 show        :   function(){
                     return true;
                 },
