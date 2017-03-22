@@ -18,6 +18,8 @@
                     'factories/customers/resource-address.js',
                     'factories/customers/tabs.js',
                     'factories/customers-groups/resource.js',
+                    'shared_factories/countries.js',
+                    'shared_factories/filter-item.js',
                     'shared_factories/document-title.js',
                     'shared_factories/validate.js',
                     'shared_factories/raw-to-options.js',

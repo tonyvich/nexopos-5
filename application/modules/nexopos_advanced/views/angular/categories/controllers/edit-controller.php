@@ -7,7 +7,7 @@ var categoriesEdit          =   function(
     categoriesResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedMoment
 ) {
@@ -35,7 +35,7 @@ var categoriesEdit          =   function(
         },
         function(data){
             console.log( data.entries );
-            $scope.fields[1].options = rawToOptions( data.entries, 'id', 'name');
+            $scope.fields[1].options = sharedRawToOptions( data.entries, 'id', 'name');
         }
     );
 
@@ -76,7 +76,7 @@ categoriesEdit.$inject    =   [
     'categoriesResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedMoment'
 ];

@@ -3,7 +3,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
     'sharedOptions',
     'barcodeOptions',
     'item',
-    'rawToOptions',
+    'sharedRawToOptions',
     'itemsResource',
     'itemsVariationsResource',
     'sharedAlert',
@@ -12,7 +12,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
         sharedOptions,
         barcodeOptions,
         item,
-        rawToOptions,
+        sharedRawToOptions,
         itemsResource,
         itemsVariationsResource,
         sharedAlert

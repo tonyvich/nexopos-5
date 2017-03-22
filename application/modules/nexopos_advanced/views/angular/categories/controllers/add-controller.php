@@ -6,7 +6,7 @@ var categories          =   function(
     categoriesResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedMoment
 ) {
@@ -21,7 +21,7 @@ var categories          =   function(
 
     categoriesResource.get(
         function(data){
-            $scope.fields[1].options = rawToOptions(data.entries, 'id', 'name');
+            $scope.fields[1].options = sharedRawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -68,7 +68,7 @@ categories.$inject    =   [
     'categoriesResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedMoment'
 ];

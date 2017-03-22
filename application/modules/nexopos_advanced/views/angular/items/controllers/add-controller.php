@@ -19,7 +19,7 @@ var items               =   function(
     $routeParams,
     sharedDocumentTitle,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedFieldEditor,
     sharedAlert,
     sharedMoment,
@@ -597,27 +597,27 @@ var items               =   function(
 
     // Resources Loading
     providersResource.get(function( data ) {
-        sharedFieldEditor( 'ref_provider', itemsAdvancedFields.stock ).options        =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_provider', itemsAdvancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
     });
 
     // Categories Loading
     categoriesResource.get(function( data ) {
-        sharedFieldEditor( 'ref_category', $scope.fields ).options   =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_category', $scope.fields ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
     });
 
     // Deliveries Loading
     deliveriesResource.get(function( data ) {
-        sharedFieldEditor( 'ref_delivery', itemsAdvancedFields.stock ).options   =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_delivery', itemsAdvancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
     });
 
     // Loading Unit
     unitsResource.get( function( data ) {
-        sharedFieldEditor( 'ref_unit', $scope.fields ).options        =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_unit', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
     });
 
     // taxes Resource
     taxesResource.get( function( data ) {
-        sharedFieldEditor( 'ref_taxe', $scope.fields ).options        =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_taxe', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
     });
 
     // Display a dynamic price when a taxes is selected
@@ -715,7 +715,7 @@ items.$inject           =   [
     '$routeParams',
     'sharedDocumentTitle',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedFieldEditor',
     'sharedAlert',
     'sharedMoment',
