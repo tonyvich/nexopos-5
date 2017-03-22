@@ -53,6 +53,11 @@ tendooApp.factory( 'customersAdvancedFields', [
                 show        :   function(){
                     return true;
                 },
+                validation  :   {
+                    callback    :   function(a, b, c) {
+                        console.log( a, b, c );
+                    }
+                },
                 desc        :   '<?php echo _s( 'Pays du lieu de facturation.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
