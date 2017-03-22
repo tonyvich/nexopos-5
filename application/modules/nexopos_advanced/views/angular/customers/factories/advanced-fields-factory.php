@@ -3,11 +3,13 @@ tendooApp.factory( 'customersAdvancedFields', [
     'customersTabs',
     'rawToOptions',
     '$location',
+    'sharedFieldEditor',
     function(
         sharedOptions,
         customersTabs,
         rawToOptions,
-        $location
+        $location,
+        sharedFieldEditor
     )
     {
     return {
@@ -16,7 +18,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             {
                 type        :   'text',
                 label       :   '<?php echo _s( 'Entreprise', 'nexopos_advanced' );?>',
-                model       :   'company',
+                model       :   'billing_company',
                 show        :   function(){
                     return true;
                 },
@@ -24,7 +26,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 1', 'nexopos_advanced' );?>',
-                model       :   'first_address',
+                model       :   'billing_first_address',
                 show        :   function(){
                     return true;
                 },
@@ -32,7 +34,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 2', 'nexopos_advanced' );?>',
-                model       :   'second_address',
+                model       :   'billing_second_address',
                 show        :   function(){
                     return true;
                 },
@@ -40,43 +42,47 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Boite postale', 'nexopos_advanced' );?>',
-                model       :   'pobox',
+                model       :   'billing_pobox',
                 show        :   function(){
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Boite Postale pour la première adresse de facturation.', 'nexopos_advanced' );?>'
             },{
                 type        :   'select',
+                subType     :   'country',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
-                model       :   'country',
-                options     :   sharedOptions.yesOrNo,
-                show        :   function(){
+                model       :   'billing_country',
+                options     :   [],
+                show        :   function( a, b, c ){
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Pays du lieu de facturation.', 'nexopos_advanced' );?>'
             },{
+                type        :   'select',
+                subType     :   'state',
+                country     :   'billing_country',
+                options     :   [],
+                label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
+                model       :   'billing_state',
+                show        :   function( field, item, model ){
+                    return true;
+                },
+                desc        :   '<?php echo _s( 'Etat du lieu de facturation.', 'nexopos_advanced' );?>'
+            },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
-                model       :   'town',
+                model       :   'billing_town',
                 show        :   function(){
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Ville du lieu de facturation.', 'nexopos_advanced' );?>'
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
-                model       :   'state',
-                show        :   function(){
-                    return true;
-                },
-                desc        :   '<?php echo _s( 'Etat du lieu de facturation.', 'nexopos_advanced' );?>'
             }
         ],
         shipping        :   [
             {
                 type        :   'text',
                 label       :   '<?php echo _s( 'Entreprise', 'nexopos_advanced' );?>',
-                model       :   'company',
+                model       :   'delivery_company',
                 show        :   function(){
                     return true;
                 },
@@ -84,7 +90,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 1', 'nexopos_advanced' );?>',
-                model       :   'first_address',
+                model       :   'delivery_first_address',
                 show        :   function(){
                     return true;
                 },
@@ -92,7 +98,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 2', 'nexopos_advanced' );?>',
-                model       :   'second_address',
+                model       :   'delivery_second_address',
                 show        :   function(){
                     return true;
                 },
@@ -100,7 +106,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Boite postale', 'nexopos_advanced' );?>',
-                model       :   'pobox',
+                model       :   'delivery_pobox',
                 show        :   function(){
                     return true;
                 },
@@ -108,28 +114,32 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
-                model       :   'country',
-                options     :   sharedOptions.yesOrNo,
+                subType     :   'country',
+                model       :   'delivery_country',
+                options     :   [],
                 show        :   function(){
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Pays du lieu de livraison.', 'nexopos_advanced' );?>'
             },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
-                model       :   'town',
-                show        :   function(){
-                    return true;
-                },
-                desc        :   '<?php echo _s( 'Ville du lieu de livraison.', 'nexopos_advanced' );?>'
-            },{
-                type        :   'text',
+                type        :   'select',
                 label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
-                model       :   'state',
+                subType     :   'state',
+                country     :   'delivery_country',
+                model       :   'delivery_state',
+                options     :   [],
                 show        :   function(){
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Etat du lieu de livraison.', 'nexopos_advanced' );?>'
+            },{
+                type        :   'text',
+                label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
+                model       :   'delivery_town',
+                show        :   function(){
+                    return true;
+                },
+                desc        :   '<?php echo _s( 'Ville du lieu de livraison.', 'nexopos_advanced' );?>'
             }
         ]
     }

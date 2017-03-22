@@ -7,14 +7,15 @@ var customersAdd               =   function(
     customersAdvancedFields,
     customersGroupsResource,
     customersResource,
-    customersAddressResource,
     customersFields,
+    sharedFilterItem,
+    sharedCountries,
+    sharedMoment,
     sharedDocumentTitle,
     sharedValidate,
-    rawToOptions,
     sharedFieldEditor,
-    sharedAlert,
-    sharedMoment
+    rawToOptions,
+    sharedAlert
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>' );
@@ -24,13 +25,61 @@ var customersAdd               =   function(
     };
 
     $scope.item.disableVariation    =   true;
-    $scope.validate             =   new sharedValidate();
-    $scope.groupLengthLimit     =   10;
-    $scope.tabs                 =   customersTabs.getTabs();
-    $scope.fields               =   customersFields;
+    $scope.validate                 =   new sharedValidate();
+    $scope.groupLengthLimit         =   10;
+    $scope.tabs                     =   customersTabs.getTabs();
+    $scope.fields                   =   customersFields;
+    $scope.advancedFields           =   customersAdvancedFields;
 
+    // test
+    $scope.pays                     =   [{
+        label   :   'Cameroun',
+        value   :   'cmr'
+    },{
+        label   :   'France',
+        value       :   'fr'
+    }]
+
+    $scope.villes                   =   [{
+        label   :   'Yaounde',
+        value   :   'yde',
+        country     :   'cmr'
+    },{
+        label   :   'Douala',
+        value   :   'dla',
+        country     :   'cmr'
+    },{
+        label   :   'Bertoua',
+        value   :   'bta',
+        country     :   'cmr'
+    },{
+        label   :   'Paris',
+        value   :   'paris',
+        country     :   'fr'
+    },{
+        label   :   'Marseille',
+        value   :   'mrslefuck',
+        country     :   'fr'
+    },{
+        label   :   'Bref',
+        value   :   'bref',
+        country     :   'fr'
+    }]
+
+    // Je peux faire ça des deux côté pour l'édition dynamique de champs, c'est mieux de faire ça dans advancedFields.
+    sharedFieldEditor( 'billing_country', $scope.advancedFields.billing ).options     =   $scope.pays;
+
+
+    // Setting customer group options
+    customersGroupsResource.get(
+        function(data){
+            sharedFieldEditor( 'ref_group', $scope.fields).options = rawToOptions(data.entries, 'id', 'name');            
+        }
+    );
+
+    
     /**
-     *  Blue a specific field
+     *  Blur a specific field
      *  @param object field
      *  @param object field data
      *  @param object ids
@@ -38,6 +87,20 @@ var customersAdd               =   function(
     **/
 
     $scope.validate.blur    =   function( field, variation_tab, ids ) {
+
+        if( field.model == 'billing_country' ) {
+            var country_name    =   $scope.item.variations[0].tabs[0].models.billing_country;
+            var country_towns   =   [];
+            
+            _.each( $scope.villes, function( ville ){
+                if( ville.country == country_name ) {
+                    country_towns.push( ville );
+                }
+            });
+
+            sharedFieldEditor( 'billing_town', $scope.advancedFields.billing ).options     =   country_towns;
+        }
+        
 
         if( ! angular.isDefined( variation_tab ) ) {
             return false;
@@ -214,6 +277,9 @@ var customersAdd               =   function(
     **/
 
     $scope.validate.focus      =   function( field, model, ids ) {
+        
+        // sharedCountries($scope.advancedFields.billing); 
+        // sharedCountries($scope.advancedFields.shipping);
 
         var fieldClass                  =   '.' + field.model + '-helper';
 
@@ -249,13 +315,8 @@ var customersAdd               =   function(
                 tab.models      =   {};
             });
         });
-    });
 
-    customersGroupsResource.get(
-        function(data){
-            // $scope.fields['general'][6].options = rawToOptions(data.entries, 'id', 'name');
-        }
-    );
+    });
 
     /**
      *  Get Class
@@ -310,6 +371,7 @@ var customersAdd               =   function(
     **/
 
     $scope.submitItem               =   function(){
+        console.log($scope.item);
         // validating
         var global_validation       =   $scope.validate.blurAll();
         var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
@@ -317,9 +379,31 @@ var customersAdd               =   function(
         if( global_validation.length > 0 ) {
             return sharedAlert.warning( warningMessage.format( global_validation.length ) );
         }
+        
+        $scope.item.date_creation   =   sharedMoment.now();
+        $scope.finalItem = sharedFilterItem($scope.item, $scope.fields, $scope.itemAdvancedFields);
+        
 
-        // When submiting item
-        console.log( $scope.item );
+        $scope.finalItem.author = <?= User::id()?>;
+        $scope.finalItem.date_creation = sharedMoment.now();
+        console.log($scope.finalItem);
+        customersResource.save(
+            $scope.finalItem,
+            function(){
+                sharedAlert.warning( '<?php echo _s( 'Enregistrement effectué', 'nexopos_advanced' );?>' );
+            },function( returned ){
+
+                $scope.submitDisabled   =   false;
+
+                if( returned.data.status === 'alreadyExists' ) {
+                    sharedAlert.warning( '<?php echo _s( 'Le nom ce client est déjà en cours d\'utilisation, veuillez choisir un autre nom.', 'nexopos_advanced' );?>' );
+                }
+
+                if( returned.data.status === 'forbidden' || returned.status == 500 ) {
+                    sharedAlert.warning( "<?php echo _s( "Une erreur s\'est produite durant l\'opération.", "nexopos_advanced" );?>" );
+                }
+            }
+        )
     }
 
     /**
@@ -420,14 +504,15 @@ customersAdd.$inject           =   [
     'customersAdvancedFields',
     'customersGroupsResource',
     'customersResource',
-    'customersAddressResource',
     'customersFields',
+    'sharedFilterItem',
+    'sharedCountries',
+    'sharedMoment',
     'sharedDocumentTitle',
     'sharedValidate',
-    'rawToOptions',
     'sharedFieldEditor',
-    'sharedAlert',
-    'sharedMoment'
+    'rawToOptions',
+    'sharedAlert'
 ];
 
 tendooApp.controller( 'customersAdd', customersAdd );
