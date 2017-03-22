@@ -24,7 +24,8 @@
                     'shared_factories/options.js',
                     'shared_factories/field-editor.js',
                     'shared_factories/alert.js',
-                    'shared_factories/moment.js'
+                    'shared_factories/moment.js',
+                    'shared_factories/filter-item.js'
                 ]
             });
         }]

@@ -42,9 +42,9 @@
         class="tab-pane row">
 
             <div
-                ng-repeat="field in itemAdvancedFields[ variation_tab.namespace ]"
+                ng-repeat="field in itemsAdvancedFields[ variation_tab.namespace ]"
                 class="{{ field.class !== undefined ? field.class : 'col-lg-6 col-sm-6 col-xs-12' }}"
-                ng-show="field.show( variation_tab, item, itemAdvancedFields[ variation_tab.namespace ] )"
+                ng-show="field.show( variation_tab, item, itemsAdvancedFields[ variation_tab.namespace ] )"
                 >
 
                 <div class="form-group" ng-if="field.type == 'text'">

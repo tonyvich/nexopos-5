@@ -14,7 +14,8 @@ var customersAdd               =   function(
     rawToOptions,
     sharedFieldEditor,
     sharedAlert,
-    sharedMoment
+    sharedMoment,
+    sharedFilterItem
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>' );
@@ -319,7 +320,9 @@ var customersAdd               =   function(
         }
 
         // When submiting item
-        console.log( $scope.item );
+        var itemToSubmit            =   sharedFilterItem( $scope.item, $scope.fields, customersAdvancedFields );
+
+        console.log( itemToSubmit );
     }
 
     /**
@@ -427,7 +430,8 @@ customersAdd.$inject           =   [
     'rawToOptions',
     'sharedFieldEditor',
     'sharedAlert',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedFilterItem'
 ];
 
 tendooApp.controller( 'customersAdd', customersAdd );

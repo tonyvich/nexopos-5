@@ -5,11 +5,12 @@ var items               =   function(
     $scope,
     $http,
     $location,
-    itemTypes,
+    itemsTypes,
     item,
-    itemAdvancedFields,
-    itemFields,
-    itemResource,
+    itemsAdvancedFields,
+    itemsFields,
+    itemsResource,
+    itemsVariationsResource,
     providersResource,
     categoriesResource,
     deliveriesResource,
@@ -60,6 +61,7 @@ var items               =   function(
         var validation      =   angular.isDefined( ids ) ?
             this.__run( field, variation_tab.models ) :
             this.__run( field, variation_tab );
+
         var response        =   this.__response( validation );
         var errors          =   this.__replaceTemplate( response.errors );
         var fieldClass      =   '.' + field.model + '-helper';
@@ -153,7 +155,7 @@ var items               =   function(
 
         var global_validation       =   [];
 
-        _.each( itemFields, function( field ) {
+        _.each( itemsFields, function( field ) {
             var validationResult    =   $scope.validate.blur( field, item );
             if( validationResult != null ) {
                 global_validation.push( validationResult );
@@ -174,7 +176,7 @@ var items               =   function(
                     }
                 }
 
-                var allFields       =   itemAdvancedFields[ tab.namespace ];
+                var allFields       =   itemsAdvancedFields[ tab.namespace ];
 
                 // We won't validate hidden field
                 _.each( allFields, function( field, variation_field_id ) {
@@ -346,7 +348,7 @@ var items               =   function(
         }
 
         // Selected Type
-        _.each( itemTypes, function( type, key ) {
+        _.each( itemsTypes, function( type, key ) {
             if( type.namespace == item.typeNamespace ) {
                 item.selectedType   =   type;
             }
@@ -519,19 +521,17 @@ var items               =   function(
         // When submiting item
         var itemToSubmit                    =   sharedFilterItem(
             item,
-            itemFields,
-            itemAdvancedFields
+            itemsFields,
+            itemsAdvancedFields
         );
 
-        itemToSubmit[ 'author' ]            =   '<?php User::id();?>';
+        itemToSubmit[ 'author' ]            =   '<?php echo User::id();?>';
         itemToSubmit[ 'date_creation' ]     =   sharedMoment.now();
         itemToSubmit[ 'namespace' ]         =   item.namespace;
 
-        console.log( itemToSubmit )
-
         // Item Resource POST*
-        itemResource.save( itemToSubmit ).then( function( returned ){
-
+        itemsResource.save( itemToSubmit, function( returned ){
+            $location.path( 'items' );
         });
     }
 
@@ -592,12 +592,12 @@ var items               =   function(
     }];
 
     $scope.groupLengthLimit     =   10;
-    $scope.itemTypes            =   itemTypes;
-    $scope.fields               =   itemFields;
+    $scope.itemsTypes            =   itemsTypes;
+    $scope.fields               =   itemsFields;
 
     // Resources Loading
     providersResource.get(function( data ) {
-        sharedFieldEditor( 'ref_provider', itemAdvancedFields.stock ).options        =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_provider', itemsAdvancedFields.stock ).options        =   rawToOptions( data.entries, 'id', 'name' );
     });
 
     // Categories Loading
@@ -607,7 +607,7 @@ var items               =   function(
 
     // Deliveries Loading
     deliveriesResource.get(function( data ) {
-        sharedFieldEditor( 'ref_delivery', itemAdvancedFields.stock ).options   =   rawToOptions( data.entries, 'id', 'name' );
+        sharedFieldEditor( 'ref_delivery', itemsAdvancedFields.stock ).options   =   rawToOptions( data.entries, 'id', 'name' );
     });
 
     // Loading Unit
@@ -621,7 +621,7 @@ var items               =   function(
     });
 
     // Display a dynamic price when a taxes is selected
-    sharedFieldEditor( 'sale_price', itemAdvancedFields.basic ).show          =   function( tab, item ) {
+    sharedFieldEditor( 'sale_price', itemsAdvancedFields.basic ).show          =   function( tab, item ) {
         if( item.ref_taxe ) {
             if( angular.isUndefined( $scope.taxes[ item.ref_taxe ] ) ) {
                 // To Avoid several calls to the database
@@ -701,11 +701,12 @@ items.$inject           =   [
     '$scope',
     '$http',
     '$location',
-    'itemTypes',
+    'itemsTypes',
     'item',
-    'itemAdvancedFields',
-    'itemFields',
-    'itemResource',
+    'itemsAdvancedFields',
+    'itemsFields',
+    'itemsResource',
+    'itemsVariationsResource',
     'providersResource',
     'categoriesResource',
     'deliveriesResource',

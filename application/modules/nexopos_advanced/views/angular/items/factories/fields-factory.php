@@ -1,4 +1,4 @@
-tendooApp.factory( 'itemFields', [ '$location', 'sharedOptions', function( $location, sharedOptions ){
+tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $location, sharedOptions ){
     return [
         {
             type    :   'hidden',

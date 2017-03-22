@@ -25,7 +25,8 @@ class Nexopos_advanced extends REST_Controller
         users,
         stores,
         customers_address,
-        items;
+        items,
+        items_variations;
 
     public function __construct()
     {

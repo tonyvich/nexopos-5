@@ -111,6 +111,15 @@ tendooApp.factory( 'sharedValidate', function(){
                             }
                         }
                     }
+
+                    /**
+                     * Callback Rules
+                     * Define a callback on a field, which can make an http request.
+                    **/
+
+                    if( rule == "callback" ) {
+                        value( item, field, errors );
+                    }
                 });
             }
 

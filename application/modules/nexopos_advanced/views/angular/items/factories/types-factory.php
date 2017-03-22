@@ -1,4 +1,4 @@
-tendooApp.factory( 'itemTypes', function(){
+tendooApp.factory( 'itemsTypes', function(){
     return [{
         namespace    :   'add.clothes',
         icon    :   'shirt',
