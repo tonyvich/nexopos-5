@@ -1,14 +1,14 @@
 tendooApp.factory( 'customersAdvancedFields', [
-    'sharedOptions',
-    'customersTabs',
-    'rawToOptions',
     '$location',
+    'customersTabs',
+    'sharedOptions',
+    'sharedRawToOptions',
     'sharedFieldEditor',
     function(
-        sharedOptions,
-        customersTabs,
-        rawToOptions,
         $location,
+        customersTabs,
+        sharedOptions,
+        sharedRawToOptions,
         sharedFieldEditor
     )
     {
@@ -49,7 +49,6 @@ tendooApp.factory( 'customersAdvancedFields', [
                 desc        :   '<?php echo _s( 'Boite Postale pour la première adresse de facturation.', 'nexopos_advanced' );?>'
             },{
                 type        :   'select',
-                subType     :   'country',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
                 model       :   'billing_country',
                 options     :   [],
@@ -59,8 +58,6 @@ tendooApp.factory( 'customersAdvancedFields', [
                 desc        :   '<?php echo _s( 'Pays du lieu de facturation.', 'nexopos_advanced' );?>'
             },{
                 type        :   'select',
-                subType     :   'state',
-                country     :   'billing_country',
                 options     :   [],
                 label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
                 model       :   'billing_state',

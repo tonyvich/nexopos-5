@@ -6,7 +6,7 @@ var taxes          =   function(
     taxesResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedMoment
 ) {
@@ -68,7 +68,7 @@ taxes.$inject    =   [
     'taxesResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedMoment'
 ];

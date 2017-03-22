@@ -8,7 +8,7 @@ var expensesEdit      =   function(
     expensesResource,
     expensesCategoriesResource,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedMoment
 ) {
@@ -24,7 +24,7 @@ var expensesEdit      =   function(
 
     expensesCategoriesResource.get(
         function(data){
-            $scope.fields[3].options = rawToOptions(data.entries, 'id', 'name');
+            $scope.fields[3].options = sharedRawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -82,7 +82,7 @@ expensesEdit.$inject    =   [
     'expensesResource',
     'expensesCategoriesResource',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedMoment'
 ];

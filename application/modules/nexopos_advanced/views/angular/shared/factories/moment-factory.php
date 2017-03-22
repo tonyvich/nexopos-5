@@ -16,7 +16,7 @@ angular.element( document ).ready( function(){
                 return moment( datetime ).from( this.serverDate );
             }
 
-            $interval( function(){
+            setInterval( function(){
                 $this.serverDate.add( 1, 's' );
             }, 1000 );
 

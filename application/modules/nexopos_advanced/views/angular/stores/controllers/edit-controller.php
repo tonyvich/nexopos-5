@@ -7,7 +7,7 @@ var storesEdit          =   function(
     storesResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedMoment
 ) {
@@ -35,7 +35,7 @@ var storesEdit          =   function(
         },
         function(data){
             console.log( data.entries );
-            $scope.fields[1].options = rawToOptions( data.entries, 'id', 'name');
+            $scope.fields[1].options = sharedRawToOptions( data.entries, 'id', 'name');
         }
     );
 
@@ -77,7 +77,7 @@ storesEdit.$inject    =   [
     'storesResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedMoment'
 ];

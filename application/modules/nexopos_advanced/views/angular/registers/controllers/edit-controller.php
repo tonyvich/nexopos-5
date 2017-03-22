@@ -7,7 +7,7 @@ var registersEdit          =   function(
     registersResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedUserResource,
     sharedMoment
@@ -34,7 +34,7 @@ var registersEdit          =   function(
 
     sharedUserResource.get(
         function(data){
-            $scope.fields[1].options = rawToOptions(data.entries, 'id', 'name');
+            $scope.fields[1].options = sharedRawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -76,7 +76,7 @@ registersEdit.$inject    =   [
     'registersResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedUserResource',
     'sharedMoment'

@@ -1,4 +1,4 @@
-tendooApp.factory( 'rawToOptions', function(){
+tendooApp.factory( 'sharedRawToOptions', function(){
 
     /**
      *  Turn Raw Options to dropdown option

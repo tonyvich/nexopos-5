@@ -1,15 +1,21 @@
-tendooApp.factory( 'itemAdvancedFields', [
+tendooApp.factory( 'itemsAdvancedFields', [
+    '$location',
     'sharedOptions',
     'barcodeOptions',
     'item',
-    'rawToOptions',
-    '$location',
+    'sharedRawToOptions',
+    'itemsResource',
+    'itemsVariationsResource',
+    'sharedAlert',
     function(
+        $location,
         sharedOptions,
         barcodeOptions,
         item,
-        rawToOptions,
-        $location
+        sharedRawToOptions,
+        itemsResource,
+        itemsVariationsResource,
+        sharedAlert
     ){
     return {
         coupon          :   [
@@ -268,7 +274,24 @@ tendooApp.factory( 'itemAdvancedFields', [
                 },
                 desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexo' );?>',
                 validation  :   {
-                    required    :   true
+                    required    :   true,
+                    callback    :   function( item, field, $event ){
+                        // Validation run only if the field is not empty
+                        if( item[ field.model ] != '' ) {
+                            itemsVariationsResource.get({
+                                id      :   item[ field.model ],
+                                as      :   'sku'
+                            }, function( returned ) {
+                                // greater than 2 since the object already has system keys : $promise and $resolved
+                                if( _.keys( returned ).length > 2 ) {
+                                    console.log( _.keys( returned ) );
+                                    var message     =   '<?php echo _s( 'L\'Unité de gestion de stock : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, car le produit ne sera pas disponible à la vente.', 'nexopos_advanced' );?>';
+
+                                    sharedAlert.warning( message.format( item[ field.model ] ) );
+                                }
+                            });
+                        }
+                    }
                 }
             },{
                 type        :   'select',
@@ -328,7 +351,26 @@ tendooApp.factory( 'itemAdvancedFields', [
                 show        :   function(){
                     return true;
                 },
-                desc        :   '<?php echo _s( 'La valeur du codebarre peut être spécifiée dans ce champ.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'La valeur du codebarre peut être spécifiée dans ce champ.', 'nexo' );?>',
+                validation    :   {
+                    callback    :   function( item, field, $event ){
+                        // Validation run only if the field is not empty
+                        if( item[ field.model ] != '' ) {
+                            itemsVariationsResource.get({
+                                id      :   item[ field.model ],
+                                as      :   'barcode'
+                            }, function( returned ) {
+                                // greater than 2 since the object already has system keys : $promise and $resolved
+                                if( _.keys( returned ).length > 2 ) {
+                                    console.log( _.keys( returned ) );
+                                    var message     =   '<?php echo _s( 'Le code barre : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, car le produit ne sera pas disponible à la vente.', 'nexopos_advanced' );?>';
+
+                                    sharedAlert.warning( message.format( item[ field.model ] ) );
+                                }
+                            });
+                        }
+                    }
+                }
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Etiquette', 'nexo' );?>',

@@ -6,7 +6,7 @@ var stores          =   function(
     storesResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedMoment
 ) {
@@ -58,7 +58,7 @@ stores.$inject    =   [
     'storesResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedMoment'
 ];

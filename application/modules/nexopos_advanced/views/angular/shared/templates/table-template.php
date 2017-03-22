@@ -37,7 +37,7 @@
                             <input type="checkbox" class="minimal" ng-model="table.headCheckbox">
                         </td>
                         <!-- Expect col to be an object with following keys : text, namespace, order (for reorder) -->
-                        <td ng-repeat="col in table.columns" ng-click="table.order( col.namespace )">
+                        <td ng-repeat="col in table.columns" width="{{ col.width }}" ng-click="table.order( col.namespace )">
 
                             <strong>{{ col.text }}</strong>
 

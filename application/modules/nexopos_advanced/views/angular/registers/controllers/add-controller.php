@@ -6,7 +6,7 @@ var registers          =   function(
     registersResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedUserResource,
     sharedDocumentTitle,
     sharedUserResource,
@@ -23,7 +23,7 @@ var registers          =   function(
     // Setting options for dropdown multiselect
     sharedUserResource.get(
         function(data){
-            $scope.fields[1].options = rawToOptions(data.entries, 'id', 'name');
+            $scope.fields[1].options = sharedRawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -72,7 +72,7 @@ registers.$inject    =   [
     'registersResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedUserResource',
     'sharedDocumentTitle',
     'sharedUserResource',

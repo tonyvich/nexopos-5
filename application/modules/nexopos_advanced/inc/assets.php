@@ -44,7 +44,7 @@ class NexoPOS_Assets extends Tendoo_Module
         } else if( @$Options[ 'site_language' ] == 'es_ES') {
             $this->enqueue->js( $bower_url . 'moment/locale/es' );
         }
-        
+
         $this->enqueue->js( $bower_url . 'angular-numeraljs/dist/angular-numeraljs.min' );
         $this->enqueue->js( $bower_url . 'angular-bootstrap/ui-bootstrap.min' );
         $this->enqueue->js( $bower_url . 'angular-bootstrap/ui-bootstrap-tpls.min' );
@@ -64,5 +64,6 @@ class NexoPOS_Assets extends Tendoo_Module
 
         // Numeral JS
         $this->enqueue->js( $bower_url . 'numeral/min/numeral.min');
+
     }
 }

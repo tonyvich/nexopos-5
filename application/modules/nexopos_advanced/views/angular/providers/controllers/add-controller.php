@@ -6,7 +6,7 @@ var providers          =   function(
     providersResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedAlert,
     sharedMoment
@@ -69,7 +69,7 @@ providers.$inject    =   [
     'providersResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedAlert',
     'sharedMoment'

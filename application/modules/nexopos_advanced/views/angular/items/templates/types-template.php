@@ -3,7 +3,7 @@
         <div class="row">
             <h3 class="text-center"><?php echo _s( 'Quels type de produit souhaitez-vous créer ?', 'nexo' );?></h3>
             <br>
-            <div class="col-md-4 col-xs-6 col-lg-3" ng-repeat="item in itemTypes">
+            <div class="col-md-4 col-xs-6 col-lg-3" ng-repeat="item in itemsTypes">
                 <div class="box">
                     <div ng-click="selectType( 'items/' + restoreSlashes( item.namespace ) )" class="box-content text-center" style="height:210px;">
                         <br>

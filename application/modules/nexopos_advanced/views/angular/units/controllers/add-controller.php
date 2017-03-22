@@ -6,7 +6,7 @@ var units          =   function(
     unitsResource,
     $location,
     sharedValidate,
-    rawToOptions,
+    sharedRawToOptions,
     sharedDocumentTitle,
     sharedMoment
 ) {
@@ -68,7 +68,7 @@ units.$inject    =   [
     'unitsResource',
     '$location',
     'sharedValidate',
-    'rawToOptions',
+    'sharedRawToOptions',
     'sharedDocumentTitle',
     'sharedMoment'
 ];
