@@ -31,6 +31,7 @@
         <div class="input-group">
             <span class="input-group-addon">{{ field.label }}</span>
             <select
+                id = "{{ field.model }}-input-id"
                 class="form-control"
                 ng-model="item[ field.model ]"
                 ng-blur="validate.blur( field, item )"

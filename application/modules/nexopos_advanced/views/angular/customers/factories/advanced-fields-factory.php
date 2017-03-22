@@ -3,11 +3,13 @@ tendooApp.factory( 'customersAdvancedFields', [
     'customersTabs',
     'rawToOptions',
     '$location',
+    'sharedFieldEditor',
     function(
         sharedOptions,
         customersTabs,
         rawToOptions,
-        $location
+        $location,
+        sharedFieldEditor
     )
     {
     return {
@@ -47,13 +49,25 @@ tendooApp.factory( 'customersAdvancedFields', [
                 desc        :   '<?php echo _s( 'Boite Postale pour la première adresse de facturation.', 'nexopos_advanced' );?>'
             },{
                 type        :   'select',
+                subType     :   'country',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
                 model       :   'billing_country',
-                options     :   sharedOptions.yesOrNo,
-                show        :   function(){
+                options     :   [],
+                show        :   function( a, b, c ){
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Pays du lieu de facturation.', 'nexopos_advanced' );?>'
+            },{
+                type        :   'select',
+                subType     :   'state',
+                country     :   'billing_country',
+                options     :   [],
+                label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
+                model       :   'billing_state',
+                show        :   function( field, item, model ){
+                    return true;
+                },
+                desc        :   '<?php echo _s( 'Etat du lieu de facturation.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
@@ -62,14 +76,6 @@ tendooApp.factory( 'customersAdvancedFields', [
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Ville du lieu de facturation.', 'nexopos_advanced' );?>'
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
-                model       :   'billing_state',
-                show        :   function(){
-                    return true;
-                },
-                desc        :   '<?php echo _s( 'Etat du lieu de facturation.', 'nexopos_advanced' );?>'
             }
         ],
         shipping        :   [
@@ -108,12 +114,24 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
+                subType     :   'country',
                 model       :   'delivery_country',
-                options     :   sharedOptions.yesOrNo,
+                options     :   [],
                 show        :   function(){
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Pays du lieu de livraison.', 'nexopos_advanced' );?>'
+            },{
+                type        :   'select',
+                label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
+                subType     :   'state',
+                country     :   'delivery_country',
+                model       :   'delivery_state',
+                options     :   [],
+                show        :   function(){
+                    return true;
+                },
+                desc        :   '<?php echo _s( 'Etat du lieu de livraison.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
@@ -122,14 +140,6 @@ tendooApp.factory( 'customersAdvancedFields', [
                     return true;
                 },
                 desc        :   '<?php echo _s( 'Ville du lieu de livraison.', 'nexopos_advanced' );?>'
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
-                model       :   'delivery_state',
-                show        :   function(){
-                    return true;
-                },
-                desc        :   '<?php echo _s( 'Etat du lieu de livraison.', 'nexopos_advanced' );?>'
             }
         ]
     }

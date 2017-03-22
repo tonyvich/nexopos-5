@@ -33,6 +33,7 @@
 
     <div class="tab-content variation-body-{{ variation_id }}">
 
+
       <div
         ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs"
         ng-init="variation.tabs[0].active   =   tabContentIsActive( variation.tabs[0].active, variation_tab_id )"
@@ -74,6 +75,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">{{ field.label }}</span>
                         <select
+                            id = "{{ field.model }}-input-id"
                             class="form-control"
                             ng-model="variation_tab.models[ field.model ]"
                             ng-blur="validate.blur( field, variation_tab, {
