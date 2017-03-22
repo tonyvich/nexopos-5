@@ -29,45 +29,38 @@ var customersAdd               =   function(
     $scope.groupLengthLimit         =   10;
     $scope.tabs                     =   customersTabs.getTabs();
     $scope.fields                   =   customersFields;
-    $scope.advancedFields           =   customersAdvancedFields;
+    $scope.itemAdvancedFields       =   customersAdvancedFields;
 
     // test
     $scope.pays                     =   [{
         label   :   'Cameroun',
-        value   :   'cmr'
+        value   :   'CM'
     },{
         label   :   'France',
-        value       :   'fr'
+        value       :   'FR'
     }]
 
-    $scope.villes                   =   [{
-        label   :   'Yaounde',
-        value   :   'yde',
-        country     :   'cmr'
+    $scope.regions  =   [{
+        label   :   'Nord',
+        value   :   'nord',
+        country         :   'CM'
     },{
-        label   :   'Douala',
-        value   :   'dla',
-        country     :   'cmr'
+        label   :   'Centre',
+        value   :   'centre',
+        country         :   'CM'
     },{
-        label   :   'Bertoua',
-        value   :   'bta',
-        country     :   'cmr'
-    },{
-        label   :   'Paris',
-        value   :   'paris',
-        country     :   'fr'
-    },{
-        label   :   'Marseille',
-        value   :   'mrslefuck',
-        country     :   'fr'
-    },{
-        label   :   'Bref',
-        value   :   'bref',
-        country     :   'fr'
-    }]
+		"label": "Alsace",
+		"country": "FR",
+		"value": "Alsace"
+	},
+	{
+		"label": "Aquitaine",
+		"country": "FR",
+		"value": "Aquitaine"
+	}];
 
     // Je peux faire ça des deux côté pour l'édition dynamique de champs, c'est mieux de faire ça dans advancedFields.
-    sharedFieldEditor( 'billing_country', $scope.advancedFields.billing ).options     =   $scope.pays;
+    sharedFieldEditor( 'billing_country', $scope.itemAdvancedFields.billing ).options     =   $scope.pays;
 
 
     // Setting customer group options
@@ -89,16 +82,16 @@ var customersAdd               =   function(
     $scope.validate.blur    =   function( field, variation_tab, ids ) {
 
         if( field.model == 'billing_country' ) {
-            var country_name    =   $scope.item.variations[0].tabs[0].models.billing_country;
-            var country_towns   =   [];
+            var country_name    =   variation_tab.models[ field.model ];
+            var country_states   =   [];
 
-            _.each( $scope.villes, function( ville ){
-                if( ville.country == country_name ) {
-                    country_towns.push( ville );
+            _.each( $scope.regions, function( region ){
+                if( region.country == country_name ) {
+                    country_states.push( region );
                 }
             });
 
-            sharedFieldEditor( 'billing_town', $scope.advancedFields.billing ).options     =   country_towns;
+            sharedFieldEditor( 'billing_state', $scope.itemAdvancedFields.billing ).options     =   country_states;
         }
 
 
@@ -278,8 +271,8 @@ var customersAdd               =   function(
 
     $scope.validate.focus      =   function( field, model, ids ) {
 
-        // sharedCountries($scope.advancedFields.billing);
-        // sharedCountries($scope.advancedFields.shipping);
+        // sharedCountries($scope.itemAdvancedFields.billing);
+        // sharedCountries($scope.itemAdvancedFields.shipping);
 
         var fieldClass                  =   '.' + field.model + '-helper';
 
