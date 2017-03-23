@@ -36,6 +36,14 @@ Trait customers_groups
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers_groups.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers_groups.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers_groups.description', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_customers_groups.author' );
             $query      =   $this->db->get();
 

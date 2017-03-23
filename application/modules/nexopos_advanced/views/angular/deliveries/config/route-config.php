@@ -12,6 +12,7 @@
                     'factories/deliveries/resource.js',
                     'factories/deliveries/table.js',
                     'shared_factories/options.js',
+                    'shared_factories/table-header-buttons.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',
                     'shared_factories/table.js',

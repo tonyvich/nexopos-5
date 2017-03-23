@@ -1,12 +1,31 @@
-var customersGroupsMain          =   function( customersGroupsTextDomain, $scope, $http, customersGroupsResource, $location, sharedValidate, sharedTable, customersGroupsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle  ) {
+var customersGroupsMain          =   function( 
+        $scope, 
+        $http, 
+        $location,
+        customersGroupsTextDomain,
+        customersGroupsResource, 
+        customersGroupsTable,
+        paginationFactory,
+        sharedValidate,
+        sharedTableHeaderButtons, 
+        sharedTable,   
+        sharedTableActions, 
+        sharedAlert,
+        sharedEntryActions, 
+        sharedDocumentTitle  
+    ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des groupes de clients', 'nexopos_advanced' );?>' );
+    
     $scope.validate             =   new sharedValidate();
+    $scope.textDomain           =   customersGroupsTextDomain;
     $scope.table                =   new sharedTable();
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
     $scope.table.columns        =   customersGroupsTable.columns;
-    $scope.textDomain           =   customersGroupsTextDomain;
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.resource       =   customersGroupsResource;
+
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -51,6 +70,21 @@ var customersGroupsMain          =   function( customersGroupsTextDomain, $scope
     $scope.table.getPage(0);
 }
 
-customersGroupsMain.$inject    =   [ 'customersGroupsTextDomain', '$scope', '$http', 'customersGroupsResource', '$location', 'sharedValidate', 'sharedTable', 'customersGroupsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert','sharedEntryActions', 'sharedDocumentTitle' ];
+customersGroupsMain.$inject    =   [ 
+    '$scope', 
+    '$http', 
+    '$location',
+    'customersGroupsTextDomain',
+    'customersGroupsResource', 
+    'customersGroupsTable',
+    'paginationFactory',
+    'sharedValidate',
+    'sharedTableHeaderButtons', 
+    'sharedTable',  
+    'sharedTableActions', 
+    'sharedAlert',
+    'sharedEntryActions', 
+    'sharedDocumentTitle' 
+];
 
 tendooApp.controller( 'customersGroupsMain', customersGroupsMain );
