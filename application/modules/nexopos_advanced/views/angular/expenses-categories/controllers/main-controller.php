@@ -1,14 +1,15 @@
 var expensesCategoriesMain          =   function(
     $scope,
     $http,
+    $location,
     expensesCategoriesTextDomain,
     expensesCategoriesResource,
-    $location,
-    sharedValidate,
-    sharedTable,
     expensesCategoriesTable,
     paginationFactory,
+    sharedValidate,
+    sharedTable,
     sharedTableActions,
+    sharedTableHeaderButtons,
     sharedAlert,
     sharedEntryActions,
     sharedDocumentTitle,
@@ -16,12 +17,15 @@ var expensesCategoriesMain          =   function(
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories de dépenses', 'nexopos_advanced' );?>' );
+    
     $scope.textDomain           =   expensesCategoriesTextDomain;
     $scope.validate             =   new sharedValidate();
     $scope.table                =   new sharedTable();
     $scope.table.columns        =   expensesCategoriesTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
+    $scope.table.resource       =   expensesCategoriesResource;
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons;
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -68,14 +72,15 @@ var expensesCategoriesMain          =   function(
 expensesCategoriesMain.$inject    =   [
     '$scope',
     '$http',
+    '$location',
     'expensesCategoriesTextDomain',
     'expensesCategoriesResource',
-    '$location',
-    'sharedValidate',
-    'sharedTable',
     'expensesCategoriesTable',
     'paginationFactory',
+    'sharedValidate',
+    'sharedTable',
     'sharedTableActions',
+    'sharedTableHeaderButtons',
     'sharedAlert',
     'sharedEntryActions',
     'sharedDocumentTitle',

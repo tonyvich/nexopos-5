@@ -3,13 +3,13 @@ var deliveriesMain          =   function(
     $http, 
     $location,
     deliveriesTextDomain,
-    deliveriesResource, 
     deliveriesTable,
+    deliveriesResource, 
     paginationFactory, 
     sharedValidate, 
     sharedTable, 
-    sharedTableHeaderButtons,
     sharedTableActions, 
+    sharedTableHeaderButtons,
     sharedAlert, 
     sharedEntryActions, 
     sharedDocumentTitle 
@@ -18,13 +18,13 @@ var deliveriesMain          =   function(
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des livraisons', 'nexopos_advanced' );?>' );
     
     $scope.textDomain           =   deliveriesTextDomain;
-    $scope.table.columns        =   deliveriesTable.columns;
     $scope.validate             =   new sharedValidate();
     $scope.table                =   new sharedTable();
-    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.columns        =   deliveriesTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
     $scope.table.resource       =   deliveriesResource;
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -80,8 +80,8 @@ deliveriesMain.$inject    =   [
     '$http',
     '$location',
     'deliveriesTextDomain',
-    'deliveriesResource',
     'deliveriesTable',
+    'deliveriesResource',
     'paginationFactory',
     'sharedValidate',
     'sharedTable',

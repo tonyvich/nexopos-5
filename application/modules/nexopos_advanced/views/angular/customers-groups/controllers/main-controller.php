@@ -7,9 +7,9 @@ var customersGroupsMain          =   function(
         customersGroupsTable,
         paginationFactory,
         sharedValidate,
-        sharedTableHeaderButtons, 
         sharedTable,   
-        sharedTableActions, 
+        sharedTableActions,
+        sharedTableHeaderButtons, 
         sharedAlert,
         sharedEntryActions, 
         sharedDocumentTitle  
@@ -79,9 +79,9 @@ customersGroupsMain.$inject    =   [
     'customersGroupsTable',
     'paginationFactory',
     'sharedValidate',
-    'sharedTableHeaderButtons', 
     'sharedTable',  
     'sharedTableActions', 
+    'sharedTableHeaderButtons',
     'sharedAlert',
     'sharedEntryActions', 
     'sharedDocumentTitle' 

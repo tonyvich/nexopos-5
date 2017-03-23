@@ -32,6 +32,14 @@ Trait units
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_units.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_units.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_units.code', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_units.author' );
             $query      =   $this->db->get();
 

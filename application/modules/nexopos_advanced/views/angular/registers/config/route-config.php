@@ -12,6 +12,7 @@
                     'factories/registers/resource.js',
                     'factories/registers/table.js',
                     'shared_factories/options.js',
+                    'shared_factories/table-header-buttons.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/raw-to-multiselect-options.js',
                     'shared_factories/validate.js',

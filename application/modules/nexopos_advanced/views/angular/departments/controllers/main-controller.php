@@ -1,12 +1,30 @@
-var departmentsMain          =   function( departmentsTextDomain, $scope, $http, departmentsResource, $location, sharedValidate, sharedTable, departmentsTable, paginationFactory, sharedTableActions, sharedAlert,sharedEntryActions, sharedDocumentTitle ) {
+var departmentsMain          =   function( 
+    $scope, 
+    $http, 
+    $location,
+    departmentsTextDomain, 
+    departmentsTable,
+    departmentsResource,
+    paginationFactory,
+    sharedValidate, 
+    sharedTableHeaderButtons,
+    sharedTable,  
+    sharedTableActions, 
+    sharedAlert,
+    sharedEntryActions, 
+    sharedDocumentTitle 
+) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des rayons', 'nexopos_advanced' );?>' );
+
     $scope.validate             =   new sharedValidate();
     $scope.table                =   new sharedTable();
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
     $scope.table.columns        =   departmentsTable.columns;
     $scope.textDomain           =   departmentsTextDomain;
+    $scope.table.resource       =   departmentsResource;
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -51,6 +69,21 @@ var departmentsMain          =   function( departmentsTextDomain, $scope, $http,
     }
 }
 
-departmentsMain.$inject    =   [ 'departmentsTextDomain', '$scope', '$http', 'departmentsResource', '$location', 'sharedValidate', 'sharedTable', 'departmentsTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert','sharedEntryActions', 'sharedDocumentTitle' ];
+departmentsMain.$inject    =   [ 
+    '$scope', 
+    '$http', 
+    '$location',
+    'departmentsTextDomain',
+    'departmentsTable',
+    'departmentsResource',
+    'paginationFactory', 
+    'sharedValidate',
+    'sharedTableHeaderButtons', 
+    'sharedTable',  
+    'sharedTableActions', 
+    'sharedAlert',
+    'sharedEntryActions', 
+    'sharedDocumentTitle' 
+];
 
 tendooApp.controller( 'departmentsMain', departmentsMain );

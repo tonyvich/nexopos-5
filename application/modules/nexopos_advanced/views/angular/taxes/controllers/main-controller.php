@@ -1,11 +1,29 @@
-var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResource, $location, sharedValidate, sharedTable, taxTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var taxesMain          =   function( 
+    $scope, 
+    $http, 
+    $location,
+    taxesTextDomain,
+    taxesResource, 
+    taxTable, 
+    paginationFactory,
+    sharedValidate, 
+    sharedTable,    
+    sharedTableActions, 
+    sharedTableHeaderButtons,
+    sharedAlert, 
+    sharedEntryActions, 
+    sharedDocumentTitle 
+    ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des taxes', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   taxesTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   taxTable.columns;
-    $scope.table.actions    =   sharedTableActions;
+    
+    $scope.textDomain          =   taxesTextDomain;
+    $scope.validate            =   new sharedValidate();
+    $scope.table               =   new sharedTable();
+    $scope.table.columns       =   taxTable.columns;
+    $scope.table.actions       =   sharedTableActions;
+    $scope.table.headerButtons =   new sharedTableHeaderButtons();
+    $scope.table.resource      =   taxesResource; 
 
         /** Adjust Entry actions **/
     _.each( sharedEntryActions, function( value, key ) {
@@ -54,6 +72,21 @@ var taxesMain          =   function( taxesTextDomain, $scope, $http, taxesResour
     $scope.table.getPage(0);
 }
 
-taxesMain.$inject    =   [ 'taxesTextDomain', '$scope', '$http', 'taxesResource', '$location', 'sharedValidate', 'sharedTable', 'taxTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
+taxesMain.$inject    =   [ 
+    '$scope', 
+    '$http', 
+    '$location',
+    'taxesTextDomain',
+    'taxesResource', 
+    'taxTable',
+    'paginationFactory',
+    'sharedValidate', 
+    'sharedTable', 
+    'sharedTableActions',
+    'sharedTableHeaderButtons',
+    'sharedAlert', 
+    'sharedEntryActions', 
+    'sharedDocumentTitle' 
+];
 
 tendooApp.controller( 'taxesMain', taxesMain );

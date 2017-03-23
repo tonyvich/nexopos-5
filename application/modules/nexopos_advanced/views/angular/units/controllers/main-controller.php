@@ -1,11 +1,29 @@
-var unitsMain          =   function( unitsTextDomain, $scope, $http, unitsResource, $location, sharedValidate, sharedTable, unitTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var unitsMain          =   function( 
+    $scope, 
+    $http, 
+    $location, 
+    unitsTextDomain,
+    unitsResource,
+    unitTable,
+    paginationFactory,
+    sharedValidate, 
+    sharedTable,   
+    sharedTableActions,
+    sharedTableHeaderButtons, 
+    sharedAlert, 
+    sharedEntryActions, 
+    sharedDocumentTitle 
+    ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des unités', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   unitsTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   unitTable.columns;
-    $scope.table.actions    =   sharedTableActions;
+    
+    $scope.textDomain          =   unitsTextDomain;
+    $scope.validate            =   new sharedValidate();
+    $scope.table               =   new sharedTable();
+    $scope.table.columns       =   unitTable.columns;
+    $scope.table.actions       =   sharedTableActions;
+    $scope.table.resource      =   unitsResource;
+    $scope.table.headerButtons =   new sharedTableHeaderButtons();
 
     /** Adjust Entry actions **/
     _.each( sharedEntryActions, function( value, key ) {
@@ -53,6 +71,21 @@ var unitsMain          =   function( unitsTextDomain, $scope, $http, unitsResour
     $scope.table.getPage(0);
 }
 
-unitsMain.$inject    =   [ 'unitsTextDomain', '$scope', '$http', 'unitsResource', '$location', 'sharedValidate', 'sharedTable', 'unitTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
+unitsMain.$inject    =   [ 
+    '$scope', 
+    '$http', 
+    '$location',
+    'unitsTextDomain',
+    'unitsResource',
+    'unitTable', 
+    'paginationFactory',
+    'sharedValidate', 
+    'sharedTable',  
+    'sharedTableActions',
+    'sharedTableHeaderButtons', 
+    'sharedAlert', 
+    'sharedEntryActions',
+    'sharedDocumentTitle' 
+];
 
 tendooApp.controller( 'unitsMain', unitsMain );

@@ -1,12 +1,30 @@
-var providersMain          =   function( providersTextDomain, $scope, $http, providersResource, $location, sharedValidate, sharedTable, providersTable, paginationFactory,  sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var providersMain          =   function( 
+    $scope, 
+    $http, 
+    $location,
+    providersTextDomain,
+    providersResource, 
+    providersTable, 
+    paginationFactory,
+    sharedValidate, 
+    sharedTable,  
+    sharedTableActions,
+    sharedTableHeaderButtons, 
+    sharedAlert, 
+    sharedEntryActions, 
+    sharedDocumentTitle 
+    ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des fournisseurs', 'nexopos_advanced' );?>' );
+    
     $scope.validate             =   new sharedValidate();
     $scope.table                =   new sharedTable();
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
     $scope.table.columns        =   providersTable.columns;
     $scope.textDomain           =   providersTextDomain;
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.resource       =   providersResource;
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -45,6 +63,21 @@ var providersMain          =   function( providersTextDomain, $scope, $http, pro
     $scope.table.getPage(0);
 }
 
-providersMain.$inject    =   [ 'providersTextDomain', '$scope', '$http', 'providersResource', '$location', 'sharedValidate', 'sharedTable', 'providersTable', 'paginationFactory' ,'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
+providersMain.$inject    =   [ 
+    '$scope', 
+    '$http', 
+    '$location',
+    'providersTextDomain',
+    'providersResource',  
+    'providersTable',
+    'paginationFactory' ,
+    'sharedValidate', 
+    'sharedTable', 
+    'sharedTableActions', 
+    'sharedTableHeaderButtons',
+    'sharedAlert', 
+    'sharedEntryActions', 
+    'sharedDocumentTitle' 
+    ];
 
 tendooApp.controller( 'providersMain', providersMain );

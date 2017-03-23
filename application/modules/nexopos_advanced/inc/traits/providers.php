@@ -34,6 +34,16 @@ Trait providers
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_providers.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_providers.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_providers.description', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_providers.email', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_providers.phone', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_providers.author' );
             $query      =   $this->db->get();
 

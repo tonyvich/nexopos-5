@@ -41,6 +41,14 @@ Trait registers
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_registers.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_registers.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_registers.description', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_registers.author' );
 
             $query      =   $this->db->get();
