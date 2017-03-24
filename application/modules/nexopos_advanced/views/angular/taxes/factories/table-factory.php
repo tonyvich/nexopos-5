@@ -19,11 +19,13 @@ tendooApp.factory( 'taxTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Date de creation', 'nexopos_advanced' );?>',
-                namespace   :   'date_creation'
+                namespace   :   'date_creation',
+                is          :   'date_span'
             },
             {
-                text    :   '<?php echo _s( 'Date de modification', 'nexopos_advanced' );?>',
-                namespace   :   'date_modification'
+                text        :   '<?php echo _s( 'Date de modification', 'nexopos_advanced' );?>',
+                namespace   :   'date_modification',
+                is          :   'date_span'
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',

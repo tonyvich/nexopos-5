@@ -9,7 +9,8 @@ var expenses          =   function(
     sharedValidate,
     sharedRawToOptions,
     sharedDocumentTitle,
-    sharedMoment
+    sharedMoment,
+    sharedFieldEditor
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une dépense', 'nexopos_advanced' );?>' );
@@ -23,7 +24,7 @@ var expenses          =   function(
 
     expensesCategoriesResource.get(
         function(data){
-            $scope.fields[3].options = sharedRawToOptions(data.entries, 'id', 'name');
+            sharedFieldEditor('ref_category',$scope.fields).options = sharedRawToOptions(data.entries, 'id', 'name');
         }
     );
 
@@ -68,7 +69,8 @@ expenses.$inject    =   [
     'sharedValidate',
     'sharedRawToOptions',
     'sharedDocumentTitle',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedFieldEditor'
 ];
 
 tendooApp.controller( 'expenses', expenses );

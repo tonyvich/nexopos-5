@@ -11,15 +11,15 @@ var expensesCategories          =   function(
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une catégorie de dépenses', 'nexopos_advanced' );?>' );
+    
     $scope.textDomain       =   expensesCategoriesTextDomain;
     $scope.fields           =   expensesCategoriesFields;
     $scope.item             =   {};
     $scope.item.auto_cost   =   'no';
     $scope.validate         =   new sharedValidate();
 
-
-
     $scope.submit       =   function(){
+        
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   sharedMoment.now();
 

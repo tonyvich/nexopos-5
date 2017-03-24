@@ -90,7 +90,9 @@
                     'shared_factories/table.js',
                     'shared_factories/pagination.js',
                     'shared_factories/alert.js',
-                    'shared_factories/document-title.js'
+                    'shared_factories/document-title.js',
+                    'shared_factories/field-editor.js',
+                    'shared_factories/moment.js'
                 ]
             });
         }]
