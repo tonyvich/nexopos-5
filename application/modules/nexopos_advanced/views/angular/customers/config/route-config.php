@@ -1,3 +1,7 @@
+/*
+ * For add Purpose
+ */
+
 .when('/customers/add', {
     templateUrl: function( urlattr ) {
         if( typeof urlattr.page != 'undefined' ) {
@@ -28,6 +32,39 @@
                     'shared_factories/alert.js',
                     'shared_factories/moment.js',
                     'shared_factories/filter-item.js'
+                ]
+            });
+        }]
+    }
+})
+
+/*
+ *For Read purpose 
+ */
+
+ .when('/customers', {
+    templateUrl: function( urlattr ) {
+        return 'templates/customers/main';
+    },
+    resolve: {
+        lazy: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                files: [
+                    'controllers/customers/main.js',
+                    'factories/customers/add-text-domain.js',
+                    'factories/customers/fields.js',
+                    'factories/customers/resource.js',
+                    'factories/customers/table.js',
+                    'shared_factories/options.js',
+                    'shared_factories/table-header-buttons.js',
+                    'shared_factories/raw-to-options.js',
+                    'shared_factories/validate.js',
+                    'shared_factories/table.js',
+                    'shared_factories/pagination.js',
+                    'shared_factories/table-actions.js',
+                    'shared_factories/alert.js',
+                    'shared_factories/entry-actions.js',
+                    'shared_factories/document-title.js',
                 ]
             });
         }]

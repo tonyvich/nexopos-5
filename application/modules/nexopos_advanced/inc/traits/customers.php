@@ -37,6 +37,19 @@ Trait customers
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.description', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.surname', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.sex', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.phone', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.email', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers_groups.name', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'nexopos_customers_groups', 'nexopos_customers_groups.id = nexopos_customers.ref_group' );
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_customers.author' );
             $query      =   $this->db->get();
