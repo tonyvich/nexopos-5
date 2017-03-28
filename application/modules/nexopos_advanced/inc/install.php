@@ -28,50 +28,50 @@ class NexoPOS_Install extends Tendoo_Module
         **/
 
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `name` varchar(200) NOT NULL,
+    		  `id` int(11) NOT NULL AUTO_INCREMENT,
+    		  `name` varchar(200) NOT NULL,
           `namespace` varchar(200) NOT NULL,
-		  `description` text,
-		  `date_creation` datetime NOT NULL,
+    		  `description` text,
+    		  `date_creation` datetime NOT NULL,
           `date_modification` datetime NOT NULL,
-		  `author` int(11) NOT NULL,
-		  `ref_category` int(11) NOT NULL,
-		  `ref_department` int(11) NOT NULL,
-		  `ref_taxe` int(11) NOT NULL,
+    		  `author` int(11) NOT NULL,
+    		  `ref_category` int(11) NOT NULL,
+    		  `ref_department` int(11) NOT NULL,
+    		  `ref_taxe` int(11) NOT NULL,
           `ref_unit` int(11) NOT NULL,
           `ref_ids` varchar(200) NOT NULL,
           `ref_coupon` int(11) NOT NULL,
-		  `sale_price` float NOT NULL,
+  		    `sale_price` float NOT NULL,
           `featured_image` varchar(200) NOT NULL,
           `status` varchar(200) NOT NULL,
           `group_sale_price` float NOT NULL,
           `group_special_price` float NOT NULL,
           `type` varchar(200) NOT NULL,
-		  PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+		      PRIMARY KEY (`id`)
+		    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
         /**
          * Create Item Meta Table
         **/
 
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_metas` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `key` varchar(200) NOT NULL,
-		  `value` text NOT NULL,
-		  `ref_item` int(11) NOT NULL,
-		  PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+    		  `id` int(11) NOT NULL AUTO_INCREMENT,
+    		  `key` varchar(200) NOT NULL,
+    		  `value` text NOT NULL,
+    		  `ref_item` int(11) NOT NULL,
+		      PRIMARY KEY (`id`)
+	   	 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
         /**
          * Crate Variation Table
         **/
 
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `name` varchar(200) NOT NULL,
+    		  `id` int(11) NOT NULL AUTO_INCREMENT,
+    		  `name` varchar(200) NOT NULL,
           `barcode_action` varchar(200) NOT NULL,
-		  `sale_price` float NOT NULL,
-		  `special_price` float NOT NULL,
+    		  `sale_price` float NOT NULL,
+    		  `special_price` float NOT NULL,
           `purchase_price` float NOT NULL,
           `discount_start` datetime NOT NULL,
           `discount_end` datetime NOT NULL,
@@ -93,66 +93,66 @@ class NexoPOS_Install extends Tendoo_Module
           `ref_item` int(11) NOT NULL,
           `available_quantity` int(11) NOT NULL,
           `featured_image` varchar(200) NOT NULL,
-		  PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+		      PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Variation Gallery
-        **/
+      /**
+       * Variation Gallery
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_galleries` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `image` varchar(200) NOT NULL,
-          `ref_variation` int(11) NOT NULL,
-          `name` varchar(200) NOT NULL,
-          `description` text,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_galleries` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `image` varchar(200) NOT NULL,
+        `ref_variation` int(11) NOT NULL,
+        `name` varchar(200) NOT NULL,
+        `description` text,
+        PRIMARY KEY (`id`)
+	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Variation Meta
-        **/
+      /**
+       * Variation Meta
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_metas` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `key` varchar(200) NOT NULL,
-          `value` varchar(200) NOT NULL,
-          `ref_variation` int(11) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_metas` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `key` varchar(200) NOT NULL,
+        `value` varchar(200) NOT NULL,
+        `ref_variation` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Stock
-        **/
+      /**
+       * Stock
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_stock` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `ref_provider` int(11) NOT NULL,
-          `ref_variation` int(11) NOT NULL,
-          `ref_delivery` int(11) NOT NULL,
-          `quantity` int(11) NOT NULL,
-          `stock_type` varchar(200) NOT NULL,
-          `description` int(11) NOT NULL,
-          `author` int(11) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations_stock` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `ref_provider` int(11) NOT NULL,
+        `ref_variation` int(11) NOT NULL,
+        `ref_delivery` int(11) NOT NULL,
+        `quantity` int(11) NOT NULL,
+        `stock_type` varchar(200) NOT NULL,
+        `description` int(11) NOT NULL,
+        `author` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Delivery
-        **/
+      /**
+       * Delivery
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_deliveries` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `description` text,
-          `author` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          `shipping_date` datetime NOT NULL,
-          `purchase_cost` float NOT NULL,
-          `auto_cost` varchar(200) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_deliveries` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `description` text,
+        `author` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `shipping_date` datetime NOT NULL,
+        `purchase_cost` float NOT NULL,
+        `auto_cost` varchar(200) NOT NULL,
+        PRIMARY KEY (`id`)
+	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
         /**
          * Category
