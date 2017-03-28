@@ -25,6 +25,11 @@ Trait coupons
                 nexopos_coupons.discount_amount as discount_amount,
                 nexopos_coupons.date_creation as date_creation,
                 nexopos_coupons.date_modification as date_modification,
+                nexopos_coupons.included_items_ids as included_items_ids,
+                nexopos_coupons.included_categories_ids as included_categories_ids,
+                nexopos_coupons.included_customers_groups_ids as included_customers_groups_ids,
+                nexopos_coupons.minimum_amount as minimum_amount,
+                nexopos_coupons.maximum_amount as maximum_amount,
                 aauth_users.name        as author_name
             ' );
 
@@ -78,17 +83,22 @@ Trait coupons
         }
 
         $this->db->insert( 'nexopos_coupons', [
-            'name'                  =>  $this->post( 'name' ),
-            'description'           =>  $this->post( 'description' ),
-            'author'                =>  $this->post( 'author' ),
-            'date_creation'         =>  $this->post( 'date_creation' ),
-            'code'                  =>  $this->post( 'code' ),
-            'start_date'            =>  $this->post( 'start_date' ),
-            'end_date'              =>  $this->post( 'end_date' ),
-            'usage_limit'           =>  $this->post( 'usage_limit' ),
-            'discount_amount'       =>  $this->post( 'discount_amount' ),
-            'discount_percent'      =>  $this->post( 'discount_percent' ),
-            'discount_type'         =>  $this->post( 'discount_type' )
+            'name'                            =>  $this->post( 'name' ),
+            'description'                     =>  $this->post( 'description' ),
+            'author'                          =>  $this->post( 'author' ),
+            'date_creation'                   =>  $this->post( 'date_creation' ),
+            'code'                            =>  $this->post( 'code' ),
+            'start_date'                      =>  $this->post( 'start_date' ),
+            'end_date'                        =>  $this->post( 'end_date' ),
+            'usage_limit'                     =>  $this->post( 'usage_limit' ),
+            'discount_amount'                 =>  $this->post( 'discount_amount' ),
+            'discount_percent'                =>  $this->post( 'discount_percent' ),
+            'discount_type'                   =>  $this->post( 'discount_type' ),
+            'minimum_amount'                  =>  $this->post( 'minimum_amount' ),
+            'maximum_amount'                  =>  $this->post( 'maximum_amount' ),
+            'included_items_ids'              =>  $this->post( 'included_items_ids' ),
+            'included_categories_ids'         =>  $this->post( 'included_categories_ids' ),
+            'included_customers_groups_ids'   =>  $this->post( 'included_customers_groups_ids' ),
         ]);
 
         $this->__success();
@@ -129,17 +139,22 @@ Trait coupons
         }
 
         $this->db->where( 'id', $id )->update( 'nexopos_coupons', [
-            'name'                  =>  $this->put( 'name' ),
-            'description'           =>  $this->put( 'description' ),
-            'author'                =>  $this->put( 'author' ),
-            'date_modification'     =>  $this->put( 'date_modification' ),
-            'code'                  =>  $this->put( 'code' ),
-            'start_date'            =>  $this->put( 'start_date' ),
-            'end_date'              =>  $this->put( 'end_date' ),
-            'usage_limit'           =>  $this->put( 'usage_limit' ),
-            'discount_amount'       =>  $this->put( 'discount_amount' ),
-            'discount_percent'      =>  $this->put( 'discount_percent' ),
-            'discount_type'         =>  $this->put( 'discount_type' )
+            'name'                            =>  $this->put( 'name' ),
+            'description'                     =>  $this->put( 'description' ),
+            'author'                          =>  $this->put( 'author' ),
+            'date_modification'               =>  $this->put( 'date_modification' ),
+            'code'                            =>  $this->put( 'code' ),
+            'start_date'                      =>  $this->put( 'start_date' ),
+            'end_date'                        =>  $this->put( 'end_date' ),
+            'usage_limit'                     =>  $this->put( 'usage_limit' ),
+            'discount_amount'                 =>  $this->put( 'discount_amount' ),
+            'discount_percent'                =>  $this->put( 'discount_percent' ),
+            'discount_type'                   =>  $this->put( 'discount_type' ),
+            'minimum_amount'                  =>  $this->put( 'minimum_amount' ),
+            'maximum_amount'                  =>  $this->put( 'maximum_amount' ),
+            'included_items_ids'              =>  $this->put( 'included_items_ids' ),
+            'included_categories_ids'         =>  $this->put( 'included_categories_ids' ),
+            'included_customers_groups_ids'   =>  $this->put( 'included_customers_groups_ids' ),
         ]);
 
         $this->__success();

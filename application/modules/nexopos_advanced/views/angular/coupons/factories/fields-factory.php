@@ -81,7 +81,7 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
     },{
         type        :   'dropdown_multiselect',
         label       :   '<?php echo _s( 'Catégories concernés', 'nexopos_advanced' );?>',
-        model       :   'included_catégories_ids',
+        model       :   'included_categories_ids',
         options     :   [],
         desc            :   '<?php echo _s( 'Appliquer ce code à quelques catégories spécifiques.', 'nexopos_advanced' );?>'
     },{
