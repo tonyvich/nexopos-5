@@ -154,236 +154,236 @@ class NexoPOS_Install extends Tendoo_Module
         PRIMARY KEY (`id`)
 	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Category
-        **/
+      /**
+       * Category
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_categories` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `image_url` varchar(200) NOT NULL,
-          `description` text,
-          `author` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          `ref_parent` int(11) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_categories` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `image_url` varchar(200) NOT NULL,
+        `description` text,
+        `author` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `ref_parent` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Deparments
-        **/
+      /**
+       * Deparments
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_departments` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `description` varchar(200) NOT NULL,
-          `image_url` varchar(200) NOT NULL,
-          `author` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_departments` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `description` varchar(200) NOT NULL,
+        `image_url` varchar(200) NOT NULL,
+        `author` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Unit
-        **/
+      /**
+       * Unit
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_units` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `code` varchar(200) NOT NULL,
-          `description` varchar(200) NOT NULL,
-          `author` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_units` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `code` varchar(200) NOT NULL,
+        `description` varchar(200) NOT NULL,
+        `author` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Taxes
-        **/
+      /**
+       * Taxes
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_taxes` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `type` varchar(100) NOT NULL,
-          `description` text,
-          `value` float NOT NULL,
-          `author` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_taxes` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `type` varchar(100) NOT NULL,
+        `description` text,
+        `value` float NOT NULL,
+        `author` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Providers
-        **/
+      /**
+       * Providers
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_providers` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `description` text,
-          `email` varchar(200) NOT NULL,
-          `phone` varchar(200) NOT NULL,
-          `author` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_providers` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `description` text,
+        `email` varchar(200) NOT NULL,
+        `phone` varchar(200) NOT NULL,
+        `author` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Providers Meta
-        **/
+      /**
+       * Providers Meta
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_providers_metas` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `key` varchar(200) NOT NULL,
-          `value` varchar(200) NOT NULL,
-          `ref_provider` int(11) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_providers_metas` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `key` varchar(200) NOT NULL,
+        `value` varchar(200) NOT NULL,
+        `ref_provider` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Coupons
-        **/
+      /**
+       * Coupons
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_coupons` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `description` text,
-          `code` varchar(200) NOT NULL,
-          `author` int NOT NULL,
-          `discount_type` varchar(200) NOT NULL,
-          `discount_percent` float NOT NULL,
-          `discount_amount` float NOT NULL,
-          `type` varchar(200) NOT NULL,
-          `start_date` datetime NOT NULL,
-          `end_date` datetime NOT NULL,
-          `included_items_ids` varchar(200) NOT NULL,
-          `excluded_items_ids` varchar(200) NOT NULL,
-          `included_categories_ids` varchar(200) NOT NULL,
-          `excluded_categories_ids` varchar(200) NOT NULL,
-          `included_customers_groups_ids` varchar(200) NOT NULL,
-          `excluded_customers_groups_ids` varchar(200) NOT NULL,
-          `minimum_amount` float NOT NULL,
-          `maximum_amount` float NOT NULL,
-          `usage_limit` int(11) NOT NULL,
-          `usage_count` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_coupons` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `description` text,
+        `code` varchar(200) NOT NULL,
+        `author` int NOT NULL,
+        `discount_type` varchar(200) NOT NULL,
+        `discount_percent` float NOT NULL,
+        `discount_amount` float NOT NULL,
+        `type` varchar(200) NOT NULL,
+        `start_date` datetime NOT NULL,
+        `end_date` datetime NOT NULL,
+        `included_items_ids` varchar(200) NOT NULL,
+        `excluded_items_ids` varchar(200) NOT NULL,
+        `included_categories_ids` varchar(200) NOT NULL,
+        `excluded_categories_ids` varchar(200) NOT NULL,
+        `included_customers_groups_ids` varchar(200) NOT NULL,
+        `excluded_customers_groups_ids` varchar(200) NOT NULL,
+        `minimum_amount` float NOT NULL,
+        `maximum_amount` float NOT NULL,
+        `usage_limit` int(11) NOT NULL,
+        `usage_count` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Order Coupons
-        **/
+      /**
+       * Order Coupons
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_coupons` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `ref_coupon` int(11) NOT NULL,
-          `ref_order` int(11) NOT NULL,
-          `coupon_amont` float NOT NULL,
-          `coupon_percent` float NOT NULL,
-          `coupon_type` varchar(200) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_coupons` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `ref_coupon` int(11) NOT NULL,
+        `ref_order` int(11) NOT NULL,
+        `coupon_amont` float NOT NULL,
+        `coupon_percent` float NOT NULL,
+        `coupon_type` varchar(200) NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Orders
-        **/
+      /**
+       * Orders
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `author` int(11) NOT NULL,
-          `description` text,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          `gross_total` float NOT NULL,
-          `net_total` float NOT NULL,
-          `perceived_amount` float NOT NULL,
-          `ref_customer` int(11) NOT NULL,
-          `ref_register` int(11) NOT NULL,
-          `type` varchar(200) NOT NULL,
-          `discount_type` varchar(200) NOT NULL,
-          `discount_percent` float NOT NULL,
-          `discount_amount` float NOT NULL,
-          `vat` float NOT NULL,
-          `code` varchar(200) NOT NULL,
-          `group_discount_amount` float NOT NULL,
-          `group_discount_percent` float NOT NULL,
-          `group_discount_type` varchar(200) NOT NULL,
-          `payment_types` varchar(200) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `author` int(11) NOT NULL,
+        `description` text,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `gross_total` float NOT NULL,
+        `net_total` float NOT NULL,
+        `perceived_amount` float NOT NULL,
+        `ref_customer` int(11) NOT NULL,
+        `ref_register` int(11) NOT NULL,
+        `type` varchar(200) NOT NULL,
+        `discount_type` varchar(200) NOT NULL,
+        `discount_percent` float NOT NULL,
+        `discount_amount` float NOT NULL,
+        `vat` float NOT NULL,
+        `code` varchar(200) NOT NULL,
+        `group_discount_amount` float NOT NULL,
+        `group_discount_percent` float NOT NULL,
+        `group_discount_type` varchar(200) NOT NULL,
+        `payment_types` varchar(200) NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Order Meta
-        **/
+      /**
+       * Order Meta
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_metas` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `key` varchar(200) NOT NULL,
-          `value` varchar(200) NOT NULL,
-          `ref_order` int(11) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_metas` (
+		    `id` int(11) NOT NULL AUTO_INCREMENT,
+        `key` varchar(200) NOT NULL,
+        `value` varchar(200) NOT NULL,
+        `ref_order` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Order Payment
-        **/
+      /**
+       * Order Payment
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_payments` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `ref_order` int(11) NOT NULL,
-          `type` varchar(200) NOT NULL,
-          `amount` float NOT NULL,
-          `author` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_payments` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `ref_order` int(11) NOT NULL,
+        `type` varchar(200) NOT NULL,
+        `amount` float NOT NULL,
+        `author` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Orders Items
-        **/
+      /**
+       * Orders Items
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_items` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `ref_order` int(11) NOT NULL,
-          `ref_item` int(11) NOT NULL,
-          `item_price` float NOT NULL,
-          `item_quantity` int(11) NOT NULL,
-          `item_total_price` float NOT NULL,
-          `discount_type` varchar(200) NOT NULL,
-          `discount_amount` float NOT NULL,
-          `discount_percent` float NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_orders_items` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `ref_order` int(11) NOT NULL,
+        `ref_item` int(11) NOT NULL,
+        `item_price` float NOT NULL,
+        `item_quantity` int(11) NOT NULL,
+        `item_total_price` float NOT NULL,
+        `discount_type` varchar(200) NOT NULL,
+        `discount_amount` float NOT NULL,
+        `discount_percent` float NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-    /**
-     * Registers
-    **/
+      /**
+       * Registers
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `authorized_users` varchar(200),
-          `description` text,
-          `status` varchar(200) NOT NULL,
-          `author` int(11) NOT NULL,
-          `used_by` int(11) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `authorized_users` varchar(200),
+        `description` text,
+        `status` varchar(200) NOT NULL,
+        `author` int(11) NOT NULL,
+        `used_by` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-    /**
-     * Registers history
-    **/
+      /**
+       * Registers history
+      **/
 
-    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers_history` (
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers_history` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `amount` float NOT NULL,
         `type` varchar(200) NOT NULL,
@@ -393,143 +393,137 @@ class NexoPOS_Install extends Tendoo_Module
         `register` int(11) NOT NULL,
         `description` text,
         PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-  /**
-   * Register Activity
-  **/
+      /**
+       * Register Activity
+      **/
 
-  $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers_activities` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-      `amount` float NOT NULL,
-      `type` varchar(200) NOT NULL,
-      `author` int(11) NOT NULL,
-      `ref_register` int(11) NOT NULL,
-      `date_creation` datetime NOT NULL,
-      `date_modification` datetime NOT NULL,
-      PRIMARY KEY (`id`)
-	) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_registers_activities` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `amount` float NOT NULL,
+        `type` varchar(200) NOT NULL,
+        `author` int(11) NOT NULL,
+        `ref_register` int(11) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+    	) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Customers
-        **/
+      /**
+       * Customers
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers` (
-		      `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `surname` varchar(200) NOT NULL,
-          `description` text NOT NULL,
-          `author` int(11) NOT NULL,
-          `sex` varchar(200) NOT NULL,
-          `phone` varchar(200) NOT NULL,
-          `email` varchar(200) NOT NULL,
-          `ref_group` varchar(200) NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          `orders_so_far` int(11) NOT NULL,
-          `purchases_so_far` float(11) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `surname` varchar(200) NOT NULL,
+        `description` text NOT NULL,
+        `author` int(11) NOT NULL,
+        `sex` varchar(200) NOT NULL,
+        `phone` varchar(200) NOT NULL,
+        `email` varchar(200) NOT NULL,
+        `ref_group` varchar(200) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `orders_so_far` int(11) NOT NULL,
+        `purchases_so_far` float(11) NOT NULL,
+        PRIMARY KEY (`id`)
+	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         *Customers Adresses
-        **/
+      /**
+       *Customers Adresses
+      **/
 
-    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_address` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `company` varchar(200),
-      `first_address` varchar(200),
-      `second_address` varchar(200),
-      `pobox` varchar(200),
-      `town` varchar(200),
-      `country` varchar(200),
-      `state` varchar(200),
-      `ref_customer` varchar(200),
-      `type` varchar(200),
-      PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_address` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `key` varchar(200) NOT NULL,
+        `value` varchar(200) NOT NULL,
+        `ref_customer` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Customer Meta
-        **/
+      /**
+       * Customer Meta
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_metas` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `key` varchar(200) NOT NULL,
-          `value` varchar(200) NOT NULL,
-          `ref_provider` int(11) NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_metas` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `key` varchar(200) NOT NULL,
+        `value` varchar(200) NOT NULL,
+        `ref_provider` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * Customers Group
-        **/
+      /**
+       * Customers Group
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_groups` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `description` text,
-          `enable_discount` varchar(200) NOT NULL,
-          `discount_start` datetime NOT NULL,
-          `discount_end` datetime NOT NULL,
-          `discount_type` varchar(200) NOT NULL,
-          `discount_value` float NOT NULL,
-          `date_creation` datetime NOT NULL,
-          `author` int(11) NOT NULL,
-          `date_modification` datetime NOT NULL,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_groups` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `description` text,
+        `enable_discount` varchar(200) NOT NULL,
+        `discount_start` datetime NOT NULL,
+        `discount_end` datetime NOT NULL,
+        `discount_type` varchar(200) NOT NULL,
+        `discount_value` float NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `author` int(11) NOT NULL,
+        `date_modification` datetime NOT NULL,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        /**
-         * xpenses
-        **/
+      /**
+       * Expenses
+      **/
 
-        $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_expenses` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-          `name` varchar(200) NOT NULL,
-          `ref_category` int(11) NOT NULL,
-          `amount` float NOT NULL,
-          `image_url` varchar(200),
-          `date_creation` datetime NOT NULL,
-          `date_modification` datetime NOT NULL,
-          `author` int(11) NOT NULL,
-          `description` text,
-          PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_expenses` (
+	      `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `ref_category` int(11) NOT NULL,
+        `amount` float NOT NULL,
+        `image_url` varchar(200),
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `author` int(11) NOT NULL,
+        `description` text,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-    /**
-     * Expense Category
-    **/
+      /**
+       * Expense Category
+      **/
 
-    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_expenses_categories` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-      `name` varchar(200) NOT NULL,
-      `date_creation` datetime NOT NULL,
-      `date_modification` datetime NOT NULL,
-      `author` int(11) NOT NULL,
-      `description` text,
-      PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_expenses_categories` (
+  		  `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `author` int(11) NOT NULL,
+        `description` text,
+        PRIMARY KEY (`id`)
+		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-    /**
-    *  Stores
-    **/
+      /**
+      *  Stores
+      **/
 
-    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_stores` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `name` varchar(200) NOT NULL,
-      `image` varchar(200),
-      `authorized_users` varchar(200),
-      `status` varchar(200),
-      `date_creation` datetime NOT NULL,
-      `date_modification` datetime NOT NULL,
-      `author` int(11) NOT NULL,
-      `description` text,
-      PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
+      $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_stores` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL,
+        `image` varchar(200),
+        `authorized_users` varchar(200),
+        `status` varchar(200),
+        `date_creation` datetime NOT NULL,
+        `date_modification` datetime NOT NULL,
+        `author` int(11) NOT NULL,
+        `description` text,
+        PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
-        $this->options->set( 'nexopos_installed', 'yes' );
-    }
+      $this->options->set( 'nexopos_installed', 'yes' );
+  }
 
     /**
      *  Remove Module
