@@ -1,7 +1,8 @@
-var customersAdd               =   function(
+var customersEdit               =   function(
     $scope,
     $http,
     $location,
+    $route,
     $routeParams,
     customersTabs,
     customersAdvancedFields,
@@ -18,11 +19,11 @@ var customersAdd               =   function(
     sharedAlert
 ) {
 
-    sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un client', 'nexopos_advanced' );?>' );
+    sharedDocumentTitle.set( '<?php echo _s( 'Modifier un client', 'nexopos_advanced' );?>' );
 
-    $scope.item                 =   {
-        variations              :   []
-    };
+    $scope.item = new Object;
+
+    $scope.item.variations = new Array;
 
     $scope.item.disableVariation    =   true;
     $scope.validate                 =   new sharedValidate();
@@ -31,37 +32,33 @@ var customersAdd               =   function(
     $scope.fields                   =   customersFields;
     $scope.itemAdvancedFields       =   customersAdvancedFields;
 
-    // test
-    $scope.pays                     =   [{
-        label   :   'Cameroun',
-        value   :   'CM'
-    },{
-        label   :   'France',
-        value       :   'FR'
-    }]
+    // Get Resource when loading
+    $scope.submitDisabled   =   true;
+    customersResource.get({
+        id  :  $route.current.params.id // make sure route is added as dependency
+    },function( entry ){
+        $scope.submitDisabled   =   false;
 
-    $scope.regions  =   [{
-        label   :   'Nord',
-        value   :   'nord',
-        country         :   'CM'
-    },{
-        label   :   'Centre',
-        value   :   'centre',
-        country         :   'CM'
-    },{
-		"label": "Alsace",
-		"country": "FR",
-		"value": "Alsace"
-	},
-	{
-		"label": "Aquitaine",
-		"country": "FR",
-		"value": "Aquitaine"
-	}];
+        console.log(entry.address[0]);
+        var billing_data = new Array;
+        var billRegEx = new RegExp("billing");
+        _.each(entry.address,function(value,key){
+            if(billRegEx.test(value.key)){
+                billing_data[value.key] = value.value;
+            }
+        });
+        $scope.item.variations.tabs = [];
+        $scope.item.variations.billing.namespace = "billing";
 
-    // Je peux faire ça des deux côté pour l'édition dynamique de champs, c'est mieux de faire ça dans advancedFields.
-    sharedFieldEditor( 'billing_country', $scope.itemAdvancedFields.billing ).options     =   $scope.pays;
-
+        _.each(billing_data, function(value,key){
+            console.log(key);
+            $scope.variations.tabs.models[key] = value;
+        });
+        console.log($scope.item.variations.tabs);
+        _.each(entry.customer[0], function(value, key){
+            $scope.item[key] = value;
+        });
+    })
 
     // Setting customer group options
     customersGroupsResource.get(
@@ -365,7 +362,6 @@ var customersAdd               =   function(
 
     $scope.submitItem               =   function(){
         console.log($scope.item);
-        return;
         // validating
         var global_validation       =   $scope.validate.blurAll();
         var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
@@ -491,10 +487,11 @@ var customersAdd               =   function(
 
 };
 
-customersAdd.$inject           =   [
+customersEdit.$inject           =   [
     '$scope',
     '$http',
     '$location',
+    '$route',
     '$routeParams',
     'customersTabs',
     'customersAdvancedFields',
@@ -511,4 +508,4 @@ customersAdd.$inject           =   [
     'sharedAlert'
 ];
 
-tendooApp.controller( 'customersAdd', customersAdd );
+tendooApp.controller( 'customersEdit', customersEdit );

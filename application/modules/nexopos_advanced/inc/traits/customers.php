@@ -60,8 +60,10 @@ Trait customers
             ], 200 );
         }
 
-        $result     =   $this->db->where( 'id', $id )->get( 'nexopos_customers' )->result();
-
+        $result = array();
+        $result[0]['customer'] =   $this->db->where( 'id', $id )->get( 'nexopos_customers' )->result();
+        $result[0]['address']  =   $this->db->where( 'ref_customer', $id )->get( 'nexopos_customers_address' )->result();
+        
         return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
@@ -99,32 +101,14 @@ Trait customers
         $variations = $this->post( 'variations' );
         $data = $variations[0]; 
         
-        // Saving customer billing informations
-        $this->db->insert('nexopos_customers_address',[
-            'company'        => $data[ 'billing_company' ],
-            'first_address'  => $data[ 'billing_first_address' ],
-            'second_address' => $data[ 'billing_second_address' ],
-            'pobox'          => $data[ 'billing_pobox' ],
-            'country'        => $data[ 'billing_country' ],
-            'town'           => $data[ 'billing_town' ],
-            'state'          => $data[ 'billing_state' ],
-            'ref_customer'   => $result->ID,
-            'type'           => 'billing'
-        ]);
-
-        // saving customer delivery informations
-        $this->db->insert('nexopos_customers_address',[
-            'company'        => $data[ 'delivery_company' ],
-            'first_address'  => $data[ 'delivery_first_address' ],
-            'second_address' => $data[ 'delivery_second_address'],
-            'pobox'          => $data[ 'delivery_pobox' ],
-            'country'        => $data[ 'delivery_country' ],
-            'town'           => $data[ 'delivery_town' ],
-            'state'          => $data[ 'delivery_state' ],
-            'ref_customer'   => $result->ID,
-            'type'           => 'delivery'
-        ]);
-
+        foreach ($data as $key => $value) {
+            $this->db->insert('nexopos_customers_address',[
+                'key'          =>     $key,
+                'value'        =>     $value,
+                'ref_customer' =>     $result->ID
+            ]);
+        }
+        
         $this->__success();
     }
 
