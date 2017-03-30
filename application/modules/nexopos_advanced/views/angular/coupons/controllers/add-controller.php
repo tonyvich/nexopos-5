@@ -1,13 +1,18 @@
 var coupons          =   function(
-    couponsTextDomain,
     $scope,
     $http,
+    $location,
+    couponsTextDomain,
     couponsFields,
     couponsResource,
-    $location,
-    sharedValidate,
+    customersGroupsResource,
+    categoriesResource,
+    itemsResource,
     sharedDocumentTitle,
-    sharedMoment
+    sharedMoment,
+    sharedFieldEditor,
+    sharedValidate,
+    sharedRawToOptions
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un coupon', 'nexopos_advanced' );?>' );
@@ -17,6 +22,27 @@ var coupons          =   function(
     $scope.item.auto_cost   =   'no';
     $scope.validate         =   new sharedValidate();
 
+    /**
+     * Populating multiselect
+     **/
+
+     categoriesResource.get(
+        function(data){
+            sharedFieldEditor('included_categories_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');
+        }
+     );
+
+     customersGroupsResource.get(
+        function(data){
+            sharedFieldEditor('included_customers_groups_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');
+        }
+     );
+
+     itemsResource.get(
+        function(data){
+            sharedFieldEditor('included_items_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');    
+        }
+     );
 
     /**
      *  Update Date
@@ -31,6 +57,9 @@ var coupons          =   function(
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   sharedMoment.now();
+        $scope.item.included_items_ids = JSON.stringify($scope.item.included_items_ids);
+        $scope.item.included_categories_ids = JSON.stringify($scope.item.included_categories_ids);
+        $scope.item.included_customers_groups_ids = JSON.stringify($scope.item.included_customers_groups_ids);
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -59,15 +88,20 @@ var coupons          =   function(
 }
 
 coupons.$inject    =   [
-    'couponsTextDomain',
     '$scope',
     '$http',
+    '$location',
+    'couponsTextDomain',
     'couponsFields',
     'couponsResource',
-    '$location',
-    'sharedValidate',
+    'customersGroupsResource',
+    'categoriesResource',
+    'itemsResource',
     'sharedDocumentTitle',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedFieldEditor',
+    'sharedValidate',
+    'sharedRawToOptions'
 ];
 
 tendooApp.controller( 'coupons', coupons );

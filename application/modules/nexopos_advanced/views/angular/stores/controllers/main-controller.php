@@ -1,10 +1,30 @@
-var storesMain          =   function( storesAddTextDomain, $scope, $http, storesResource, $location, sharedValidate, sharedTable, storeTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var storesMain          =   function( 
+    $scope, 
+    $http, 
+    $location,
+    storesAddTextDomain,
+    storesResource, 
+    storeTable,
+    paginationFactory,
+    sharedValidate, 
+    sharedTable,   
+    sharedTableActions,
+    sharedTableHeaderButtons, 
+    sharedAlert, 
+    sharedEntryActions, 
+    sharedDocumentTitle 
+    ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des boutiques', 'nexopos_advanced' );?>' );
-    $scope.textDomain       =   storesAddTextDomain;
-    $scope.validate         =   new sharedValidate();
-    $scope.table            =   new sharedTable();
-    $scope.table.columns    =   storeTable.columns;
+    
+    $scope.textDomain           =   storesAddTextDomain;
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.columns        =   storeTable.columns;
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();
+    $scope.table.resource       =   storesResource;
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
 
     /** Adjust Entry actions **/
     _.each( sharedEntryActions, function( value, key ) {
@@ -12,10 +32,7 @@ var storesMain          =   function( storesAddTextDomain, $scope, $http, stores
             sharedEntryActions[ key ].path      =    '/stores/edit/';
         }
     });
-
-    $scope.table.entryActions   =   new sharedEntryActions();
-    $scope.table.actions   =   new sharedTableActions();
-
+    
     /**
      *  Table Get
      *  @param object query object
@@ -53,16 +70,17 @@ var storesMain          =   function( storesAddTextDomain, $scope, $http, stores
 }
 
 storesMain.$inject    =   [
-    'storesAddTextDomain',
     '$scope',
     '$http',
-    'storesResource',
     '$location',
-    'sharedValidate',
-    'sharedTable',
+    'storesAddTextDomain',
+    'storesResource',
     'storeTable',
     'paginationFactory',
+    'sharedValidate',
+    'sharedTable',
     'sharedTableActions',
+    'sharedTableHeaderButtons',
     'sharedAlert',
     'sharedEntryActions',
     'sharedDocumentTitle'

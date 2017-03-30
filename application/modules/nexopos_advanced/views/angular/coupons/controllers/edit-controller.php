@@ -1,13 +1,18 @@
 var couponsEdit      =   function(
-    couponsEditTextDomain,
     $scope,
     $http,
     $route,
+    $location,
+    couponsEditTextDomain,
     couponsFields,
     couponsResource,
-    $location,
+    customersGroupsResource,
+    categoriesResource,
+    itemsResource,
     sharedValidate,
     sharedDocumentTitle,
+    sharedFieldEditor,
+    sharedRawToOptions,
     sharedMoment
 ) {
 
@@ -28,6 +33,28 @@ var couponsEdit      =   function(
     })
 
     /**
+     * Populating multiselect
+     **/
+
+     categoriesResource.get(
+        function(data){
+            sharedFieldEditor('included_categories_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');
+        }
+     );
+
+     customersGroupsResource.get(
+        function(data){
+            sharedFieldEditor('included_customers_groups_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');
+        }
+     );
+
+     itemsResource.get(
+        function(data){
+            sharedFieldEditor('included_items_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');    
+        }
+     );
+
+    /**
      *  Update Date
      *  @param object date
      *  @return void
@@ -40,6 +67,9 @@ var couponsEdit      =   function(
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
         $scope.item.date_modification   =   sharedMoment.now();
+        $scope.item.included_items_ids = JSON.stringify($scope.item.included_items_ids);
+        $scope.item.included_categories_ids = JSON.stringify($scope.item.included_categories_ids);
+        $scope.item.included_customers_groups_ids = JSON.stringify($scope.item.included_customers_groups_ids);
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
             return $scope.validate.blurAll( $scope.fields, $scope.item );
@@ -61,15 +91,20 @@ var couponsEdit      =   function(
 }
 
 couponsEdit.$inject    =   [
-    'couponsEditTextDomain',
     '$scope',
     '$http',
     '$route',
+    '$location',
+    'couponsEditTextDomain',
     'couponsFields',
     'couponsResource',
-    '$location',
+    'customersGroupsResource',
+    'categoriesResource',
+    'itemsResource',
     'sharedValidate',
     'sharedDocumentTitle',
+    'sharedFieldEditor',
+    'sharedRawToOptions',
     'sharedMoment'
 ];
 tendooApp.controller( 'couponsEdit', couponsEdit );

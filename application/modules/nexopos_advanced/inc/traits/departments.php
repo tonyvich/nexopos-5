@@ -33,6 +33,14 @@ Trait departments
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_departments.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_departments.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_departments.description', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_departments.author' );
             $query      =   $this->db->get();
 

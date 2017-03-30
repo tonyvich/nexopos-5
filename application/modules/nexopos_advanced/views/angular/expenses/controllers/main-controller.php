@@ -1,4 +1,19 @@
-var expensesMain          =   function( $scope, $http, expensesTextDomain, expensesResource, $location, sharedValidate, sharedTable, expensesTable, paginationFactory, sharedTableActions, sharedAlert, sharedEntryActions, sharedDocumentTitle ) {
+var expensesMain          =   function( 
+    $scope, 
+    $http,
+    $location, 
+    expensesTextDomain, 
+    expensesResource,
+    expensesTable, 
+    paginationFactory,
+    sharedValidate, 
+    sharedTable,
+    sharedTableActions,
+    sharedTableHeaderButtons,   
+    sharedAlert, 
+    sharedEntryActions, 
+    sharedDocumentTitle 
+    ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des dépenses', 'nexopos_advanced' );?>' );
     $scope.textDomain           =   expensesTextDomain;
@@ -7,6 +22,8 @@ var expensesMain          =   function( $scope, $http, expensesTextDomain, expen
     $scope.table.columns        =   expensesTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.resource       =   expensesResource;
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -50,6 +67,21 @@ var expensesMain          =   function( $scope, $http, expensesTextDomain, expen
     $scope.table.getPage(0);
 }
 
-expensesMain.$inject    =   [ '$scope', '$http', 'expensesTextDomain',  'expensesResource', '$location', 'sharedValidate', 'sharedTable', 'expensesTable', 'paginationFactory', 'sharedTableActions', 'sharedAlert', 'sharedEntryActions', 'sharedDocumentTitle' ];
+expensesMain.$inject    =   [ 
+    '$scope', 
+    '$http', 
+    '$location',
+    'expensesTextDomain',  
+    'expensesResource', 
+    'expensesTable',
+    'paginationFactory',
+    'sharedValidate', 
+    'sharedTable',
+    'sharedTableActions',
+    'sharedTableHeaderButtons',  
+    'sharedAlert', 
+    'sharedEntryActions', 
+    'sharedDocumentTitle' 
+];
 
 tendooApp.controller( 'expensesMain', expensesMain );

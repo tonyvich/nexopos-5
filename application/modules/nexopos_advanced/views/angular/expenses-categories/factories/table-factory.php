@@ -6,12 +6,14 @@ tendooApp.factory( 'expensesCategoriesTable', function(){
                 namespace   :   'name'
             },
             {
-                text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
-                namespace   :   'date_creation'
+                text        :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
+                namespace   :   'date_creation',
+                is          :   'date_span'  
             },
             {
-                text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
-                namespace   :   'date_modification'
+                text        :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
+                namespace   :   'date_modification',
+                is          :   'date_span'
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',

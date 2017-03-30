@@ -37,6 +37,19 @@ Trait customers
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.description', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.surname', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.sex', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.phone', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers.email', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_customers_groups.name', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'nexopos_customers_groups', 'nexopos_customers_groups.id = nexopos_customers.ref_group' );
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_customers.author' );
             $query      =   $this->db->get();
@@ -47,8 +60,10 @@ Trait customers
             ], 200 );
         }
 
-        $result     =   $this->db->where( 'id', $id )->get( 'nexopos_customers' )->result();
-
+        $result = array();
+        $result[0]['customer'] =   $this->db->where( 'id', $id )->get( 'nexopos_customers' )->result();
+        $result[0]['address']  =   $this->db->where( 'ref_customer', $id )->get( 'nexopos_customers_address' )->result();
+        
         return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
@@ -86,32 +101,14 @@ Trait customers
         $variations = $this->post( 'variations' );
         $data = $variations[0]; 
         
-        // Saving customer billing informations
-        $this->db->insert('nexopos_customers_address',[
-            'company'        => $data[ 'billing_company' ],
-            'first_address'  => $data[ 'billing_first_address' ],
-            'second_address' => $data[ 'billing_second_address' ],
-            'pobox'          => $data[ 'billing_pobox' ],
-            'country'        => $data[ 'billing_country' ],
-            'town'           => $data[ 'billing_town' ],
-            'state'          => $data[ 'billing_state' ],
-            'ref_customer'   => $result->ID,
-            'type'           => 'billing'
-        ]);
-
-        // saving customer delivery informations
-        $this->db->insert('nexopos_customers_address',[
-            'company'        => $data[ 'delivery_company' ],
-            'first_address'  => $data[ 'delivery_first_address' ],
-            'second_address' => $data[ 'delivery_second_address'],
-            'pobox'          => $data[ 'delivery_pobox' ],
-            'country'        => $data[ 'delivery_country' ],
-            'town'           => $data[ 'delivery_town' ],
-            'state'          => $data[ 'delivery_state' ],
-            'ref_customer'   => $result->ID,
-            'type'           => 'delivery'
-        ]);
-
+        foreach ($data as $key => $value) {
+            $this->db->insert('nexopos_customers_address',[
+                'key'          =>     $key,
+                'value'        =>     $value,
+                'ref_customer' =>     $result->ID
+            ]);
+        }
+        
         $this->__success();
     }
 

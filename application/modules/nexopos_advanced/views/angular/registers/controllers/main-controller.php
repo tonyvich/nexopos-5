@@ -1,26 +1,30 @@
 var registersMain          =   function(
-    registersAddTextDomain,
     $scope,
     $http,
-    registersResource,
     $location,
-    sharedValidate,
-    sharedTable,
+    registersAddTextDomain,
+    registersResource,
     registerTable,
     paginationFactory,
+    sharedValidate,
+    sharedTable,
     sharedTableActions,
+    sharedTableHeaderButtons,
     sharedAlert,
     sharedEntryActions,
     sharedDocumentTitle
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des Caisse enregistreuse', 'nexopos_advanced' );?>' );
+    
     $scope.textDomain           =   registersAddTextDomain;
     $scope.validate             =   new sharedValidate();
     $scope.table                =   new sharedTable();
     $scope.table.columns        =   registerTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.resource       =   registersResource;
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
@@ -66,16 +70,17 @@ var registersMain          =   function(
 }
 
 registersMain.$inject    =   [
-    'registersAddTextDomain',
     '$scope',
     '$http',
-    'registersResource',
     '$location',
-    'sharedValidate',
-    'sharedTable',
+    'registersAddTextDomain',
+    'registersResource',
     'registerTable',
     'paginationFactory',
+    'sharedValidate',
+    'sharedTable',
     'sharedTableActions',
+    'sharedTableHeaderButtons',
     'sharedAlert',
     'sharedEntryActions',
     'sharedDocumentTitle'

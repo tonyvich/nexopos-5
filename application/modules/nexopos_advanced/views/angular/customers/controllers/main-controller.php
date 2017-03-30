@@ -1,43 +1,37 @@
-var deliveriesMain          =   function( 
+var customersMain          =   function( 
     $scope, 
-    $http, 
-    $location,
-    deliveriesTextDomain,
-    deliveriesTable,
-    deliveriesResource, 
-    paginationFactory, 
+    $http,
+    $location, 
+    customersTextDomain, 
+    customersResource,
+    customersTable, 
+    paginationFactory,
     sharedValidate, 
-    sharedTable, 
-    sharedTableActions, 
-    sharedTableHeaderButtons,
+    sharedTable,
+    sharedTableActions,
+    sharedTableHeaderButtons,   
     sharedAlert, 
     sharedEntryActions, 
     sharedDocumentTitle 
-) {
-
-    sharedDocumentTitle.set( '<?php echo _s( 'Liste des livraisons', 'nexopos_advanced' );?>' );
     
-    $scope.textDomain           =   deliveriesTextDomain;
+    ) {
+
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des clients', 'nexopos_advanced' );?>' );
+    
+    $scope.textDomain           =   customersTextDomain;
     $scope.validate             =   new sharedValidate();
     $scope.table                =   new sharedTable();
-    $scope.table.columns        =   deliveriesTable.columns;
+    $scope.table.columns        =   customersTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
-    $scope.table.resource       =   deliveriesResource;
     $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.resource       =   customersResource;
 
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            $scope.table.entryActions[ key ].path      =    '/deliveries/edit/';
+            $scope.table.entryActions[ key ].path      =    '/customers/edit/';
         }
-    });
-
-    /** Extends Table Entry Actions **/
-    $scope.table.entryActions.push({
-        'name'                  :   '<?php echo _s( 'Imprimer', 'nexopos_advanced' );?>',
-        'namespace'             :   'print',
-        'path'                  :   '/deliveries/print/'
     });
 
     /**
@@ -47,7 +41,7 @@ var deliveriesMain          =   function(
     **/
 
     $scope.table.get        =   function( params ){
-        deliveriesResource.get( params,function( data ) {
+        customersResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );
         });
@@ -60,7 +54,7 @@ var deliveriesMain          =   function(
     **/
 
     $scope.table.delete     =   function( params ){
-        deliveriesResource.delete( params, function( data ) {
+        customersResource.delete( params, function( data ) {
             $scope.table.get();
         },function(){
             sharedAlert.warning( '<?php echo _s(
@@ -75,21 +69,21 @@ var deliveriesMain          =   function(
     $scope.table.getPage(0);
 }
 
-deliveriesMain.$inject    =   [
-    '$scope',
-    '$http',
+customersMain.$inject    =   [ 
+    '$scope', 
+    '$http', 
     '$location',
-    'deliveriesTextDomain',
-    'deliveriesTable',
-    'deliveriesResource',
+    'customersTextDomain',  
+    'customersResource', 
+    'customersTable',
     'paginationFactory',
-    'sharedValidate',
+    'sharedValidate', 
     'sharedTable',
     'sharedTableActions',
-    'sharedTableHeaderButtons',
-    'sharedAlert',
-    'sharedEntryActions',
-    'sharedDocumentTitle'
+    'sharedTableHeaderButtons',  
+    'sharedAlert', 
+    'sharedEntryActions', 
+    'sharedDocumentTitle' 
 ];
 
-tendooApp.controller( 'deliveriesMain', deliveriesMain );
+tendooApp.controller( 'customersMain', customersMain );

@@ -31,6 +31,14 @@ Trait expenses_categories
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
             }
 
+            // Search
+            if( $this->get( 'search' ) ) {
+                $this->db->like( 'aauth_users.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_expenses_categories.id', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_expenses_categories.name', $this->get( 'search' ) );
+                $this->db->or_like( 'nexopos_expenses_categories.description', $this->get( 'search' ) );
+            }
+
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_expenses_categories.author' );
             $query      =   $this->db->get();
 

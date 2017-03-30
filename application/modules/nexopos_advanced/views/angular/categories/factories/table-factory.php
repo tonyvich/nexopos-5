@@ -15,10 +15,12 @@ tendooApp.factory( 'categoryTable', function(){
                 namespace   :   'author_name'
             },{
                 text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
-                namespace   :   'date_creation'
+                namespace   :   'date_creation',
+                is          :   'date_span'
             },{
                 text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
-                namespace   :   'date_modification'
+                namespace   :   'date_modification',
+                is          :   'date_span'
             }
         ]
     }

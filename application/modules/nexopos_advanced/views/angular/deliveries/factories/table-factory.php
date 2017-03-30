@@ -6,9 +6,9 @@ tendooApp.factory( 'deliveriesTable', function(){
                 namespace   :   'name'
             },
             {
-                text    :   '<?php echo _s( 'Coût d\'achat', 'nexopos_advanced' );?>',
+                text        :   '<?php echo _s( 'Coût d\'achat', 'nexopos_advanced' );?>',
                 namespace   :   'purchase_cost',
-                is      :   'money'
+                is          :   'money'
             },
             {
                 text    :   '<?php echo _s( 'Coût Automatique', 'nexopos_advanced' );?>',
@@ -16,15 +16,18 @@ tendooApp.factory( 'deliveriesTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Livré le', 'nexopos_advanced' );?>',
-                namespace   :   'shipping_date'
+                namespace   :   'shipping_date',
+                is          :   'date_span'
             },
             {
                 text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
-                namespace   :   'date_creation'
+                namespace   :   'date_creation',
+                is          :   'date_span'
             },
             {
                 text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
-                namespace   :   'date_modification'
+                namespace   :   'date_modification',
+                is          :   'date_span'
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
