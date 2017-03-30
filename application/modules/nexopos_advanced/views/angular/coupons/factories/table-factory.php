@@ -11,7 +11,8 @@ tendooApp.factory( 'couponsTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Montant', 'nexopos_advanced' );?>',
-                namespace   :   'discount_amount'
+                namespace   :   'discount_amount',
+                is          :   'money'
             },
             {
                 text    :   '<?php echo _s( 'Pourcentage', 'nexopos_advanced' );?>',

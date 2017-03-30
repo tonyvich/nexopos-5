@@ -12,7 +12,8 @@ tendooApp.factory( 'storeTable', function(){
                 namespace   :   'image'
             },{
                 text    :   '<?php echo _s( 'Utilisateurs authorisés', 'nexopos_advanced' );?>',
-                namespace   :   'authorized_users'
+                namespace   :   'authorized_users',
+                is          :   'array_of_object'
             },{
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
                 namespace   :   'author_name'
