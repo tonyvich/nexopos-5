@@ -1,39 +1,37 @@
-var taxesMain          =   function( 
-    $scope, 
-    $http, 
+var taxesMain          =   function(
+    $scope,
+    $http,
     $location,
     taxesTextDomain,
-    taxesResource, 
-    taxTable, 
+    taxesResource,
+    taxesTable,
     paginationFactory,
-    sharedValidate, 
-    sharedTable,    
-    sharedTableActions, 
+    sharedValidate,
+    sharedTable,
+    sharedTableActions,
     sharedTableHeaderButtons,
-    sharedAlert, 
-    sharedEntryActions, 
-    sharedDocumentTitle 
+    sharedAlert,
+    sharedEntryActions,
+    sharedDocumentTitle
     ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des taxes', 'nexopos_advanced' );?>' );
-    
-    $scope.textDomain          =   taxesTextDomain;
-    $scope.validate            =   new sharedValidate();
-    $scope.table               =   new sharedTable();
-    $scope.table.columns       =   taxTable.columns;
-    $scope.table.actions       =   sharedTableActions;
-    $scope.table.headerButtons =   new sharedTableHeaderButtons();
-    $scope.table.resource      =   taxesResource; 
 
-        /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    $scope.textDomain               =   taxesTextDomain;
+    $scope.validate                 =   new sharedValidate();
+    $scope.table                    =   new sharedTable();
+    $scope.table.columns            =   taxesTable.columns;
+    $scope.table.entryActions       =   new sharedEntryActions();
+    $scope.table.actions            =   new sharedTableActions();;
+    $scope.table.headerButtons      =   new sharedTableHeaderButtons();
+    $scope.table.resource           =   taxesResource;
+
+    /** Adjust Entry actions **/
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/taxes/edit/';
+            $scope.table.entryActions[ key ].path      =    '/taxes/edit/';
         }
     });
-
-    $scope.table.entryActions   =   new sharedEntryActions();
-    $scope.table.actions   =   new sharedTableActions();
 
 
     /**
@@ -72,21 +70,21 @@ var taxesMain          =   function(
     $scope.table.getPage(0);
 }
 
-taxesMain.$inject    =   [ 
-    '$scope', 
-    '$http', 
+taxesMain.$inject    =   [
+    '$scope',
+    '$http',
     '$location',
     'taxesTextDomain',
-    'taxesResource', 
-    'taxTable',
+    'taxesResource',
+    'taxesTable',
     'paginationFactory',
-    'sharedValidate', 
-    'sharedTable', 
+    'sharedValidate',
+    'sharedTable',
     'sharedTableActions',
     'sharedTableHeaderButtons',
-    'sharedAlert', 
-    'sharedEntryActions', 
-    'sharedDocumentTitle' 
+    'sharedAlert',
+    'sharedEntryActions',
+    'sharedDocumentTitle'
 ];
 
 tendooApp.controller( 'taxesMain', taxesMain );

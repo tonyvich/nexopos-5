@@ -20,7 +20,7 @@ tendooApp.factory( 'providersTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Date de modification', 'nexopos_advanced' );?>',
-                namespace   :   'date_modification'
+                namespace   :   'date_modification',
                 is          :   'date_span'
             },
             {

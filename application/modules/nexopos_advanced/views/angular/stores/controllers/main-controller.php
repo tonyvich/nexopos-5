@@ -1,22 +1,22 @@
-var storesMain          =   function( 
-    $scope, 
-    $http, 
+var storesMain          =   function(
+    $scope,
+    $http,
     $location,
     storesAddTextDomain,
-    storesResource, 
+    storesResource,
     storeTable,
     paginationFactory,
-    sharedValidate, 
-    sharedTable,   
+    sharedValidate,
+    sharedTable,
     sharedTableActions,
-    sharedTableHeaderButtons, 
-    sharedAlert, 
-    sharedEntryActions, 
-    sharedDocumentTitle 
+    sharedTableHeaderButtons,
+    sharedAlert,
+    sharedEntryActions,
+    sharedDocumentTitle
     ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des boutiques', 'nexopos_advanced' );?>' );
-    
+
     $scope.textDomain           =   storesAddTextDomain;
     $scope.validate             =   new sharedValidate();
     $scope.table                =   new sharedTable();
@@ -27,12 +27,12 @@ var storesMain          =   function(
     $scope.table.headerButtons  =   new sharedTableHeaderButtons();
 
     /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/stores/edit/';
+            $scope.table.entryActions[ key ].path      =    '/stores/edit/';
         }
     });
-    
+
     /**
      *  Table Get
      *  @param object query object
