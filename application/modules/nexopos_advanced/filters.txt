@@ -1,0 +1,2 @@
+nexopos_categories_fields :
+regroupe tous les champs du formulaire de création et d'édition des catégories

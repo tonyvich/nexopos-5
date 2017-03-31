@@ -1,13 +1,12 @@
-.when('/pos', {
+.when('/checkout', {
     templateUrl: function( urlattr ) {
-        return 'templates/pos/add';
+        return 'templates/pos/screen';
     },
-    controller: 'posMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
                 files: [
-                    'controllers/pos/add.js',
+                    'controllers/pos/screen.js',
                 ]
             });
         }]

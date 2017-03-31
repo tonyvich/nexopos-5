@@ -1,8 +1,5 @@
 .when('/taxes', {
-    templateUrl: function( urlattr ) {
-        return 'templates/taxes/main';
-    },
-    controller: 'taxesMain',
+    templateUrl: 'templates/taxes/main',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -33,10 +30,7 @@
 **/
 
 .when('/taxes/edit/:id?', {
-    templateUrl: function( urlattr ) {
-        return 'templates/taxes/edit';
-    },
-    controller: 'taxesEdit',
+    templateUrl: 'templates/taxes/edit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -61,14 +55,8 @@
 })
 
 
-.when('/taxes/:page', {
-    templateUrl: function( urlattr ) {
-        if( typeof urlattr.page != 'undefined' ) {
-            return 'templates/taxes/' + urlattr.page;
-        }
-        return 'templates/taxes/main';
-    },
-    controller: 'taxes',
+.when('/taxes/add', {
+    templateUrl: 'templates/taxes/add',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

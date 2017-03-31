@@ -1,39 +1,38 @@
-var unitsMain          =   function( 
-    $scope, 
-    $http, 
-    $location, 
+var unitsMain          =   function(
+    $scope,
+    $http,
+    $location,
     unitsTextDomain,
     unitsResource,
     unitTable,
     paginationFactory,
-    sharedValidate, 
-    sharedTable,   
+    sharedValidate,
+    sharedTable,
     sharedTableActions,
-    sharedTableHeaderButtons, 
-    sharedAlert, 
-    sharedEntryActions, 
-    sharedDocumentTitle 
+    sharedTableHeaderButtons,
+    sharedAlert,
+    sharedEntryActions,
+    sharedDocumentTitle
     ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des unités', 'nexopos_advanced' );?>' );
-    
-    $scope.textDomain          =   unitsTextDomain;
-    $scope.validate            =   new sharedValidate();
-    $scope.table               =   new sharedTable();
-    $scope.table.columns       =   unitTable.columns;
-    $scope.table.actions       =   sharedTableActions;
-    $scope.table.resource      =   unitsResource;
-    $scope.table.headerButtons =   new sharedTableHeaderButtons();
+
+    $scope.textDomain           =   unitsTextDomain;
+    $scope.validate             =   new sharedValidate();
+    $scope.table                =   new sharedTable();
+    $scope.table.columns        =   unitTable.columns;
+    $scope.table.resource       =   unitsResource;
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.entryActions   =   new sharedEntryActions();
+    $scope.table.actions        =   new sharedTableActions();;
+
 
     /** Adjust Entry actions **/
-    _.each( sharedEntryActions, function( value, key ) {
+    _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            sharedEntryActions[ key ].path      =    '/units/edit/';
+            $scope.table.entryActions[ key ].path      =    '/units/edit/';
         }
     });
-
-    $scope.table.entryActions   =   new sharedEntryActions();
-    $scope.table.actions   =   new sharedTableActions();;
 
     /**
      *  Table Get
@@ -71,21 +70,21 @@ var unitsMain          =   function(
     $scope.table.getPage(0);
 }
 
-unitsMain.$inject    =   [ 
-    '$scope', 
-    '$http', 
+unitsMain.$inject    =   [
+    '$scope',
+    '$http',
     '$location',
     'unitsTextDomain',
     'unitsResource',
-    'unitTable', 
+    'unitTable',
     'paginationFactory',
-    'sharedValidate', 
-    'sharedTable',  
+    'sharedValidate',
+    'sharedTable',
     'sharedTableActions',
-    'sharedTableHeaderButtons', 
-    'sharedAlert', 
+    'sharedTableHeaderButtons',
+    'sharedAlert',
     'sharedEntryActions',
-    'sharedDocumentTitle' 
+    'sharedDocumentTitle'
 ];
 
 tendooApp.controller( 'unitsMain', unitsMain );

@@ -228,7 +228,7 @@ class NexoPOS_Admin_Menus
                     array(
                         'title'     =>  __( 'Open POS', 'nexopos' ),
                         'icon'      =>  'fa fa-desktop',
-                        'href'      =>  site_url( [ 'dashboard', 'nexopos' ] )
+                        'href'      =>  site_url( [ 'dashboard', 'nexopos', 'checkout' ] )
                     )
                 ]);
             }

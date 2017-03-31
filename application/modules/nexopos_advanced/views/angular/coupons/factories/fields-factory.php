@@ -52,7 +52,7 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
         }
     },{
         type        :   'datepick',
-        label       :   '<?php echo _s( 'Début des réductions', 'nexopos_advanced' );?>',
+        label       :   '<?php echo _s( 'Début', 'nexopos_advanced' );?>',
         model       :   'start_date',
         desc        :   '<?php echo _s( 'Le coupon commencera à être valide à partir de cette date.', 'nexopos_advanced' );?>',
         useCurrent  :   'minutes',
@@ -63,7 +63,7 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
         }
     },{
         type        :   'datepick',
-        label       :   '<?php echo _s( 'Fin des réductions', 'nexopos_advanced' );?>',
+        label       :   '<?php echo _s( 'Expire', 'nexopos_advanced' );?>',
         model       :   'end_date',
         useCurrent  :   'minutes',
         desc        :   '<?php echo _s( 'Le coupon ne sera plus valide après cette date.', 'nexopos_advanced' );?>',
