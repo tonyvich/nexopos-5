@@ -21,9 +21,9 @@ var customersEdit               =   function(
 
     sharedDocumentTitle.set( '<?php echo _s( 'Modifier un client', 'nexopos_advanced' );?>' );
 
-    $scope.item = new Object;
-
-    $scope.item.variations = new Array;
+    $scope.item                 =   {
+        variations              :   []
+    };
 
     $scope.item.disableVariation    =   true;
     $scope.validate                 =   new sharedValidate();
@@ -32,33 +32,7 @@ var customersEdit               =   function(
     $scope.fields                   =   customersFields;
     $scope.itemAdvancedFields       =   customersAdvancedFields;
 
-    // Get Resource when loading
-    $scope.submitDisabled   =   true;
-    customersResource.get({
-        id  :  $route.current.params.id // make sure route is added as dependency
-    },function( entry ){
-        $scope.submitDisabled   =   false;
-
-        console.log(entry.address[0]);
-        var billing_data = new Array;
-        var billRegEx = new RegExp("billing");
-        _.each(entry.address,function(value,key){
-            if(billRegEx.test(value.key)){
-                billing_data[value.key] = value.value;
-            }
-        });
-        $scope.item.variations.tabs = [];
-        $scope.item.variations.billing.namespace = "billing";
-
-        _.each(billing_data, function(value,key){
-            console.log(key);
-            $scope.variations.tabs.models[key] = value;
-        });
-        console.log($scope.item.variations.tabs);
-        _.each(entry.customer[0], function(value, key){
-            $scope.item[key] = value;
-        });
-    })
+    
 
     // Setting customer group options
     customersGroupsResource.get(
@@ -305,8 +279,9 @@ var customersEdit               =   function(
                 tab.models      =   {};
             });
         });
-
     });
+
+    console.log($scope.item.variations);
 
     /**
      *  Get Class
@@ -361,7 +336,6 @@ var customersEdit               =   function(
     **/
 
     $scope.submitItem               =   function(){
-        console.log($scope.item);
         // validating
         var global_validation       =   $scope.validate.blurAll();
         var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
@@ -394,7 +368,6 @@ var customersEdit               =   function(
             // When submiting item
             var itemToSubmit            =   sharedFilterItem( $scope.item, $scope.fields, customersAdvancedFields );
 
-            console.log( itemToSubmit );
         });
     }
 
@@ -484,6 +457,35 @@ var customersEdit               =   function(
 
         $scope.item.variations[variationIndex].tabs[ tabIndex ].active     =   true;
     }
+
+    // Get Resource when loading
+    $scope.submitDisabled   =   true;
+    customersResource.get({
+        id  :  $route.current.params.id // make sure route is added as dependency
+    },function( entry ){
+        $scope.submitDisabled   =   false;
+ 
+        _.each(entry.customer[0], function(value, key){
+            $scope.item[key] = value;
+        });
+       
+        var billing_data = new Array;
+        var billRegEx = new RegExp("billing");
+        _.each(entry.address,function(value,key){
+            if(billRegEx.test(value.key)){
+                billing_data[value.key] = value.value;
+            }
+        });
+
+        _.each(billing_data, function(value,key){
+            console.log(key);
+            $scope.variations.tabs.models[key] = value;
+        });
+        
+        _.each(entry.customer[0], function(value, key){
+            $scope.item[key] = value;
+        });
+    })
 
 };
 
