@@ -1,7 +1,4 @@
 var posScreenCTRL           =   function( $scope, $timeout ) {
-    $scope.cartItems        =   [];
-    $scope.documentHeight   =   angular.element( document ).height();
-    $scope.pageHeight       =   angular.element( '.content-wrapper' ).height() - 30;
     $scope.get              =   function( type, namespace ) {
         if( type == 'height' ) {
             if( namespace == 'nexopos-cart-body' ) {
@@ -26,7 +23,29 @@ var posScreenCTRL           =   function( $scope, $timeout ) {
 
     $scope.$watch( 'documentHeight', function(){
         console.log( $scope.pageHeight );
-    })
+    });
+
+    $scope.cartItems        =   [];
+    $scope.documentHeight   =   angular.element( document ).height();
+    $scope.pageHeight       =   angular.element( '.content-wrapper' ).height() - 30;
+
+    $scope.scrollTableContentConfig     =   {
+        autoHideScrollbar: false,
+    	theme: 'minimal-dark',
+    	advanced:{
+    		updateOnContentResize: true
+    	},
+        setHeight: $scope.get( 'height', 'nexopos-cart-table-content' ),
+        scrollInertia: 0
+    }
+
+    $scope.tableWidth       =   {
+        itemName            :   '40%',
+        itemPrice           :   '15%',
+        itemDiscount        :   '15%',
+        itemQte             :   '15%',
+        itemTotal           :   '15%'
+    }
 }
 
 posScreenCTRL.$inject   =   [ '$scope', '$timeout' ];

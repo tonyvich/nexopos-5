@@ -12,23 +12,51 @@
                 <table class="table table-bordered nexopos-cart-table-header" ng-style="{ border : 'solid 0px transparent'}">
                     <thead>
                         <tr class="active">
-                            <td class="text-center"><?php echo __( 'Produit', 'nexopos_advanced' );?></td>
-                            <td class="text-center"><?php echo __( 'Prix Unitaire', 'nexopos_advanced' );?></td>
-                            <td class="text-center"><?php echo __( 'Remise', 'nexopos_advanced' );?></td>
-                            <td class="text-center"><?php echo __( 'Quantité', 'nexopos_advanced' );?></td>
-                            <td class="text-center"><?php echo __( 'Prix Total', 'nexopos_advanced' );?></td>
+                            <td ng-style="{ width : tableWidth[ 'itemName' ] }" class="text-center"><?php echo __( 'Produit', 'nexopos_advanced' );?></td>
+                            <td ng-style="{ width : tableWidth[ 'itemPrice' ] }" class="text-center"><?php echo __( 'Prix', 'nexopos_advanced' );?></td>
+                            <td ng-style="{ width : tableWidth[ 'itemDiscount' ] }" class="text-center"><?php echo __( 'Remise', 'nexopos_advanced' );?></td>
+                            <td ng-style="{ width : tableWidth[ 'itemQte' ] }" class="text-center"><?php echo __( 'Quantité', 'nexopos_advanced' );?></td>
+                            <td ng-style="{ width : tableWidth[ 'itemTotal' ] }" class="text-left"><?php echo __( 'Total', 'nexopos_advanced' );?></td>
                         </tr>
                     </thead>
                 </table>
-                <div class="nexopos-cart-table-content" ng-style="{ height : get( 'height', 'nexopos-cart-table-content' ), overflowY : 'scroll' }">
-                    <table class="table" ng-style="{ border : 'solid 0px transparent'}">
+                <div
+                    class="nexopos-cart-table-content"
+                    ng-style="{ height : get( 'height', 'nexopos-cart-table-content' ) }"
+                    ng-scrollbars ng-scrollbars-config="scrollTableContentConfig"
+                    >
+                    <table class="table" ng-style="{ border : 'solid 0px transparent', marginBottom : 0 }">
                         <tbody>
                             <tr ng-repeat="cartItem in cartItems">
-                                <td><?php echo __( 'Something', 'nexopos_advanced' );?></td>
-                                <td><?php echo __( 'Something', 'nexopos_advanced' );?></td>
-                                <td><?php echo __( 'Something', 'nexopos_advanced' );?></td>
-                                <td><?php echo __( 'Something', 'nexopos_advanced' );?></td>
-                                <td><?php echo __( 'Something', 'nexopos_advanced' );?></td>
+                                <td ng-style="{ width : tableWidth[ 'itemName' ] }">
+                                    <a class="btn btn-sm btn-default"><i class="fa fa-edit"></i></a>
+                                    <?php echo __( 'Something', 'nexopos_advanced' );?>
+                                </td>
+                                <td
+                                    class="text-center"
+                                    ng-style="{ width : tableWidth[ 'itemPrice' ], lineHeight : '30px' }">
+                                    10.000
+                                </td>
+
+                                <td
+                                    class="text-center"
+                                    ng-style="{ width : tableWidth[ 'itemDiscount' ], lineHeight : '30px' }">
+                                    10.000
+                                </td>
+
+                                <td
+                                    class="text-center"
+                                    ng-style="{ width : tableWidth[ 'itemQte' ], lineHeight : '30px' }">
+                                    <div class="input-group input-group-sm">
+                                      <input type="text" class="form-control">
+                                    </div>
+                                </td>
+
+                                <td
+                                    class="text-left"
+                                    ng-style="{ width : tableWidth[ 'itemTotal' ], lineHeight : '30px' }">
+                                    10.000
+                                </td>
                             </tr>
                             <tr ng-show="cartItems.length == 0 || isUndefined( cartItems )">
                                 <td colspan="5" class="text-center"><?php echo __( 'Aucun élément dans le panier. Veuillez ajouter des produits.', 'nexopos_advanced' );?></td>
@@ -38,13 +66,13 @@
                 </div>
                 <table class="table table-bordered nexopos-cart-table-details" ng-style="{ background : '#F5F5F5' }">
                     <tr>
-                        <td width="130" class="text-right"><strong><?php echo __( 'Sous Total', 'nexopos_advanced' );?></strong></td>
+                        <td width="130" class="text-right"><strong><?php echo __( 'TVA', 'nexopos_advanced' );?></strong></td>
                         <td></td>
-                        <td width="130" class="text-right"><strong><?php echo __( 'Remise', 'nexopos_advanced' );?></strong></td>
+                        <td width="130" class="text-right"><strong><?php echo __( 'Sous Total', 'nexopos_advanced' );?></strong></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td width="130" class="text-right"><strong><?php echo __( 'TVA', 'nexopos_advanced' );?></strong></td>
+                        <td width="130" class="text-right"><strong><?php echo __( 'Remise', 'nexopos_advanced' );?></strong></td>
                         <td></td>
                         <td width="130" class="text-right"><strong><?php echo __( 'Total', 'nexopos_advanced' );?></strong></td>
                         <td></td>
@@ -117,6 +145,9 @@
 
 .nexopos-cart-table-content {
     border-bottom: 1px solid #e8e7e7;
+}
+
+.nexopos-cart-body {
     border-top: 1px solid #e8e7e7;
 }
 
@@ -138,5 +169,11 @@
     width: 100%;
     box-shadow: 0 1.5px 1.5px rgba(0,0,0,0.1);
     overflow: hidden;
+}
+
+.btn {
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: 0px 1px 0px 0px #c1c0c0;
 }
 </style>
