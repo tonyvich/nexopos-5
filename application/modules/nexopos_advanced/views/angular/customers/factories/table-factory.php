@@ -1,5 +1,5 @@
-tendooApp.factory( 'customersTable', function(){
-    return {
+tendooApp.factory( 'customersTable', [ 'sharedOptions', function( sharedOptions ){
+    return {    
         columns     :   [
             {
                 text    :   '<?php echo _s( 'Nom', 'nexopos_advanced' );?>',
@@ -15,7 +15,9 @@ tendooApp.factory( 'customersTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Sexe', 'nexopos_advanced' );?>',
-                namespace   :   'sex'
+                namespace   :   'sex',
+                is          :   'object',
+                object      :   sharedOptions.maleOrFemale
             },
             {
                 text    :   '<?php echo _s( 'Téléphone', 'nexopos_advanced' );?>',
@@ -41,4 +43,4 @@ tendooApp.factory( 'customersTable', function(){
             }
         ]
     }
-});
+}]);

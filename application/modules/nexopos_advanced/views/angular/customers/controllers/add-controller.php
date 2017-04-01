@@ -364,8 +364,6 @@ var customersAdd               =   function(
     **/
 
     $scope.submitItem               =   function(){
-        console.log($scope.item);
-        return;
         // validating
         var global_validation       =   $scope.validate.blurAll();
         var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
@@ -386,7 +384,7 @@ var customersAdd               =   function(
         customersResource.save(
             $scope.finalItem,
             function(){
-                sharedAlert.warning( '<?php echo _s( 'Enregistrement effectué', 'nexopos_advanced' );?>' );
+                $location.url( '/customers?notice=done' );
             },function( returned ){
 
                 $scope.submitDisabled   =   false;

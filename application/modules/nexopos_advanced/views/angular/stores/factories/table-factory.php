@@ -1,4 +1,4 @@
-tendooApp.factory( 'storeTable', function(){
+tendooApp.factory( 'storeTable', [ 'sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -6,7 +6,9 @@ tendooApp.factory( 'storeTable', function(){
                 namespace   :   'name'
             },{
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
-                namespace   :   'status'
+                namespace   :   'status',
+                is          :   'object',
+                object      :   sharedOptions.status
             },{
                 text    :   '<?php echo _s( 'Image', 'nexopos_advanced' );?>',
                 namespace   :   'image'
@@ -28,4 +30,4 @@ tendooApp.factory( 'storeTable', function(){
             }
         ]
     }
-});
+}]);

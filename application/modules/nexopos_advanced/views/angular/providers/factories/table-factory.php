@@ -1,4 +1,4 @@
-tendooApp.factory( 'providersTable', function(){
+tendooApp.factory( 'providersTable', ['sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -29,4 +29,4 @@ tendooApp.factory( 'providersTable', function(){
             }
         ]
     }
-});
+}]);

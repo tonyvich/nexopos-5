@@ -1,4 +1,4 @@
-tendooApp.factory( 'customersGroupsTable', function(){
+tendooApp.factory( 'customersGroupsTable', ['sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -7,7 +7,9 @@ tendooApp.factory( 'customersGroupsTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Réductions', 'nexopos_advanced' );?>',
-                namespace   :   'enable_discount'
+                namespace   :   'enable_discount',
+                is          :   'object',
+                object      :   sharedOptions.yesOrNo
             },
             {
                 text    :   '<?php echo _s( 'Début des réductions', 'nexopos_advanced' );?>',
@@ -21,7 +23,9 @@ tendooApp.factory( 'customersGroupsTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Type de réductions', 'nexopos_advanced' );?>',
-                namespace   :   'discount_type'
+                namespace   :   'discount_type',
+                is          :   'object',
+                object      :   sharedOptions.percentOrFlat
             },
             {
                 text    :   '<?php echo _s( 'Valeur de la réduction', 'nexopos_advanced' );?>',
@@ -43,4 +47,4 @@ tendooApp.factory( 'customersGroupsTable', function(){
             }
         ]
     }
-});
+}]);

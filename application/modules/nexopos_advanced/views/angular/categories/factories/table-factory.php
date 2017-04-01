@@ -1,4 +1,4 @@
-tendooApp.factory( 'categoryTable', function(){
+tendooApp.factory( 'categoryTable', ['sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -24,4 +24,4 @@ tendooApp.factory( 'categoryTable', function(){
             }
         ]
     }
-});
+}]);

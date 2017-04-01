@@ -1,4 +1,4 @@
-tendooApp.factory( 'departmentsTable', function(){
+tendooApp.factory( 'departmentsTable',[ 'sharedOptions', function(){
     return {
         columns     :   [
             {
@@ -21,4 +21,4 @@ tendooApp.factory( 'departmentsTable', function(){
             }
         ]
     }
-});
+}]);

@@ -42,6 +42,24 @@ tendooApp.factory( 'sharedTable', [
         }
 
         /**
+         * Options value to human readable
+        **/
+
+        this.objectToString = function ( data, options ){
+            var stringToReturn = '';
+            if ( typeof data == "undefined" ){
+                return "Non défini";
+            } else {
+                _.each( options, function( entry ){
+                    if (entry.value == data){
+                        stringToReturn = entry.label
+                    }
+                });            
+            }
+            return stringToReturn;
+        }
+
+        /**
          *  Cancel Search
          *  @param void
          *  @return void
@@ -74,13 +92,15 @@ tendooApp.factory( 'sharedTable', [
          *  @return string
         **/
 
-        this.filter             =   function( value, filter ) {
+        this.filter             =   function( value, filter, col ) {
             if( filter == 'array_of_object' ) {
                 return this.arrayOfObjectToString( value )
             } else if( filter == 'money' ) {
                 return numeral( value ).format( sharedCurrency.format() );
             } else if( filter == 'date_span' ) {
                 return sharedMoment.timeFromNow( value );
+            } else if( filter == 'object'){
+                return this.objectToString( value, col.object );
             }
             return value;
         }

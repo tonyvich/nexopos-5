@@ -61,13 +61,11 @@
                             <td width="20" ng-click="table.toggleThis( entry )">
                                 <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
                             </td>
-
                             <td ng-repeat="col in table.columns" style="line-height: 30px;" title="{{ entry[ col.namespace ] }}">
                                 {{
-                                    table.filter( entry[ col.namespace ], col.is )
+                                    table.filter( entry[ col.namespace ], col.is, col)
                                 }}
                             </td>
-
                             <td width="50" ng-hide="table.isDisabled( 'entry-actions' )">
                                 <!-- Single button -->
                                 <div class="btn-group">
