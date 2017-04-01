@@ -1,4 +1,4 @@
-tendooApp.factory( 'expensesTable', function(){
+tendooApp.factory( 'expensesTable', [ 'sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -25,4 +25,4 @@ tendooApp.factory( 'expensesTable', function(){
             }
         ]
     }
-});
+}]);

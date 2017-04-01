@@ -1,4 +1,4 @@
-tendooApp.factory( 'deliveriesTable', function(){
+tendooApp.factory( 'deliveriesTable', ['sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -12,7 +12,9 @@ tendooApp.factory( 'deliveriesTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Coût Automatique', 'nexopos_advanced' );?>',
-                namespace   :   'auto_cost'
+                namespace   :   'auto_cost',
+                is          :   'object',
+                object      :   sharedOptions.yesOrNo
             },
             {
                 text    :   '<?php echo _s( 'Livré le', 'nexopos_advanced' );?>',
@@ -35,4 +37,4 @@ tendooApp.factory( 'deliveriesTable', function(){
             }
         ]
     }
-});
+}]);

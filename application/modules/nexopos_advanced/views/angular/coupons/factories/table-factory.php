@@ -1,4 +1,4 @@
-tendooApp.factory( 'couponsTable', function(){
+tendooApp.factory( 'couponsTable', [ 'sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -7,7 +7,9 @@ tendooApp.factory( 'couponsTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Type', 'nexopos_advanced' );?>',
-                namespace   :   'discount_type'
+                namespace   :   'discount_type',
+                is          :   'object',
+                object      :   sharedOptions.percentOrFlat
             },
             {
                 text    :   '<?php echo _s( 'Montant', 'nexopos_advanced' );?>',
@@ -48,4 +50,4 @@ tendooApp.factory( 'couponsTable', function(){
             }
         ]
     }
-});
+}]);

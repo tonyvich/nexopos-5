@@ -1,4 +1,4 @@
-tendooApp.factory( 'unitTable', function(){
+tendooApp.factory( 'unitTable', ['sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -21,4 +21,4 @@ tendooApp.factory( 'unitTable', function(){
             }
         ]
     }
-});
+}]);

@@ -1,4 +1,4 @@
-tendooApp.factory( 'registerTable', function(){
+tendooApp.factory( 'registerTable', ['sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -10,10 +10,9 @@ tendooApp.factory( 'registerTable', function(){
                 is          :   'array_of_object'
             },{
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
-                namespace   :   'status'
-            },{
-                text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
-                namespace   :   'author_name'
+                namespace   :   'status',
+                is          :   'object',
+                object      :   sharedOptions.status
             },{
                 text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
@@ -22,7 +21,10 @@ tendooApp.factory( 'registerTable', function(){
                 text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
                 namespace   :   'date_modification',
                 is          :   'date_span'
+            },{
+                text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
+                namespace   :   'author_name'
             }
         ]
     }
-});
+}]);

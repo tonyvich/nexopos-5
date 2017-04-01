@@ -1,4 +1,4 @@
-tendooApp.factory( 'taxesTable', function(){
+tendooApp.factory( 'taxesTable', ['sharedOptions', function( sharedOptions ){
     return {
         columns     :   [
             {
@@ -7,7 +7,9 @@ tendooApp.factory( 'taxesTable', function(){
             },
             {
                 text    :   '<?php echo _s( 'Type', 'nexopos_advanced' );?>',
-                namespace   :   'type'
+                namespace   :   'type',
+                is          :   'object',
+                object      :   sharedOptions.percentOrFlat
             },
             {
                 text    :   '<?php echo _s( 'Valeur', 'nexopos_advanced' );?>',
@@ -29,4 +31,4 @@ tendooApp.factory( 'taxesTable', function(){
             }
         ]
     }
-});
+}]);
