@@ -29,71 +29,71 @@
                 </div>
             </div>
         </div>
-        <div class="box-body table-responsive no-padding">
-            <table class="table table-bordered" style="margin-bottom:-1px;">
-                <thead>
-                    <tr class="active">
-                        <td ng-click="table.toggleAllEntries( table.entries, table.headCheckbox )">
-                            <input type="checkbox" class="minimal" ng-model="table.headCheckbox">
-                        </td>
-                        <!-- Expect col to be an object with following keys : text, namespace, order (for reorder) -->
-                        <td ng-repeat="col in table.columns" width="{{ col.width }}" ng-click="table.order( col.namespace )">
+        <div class="box-body no-padding">
+            <div class="table-responsive">
+                <table class="table table-bordered" style="margin-bottom:-1px;">
+                    <thead>
+                        <tr class="active">
+                            <td ng-click="table.toggleAllEntries( table.entries, table.headCheckbox )">
+                                <input type="checkbox" class="minimal" ng-model="table.headCheckbox">
+                            </td>
+                            <!-- Expect col to be an object with following keys : text, namespace, order (for reorder) -->
+                            <td ng-repeat="col in table.columns" width="{{ col.width }}" ng-click="table.order( col.namespace )">
 
-                            <strong>{{ col.text }}</strong>
+                                <strong>{{ col.text }}</strong>
 
-                            <span
-                                ng-show="table.order_type == 'desc' && col.namespace == table.order_by" class="fa fa-long-arrow-up pull-right">
-                            </span>
+                                <span
+                                    ng-show="table.order_type == 'desc' && col.namespace == table.order_by" class="fa fa-long-arrow-up pull-right">
+                                </span>
 
-                            <span
-                                ng-show="table.order_type == 'asc' && col.namespace == table.order_by" class="fa fa-long-arrow-down pull-right">
-                            </span>
+                                <span
+                                    ng-show="table.order_type == 'asc' && col.namespace == table.order_by" class="fa fa-long-arrow-down pull-right">
+                                </span>
 
-                        </td>
+                            </td>
 
-                        <td ng-hide="table.isDisabled( 'entry-actions' )"><strong><?php echo __( 'Actions', 'nexopos_advanced' );?></strong></td>
-                    </tr>
-                </thead>
-                <tbody>
+                            <td ng-hide="table.isDisabled( 'entry-actions' )"><strong><?php echo __( 'Actions', 'nexopos_advanced' );?></strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    <tr ng-repeat="entry in table.entries" ng-class="{ 'success' : entry.checked }" ng-click="entry.checked = !entry.checked">
-                        <td width="20" ng-click="table.toggleThis( entry )">
-                            <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
-                        </td>
+                        <tr ng-repeat="entry in table.entries" ng-class="{ 'success' : entry.checked }" ng-click="entry.checked = !entry.checked">
+                            <td width="20" ng-click="table.toggleThis( entry )">
+                                <input type="checkbox" ng-model="entry.checked" ng-checked="entry.checked"  value="{{ entry.id }}">
+                            </td>
+                            <td ng-repeat="col in table.columns" style="line-height: 30px;" title="{{ entry[ col.namespace ] }}">
+                                {{
+                                    table.filter( entry[ col.namespace ], col.is, col)
+                                }}
+                            </td>
+                            <td width="50" ng-hide="table.isDisabled( 'entry-actions' )">
+                                <!-- Single button -->
+                                <div class="btn-group">
+                                  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu right-align">
+                                    <li ng-repeat="action in table.entryActions">
+                                        <a
+                                            ng-if="action.namespace != false"
+                                            href="javascript:void(0);"
+                                            ng-click="table.submitSingleAction( entry, action )"
+                                        >{{ action.name }}</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                            </td>
+                        </tr>
 
-                        <td ng-repeat="col in table.columns" style="line-height: 30px;" title="{{ entry[ col.namespace ] }}">
-                            {{
-                                table.filter( entry[ col.namespace ], col.is, col)
-                            }}
-                        </td>
-
-                        <td width="50" ng-hide="table.isDisabled( 'entry-actions' )">
-                            <!-- Single button -->
-                            <div class="btn-group">
-                              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Action <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu right-align">
-                                <li ng-repeat="action in table.entryActions">
-                                    <a
-                                        ng-if="action.namespace != false"
-                                        href="javascript:void(0);"
-                                        ng-click="table.submitSingleAction( entry, action )"
-                                    >{{ action.name }}</a>
-                                </li>
-                              </ul>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr ng-show="table.entries.length == 0">
-                        <td class="text-center" colspan="{{
-                            table.columns.length + 2 +
-                            ( table.isDisabled( 'entry-actions' ) ? 1 : 0 )
-                        }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tr ng-show="table.entries.length == 0">
+                            <td class="text-center" colspan="{{
+                                table.columns.length + 2 +
+                                ( table.isDisabled( 'entry-actions' ) ? 1 : 0 )
+                            }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="box-footer">
             <div class="row">
