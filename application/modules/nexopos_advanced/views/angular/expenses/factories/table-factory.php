@@ -10,18 +10,22 @@ tendooApp.factory( 'expensesTable', [ 'sharedOptions', function( sharedOptions )
             },{
                 text        :   '<?php echo _s( 'Montant', 'nexopos_advanced' );?>',
                 namespace   :   'amount',
-                is          :   'money'
+                is          :   'money',
+                width       :   180
             },{
                 text        :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
-                is          :   'date_span'
+                is          :   'date_span',
+                width       :   170
             },{
                 text        :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
                 namespace   :   'date_modification',
-                is          :   'date_span'
+                is          :   'date_span',
+                width       :   170
             },{
                 text        :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
-                namespace   :   'author_name'
+                namespace   :   'author_name',
+                width       :   80
             }
         ]
     }

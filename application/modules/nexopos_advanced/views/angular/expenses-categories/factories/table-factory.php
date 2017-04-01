@@ -8,16 +8,19 @@ tendooApp.factory( 'expensesCategoriesTable', ['sharedOptions', function( shared
             {
                 text        :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
-                is          :   'date_span'  
+                is          :   'date_span',
+                width       :   190
             },
             {
                 text        :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
                 namespace   :   'date_modification',
-                is          :   'date_span'
+                is          :   'date_span',
+                width       :   190
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
-                namespace   :   'author_name'
+                namespace   :   'author_name',
+                width       :   100
             }
         ]
     }

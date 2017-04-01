@@ -16,16 +16,19 @@ tendooApp.factory( 'providersTable', ['sharedOptions', function( sharedOptions )
             {
                 text    :   '<?php echo _s( 'Date de creation', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
-                is          :   'date_span'
+                is          :   'date_span',
+                width       :   170
             },
             {
                 text    :   '<?php echo _s( 'Date de modification', 'nexopos_advanced' );?>',
                 namespace   :   'date_modification',
-                is          :   'date_span'
+                is          :   'date_span',
+                width       :   170
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
-                namespace   :   'author_name'
+                namespace   :   'author_name',
+                width       :   80
             }
         ]
     }
