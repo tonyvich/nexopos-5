@@ -1,5 +1,5 @@
-tendooApp.factory( 'sharedTableHeaderButtons', function(){
-    return function() {
+tendooApp.factory( 'sharedTableHeaderButtons',['sharedDataToCsv', function( sharedDataToCsv ){
+    return function( resource ) {
         return [{
             text        :   '<?php echo _s( 'CSV', 'nexopos_advanced' );?>',
             show        :   {
@@ -7,7 +7,10 @@ tendooApp.factory( 'sharedTableHeaderButtons', function(){
                 multiSelect     :   true, // if the table has more that one select, the button will appear
                 noSelect        :   true // if the table has 0 entry selected, the button will appear
             },
-            icon        :   'fa fa-file-o'
+            icon        :   'fa fa-file-o',
+            toDo        :   function() {
+                sharedDataToCsv.export( resource );
+            }
         },{
             text        :   '<?php echo _s( 'PDF', 'nexopos_advanced' );?>',
             show        :   {
@@ -15,7 +18,10 @@ tendooApp.factory( 'sharedTableHeaderButtons', function(){
                 multiSelect     :   true, // if the table has more that one select, the button will appear
                 noSelect        :   true // if the table has 0 entry selected, the button will appear
             },
-            icon        :   'fa fa-file-text'
+            icon        :   'fa fa-file-text',
+            toDo        :   function() {
+                alert( 'PDF export Function will be available ASAP' );
+            }
         }]
     }
-});
+}]);

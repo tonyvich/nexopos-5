@@ -23,7 +23,7 @@
                         ( button.show.multiSelect && table.getChecked().length > 1 ) ||
                         ( button.show.noSelect && table.getChecked().length == 0 )"
                         ng-repeat="button in table.headerButtons" class="btn-group" role="group">
-                            <button type="button" class="btn btn-default"><i class="{{ button.icon }}"></i> {{ button.text }}</button>
+                            <button type="button" class="btn btn-default" ng-click=" button.toDo() "><i class="{{ button.icon }}"></i> {{ button.text }}</button>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,9 @@ tendooApp.factory( 'customersTable', [ 'sharedOptions', function( sharedOptions 
             },
             {
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
-                namespace   :   'status'
+                namespace   :   'status',
+                is          :   'object',
+                object      :   sharedOptions.status
             },
             {
                 text    :   '<?php echo _s( 'Sexe', 'nexopos_advanced' );?>',
@@ -30,16 +32,19 @@ tendooApp.factory( 'customersTable', [ 'sharedOptions', function( sharedOptions 
             {
                 text    :   '<?php echo _s( 'Date de création', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
-                is          :   'date_span'
+                is          :   'date_span',
+                width       :   160
             },
             {
                 text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
                 namespace   :   'date_modification',
-                is          :   'date_span'
+                is          :   'date_span',
+                width       :   160
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',
-                namespace   :   'author_name'
+                namespace   :   'author_name',
+                width       :   80
             }
         ]
     }
