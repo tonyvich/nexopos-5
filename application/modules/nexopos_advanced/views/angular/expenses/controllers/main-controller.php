@@ -22,7 +22,7 @@ var expensesMain          =   function(
     $scope.table.columns        =   expensesTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
-    $scope.table.headerButtons  =   new sharedTableHeaderButtons();
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons( expensesResource );
     $scope.table.resource       =   expensesResource;
 
     /** Adjust Entry actions **/
