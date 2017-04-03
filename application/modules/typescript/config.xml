@@ -1,0 +1,9 @@
+<application>
+    <name>TypeScript</name>
+    <namespace>typescript</namespace>
+    <version>1.0</version>
+    <author>Blair Jersyer</author>
+    <description>TypeScript</description>
+    <language>/language</language>
+    <main>typescript.php</main>
+</application>
