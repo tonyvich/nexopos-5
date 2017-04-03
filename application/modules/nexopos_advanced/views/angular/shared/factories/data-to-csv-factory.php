@@ -1,26 +1,37 @@
 tendooApp.factory('sharedDataToCsv', function(){
         return {
-            export:function( resource ){
+            export:function( resource, columns ){
                 
-                resource.get( function( data ){
-                    console.log( data );    
+                    resource.get( function( data ){
+                    
                     var infos = "data:text/csv;charset=latin-1,\ufeff";
                     data.entries = angular.toJson( data.entries );
                     data.entries = JSON.parse ( data.entries );
+                    
+                    // Setting columns
                     var row = "";
-                    _.each( data.entries[0], function (value, key){
-                        row += '"' + key + '",';
+                    var col_array = new Array // For storing namespace columns
+                    
+                    _.each( columns, function ( value ){
+                        row += '"' + value.text + '",';
+                        col_array.push( value.namespace);
                     });
                     infos += row + '\r\n';
+                    
                     for (var i = 0; i < data.entries.length; i++) {
                         var row = "";
-                        for (var index in data.entries[i]) {
-                            row += '"' + data.entries[i][index] + '",';
-                        }
+                        _.each( data.entries[i], function ( value, key ){
+                            var keyers = "";
+                            keyers += key;
+                        
+                            if ( col_array.indexOf( keyers ) != -1 ){
+                                row += '"' + value + '",'; 
+                            }
+                        });
                         row.slice(0, row.length - 1);
                         infos += row + '\r\n';
                     }
-                    
+
                     var encodedData = encodeURI( infos );
                     var body = angular.element(document.getElementsByTagName('body'))[0];
                     angular.element(body).append("<a id='ExportToCSV'></a>");

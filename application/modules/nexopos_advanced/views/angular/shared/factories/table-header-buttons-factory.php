@@ -1,5 +1,5 @@
 tendooApp.factory( 'sharedTableHeaderButtons',['sharedDataToCsv', function( sharedDataToCsv ){
-    return function( resource ) {
+    return function( resource, columns ) {
         return [{
             text        :   '<?php echo _s( 'CSV', 'nexopos_advanced' );?>',
             show        :   {
@@ -9,7 +9,7 @@ tendooApp.factory( 'sharedTableHeaderButtons',['sharedDataToCsv', function( shar
             },
             icon        :   'fa fa-file-o',
             toDo        :   function() {
-                sharedDataToCsv.export( resource );
+                sharedDataToCsv.export( resource, columns );
             }
         },{
             text        :   '<?php echo _s( 'PDF', 'nexopos_advanced' );?>',
