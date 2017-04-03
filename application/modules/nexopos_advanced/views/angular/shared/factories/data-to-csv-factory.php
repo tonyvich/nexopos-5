@@ -3,10 +3,15 @@ tendooApp.factory('sharedDataToCsv', function(){
             export:function( resource ){
                 
                 resource.get( function( data ){
+                    console.log( data );    
                     var infos = "data:text/csv;charset=latin-1,\ufeff";
                     data.entries = angular.toJson( data.entries );
                     data.entries = JSON.parse ( data.entries );
-                    
+                    var row = "";
+                    _.each( data.entries[0], function (value, key){
+                        row += '"' + key + '",';
+                    });
+                    infos += row + '\r\n';
                     for (var i = 0; i < data.entries.length; i++) {
                         var row = "";
                         for (var index in data.entries[i]) {
@@ -15,7 +20,7 @@ tendooApp.factory('sharedDataToCsv', function(){
                         row.slice(0, row.length - 1);
                         infos += row + '\r\n';
                     }
-
+                    
                     var encodedData = encodeURI( infos );
                     var body = angular.element(document.getElementsByTagName('body'))[0];
                     angular.element(body).append("<a id='ExportToCSV'></a>");
