@@ -1,4 +1,4 @@
-var data: string[]  =   [ 'Bonjour', 'Bonsoir' ];
+peScrvar data: string[]  =   [ 'Bonjour', 'Bonsoir' ];
 console.log( data );
 
 var filter  =   function( value: string ): string {
@@ -16,5 +16,5 @@ var noah: human = {
     name        :   'Noah',
     move        :   function( y:number, x:number ) {
 
-    }    
+    }
 }

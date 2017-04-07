@@ -1,16 +1,18 @@
 <?php global $Options;?>
 tendooApp.factory( 'sharedTable', [
-    'sharedAlert',
     '$location',
+    '$http',
+    'sharedAlert',
     'sharedCurrency',
     'sharedMoment',
     function(
-        sharedAlert,
         $location,
+        $http,
+        sharedAlert,
         sharedCurrency,
         sharedMoment
     ){
-    return function(){
+    return function( name = '<?php echo _s( 'Tableau sans nom', 'nexopos_advanced' );?>' ){
 
         var $this               =   this;
         this.columns            =   [];
@@ -21,6 +23,9 @@ tendooApp.factory( 'sharedTable', [
 
         // Hide Header buttons
         this.hideHeaderButtons  =   false;
+
+        // table name
+        this.name               =   name;
 
         /**
          *  Array of Object To String
@@ -54,7 +59,7 @@ tendooApp.factory( 'sharedTable', [
                     if (entry.value == data){
                         stringToReturn = entry.label
                     }
-                });            
+                });
             }
             return stringToReturn;
         }
@@ -205,6 +210,17 @@ tendooApp.factory( 'sharedTable', [
             _.each( entries, function( entry ) {
                 entry.checked  =   headCheckbox;
             });
+        }
+
+        /**
+         *  Trigger Button Export
+         *  @return void
+        **/
+
+        this.triggerExport              =   ()  =>  {
+            if( typeof this.selectedExportOption != 'undefined' ) {
+                this.headerButtons[ this.selectedExportOption ].callback( this );
+            }
         }
 
         /**

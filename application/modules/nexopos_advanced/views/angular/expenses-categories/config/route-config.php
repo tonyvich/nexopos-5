@@ -21,7 +21,8 @@
                     'shared_factories/table-actions.js',
                     'shared_factories/alert.js',
                     'shared_factories/entry-actions.js',
-                    'shared_factories/document-title.js'
+                    'shared_factories/document-title.js',
+                    'shared_factories/table-header-buttons.js'
                 ]
             });
         }]
@@ -90,7 +91,7 @@
                     'shared_factories/alert.js',
                     'shared_factories/document-title.js',
                     'shared_factories/moment.js',
-                    'shared_factories/field-editor.js' 
+                    'shared_factories/field-editor.js'
                 ]
             });
         }]

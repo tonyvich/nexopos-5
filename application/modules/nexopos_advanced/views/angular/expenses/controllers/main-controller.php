@@ -1,24 +1,24 @@
-var expensesMain          =   function( 
-    $scope, 
+var expensesMain          =   function(
+    $scope,
     $http,
-    $location, 
-    expensesTextDomain, 
+    $location,
+    expensesTextDomain,
     expensesResource,
-    expensesTable, 
+    expensesTable,
     paginationFactory,
-    sharedValidate, 
+    sharedValidate,
     sharedTable,
     sharedTableActions,
-    sharedTableHeaderButtons,   
-    sharedAlert, 
-    sharedEntryActions, 
-    sharedDocumentTitle 
+    sharedTableHeaderButtons,
+    sharedAlert,
+    sharedEntryActions,
+    sharedDocumentTitle
     ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des dépenses', 'nexopos_advanced' );?>' );
     $scope.textDomain           =   expensesTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des dépenses', 'nexopos_advanced' );?>' );
     $scope.table.columns        =   expensesTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
@@ -67,21 +67,21 @@ var expensesMain          =   function(
     $scope.table.getPage(0);
 }
 
-expensesMain.$inject    =   [ 
-    '$scope', 
-    '$http', 
+expensesMain.$inject    =   [
+    '$scope',
+    '$http',
     '$location',
-    'expensesTextDomain',  
-    'expensesResource', 
+    'expensesTextDomain',
+    'expensesResource',
     'expensesTable',
     'paginationFactory',
-    'sharedValidate', 
+    'sharedValidate',
     'sharedTable',
     'sharedTableActions',
-    'sharedTableHeaderButtons',  
-    'sharedAlert', 
-    'sharedEntryActions', 
-    'sharedDocumentTitle' 
+    'sharedTableHeaderButtons',
+    'sharedAlert',
+    'sharedEntryActions',
+    'sharedDocumentTitle'
 ];
 
 tendooApp.controller( 'expensesMain', expensesMain );

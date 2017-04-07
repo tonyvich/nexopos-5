@@ -1,5 +1,5 @@
-var posScreenCTRL           =   function( $scope, $timeout ) {
-    $scope.get              =   function( type, namespace ) {
+var posScreenCTRL           =   ( $scope, $timeout ) => {
+    $scope.get              =   ( type, namespace ) => {
         if( type == 'height' ) {
             if( namespace == 'nexopos-cart-body' ) {
                 return angular.element( '.nexopos-cart' ).height() - (
@@ -15,13 +15,13 @@ var posScreenCTRL           =   function( $scope, $timeout ) {
         }
     }
 
-    $timeout( function(){
-        for( i = 0; i < 200; i++ ) {
+    $timeout(()=>{
+        for( let i = 0; i < 200; i++ ) {
             $scope.cartItems.push(i);
         }
     }, 1000 );
 
-    $scope.$watch( 'documentHeight', function(){
+    $scope.$watch( 'documentHeight', () => {
         console.log( $scope.pageHeight );
     });
 
