@@ -1,4 +1,4 @@
-tendooApp.factory( 'sharedTableHeaderButtons',['sharedDataToCsv', function( sharedDataToCsv ){
+tendooApp.factory( 'sharedTableHeaderButtons', function(){
     return function( resource, columns ) {
         return [{
             text        :   '<?php echo _s( 'CSV', 'nexopos_advanced' );?>',
@@ -24,4 +24,4 @@ tendooApp.factory( 'sharedTableHeaderButtons',['sharedDataToCsv', function( shar
             }
         }]
     }
-}]);
+});

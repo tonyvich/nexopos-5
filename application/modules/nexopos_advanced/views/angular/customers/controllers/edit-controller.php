@@ -277,11 +277,42 @@ var customersEdit               =   function(
         _.each( $scope.item.variations, function( variation, $tab_id ) {
             _.each( variation.tabs, function( tab, $tab_key ) {
                 tab.models      =   {};
+                if( tab.namespace == "billing"){
+                    customersResource.get({
+                        id  :  $route.current.params.id // make sure route is added as dependency
+                    },function( entry ){
+                        var billing_data = new Object;
+                        var billRegEx = new RegExp("billing");
+                        _.each(entry.address, function(value, key){
+                            if(billRegEx.test(value.key)){
+                                billing_data[value.key] = value.value;
+                            }
+                        });
+
+                        _.each( billing_data, function( value, key ){
+                            
+                            tab.models[ key ] = value;
+                        });                
+                    });
+                } else if( tab.namespace == "shipping"){
+                    customersResource.get({
+                        id  :  $route.current.params.id // make sure route is added as dependency
+                    },function( entry ){
+                        var shipping_data = new Object;
+                        var shipRegEx = new RegExp("delivery");
+                        _.each(entry.address, function(value, key){
+                            if(shipRegEx.test(value.key)){
+                                shipping_data[ value.key ] = value.value;
+                            }
+                        });
+                        _.each( shipping_data, function( value, key ){
+                            tab.models[ key ] = value;
+                        });                
+                    });
+                }
             });
         });
     });
-
-    console.log($scope.item.variations);
 
     /**
      *  Get Class
@@ -351,12 +382,14 @@ var customersEdit               =   function(
         );
 
         $scope.finalItem.author             = <?= User::id()?>;
-        $scope.finalItem.date_creation      = sharedMoment.now();
+        $scope.finalItem.date_modification      = sharedMoment.now();
 
-        customersResource.save(
+        customersResource.update({
+                id  :   $route.current.params.id // make sure route is added as dependency
+            },      
             $scope.finalItem,
             function(){
-                sharedAlert.warning( '<?php echo _s( 'Enregistrement effectué', 'nexopos_advanced' );?>' );
+                $location.url( '/customers?notice=done' );
             },function( returned ){
 
                 $scope.submitDisabled   =   false;
@@ -464,27 +497,10 @@ var customersEdit               =   function(
         id  :  $route.current.params.id // make sure route is added as dependency
     },function( entry ){
         $scope.submitDisabled   =   false;
- 
         _.each(entry.customer[0], function(value, key){
             $scope.item[key] = value;
         });
        
-        var billing_data = new Array;
-        var billRegEx = new RegExp("billing");
-        _.each(entry.address,function(value,key){
-            if(billRegEx.test(value.key)){
-                billing_data[value.key] = value.value;
-            }
-        });
-
-        _.each(billing_data, function(value,key){
-            console.log(key);
-            $scope.variations.tabs.models[key] = value;
-        });
-        
-        _.each(entry.customer[0], function(value, key){
-            $scope.item[key] = value;
-        });
     })
 
 };

@@ -23,6 +23,7 @@
                     'factories/customers/tabs.js',
                     'factories/customers-groups/resource.js',
                     'shared_factories/countries.js',
+                    'shared_factories/states.js',
                     'shared_factories/filter-item.js',
                     'shared_factories/document-title.js',
                     'shared_factories/validate.js',
