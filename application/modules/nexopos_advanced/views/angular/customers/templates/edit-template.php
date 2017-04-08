@@ -1,7 +1,7 @@
 <div ng-controller="customersEdit">
     <div class="row">
         <div class="col-md-12">
-            <h3 style="margin-top:0px;"><?php echo __( 'Ajouter un client', 'nexopos_advanced' );?><a href="<?php echo site_url([ 'dashboard', 'nexopos', 'customers'] );?>" class="btn btn-primary btn-sm pull-right"><?php echo __( 'Liste des clients', 'nexopos_advanced' );?></a></h3>
+            <h3 style="margin-top:0px;"><?php echo __( 'Modifier un client', 'nexopos_advanced' );?><a href="<?php echo site_url([ 'dashboard', 'nexopos', 'customers'] );?>" class="btn btn-primary btn-sm pull-right"><?php echo __( 'Liste des clients', 'nexopos_advanced' );?></a></h3>
         </div>
         <div class="col-md-8 advanced-fields-wrapper">
             <div class="form-group default-fields-wrapper">
@@ -36,7 +36,6 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    {{ item }}
                     <div class="row">
                       <?php $this->module_view( 'nexopos_advanced', 'angular.shared.templates.fields-template' );?>
                     </div>

@@ -52,4 +52,4 @@ tendooApp.factory( 'sharedTableHeaderButtons',[ '$http', function( $http ){
             }
         }]
     }
-}]);
+});

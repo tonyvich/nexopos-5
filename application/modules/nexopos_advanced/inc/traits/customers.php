@@ -159,6 +159,18 @@ Trait customers
             'date_modification'     =>  $this->put( 'date_modification' )
         ]);
 
+        $variations = $this->put( "variations" );
+        $data = $variations[0];
+
+        foreach ($data as $key => $value) {
+            $this->db->where( array('ref_customer' => $id, 'key' => $key ))->update(
+                'nexopos_customers_address',
+                [
+                    'value' => $value
+                ]
+            );
+        }
+        
         $this->__success();
     }
 }

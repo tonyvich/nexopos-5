@@ -10,6 +10,7 @@ var customersAdd               =   function(
     customersFields,
     sharedFilterItem,
     sharedCountries,
+    sharedStates,
     sharedMoment,
     sharedDocumentTitle,
     sharedValidate,
@@ -30,37 +31,11 @@ var customersAdd               =   function(
     $scope.tabs                     =   customersTabs.getTabs();
     $scope.fields                   =   customersFields;
     $scope.itemAdvancedFields       =   customersAdvancedFields;
-
-    // test
-    $scope.pays                     =   [{
-        label   :   'Cameroun',
-        value   :   'CM'
-    },{
-        label   :   'France',
-        value       :   'FR'
-    }]
-
-    $scope.regions  =   [{
-        label   :   'Nord',
-        value   :   'nord',
-        country         :   'CM'
-    },{
-        label   :   'Centre',
-        value   :   'centre',
-        country         :   'CM'
-    },{
-		"label": "Alsace",
-		"country": "FR",
-		"value": "Alsace"
-	},
-	{
-		"label": "Aquitaine",
-		"country": "FR",
-		"value": "Aquitaine"
-	}];
-
-    // Je peux faire ça des deux côté pour l'édition dynamique de champs, c'est mieux de faire ça dans advancedFields.
-    sharedFieldEditor( 'billing_country', $scope.itemAdvancedFields.billing ).options     =   $scope.pays;
+    $scope.countries                =   sharedCountries.countries;
+    $scope.states                   =   sharedStates.states
+    
+   
+    sharedFieldEditor( 'billing_country', $scope.itemAdvancedFields.billing ).options     =   $scope.countries;
 
 
     // Setting customer group options
@@ -83,11 +58,11 @@ var customersAdd               =   function(
 
         if( field.model == 'billing_country' ) {
             var country_name    =   variation_tab.models[ field.model ];
-            var country_states   =   [];
+            var country_states   =   {};
 
-            _.each( $scope.regions, function( region ){
-                if( region.country == country_name ) {
-                    country_states.push( region );
+            _.each( $scope.states, function( state ){
+                if( state.countryShortCode == country_name ) {
+                    country_states = state.regions;
                 }
             });
 
@@ -501,6 +476,7 @@ customersAdd.$inject           =   [
     'customersFields',
     'sharedFilterItem',
     'sharedCountries',
+    'sharedStates',
     'sharedMoment',
     'sharedDocumentTitle',
     'sharedValidate',
