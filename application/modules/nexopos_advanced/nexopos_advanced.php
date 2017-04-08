@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include_once( dirname( __FILE__ ) . '/vendor/autoload.php' );
 include_once( dirname( __FILE__ ) . '/inc/menus.php' );
 include_once( dirname( __FILE__ ) . '/inc/assets.php' );
 include_once( dirname( __FILE__ ) . '/inc/filters.php' );

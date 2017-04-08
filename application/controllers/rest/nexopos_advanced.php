@@ -7,6 +7,8 @@ include_once(APPPATH . '/libraries/REST_Controller.php'); // Include Rest Contro
 
 include_once(APPPATH . '/modules/nexopos_advanced/inc/traits_loader.php'); // Include from Nexo module dir
 
+include_once(APPPATH . '/modules/nexopos_advanced/vendor/autoload.php'); // Include from Nexo module dir
+
 class Nexopos_advanced extends REST_Controller
 {
     use deliveries,
@@ -26,7 +28,8 @@ class Nexopos_advanced extends REST_Controller
         stores,
         customers_address,
         items,
-        items_variations;
+        items_variations,
+        export;
 
     public function __construct()
     {

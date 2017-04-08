@@ -13,7 +13,6 @@
                     'factories/expenses-categories/resource.js',
                     'factories/expenses/table.js',
                     'shared_factories/options.js',
-                    'shared_factories/data-to-csv.js',
                     'shared_factories/table-header-buttons.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',

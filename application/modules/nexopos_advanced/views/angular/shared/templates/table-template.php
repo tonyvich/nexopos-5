@@ -16,15 +16,19 @@
 
                 </div>
                 <div class="col-md-3">
-                    <div class="btn-group btn-group-justified" ng-hide="table.hideHeaderButtons" role="group" aria-label="...">
-                        <div
-                        ng-show="
-                        ( button.show.singleSelect && table.getChecked().length == 1 ) ||
-                        ( button.show.multiSelect && table.getChecked().length > 1 ) ||
-                        ( button.show.noSelect && table.getChecked().length == 0 )"
-                        ng-repeat="button in table.headerButtons" class="btn-group" role="group">
-                            <button type="button" class="btn btn-default" ng-click=" button.toDo() "><i class="{{ button.icon }}"></i> {{ button.text }}</button>
-                        </div>
+                    <div class="input-group" ng-hide="table.hideHeaderButtons">
+                      <span class="input-group-addon"><?php echo __( 'Exporter', 'nexopos_advanced' );?></span>
+                      <select ng-model="table.selectedExportOption" type="text" class="form-control">
+                          <option value=""><?php echo __( 'Selectionner', 'nexopos_advanced' );?></option>
+                          <option ng-show="
+                          ( button.show.singleSelect && table.getChecked().length == 1 ) ||
+                          ( button.show.multiSelect && table.getChecked().length > 1 ) ||
+                          ( button.show.noSelect && table.getChecked().length == 0 )"
+                          ng-repeat="( index, button ) in table.headerButtons" value="{{ index }}"><i class="{{ button.icon }}"></i> {{ button.text }}</option>
+                      </select>
+                      <span class="input-group-btn">
+                          <button ng-click="table.triggerExport()" type="button" name="button" class="btn btn-default"><i class="fa fa-download"></i></button>
+                      </span>
                     </div>
                 </div>
             </div>
