@@ -428,6 +428,7 @@ class NexoPOS_Install extends Tendoo_Module
         `date_modification` datetime NOT NULL,
         `orders_so_far` int(11) NOT NULL,
         `purchases_so_far` float(11) NOT NULL,
+        `status` varchar(200) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
