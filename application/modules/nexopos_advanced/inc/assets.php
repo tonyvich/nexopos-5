@@ -38,7 +38,7 @@ class NexoPOS_Assets extends Tendoo_Module
         $this->enqueue->js( $bower_url . 'oclazyload/dist/ocLazyLoad.min' );
         $this->enqueue->js( $bower_url . 'angular-ui-notification/dist/angular-ui-notification.min' );
         $this->enqueue->js( $bower_url . 'moment/min/moment.min' );
-        $this->enqueue->js( $bower_url . 'moment-timezone/moment-timezone' );
+        $this->enqueue->js( $bower_url . 'moment-timezone/builds/moment-timezone-with-data-2010-2020.min' );
 
         if( @$Options[ 'site_language' ] == 'en_US') {
             $this->enqueue->js( $bower_url . 'moment/locale/en-gb' );

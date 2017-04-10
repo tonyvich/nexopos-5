@@ -7,7 +7,8 @@ var customersGroups          =   function(
     $location,
     sharedValidate,
     sharedDocumentTitle,
-    sharedMoment
+    sharedMoment,
+    sharedAlert
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un groupe de clients', 'nexopos_advanced' );?>' );
@@ -33,6 +34,9 @@ var customersGroups          =   function(
         $scope.item.date_creation   =   sharedMoment.now();
 
         if( ! $scope.validate.run( $scope.fields, $scope.item ).isValid ) {
+            sharedAlert.warning(
+                '<?php echo _s( 'Une erreur s\'est produite avant l\'enregistrement des données. Veuillez verifier le formulaire.', 'nexopos_advanced' );?>'
+            );
             return $scope.validate.blurAll( $scope.fields, $scope.item );
         }
 
@@ -67,7 +71,8 @@ customersGroups.$inject    =   [
     '$location',
     'sharedValidate',
     'sharedDocumentTitle',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedAlert'
 ];
 
 tendooApp.controller( 'customersGroups', customersGroups );

@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/customers-groups/main';
     },
-    controller: 'customersGroupsMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -37,7 +36,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/customers-groups/edit';
     },
-    controller: 'customersGroupsEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -70,7 +68,6 @@
         }
         return 'templates/customers-groups/main';
     },
-    controller: 'customersGroups',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

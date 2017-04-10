@@ -79,7 +79,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             {
                 type        :   'text',
                 label       :   '<?php echo _s( 'Entreprise', 'nexopos_advanced' );?>',
-                model       :   'delivery_company',
+                model       :   'shipping_company',
                 show        :   function(){
                     return true;
                 },
@@ -87,7 +87,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 1', 'nexopos_advanced' );?>',
-                model       :   'delivery_first_address',
+                model       :   'shipping_first_address',
                 show        :   function(){
                     return true;
                 },
@@ -95,7 +95,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Adresse 2', 'nexopos_advanced' );?>',
-                model       :   'delivery_second_address',
+                model       :   'shipping_second_address',
                 show        :   function(){
                     return true;
                 },
@@ -103,7 +103,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Boite postale', 'nexopos_advanced' );?>',
-                model       :   'delivery_pobox',
+                model       :   'shipping_pobox',
                 show        :   function(){
                     return true;
                 },
@@ -112,7 +112,7 @@ tendooApp.factory( 'customersAdvancedFields', [
                 type        :   'select',
                 label       :   '<?php echo _s( 'Pays', 'nexopos_advanced' );?>',
                 subType     :   'country',
-                model       :   'delivery_country',
+                model       :   'shipping_country',
                 options     :   [],
                 show        :   function(){
                     return true;
@@ -122,8 +122,8 @@ tendooApp.factory( 'customersAdvancedFields', [
                 type        :   'select',
                 label       :   '<?php echo _s( 'Etat', 'nexopos_advanced' );?>',
                 subType     :   'state',
-                country     :   'delivery_country',
-                model       :   'delivery_state',
+                country     :   'shipping_country',
+                model       :   'shipping_state',
                 options     :   [],
                 show        :   function(){
                     return true;
@@ -132,7 +132,7 @@ tendooApp.factory( 'customersAdvancedFields', [
             },{
                 type        :   'text',
                 label       :   '<?php echo _s( 'Ville', 'nexopos_advanced' );?>',
-                model       :   'delivery_town',
+                model       :   'shipping_town',
                 show        :   function(){
                     return true;
                 },

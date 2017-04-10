@@ -47,13 +47,17 @@
     </div>
 
     <div class="form-group" ng-if="field.type == 'datepick'">
-        <div class="input-group" on-change="updateDate( item[ field.model ], field.model )" datetimepicker ng-model="item[ field.model ]" options="field.options">
+        <div class="input-group">
             <span class="input-group-addon">{{ field.label }}</span>
             <input
                 class="form-control"
                 ng-blur="validate.blur( field, item )"
                 ng-focus="validate.focus( field, item )"
-                placeholder="{{ field.placeholder }}" />
+                placeholder="{{ field.placeholder }}"
+                on-change="updateDate( item[ field.model ], field.model )"
+                datetimepicker ng-model="item[ field.model ]"
+                options="field.options"
+                />
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>

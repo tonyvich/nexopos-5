@@ -2,8 +2,8 @@
 angular.element( document ).ready( function(){
     tendooApp.factory( 'sharedMoment', function( $interval ){
         return new function(){
-            $this                   =   this;
-            this.serverTimeZone         =   '<?php echo @$Options[ 'site_timezone' ];?>';
+            $this                       =   this;
+            this.serverTimeZone         =   '<?php echo @$Options[ 'site_timezone' ] == null ? 'Africa/Casablanca' : $Options[ 'site_timezone' ];?>';
             this.serverDate             =   moment( '<?php echo date_now();?>' );
 
             /**
@@ -16,8 +16,8 @@ angular.element( document ).ready( function(){
                 return moment( datetime ).from( this.serverDate );
             }
 
-            setInterval( function(){
-                $this.serverDate.add( 1, 's' );
+            setInterval( () =>{
+                this.serverDate.add( 1, 's' );
             }, 1000 );
 
             /**
