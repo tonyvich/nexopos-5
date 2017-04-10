@@ -113,6 +113,12 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 options     :   {
                     format: 'YYYY/MM/DD HH:mm',
                     showClear: true
+                },
+                beforeValidation    :   ( date )  =>  {
+                    if( typeof date == 'object' ) {
+                        return  data.format( 'YYYY/MM/DD HH:mm' )
+                    }
+                    return date;
                 }
             },{
                 type        :   'datepick',
@@ -142,6 +148,12 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 options     :   {
                     format: 'YYYY/MM/DD HH:mm',
                     showClear: true
+                },
+                beforeValidation    :   ( date )  =>  {
+                    if( typeof date == 'object' ) {
+                        return  data.format( 'YYYY/MM/DD HH:mm' )
+                    }
+                    return date;
                 }
             }
         ],

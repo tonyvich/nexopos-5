@@ -18,17 +18,6 @@ var providers          =   function(
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
 
-    /**
-     *  Update Date
-     *  @param object date
-     *  @return void
-    **/
-
-    $scope.updateDate   =   function( date, key ){
-        $scope.item[ key ]    =   date;
-    }
-
-
     //Submitting Form
 
     $scope.submit       =   function(){

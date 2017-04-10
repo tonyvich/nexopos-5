@@ -25,7 +25,13 @@ tendooApp.factory( 'sharedValidate', function(){
             var errors      =   {};
 
             if( angular.isDefined( field.validation ) ) {
+
                 _.each( field.validation, function( value, rule ) {
+
+                    // If a field has a specific formating, let's apply this before validating
+                    if( typeof field.beforeValidation != 'undefined' ) {
+                        item[ field.model ]     =   field.beforeValidation( item[ field.model ] );
+                    }
 
                     if( rule == 'required' && value == true ) {
                         if( ! angular.isDefined( item[ field.model ] ) || item[ field.model ] == null ) {
@@ -120,6 +126,7 @@ tendooApp.factory( 'sharedValidate', function(){
                     if( rule == "callback" ) {
                         value( item, field, errors );
                     }
+
                 });
             }
 
@@ -130,9 +137,12 @@ tendooApp.factory( 'sharedValidate', function(){
 
         this.run        =   function( fields, item ) {
             var errors          =   {};
+
             _.each( fields, function( field ){
                 // extends current field errors
-                errors          =   _.extend( errors, $this.__run( field, item ) );
+                let singleRunResult     =   $this.__run( field, item ) ;
+
+                errors          =   _.extend( errors, singleRunResult );
             });
 
             // replace template on error if exists
@@ -177,6 +187,7 @@ tendooApp.factory( 'sharedValidate', function(){
             var response        =   this.__response( validation );
             var errors          =   this.__replaceTemplate( response.errors );
             var fieldClass      =   '.' + field.model + '-helper';
+
             if( ! response.isValid ) {
                 if( angular.isDefined( $event ) ) {
                     angular.element( $event.target ).closest( '.form-group' ).removeClass( 'has-success' );

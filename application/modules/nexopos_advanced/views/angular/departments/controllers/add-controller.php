@@ -15,16 +15,6 @@ var departmentsAddController = function(
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
 
-    /**
-     *  Update Date
-     *  @param object date
-     *  @return void
-    **/
-
-    $scope.updateDate   =   function( date, key ){
-        $scope.item[ key ]    =   date;
-    }
-
     $scope.submit       =   function(){
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   sharedMoment.now();

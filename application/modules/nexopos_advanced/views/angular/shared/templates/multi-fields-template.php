@@ -6,7 +6,11 @@
             ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs"
             ng-hide="variation_tab.hide( item )"
             class="{{ tabContentIsActive( variation_tab.active ) ? 'active' : '' }} variation-{{ variation_id }}-tab-header-{{ variation_tab_id }}"
-        ><a href="javascript:void(0)" ng-click="activeTab( $event, variation_id, variation_tab_id )">{{ variation_tab.title }} <span class="badge badge-warning" ng-show="countAllErrors( variation_tab ) > 0">{{ countAllErrors( variation_tab ) }}</span></a></li>
+        >
+            <a href="javascript:void(0)" ng-click="activeTab( $event, variation_id, variation_tab_id )">{{ variation_tab.title }}
+                <span class="badge badge-warning" ng-show="countAllErrors( variation_tab ) > 0">{{ countAllErrors( variation_tab ) }}</span>
+            </a>
+        </li>
 
         <li
             class="pull-right"
@@ -32,7 +36,6 @@
     </ul>
 
     <div class="tab-content variation-body-{{ variation_id }}">
-
 
       <div
         ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs"
@@ -96,7 +99,6 @@
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                 </div>
 
-                <!--  -->
                 <div class="form-group" ng-if="field.type == 'datepick'">
                     <div class="input-group" on-change="updateDate( variation_tab.models[ field.model ], field.model )" datetimepicker data-ng-model="variation_tab.models[ field.model ]" options="field.options">
                         <span class="input-group-addon">{{ field.label }}</span>
@@ -152,7 +154,6 @@
 
                         <div class="box box-primary variation-{{ variation_id }}-tab-{{ variation_tab_id }}-group-{{ variation_group_id }}" style="background:#F1F1F1;" >
                             <div class="box-header with-border variation-{{ variation_id }}-tab-{{ variation_tab_id }}-group-header-{{ variation_group_id }}">
-                                <!-- .groups" -->
                                 <div class="box-title">
                                     {{ field.label }}
                                 </div>
@@ -242,7 +243,6 @@
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
                                     </div>
 
-                                    <!--  Image Select -->
                                     <div class="form-group" ng-if="subField.type == 'image_select'">
                                         <div class="input-group" ng-if="subField.type == 'image_select'">
                                           <span class="input-group-addon">{{ subField.label }}</span>
@@ -277,6 +277,6 @@
         </div>
 
       </div>
+
     </div>
-    <!-- /.tab-content -->
 </div>

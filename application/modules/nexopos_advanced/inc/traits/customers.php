@@ -50,7 +50,7 @@ Trait customers
                 $this->db->or_like( 'nexopos_customers_groups.name', $this->get( 'search' ) );
             }
 
-            $this->db->join( 'nexopos_customers_groups', 'nexopos_customers_groups.id = nexopos_customers.ref_group' );
+            $this->db->join( 'nexopos_customers_groups', 'nexopos_customers_groups.id = nexopos_customers.ref_group', 'left' );
             $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_customers.author' );
             $query      =   $this->db->get();
 
@@ -62,8 +62,8 @@ Trait customers
 
         $result = array();
         $result[0]['customer'] =   $this->db->where( 'id', $id )->get( 'nexopos_customers' )->result();
-        $result[0]['address']  =   $this->db->where( 'ref_customer', $id )->get( 'nexopos_customers_address' )->result();
-        
+        $result[0]['address']  =   $this->db->where( 'ref_customer', $id )->get( 'nexopos_customers_metas' )->result();
+
         return $result ? $this->response( ( array ) @$result[0], 200 ) : $this->__404();
     }
 
@@ -99,16 +99,16 @@ Trait customers
 
         // getting billing and delivery indormations
         $variations = $this->post( 'variations' );
-        $data = $variations[0]; 
-        
+        $data = $variations[0];
+
         foreach ($data as $key => $value) {
-            $this->db->insert('nexopos_customers_address',[
+            $this->db->insert( 'nexopos_customers_metas',[
                 'key'          =>     $key,
                 'value'        =>     $value,
                 'ref_customer' =>     $result->ID
             ]);
         }
-        
+
         $this->__success();
     }
 
@@ -163,14 +163,16 @@ Trait customers
         $data = $variations[0];
 
         foreach ($data as $key => $value) {
-            $this->db->where( array('ref_customer' => $id, 'key' => $key ))->update(
-                'nexopos_customers_address',
-                [
+            $this->db->where([
+                'ref_customer' => $id,
+                'key' => $key
+            ])->update(
+                'nexopos_customers_metas', [
                     'value' => $value
                 ]
             );
         }
-        
+
         $this->__success();
     }
 }

@@ -13,31 +13,31 @@ tendooApp.factory( 'customersGroupsTable', ['sharedOptions', function( sharedOpt
                 object      :   sharedOptions.yesOrNo
             },
             {
-                text    :   '<?php echo _s( 'Début réductions', 'nexopos_advanced' );?>',
+                text    :   '<?php echo _s( 'Début', 'nexopos_advanced' );?>',
                 namespace   :   'discount_start',
                 is          :   'date_span',
                 width       :   160
             },
             {
-                text    :   '<?php echo _s( 'Fin réductions', 'nexopos_advanced' );?>',
+                text    :   '<?php echo _s( 'Fin', 'nexopos_advanced' );?>',
                 namespace   :   'discount_end',
                 is          :   'date_span',
                 width       :   160
             },
             {
-                text    :   '<?php echo _s( 'Type réductions', 'nexopos_advanced' );?>',
+                text    :   '<?php echo _s( 'Type', 'nexopos_advanced' );?>',
                 namespace   :   'discount_type',
                 is          :   'object',
                 object      :   sharedOptions.percentOrFlat,
                 width       :   100
             },
             {
-                text    :   '<?php echo _s( 'Valeur réduction', 'nexopos_advanced' );?>',
+                text    :   '<?php echo _s( 'Valeur', 'nexopos_advanced' );?>',
                 namespace   :   'discount_value',
                 width       :   120
             },
             {
-                text    :   '<?php echo _s( 'Date de création', 'nexopos_advanced' );?>',
+                text    :   '<?php echo _s( 'Créé', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
                 is          :   'date_span',
                 width       :    150

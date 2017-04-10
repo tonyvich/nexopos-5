@@ -27,8 +27,11 @@ tendooApp.factory( 'customersGroupsFields', [ 'sharedOptions', function( sharedO
             format: 'YYYY/MM/DD HH:mm',
             showClear: true,
         },
-        validation : {
-            required : true
+        beforeValidation    :   ( date )  =>  {
+            if( typeof date == 'object' ) {
+                return  data.format( 'YYYY/MM/DD HH:mm' )
+            }
+            return date;
         }
     },{
         type        :   'datepick',
@@ -41,8 +44,11 @@ tendooApp.factory( 'customersGroupsFields', [ 'sharedOptions', function( sharedO
             format: 'YYYY/MM/DD HH:mm',
             showClear: true
         },
-        validation : {
-            required : true
+        beforeValidation    :   ( date )  =>  {
+            if( typeof date == 'object' ) {
+                return  data.format( 'YYYY/MM/DD HH:mm' )
+            }
+            return date;
         }
     },{
         type    :   'select',
@@ -50,16 +56,12 @@ tendooApp.factory( 'customersGroupsFields', [ 'sharedOptions', function( sharedO
         model   :   'discount_type',
         options     :   sharedOptions.percentOrFlat,
         desc    :   '<?php echo _s( 'Vous pouvez appliquer des réductions fixes ou variables.', 'nexopos_advanced' );?>',
-        validation : {
-            required : true
-        }
     },{
         type        :   'text',
         label       :   '<?php echo __( 'Valeur de la réduction', 'nexopos_advanced' );?>',
         model       :   'discount_value',
         desc        :   '<?php echo _s( 'Sera considéré comme pourcentage ou montant fixe de la réduction.', 'nexopos_advanced' );?>',
         validation  :   {
-            required : true,
             decimal   : true
         }
     },{

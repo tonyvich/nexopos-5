@@ -40,7 +40,7 @@
 })
 
 /*
- *For Read purpose 
+ *For Read purpose
  */
 
  .when('/customers', {
@@ -80,7 +80,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/customers/edit';
     },
-    controller : 'customersEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

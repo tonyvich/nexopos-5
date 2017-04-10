@@ -48,7 +48,6 @@ var customersAdd               =   function(
         }
     );
 
-
     /**
      *  Blur a specific field
      *  @param object field
@@ -290,7 +289,7 @@ var customersAdd               =   function(
                 tab.models      =   {};
             });
         });
-
+        
     });
 
     /**

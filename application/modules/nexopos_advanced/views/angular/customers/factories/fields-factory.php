@@ -8,6 +8,14 @@ tendooApp.factory( 'customersFields', [ '$location', 'sharedOptions', function( 
             },
             desc        :   '<?php echo _s( 'Nom du client.', 'nexopos_advanced' );?>'
         },{
+            type        :   'hidden',
+            desc        :   '<?php echo _s( 'Détails du client.', 'nexopos_advanced' );?>',
+            label       :   '<?php echo __( 'Description', 'nexopos_advanced' );?>',
+            model       :   'description',
+            validation  :   {
+                required :  true
+            }
+        },{
             type    :   'text',
             model   :   'surname',
             label   :   '<?php echo _s('Prénom', 'nexopos_advanced');?>',

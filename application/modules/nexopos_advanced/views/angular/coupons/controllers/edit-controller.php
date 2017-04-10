@@ -50,19 +50,9 @@ var couponsEdit      =   function(
 
      itemsResource.get(
         function(data){
-            sharedFieldEditor('included_items_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');    
+            sharedFieldEditor('included_items_ids',$scope.fields).options = sharedRawToOptions(data.entries,'id','name');
         }
      );
-
-    /**
-     *  Update Date
-     *  @param object date
-     *  @return void
-    **/
-
-    $scope.updateDate   =   function( date, key ){
-        $scope.item[ key ]    =   date;
-    }
 
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;

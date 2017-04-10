@@ -27,7 +27,7 @@ class NexoPOS_Advanced_Init extends Tendoo_Module {
         $this->events->add_action( 'do_enable_module', [ $this->install, 'create_tables' ] );
         $this->events->add_action( 'do_enable_module', [ $this->actions, 'do_enable_module' ], 20 );
         $this->events->add_action( 'do_remove_module', [ $this->install, 'remove_tables' ] );
-        $this->events->add_action( 'tendoo_settings_tables', [ $this->install, 'create_tables' ] );
+        $this->events->add_action( 'tendoo_settings_tables', [ $this->install, 'setup' ] );
     }
 
     /**

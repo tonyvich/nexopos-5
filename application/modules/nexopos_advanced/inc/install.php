@@ -433,18 +433,6 @@ class NexoPOS_Install extends Tendoo_Module
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
     /**
-    *Customers Adresses
-    **/
-
-    $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_customers_address` (
-        `id` int(11) NOT NULL AUTO_INCREMENT,
-        `key` varchar(200) NOT NULL,
-        `value` varchar(200) NOT NULL,
-        `ref_customer` int(11) NOT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
-
-    /**
     * Customer Meta
     **/
 
@@ -452,7 +440,7 @@ class NexoPOS_Install extends Tendoo_Module
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `key` varchar(200) NOT NULL,
         `value` varchar(200) NOT NULL,
-        `ref_provider` int(11) NOT NULL,
+        `ref_customer` int(11) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 
@@ -542,24 +530,46 @@ class NexoPOS_Install extends Tendoo_Module
 
         $table_prefix       =   $this->db->dbprefix;
 
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_items`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_items_metas`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_items_variations`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_items_variations_galleries`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_items_variations_metas`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_items_variations_stock`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_deliveries`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_categories`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_departments`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_units`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_taxes`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_providers`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_providers_metas`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_coupons`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders_coupons`;');
         $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
         $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders_metas`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
-        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders_payments`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_orders_items`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_registers`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_registers_history`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_registers_activities`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_customers`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_customers_metas`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_customers_groups`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_expenses`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_expenses_categories`;');
+        $this->db->query('DROP TABLE IF EXISTS `'.$table_prefix . 'nexopos_stores`;');
+    }
+
+    /**
+     *  setup
+     *  @param
+     *  @return
+    **/
+
+    public function setup( $module_namespace = null )
+    {
+        $this->create_tables( $module_namespace );
+        Modules::enable( 'nexopos_advanced' );
     }
 
 }

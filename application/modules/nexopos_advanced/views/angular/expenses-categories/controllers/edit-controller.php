@@ -27,17 +27,6 @@ var expensesCategoriesEdit      =   function(
         $scope.item             =   entry;
     })
 
-
-    /**
-     *  Update Date
-     *  @param object date
-     *  @return void
-    **/
-
-    $scope.updateDate   =   function( date, key ){
-        $scope.item[ key ]    =   date;
-    }
-
     $scope.submit       =   function(){
         $scope.item.author              =   <?= User::id()?>;
         $scope.item.date_modification   =   sharedMoment.now();

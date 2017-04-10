@@ -54,7 +54,6 @@
                 ng-blur="validate.blur( field, item )"
                 ng-focus="validate.focus( field, item )"
                 placeholder="{{ field.placeholder }}"
-                on-change="updateDate( item[ field.model ], field.model )"
                 datetimepicker ng-model="item[ field.model ]"
                 options="field.options"
                 />

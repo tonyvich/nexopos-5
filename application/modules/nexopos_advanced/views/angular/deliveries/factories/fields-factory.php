@@ -32,6 +32,12 @@ tendooApp.factory( 'deliveriesFields', [ 'sharedOptions', function( sharedOption
         options     :   {
             format: 'YYYY/MM/DD HH:mm',
             showClear: true
+        },
+        beforeValidation    :   ( date )  =>  {
+            if( typeof date == 'object' ) {
+                return  data.format( 'YYYY/MM/DD HH:mm' )
+            }
+            return date;
         }
     },{
         type        :   'textarea',

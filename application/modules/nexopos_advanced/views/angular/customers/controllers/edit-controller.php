@@ -37,7 +37,7 @@ var customersEdit               =   function(
 
     sharedFieldEditor( 'billing_country', $scope.itemAdvancedFields.billing ).options     =   $scope.countries;
 
-    sharedFieldEditor( 'shipping_country', $scope.itemAdvancedFields.shipping ).options     =   $scope.countries;    
+    sharedFieldEditor( 'shipping_country', $scope.itemAdvancedFields.shipping ).options     =   $scope.countries;
 
     // Setting customer group options
     customersGroupsResource.get(
@@ -45,6 +45,29 @@ var customersEdit               =   function(
             sharedFieldEditor( 'ref_group', $scope.fields).options = sharedRawToOptions(data.entries, 'id', 'name');
         }
     );
+
+    // Get customers
+    $scope.submitDisabled   =   true;
+    customersResource.get({
+        id  :  $route.current.params.id // make sure route is added as dependency
+    }, ( entries ) => {
+        $scope.item             =   _.extend( $scope.item, entries.customer[0] );
+
+        // Since variations is not allowed for customers
+        _.each( $scope.item.variations[0].tabs, ( tab ) => {
+
+            _.each( entries.address, ( address ) => {
+                let namespace   =   address.key.split( '_' );
+                    namespace   =   namespace[0];
+
+                if( namespace == tab.namespace ) {
+                    tab.models[ address.key ]    =   address.value;
+                }
+            });
+        });
+
+        $scope.submitDisabled   =   false;
+    });
 
 
     /**
@@ -286,39 +309,6 @@ var customersEdit               =   function(
         _.each( $scope.item.variations, function( variation, $tab_id ) {
             _.each( variation.tabs, function( tab, $tab_key ) {
                 tab.models      =   {};
-                if( tab.namespace == "billing"){
-                    customersResource.get({
-                        id  :  $route.current.params.id // make sure route is added as dependency
-                    },function( entry ){
-                        var billing_data = new Object;
-                        var billRegEx = new RegExp("billing");
-                        _.each(entry.address, function(value, key){
-                            if(billRegEx.test(value.key)){
-                                billing_data[value.key] = value.value;
-                            }
-                        });
-
-                        _.each( billing_data, function( value, key ){
-                            
-                            tab.models[ key ] = value;
-                        });                
-                    });
-                } else if( tab.namespace == "shipping"){
-                    customersResource.get({
-                        id  :  $route.current.params.id // make sure route is added as dependency
-                    },function( entry ){
-                        var shipping_data = new Object;
-                        var shipRegEx = new RegExp("delivery");
-                        _.each(entry.address, function(value, key){
-                            if(shipRegEx.test(value.key)){
-                                shipping_data[ value.key ] = value.value;
-                            }
-                        });
-                        _.each( shipping_data, function( value, key ){
-                            tab.models[ key ] = value;
-                        });
-                    });
-                }
             });
         });
     });
@@ -395,7 +385,7 @@ var customersEdit               =   function(
 
         customersResource.update({
                 id  :   $route.current.params.id // make sure route is added as dependency
-            },      
+            },
             $scope.finalItem,
             function(){
                 $location.url( '/customers?notice=done' );
@@ -499,19 +489,6 @@ var customersEdit               =   function(
 
         $scope.item.variations[variationIndex].tabs[ tabIndex ].active     =   true;
     }
-
-    // Get Resource when loading
-    $scope.submitDisabled   =   true;
-    customersResource.get({
-        id  :  $route.current.params.id // make sure route is added as dependency
-    },function( entry ){
-        $scope.submitDisabled   =   false;
-        _.each(entry.customer[0], function(value, key){
-            $scope.item[key] = value;
-        });
-       
-    })
-
 };
 
 customersEdit.$inject           =   [

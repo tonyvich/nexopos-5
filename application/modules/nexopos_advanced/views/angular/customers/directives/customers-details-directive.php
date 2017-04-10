@@ -4,6 +4,7 @@ tendooApp.directive( 'customersDetails', function(){
         controller  :   function( $scope, customersAdvancedFields, $rootScope ) {
             $scope.$broadcast           =   $rootScope.$broadcast;
             // $scope.itemAdvancedFields   =   customersAdvancedFields;
-        }
+        },
+        restrict    :   'E'
     }
 });

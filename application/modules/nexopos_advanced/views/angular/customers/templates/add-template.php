@@ -19,14 +19,28 @@
                         ng-focus="validate.focus( fields[0], item )"
                         type="text" class="form-control"
                         style="line-height:40px;font-size:25px;" ng-model="item[ fields[0].model ]">
-                    <span class="input-group-btn ">
+                    <span class="input-group-btn">
                         <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexo' );?></button>
                         <span class="ng-hide"></span>
                     </span>
                 </div>
                 <p class="help-block {{ fields[0].model }}-helper" style="font-size:12px;">{{ fields[0].desc }}</p>
             </div>
-            <customers-details/>
+
+            <customers-details></customers-details>
+
+            <div class="box default-fields-wrapper">
+                <div class="box-body">
+                    <div class="form-group">
+                      <label for=""><?php echo _s( 'Description', 'nexopos_advanced' );?></label>
+                      <textarea
+                          ng-blur="validate.blur( fields[1], item )"
+                          ng-focus="validate.focus( fields[1], item )"
+                      ng-model="item[ fields[1].model ]" type="text" class="form-control"></textarea>
+                      <p class="help-block {{ fields[1].model }}-helper" style="font-size:12px;">{{ fields[1].desc }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4 default-fields-wrapper">
             <div class="box box-primary">

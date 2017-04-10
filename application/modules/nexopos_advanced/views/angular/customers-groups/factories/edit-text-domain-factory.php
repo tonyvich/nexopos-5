@@ -7,7 +7,7 @@ tendooApp.factory( 'customersGroupsEditTextDomain', function(){
         saveBtnText :   '<?php echo __( 'Sauvegarder', 'nexopos_advanced' );?>',
         fieldsTitle :   '<?php echo __( 'Options', 'nexopos_advanced' );?>',
         addNewLink  :   '<?php echo site_url( [ 'dashboard', 'nexopos', 'customers-groups', 'add' ] );?>',
-        listTitle   :   '<?php echo __( 'Liste des Groupes client', 'nexopos_advanced' );?>',
+        listTitle   :   '<?php echo __( 'Liste des groupes de client', 'nexopos_advanced' );?>',
         addNew      :   '<?php echo __( 'Modifier le groupe', 'nexopos_advanced' );?>'
     }
 });
