@@ -11,6 +11,7 @@ var customersEdit               =   function(
     customersFields,
     sharedFilterItem,
     sharedCountries,
+    sharedStates,
     sharedMoment,
     sharedDocumentTitle,
     sharedValidate,
@@ -31,8 +32,12 @@ var customersEdit               =   function(
     $scope.tabs                     =   customersTabs.getTabs();
     $scope.fields                   =   customersFields;
     $scope.itemAdvancedFields       =   customersAdvancedFields;
+    $scope.countries                =   sharedCountries.countries;
+    $scope.states                   =   sharedStates.states
 
-    
+    sharedFieldEditor( 'billing_country', $scope.itemAdvancedFields.billing ).options     =   $scope.countries;
+
+    sharedFieldEditor( 'shipping_country', $scope.itemAdvancedFields.shipping ).options     =   $scope.countries;    
 
     // Setting customer group options
     customersGroupsResource.get(
@@ -52,17 +57,21 @@ var customersEdit               =   function(
 
     $scope.validate.blur    =   function( field, variation_tab, ids ) {
 
-        if( field.model == 'billing_country' ) {
-            var country_name    =   variation_tab.models[ field.model ];
-            var country_states   =   [];
+        if( field.model == 'billing_country' || field.model == 'shipping_country' ) {
+            let country_name        =   variation_tab.models[ field.model ];
+            let country_states      =   {};
 
-            _.each( $scope.regions, function( region ){
-                if( region.country == country_name ) {
-                    country_states.push( region );
+            _.each( $scope.states, function( state ){
+                if( state.countryShortCode == country_name ) {
+                    country_states = state.regions;
                 }
             });
 
-            sharedFieldEditor( 'billing_state', $scope.itemAdvancedFields.billing ).options     =   country_states;
+            if( field.model == 'billing_country' ) {
+                sharedFieldEditor( 'billing_state', $scope.itemAdvancedFields.billing ).options     =   country_states;
+            } else { // for shipping obvisouly
+                sharedFieldEditor( 'shipping_state', $scope.itemAdvancedFields.shipping ).options     =   country_states;
+            }
         }
 
 
@@ -307,7 +316,7 @@ var customersEdit               =   function(
                         });
                         _.each( shipping_data, function( value, key ){
                             tab.models[ key ] = value;
-                        });                
+                        });
                     });
                 }
             });
@@ -518,6 +527,7 @@ customersEdit.$inject           =   [
     'customersFields',
     'sharedFilterItem',
     'sharedCountries',
+    'sharedStates',
     'sharedMoment',
     'sharedDocumentTitle',
     'sharedValidate',

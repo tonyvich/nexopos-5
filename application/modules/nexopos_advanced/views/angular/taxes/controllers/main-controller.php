@@ -19,7 +19,7 @@ var taxesMain          =   function(
 
     $scope.textDomain               =   taxesTextDomain;
     $scope.validate                 =   new sharedValidate();
-    $scope.table                    =   new sharedTable();
+    $scope.table                    =   new sharedTable( '<?php echo _s( 'Liste des taxes', 'nexopos_advanced' );?>' );
     $scope.table.columns            =   taxesTable.columns;
     $scope.table.entryActions       =   new sharedEntryActions();
     $scope.table.actions            =   new sharedTableActions();;

@@ -19,7 +19,7 @@ var unitsMain          =   function(
 
     $scope.textDomain           =   unitsTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des unités', 'nexopos_advanced' );?>' );
     $scope.table.columns        =   unitTable.columns;
     $scope.table.resource       =   unitsResource;
     $scope.table.headerButtons  =   new sharedTableHeaderButtons();

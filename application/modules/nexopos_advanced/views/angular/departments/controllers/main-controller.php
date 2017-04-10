@@ -18,7 +18,7 @@ var departmentsMain          =   function(
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des rayons', 'nexopos_advanced' );?>' );
 
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des rayons', 'nexopos_advanced' );?>' );
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
     $scope.table.columns        =   departmentsTable.columns;

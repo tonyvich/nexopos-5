@@ -20,7 +20,7 @@ var customersMain          =   function(
     
     $scope.textDomain           =   customersTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des clients', 'nexopos_advanced' );?>' );
     $scope.table.columns        =   customersTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
