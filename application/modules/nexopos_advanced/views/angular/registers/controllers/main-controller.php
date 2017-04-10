@@ -15,11 +15,11 @@ var registersMain          =   function(
     sharedDocumentTitle
 ) {
 
-    sharedDocumentTitle.set( '<?php echo _s( 'Liste des Caisse enregistreuse', 'nexopos_advanced' );?>' );
+    sharedDocumentTitle.set( '<?php echo _s( 'Liste des Caisses enregistreuse', 'nexopos_advanced' );?>' );
     
     $scope.textDomain           =   registersAddTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des caisses enregistreuse', 'nexopos_advanced' );?>' );
     $scope.table.columns        =   registerTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();

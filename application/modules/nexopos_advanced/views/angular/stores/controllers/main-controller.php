@@ -19,7 +19,7 @@ var storesMain          =   function(
 
     $scope.textDomain           =   storesAddTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des boutiques', 'nexopos_advanced' );?>');
     $scope.table.columns        =   storeTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();

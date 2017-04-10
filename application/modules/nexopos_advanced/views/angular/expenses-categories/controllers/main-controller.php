@@ -20,7 +20,7 @@ var expensesCategoriesMain          =   function(
     
     $scope.textDomain           =   expensesCategoriesTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des catégories de dépenses', 'nexopos_advanced' );?>' );
     $scope.table.columns        =   expensesCategoriesTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();

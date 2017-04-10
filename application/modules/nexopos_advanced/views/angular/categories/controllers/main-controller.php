@@ -12,14 +12,14 @@ var categoriesMain          =   function(
     sharedTableHeaderButtons,
     sharedAlert,
     sharedEntryActions,
-    sharedDocumentTitle
-) {
+    sharedDocumentTitle)
+ {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories', 'nexopos_advanced' );?>' );
     
     $scope.textDomain           =   categoriesAddTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste catégories', 'nexopos_advanced' );?>' );
     $scope.table.columns        =   categoryTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();

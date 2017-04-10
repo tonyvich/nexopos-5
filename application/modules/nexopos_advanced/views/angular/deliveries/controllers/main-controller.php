@@ -19,7 +19,7 @@ var deliveriesMain          =   function(
     
     $scope.textDomain           =   deliveriesTextDomain;
     $scope.validate             =   new sharedValidate();
-    $scope.table                =   new sharedTable();
+    $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des livraisons', 'nexopos_advanced' );?>' );
     $scope.table.columns        =   deliveriesTable.columns;
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
