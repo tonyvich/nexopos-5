@@ -84,8 +84,21 @@ tendooApp.factory( 'sharedTableHeaderButtons',[ '$http', function( $http ){
                 noSelect        :   true // if the table has 0 entry selected, the button will appear
             },
             icon        :   'fa fa-file-text',
-            callback        :   function() {
-                // alert( 'PDF export Function will be available ASAP' );
+            callback        :   function( table ) {
+                var dataObject      =   {
+                    headers         :   table.columns,
+                    data            :   table.entries,
+                    name            :   table.name,
+                    author          :   '<?php echo User::pseudo();?>'
+                };
+
+                $http.post( '<?php echo site_url([ 'rest', 'nexopos_advanced', 'export_to_pdf' ]);?>' , dataObject,{
+                    headers			:	{
+                        '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                    }
+                }).then( ( returned ) => {
+                    window.open( returned.data.file );
+                });
             }
         }]
     }

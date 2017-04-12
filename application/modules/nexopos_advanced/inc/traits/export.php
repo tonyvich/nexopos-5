@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+use Dompdf\Dompdf;
+
 Trait export
 {
     private function cleanString($text) {
@@ -89,7 +92,27 @@ Trait export
 
     public function export_to_pdf_post()
     {
+        $dompdf = new Dompdf();
+        $dompdf->setPaper('A4','potrait');
+        $dompdf->load_html( $this->load->module_view( 'nexopos_advanced', 'export.pdf-table', [
+            'headers'   =>  $this->post( 'headers' ),
+            'data'      =>  $this->post( 'data' ),
+            'name'      =>  $this->post( 'name' ),
+            'author'    =>  $this->post( 'author' )
+        ], true ) );
+        $dompdf->render();
 
+
+        // Save Excel 2007 file
+        $file_name      =   strtolower( $this->cleanString( str_replace( ' ', '-', $this->post( 'name' ) ) ) );
+        $file_location  =   UPLOADPATH . $file_name . '.pdf';
+        $output         =   $dompdf->output();
+
+        file_put_contents( $file_location, $output);
+
+        $this->response([
+            'file'  =>  site_url([ 'public', 'upload', $file_name . '.pdf' ])
+        ]);
     }
 
     /**
