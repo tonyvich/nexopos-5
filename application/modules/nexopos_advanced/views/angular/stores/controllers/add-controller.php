@@ -1,14 +1,16 @@
 var stores          =   function(
-    storesAddTextDomain,
     $scope,
     $http,
+    $location,
+    storesAddTextDomain,
     storesFields,
     storesResource,
-    $location,
     sharedValidate,
     sharedRawToOptions,
     sharedDocumentTitle,
-    sharedMoment
+    sharedMoment,
+    sharedUserResource,
+    sharedFieldEditor
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une Boutique', 'nexopos_advanced' );?>' );
@@ -17,6 +19,13 @@ var stores          =   function(
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
 
+    // Setting options for dropdown multiselect
+    sharedUserResource.get(
+        function(data){
+            sharedFieldEditor('authorized_users',$scope.fields).options = sharedRawToOptions(data.entries, 'id', 'name');
+        }
+    );
+    
     //Submitting Form
 
     $scope.submit       =   function(){
@@ -51,16 +60,18 @@ var stores          =   function(
 }
 
 stores.$inject    =   [
-    'storesAddTextDomain',
     '$scope',
     '$http',
+    '$location',
+    'storesAddTextDomain',
     'storesFields',
     'storesResource',
-    '$location',
     'sharedValidate',
     'sharedRawToOptions',
     'sharedDocumentTitle',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedUserResource',
+    'sharedFieldEditor'
 ];
 
 tendooApp.controller( 'stores', stores );

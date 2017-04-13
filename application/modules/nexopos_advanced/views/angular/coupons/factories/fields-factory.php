@@ -30,7 +30,6 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
         model       :   'discount_percent',
         desc        :    '<?php echo _s( 'Si vous avez choisi une réduction en pourcentage', 'nexopos_advanced' );?>',
         validation  :   {
-            required : true,
             decimal  : true
         }
     },{
@@ -39,7 +38,6 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
         model       :   'discount_amount',
         desc        :    '<?php echo _s( 'Si vous avez choisi une réduction en montant', 'nexopos_advanced' );?>',
         validation  :   {
-            required : true,
             decimal  : true
         }
     },{
@@ -107,11 +105,17 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
         label       :   '<?php echo _s( 'Montant minimal', 'nexopos_advanced' );?>',
         model       :   'minimum_amount',
         desc        :    '<?php echo _s( 'le coupon ne sera utilisable que si le total de la commande ne soit égale à cette valeur.', 'nexopos_advanced' );?>',
+        validation  :   {
+            decimal  : true
+        }
     },{
         type        :   'text',
         label       :   '<?php echo _s( 'Montant maximal', 'nexopos_advanced' );?>',
         model       :   'maximum_amount',
         desc        :    '<?php echo _s( 'le coupon ne sera utilisable que si le total de la commande n\'excède pas cette valeur.', 'nexopos_advanced' );?>',
+        validation  :   {
+            decimal  : true
+        }
     },{
         type        :   'textarea',
         label       :   '<?php echo _s( 'Description', 'nexopos_advanced' );?>',
