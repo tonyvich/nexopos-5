@@ -1,0 +1,20 @@
+<div class="main-wrapper bg-smooth-gray" fxFlex [ngStyle]="{ 'height.px': documentHeight }">
+    <div fxLayout="column" fxFlex="100">
+        <div fxFlex="10" fxLayout="row" class="pos-cart-header">
+            <div fxFlex style="margin-right:5px;">
+                <button fxFlex="15" md-raised-button>Load Order</button>
+            </div>
+            <div fxFlex style="margin-left:5px;">
+                <button fxFlex="15" md-raised-button>Raised button</button>
+            </div>
+        </div>
+        <div fxFlex fxLayout="row" style="padding:0 10px 10px 10px;">
+            <div fxFlex style="margin-right:5px;">
+                <nexopos-cart fxFlex></nexopos-cart>
+            </div>
+            <div fxFlex style="margin-left:5px;">
+                <nexopos-grid fxFlex></nexopos-grid>
+            </div>
+        </div>
+    </div>
+</div>

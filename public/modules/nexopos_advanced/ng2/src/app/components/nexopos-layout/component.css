@@ -1,0 +1,10 @@
+.bg-smooth-gray {
+    background: #DDD;
+}
+.pos-cart-header {
+    padding:10px; 10px 0 10px
+}
+
+.pos-cart-header > button {
+    margin-right:10px;
+}
