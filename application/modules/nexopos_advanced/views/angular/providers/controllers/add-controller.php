@@ -33,7 +33,11 @@ var providers          =   function(
         providersResource.save(
             $scope.item,
             function(){
-                $location.url( '/providers?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/providers?notice=done' );
+                }
             },function( returned ){
 
                 $scope.submitDisabled   =   false;

@@ -25,7 +25,7 @@ var stores          =   function(
             sharedFieldEditor('authorized_users',$scope.fields).options = sharedRawToOptions(data.entries, 'id', 'name');
         }
     );
-    
+
     //Submitting Form
 
     $scope.submit       =   function(){
@@ -42,7 +42,11 @@ var stores          =   function(
     storesResource.save(
         $scope.item,
         function(){
-            $location.url( '/stores?notice=done' );
+            if( $location.search().fallback ) {
+                $location.url( $location.search().fallback );
+            } else {
+                $location.url( '/stores?notice=done' );
+            }            
         },function( returned ){
 
             $scope.submitDisabled   =   false;

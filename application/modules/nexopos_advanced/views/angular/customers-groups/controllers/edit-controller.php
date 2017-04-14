@@ -46,7 +46,11 @@ var customersGroupsEdit      =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/customers-groups?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/customers-groups?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }

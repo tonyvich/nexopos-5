@@ -43,7 +43,11 @@ var categories          =   function(
         categoriesResource.save(
             $scope.item,
             function(){
-                $location.url( '/categories?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/categories?notice=done' );
+                }                
             },function( returned ){
 
                 $scope.submitDisabled   =   false;

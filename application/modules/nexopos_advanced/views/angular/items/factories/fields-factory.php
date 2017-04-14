@@ -19,8 +19,8 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
             },
             buttons     :   [{
                 class   :   'default',
-                click   :   function() {
-                    $location.path( 'categories/add' );
+                click   :   function( item ) {
+                    $location.url( 'categories/add/?fallback=items/add/' + item.namespace );
                 },
                 icon    :   'fa fa-plus'
             }]
@@ -35,7 +35,7 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
             buttons     :   [{
                 class   :   'default',
                 click   :   function() {
-                    $location.path( 'units/add' );
+                    $location.url( 'units/add/?fallback=items/add/' + item.namespace );
                 },
                 icon    :   'fa fa-plus'
             }]
@@ -49,8 +49,8 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
             },
             buttons     :   [{
                 class   :   'default',
-                click   :   function() {
-                    $location.path( 'taxes/add' );
+                click   :   function( item ) {
+                    $location.url( 'taxes/add/?fallback=items/add/' + item.namespace );
                 },
                 icon    :   'fa fa-plus'
             }]

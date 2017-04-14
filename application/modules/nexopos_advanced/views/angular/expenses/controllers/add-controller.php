@@ -41,7 +41,11 @@ var expenses          =   function(
         expensesResource.save(
             $scope.item,
             function(){
-                $location.url( '/expenses?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/expenses?notice=done' );
+                }                
             },function( returned ){
 
                 $scope.submitDisabled   =   false;

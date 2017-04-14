@@ -1,9 +1,9 @@
-<div class="nav-tabs-custom variation-{{ variation_id }}" ng-repeat="(variation_id, variation) in item.variations">
+<div class="nav-tabs-custom variation-{{ variation_id }}" ng-repeat="(variation_id, variation) in item.variations track by $index">
 
     <ul class="nav nav-tabs variation-header-{{ variation_id }}">
 
         <li
-            ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs"
+            ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs track by $index"
             ng-hide="variation_tab.hide( item )"
             class="{{ tabContentIsActive( variation_tab.active ) ? 'active' : '' }} variation-{{ variation_id }}-tab-header-{{ variation_tab_id }}"
         >
@@ -38,7 +38,7 @@
     <div class="tab-content variation-body-{{ variation_id }}">
 
       <div
-        ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs"
+        ng-repeat="(variation_tab_id, variation_tab ) in variation.tabs track by $index"
         ng-init="variation.tabs[0].active   =   tabContentIsActive( variation.tabs[0].active, variation_tab_id )"
         class="variation-{{ variation_id }}-tab-body-{{ variation_tab_id }}"
         style="display:block;">
@@ -47,7 +47,7 @@
         class="tab-pane row">
 
             <div
-                ng-repeat="field in itemAdvancedFields[ variation_tab.namespace ]"
+                ng-repeat="field in itemAdvancedFields[ variation_tab.namespace ] track by $index"
                 class="{{ field.class !== undefined ? field.class : 'col-lg-6 col-sm-6 col-xs-12' }}"
                 ng-show="field.show( variation_tab, item, itemAdvancedFields[ variation_tab.namespace ] )"
                 >
@@ -90,10 +90,16 @@
                                 variation_tab_id    :   variation_tab_id
                             })"
                         >
-                            <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
+                            <option ng-repeat="option in field.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
                         <span class="input-group-btn" ng-if="field.buttons.length > 0">
-                            <button class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                            <button
+                                class="btn btn-{{ button.class }}"
+                                ng-repeat="button in field.buttons track by $index"
+                                ng-click="button.click( item )"> <!-- Send the item as parameter -->
+                                <i class="{{ button.icon }}"></i> {{ button.label }}
+
+                            </button>
                         </span>
                     </div>
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
@@ -149,7 +155,7 @@
 
                     <div
                         class="col-lg-6 col-sm-6 col-xs-12"
-                        ng-repeat="(variation_group_id,group_value) in variation_tab.models[ field.model ]"
+                        ng-repeat="(variation_group_id,group_value) in variation_tab.models[ field.model ] track by $index"
                         >
 
                         <div class="box box-primary variation-{{ variation_id }}-tab-{{ variation_tab_id }}-group-{{ variation_group_id }}" style="background:#F1F1F1;" >
@@ -183,7 +189,7 @@
                             <div class="box-body variation-{{ variation_id }}-tab-{{ variation_tab_id }}-group-body-{{ variation_group_id }}">
 
                                 <div
-                                    ng-repeat="( subFieldId, subField ) in field.subFields"
+                                    ng-repeat="( subFieldId, subField ) in field.subFields track by $index"
                                     ng-show="subField.show( variation_tab, item, field.subFields )"
                                     >
 
@@ -234,10 +240,15 @@
                                                   variation_tab       :   variation_tab
                                                 })"
                                                 ng-model="variation_tab.models[ field.model ][ variation_group_id ].models[ subField.model ]">
-                                                <option ng-repeat="option in subField.options" value="{{ option.value }}">{{ option.label }}</option>
+                                                <option ng-repeat="option in subField.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
                                             <span class="input-group-btn" ng-if="subField.buttons.length > 0">
-                                                <button class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-click="button.click()"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                                                <button
+                                                    class="btn btn-{{ button.class }}"
+                                                    ng-repeat="button in subField.buttons track by $index"
+                                                    ng-click="button.click( item )"> <!-- Send the item as parameter -->
+                                                    <i class="{{ button.icon }}"></i> {{ button.label }}
+                                                </button>
                                             </span>
                                         </div>
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>

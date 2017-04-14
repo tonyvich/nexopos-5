@@ -388,7 +388,11 @@ var customersEdit               =   function(
             },
             $scope.finalItem,
             function(){
-                $location.url( '/customers?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/customers?notice=done' );
+                }
             },function( returned ){
 
                 $scope.submitDisabled   =   false;

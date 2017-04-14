@@ -48,7 +48,11 @@ var providersEdit      =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/providers?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/providers?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }

@@ -46,7 +46,11 @@ var unitsEdit      =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/units?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/units?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }

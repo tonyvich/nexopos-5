@@ -1,5 +1,5 @@
 var storesEdit          =   function(
-    
+
     $scope,
     $http,
     $route,
@@ -70,7 +70,11 @@ var storesEdit          =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/stores?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/stores?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }
@@ -79,7 +83,7 @@ var storesEdit          =   function(
 }
 
 storesEdit.$inject    =   [
-    
+
     '$scope',
     '$http',
     '$route',
