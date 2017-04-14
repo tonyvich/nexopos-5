@@ -1,15 +1,18 @@
 var storesEdit          =   function(
-    storesEditTextDomain,
+    
     $scope,
     $http,
     $route,
+    $location,
+    storesEditTextDomain,
     storesFields,
     storesResource,
-    $location,
     sharedValidate,
     sharedRawToOptions,
     sharedDocumentTitle,
-    sharedMoment
+    sharedMoment,
+    sharedUserResource,
+    sharedFieldEditor
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une caisse', 'nexopos_advanced' );?>' );
@@ -17,6 +20,13 @@ var storesEdit          =   function(
     $scope.fields           =   storesFields;
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
+
+    // Setting options for dropdown multiselect
+    sharedUserResource.get(
+        function(data){
+            sharedFieldEditor('authorized_users',$scope.fields).options = sharedRawToOptions(data.entries, 'id', 'name');
+        }
+    );
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
@@ -69,17 +79,20 @@ var storesEdit          =   function(
 }
 
 storesEdit.$inject    =   [
-    'storesEditTextDomain',
+    
     '$scope',
     '$http',
     '$route',
+    '$location',
+    'storesEditTextDomain',
     'storesFields',
     'storesResource',
-    '$location',
     'sharedValidate',
     'sharedRawToOptions',
     'sharedDocumentTitle',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedUserResource',
+    'sharedFieldEditor'
 ];
 
 tendooApp.controller( 'storesEdit', storesEdit );
