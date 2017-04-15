@@ -26,7 +26,7 @@ var setupDetails        =   function(
          sharedStorageResource.post( {}, {
              options : $scope.options
          }, function(){
-             $location.path( string );
+             $location.url( string );
          },function(){
              console.log( 'An Error occured' );
          });

@@ -5,6 +5,9 @@ var items               =   function(
     $scope,
     $http,
     $location,
+
+    // internal dependencies
+
     itemsTypes,
     item,
     itemsAdvancedFields,
@@ -17,13 +20,19 @@ var items               =   function(
     unitsResource,
     taxesResource,
     $routeParams,
+
+    // Shared Dependencies
+
     sharedDocumentTitle,
     sharedValidate,
     sharedRawToOptions,
     sharedFieldEditor,
     sharedAlert,
     sharedMoment,
-    sharedFilterItem
+    sharedFilterItem,
+
+    // External dependencies
+    localStorageService
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
@@ -83,13 +92,13 @@ var items               =   function(
                 variation_tab_selector      =   $scope.getClass( ids ).variation_group_body;
 
                 // if tab groups_errors is not set
-                if( typeof item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors == 'undefined' ) {
-                    item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors     =   {};
+                if( typeof $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors == 'undefined' ) {
+                    $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors     =   {};
                 }
 
                 // Bring validaiton error badge to the tab of the variation
                 // We just fetch the group name and use it to group errors
-                var groups_errors   =   item.variations[ ids.variation_id ]
+                var groups_errors   =   $scope.item.variations[ ids.variation_id ]
                 .tabs[ ids.variation_tab_id ]
                 .groups_errors[ ids.variation_tab.namespace ];
 
@@ -106,7 +115,7 @@ var items               =   function(
                 );
 
                 // let refresh variation groups errors;
-                item.variations[ ids.variation_id ]
+                $scope.item.variations[ ids.variation_id ]
                 .tabs[ ids.variation_tab_id ]
                 .groups_errors[ ids.variation_tab.namespace ]    =   groups_errors;
 
@@ -128,7 +137,7 @@ var items               =   function(
             // delete error for grouped field
             if( angular.isDefined( $scope.getClass( ids ).variation_group_body ) ) {
                 // Delete validaiton error for group in tab object;
-                var groups_errors   =   item.variations[ ids.variation_id ]
+                var groups_errors   =   $scope.item.variations[ ids.variation_id ]
                 .tabs[ ids.variation_tab_id ]
                 .groups_errors[ ids.variation_tab.namespace ];
 
@@ -141,6 +150,8 @@ var items               =   function(
                 delete variation_tab.errors[ field.model ]; // delete error for other fields
             }
         }
+
+        $scope.saveOnLocalStorage();
 
         return response.isValid ? null : validation;
     }
@@ -162,7 +173,7 @@ var items               =   function(
             }
         });
 
-        _.each( item.variations, function( variation, variation_id ) {
+        _.each( $scope.item.variations, function( variation, variation_id ) {
             _.each( variation.tabs, function( tab, variation_tab_id ) {
                 var ids             =   {
                     variation_id        :   variation_id,
@@ -253,18 +264,18 @@ var items               =   function(
 
     /**
      *  Add Variation
-     *  @param
-     *  @return
+     *  @param void
+     *  @return void
     **/
 
     $scope.addVariation         =   function(){
-        if( item.variations.length == 10 ) {
+        if( $scope.item.variations.length == 10 ) {
             NexoAPI.Notify().info( '<?php echo _s( 'Attention', 'nexo' );?>', '<?php echo _s( 'Vous ne pouvez pas créer plus de 10 variations d\'un même produit.', 'nexo' );?>')
             return;
         }
 
         var singleVariation         =   {
-            tabs        :   item.getTabs()
+            tabs        :   $scope.item.getTabs()
         };
 
         _.each( singleVariation, function( variation, $tab_id ) {
@@ -273,7 +284,7 @@ var items               =   function(
             });
         });
 
-        item.variations.push( singleVariation );
+        $scope.item.variations.push( singleVariation );
     }
 
     /**
@@ -292,11 +303,11 @@ var items               =   function(
         .parent( 'li' )
         .addClass( 'active' );
 
-        _.each( item.variations[variationIndex].tabs, function( value ) {
+        _.each( $scope.item.variations[variationIndex].tabs, function( value ) {
             value.active    =   false;
         });
 
-        item.variations[variationIndex].tabs[ tabIndex ].active     =   true;
+        $scope.item.variations[variationIndex].tabs[ tabIndex ].active     =   true;
     }
 
     /**
@@ -326,33 +337,70 @@ var items               =   function(
      *  @return void
     **/
 
-    $scope.detectItemNamespace      =   function(a, b){
+    $scope.initItem      =   function(a, b){
 
-        // Reset Variations if he comes from item selection
-        if( $scope.previousPath == '/create' ) {
-            item.variations         =   [{
-                models          :       {
-                    name        :   item.name
-                },
-                tabs            :       item.getTabs()
-            }];
-        }
+        $scope.item                 =   new item;
+        $scope.item.name            =   '';
+        $scope.item.variations      =   [{
+            models          :       {
+                name        :   $scope.item.name
+            },
+            tabs            :       $scope.item.getTabs()
+        }];
+
+        _.each( $scope.item.variations, function( variation, $tab_id ) {
+            _.each( variation.tabs, function( tab, $tab_key ) {
+                tab.models      =   {};
+            });
+        });
 
         switch( $location.path() ) {
             case "/items/add/clothes" :
-                item.namespace    =   'clothes';
+                $scope.item.namespace    =   'clothes';
             break;
             case "/items/add/coupon" :
-                item.namespace   =   'coupon';
+                $scope.item.namespace   =   'coupon';
             break;
         }
 
         // Selected Type
         _.each( itemsTypes, function( type, key ) {
-            if( type.namespace == item.typeNamespace ) {
-                item.selectedType   =   type;
+            if( type.namespace == $scope.item.typeNamespace ) {
+                $scope.item.selectedType   =   type;
             }
         });
+
+        // When everything seems to be done, then we can check if the item exist on the local store
+        if( localStorageService.isSupported ) {
+            // The item is reset if you access from type selection
+            // Maybe a prompt can ask whether the saved item should be deleted :\ ?
+            if( $location.path() == '/items/types' ) {
+                localStorageService.remove( 'item' );
+            } else {
+                if( typeof localStorageService.get( 'item' ) === 'object' ) {
+                    console.log( $scope.item );
+                    let savedItem           =   localStorageService.get( 'item' );
+                    _.each( savedItem, ( field, field_name) => {
+                        if( field_name != 'variations' ) {
+                            $scope.item[ field_name ]   =   field;
+                        }
+                    });
+
+                    _.each( savedItem.variations, ( savedVariation, key ) => {
+                        $scope.item.variations[ key ]   =   {
+                            models          :   savedVariation.models,
+                            tabs            :   $scope.item.getTabs()
+                        };
+
+                        //Looping tabs
+                        _.each( $scope.item.variations[ key ].tabs, ( tab, tab_key ) => {
+                            tab.models      =   savedVariation.tabs[ tab_key ].models
+                        });
+                    });
+                    /// $scope.item         =   _.extend( $scope.item, localStorageService.get( 'item' ) );
+                }
+            }
+        }
     }
 
     /**
@@ -404,7 +452,7 @@ var items               =   function(
     **/
 
     $scope.purifyItem           =   function( item ) {
-
+        // nothing
     }
 
     /**
@@ -457,7 +505,7 @@ var items               =   function(
         sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ce groupe ?', 'nexopos_advanced' );?>', function( action ) {
             if( action ) {
                 // delete all error related to the deleted group
-                item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors[ ids.variation_tab.namespace ].splice( $index, 1 );
+                $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors[ ids.variation_tab.namespace ].splice( $index, 1 );
 
                 $groups.splice( $index, 1 );
             }
@@ -473,9 +521,27 @@ var items               =   function(
     $scope.removeVariation  =   function( $index ){
         sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer cette variation ?', 'nexopos_advanced' );?>', function( action ) {
             if( action ) {
-                item.variations.splice( $index, 1 );
+                $scope.item.variations.splice( $index, 1 );
             }
         });
+    }
+
+    /**
+     *  Save On Local Storage
+     *  @param void
+     *  @return void
+    **/
+
+    $scope.saveOnLocalStorage   =   ()  => {
+        if( localStorageService.isSupported ) {
+            // We'll only save if localStore is enabled
+            if( localStorageService.getStorageType() == 'localStorage' ) {
+                $scope.$watch( 'item', ( before, after ) => {
+                    // console.log( $scope.item );
+                    localStorageService.set( 'item', $scope.item );
+                });
+            }
+        }
     }
 
     /**
@@ -527,7 +593,7 @@ var items               =   function(
 
         itemToSubmit[ 'author' ]            =   '<?php echo User::id();?>';
         itemToSubmit[ 'date_creation' ]     =   sharedMoment.now();
-        itemToSubmit[ 'namespace' ]         =   item.namespace;
+        itemToSubmit[ 'namespace' ]         =   $scope.item.namespace;
 
         // Item Resource POST*
         itemsResource.save( itemToSubmit, function( returned ){
@@ -592,7 +658,7 @@ var items               =   function(
     }];
 
     $scope.groupLengthLimit     =   10;
-    $scope.itemsTypes            =   itemsTypes;
+    $scope.itemsTypes           =   itemsTypes;
     $scope.fields               =   itemsFields;
 
     // Resources Loading
@@ -622,37 +688,37 @@ var items               =   function(
 
     // Display a dynamic price when a taxes is selected
     sharedFieldEditor( 'sale_price', itemsAdvancedFields.basic ).show          =   function( tab, item ) {
-        if( item.ref_taxe ) {
-            if( angular.isUndefined( $scope.taxes[ item.ref_taxe ] ) ) {
+        if( $scope.item.ref_taxe ) {
+            if( angular.isUndefined( $scope.taxes[ $scope.item.ref_taxe ] ) ) {
                 // To Avoid several calls to the database
-                $scope.taxes[ item.ref_taxe ]           =   {};
+                $scope.taxes[ $scope.item.ref_taxe ]           =   {};
                 taxesResource.get({
-                    id      :   item.ref_taxe
+                    id      :   $scope.item.ref_taxe
                 },function( entries ) {
-                    $scope.taxes[ item.ref_taxe ]       =   entries;
+                    $scope.taxes[ $scope.item.ref_taxe ]       =   entries;
                 });
 
                 if( angular.isDefined( tab.models.sale_price ) ) {
-                    if( $scope.taxes[ item.ref_taxe ].type == 'percent' ) {
-                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ item.ref_taxe ].value ) ) / 100;
+                    if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
+                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
                         var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                         this.addon          =   newPrice;
                     } else {
-                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ item.ref_taxe ].value );
+                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
                         this.addon          =   newPrice;
                     }
                 }
             }
 
-            if( _.keys( $scope.taxes[ item.ref_taxe ] ).length > 0 ) {
+            if( _.keys( $scope.taxes[ $scope.item.ref_taxe ] ).length > 0 ) {
                 if( angular.isDefined( tab.models ) ) {
                     if( angular.isDefined( tab.models.sale_price ) ) {
-                        if( $scope.taxes[ item.ref_taxe ].type == 'percent' ) {
-                            var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ item.ref_taxe ].value ) ) / 100;
+                        if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
+                            var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
                             var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                             this.addon          =   newPrice;
                         } else {
-                            var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ item.ref_taxe ].value );
+                            var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
                             this.addon          =   newPrice;
                         }
                     }
@@ -664,32 +730,11 @@ var items               =   function(
         return true;
     }
 
-    // Item Status
-    item.variations     =   new Array;
-    item.name           =   '';
-
     $scope.docHeight            =   ( parseFloat( angular.element( '.content-wrapper' ).css( 'min-height' ) ) - 100 ) + 'px';
 
-    // Watch variation
-    $scope.$watch( 'item.variations', function(){
-        if( item.variations.length == 0 ) {
-            item.variations.push({
-                tabs    :   item.getTabs()
-            });
-        }
-
-        _.each( item.variations, function( variation, $tab_id ) {
-            _.each( variation.tabs, function( tab, $tab_key ) {
-                tab.models      =   {};
-            });
-        });
-    });
-
     // Detect item Namespace
-    $scope.detectItemNamespace();
-
     $scope.$on('$routeChangeSuccess', function(next, current) {
-        $scope.detectItemNamespace(current, next);
+        $scope.initItem(current, next);
     });
 
     $scope.$on('$routeChangeStart', function(next, current) {
@@ -719,7 +764,8 @@ items.$inject           =   [
     'sharedFieldEditor',
     'sharedAlert',
     'sharedMoment',
-    'sharedFilterItem'
+    'sharedFilterItem',
+    'localStorageService'
 ];
 
 tendooApp.controller( 'items', items );

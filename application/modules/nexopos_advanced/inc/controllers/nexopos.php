@@ -153,4 +153,15 @@ class NexoPOS_Main_Controller extends Tendoo_Module
            'angular/shared/templates/' . $file . '-template'
        );
    }
+
+   /**
+    *  POS using Angular 2
+    *  @param
+    *  @return
+   **/
+
+   public function pos()
+   {
+       $this->load->module_view( 'nexopos_advanced', 'pos.main' );
+   }
 }

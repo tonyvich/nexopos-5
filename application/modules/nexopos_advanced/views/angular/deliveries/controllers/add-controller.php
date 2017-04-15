@@ -34,7 +34,11 @@ var deliveries          =   function(
         deliveriesResource.save(
             $scope.item,
             function(){
-                $location.url( '/deliveries?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/deliveries?notice=done' );
+                }
             },function( returned ){
 
                 $scope.submitDisabled   =   false;

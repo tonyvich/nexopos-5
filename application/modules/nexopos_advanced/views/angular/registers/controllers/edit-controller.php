@@ -59,7 +59,11 @@ var registersEdit          =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/registers?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/registers?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }

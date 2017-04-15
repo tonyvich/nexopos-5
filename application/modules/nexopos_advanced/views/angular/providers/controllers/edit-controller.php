@@ -11,8 +11,6 @@ var providersEdit      =   function(
     sharedMoment
 ) {
 
-    console.log( sharedDocumentTitle );
-
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un fournisseur', 'nexopos_advanced' );?>');
     $scope.textDomain       =   providersEditTextDomain;
     $scope.fields           =   providersFields;
@@ -48,7 +46,11 @@ var providersEdit      =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/providers?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/providers?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }

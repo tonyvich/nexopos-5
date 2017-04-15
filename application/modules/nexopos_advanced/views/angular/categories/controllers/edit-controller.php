@@ -34,7 +34,6 @@ var categoriesEdit          =   function(
             exclude     :   $route.current.params.id
         },
         function(data){
-            console.log( data.entries );
             $scope.fields[1].options = sharedRawToOptions( data.entries, 'id', 'name');
         }
     );
@@ -59,7 +58,11 @@ var categoriesEdit          =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/categories?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/categories?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }

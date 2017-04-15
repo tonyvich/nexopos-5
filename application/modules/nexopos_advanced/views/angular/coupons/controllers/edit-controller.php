@@ -72,7 +72,11 @@ var couponsEdit      =   function(
             },
             $scope.item,
             function(){
-                $location.url( '/coupons?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/coupons?notice=done' );
+                }
             },function(){
                 $scope.submitDisabled       =   false;
             }

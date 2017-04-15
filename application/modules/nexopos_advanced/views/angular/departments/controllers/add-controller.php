@@ -28,7 +28,11 @@ var departmentsAddController = function(
         departmentsResource.save(
             $scope.item,
             function(){
-                $location.url( '/departments?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/departments?notice=done' );
+                }
             },function( returned ){
 
                 $scope.submitDisabled   =   false;

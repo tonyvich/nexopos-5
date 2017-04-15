@@ -11,7 +11,7 @@ var expensesCategories          =   function(
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une catégorie de dépenses', 'nexopos_advanced' );?>' );
-    
+
     $scope.textDomain       =   expensesCategoriesTextDomain;
     $scope.fields           =   expensesCategoriesFields;
     $scope.item             =   {};
@@ -19,7 +19,7 @@ var expensesCategories          =   function(
     $scope.validate         =   new sharedValidate();
 
     $scope.submit       =   function(){
-        
+
         $scope.item.author          =   <?= User::id()?>;
         $scope.item.date_creation   =   sharedMoment.now();
 
@@ -32,7 +32,11 @@ var expensesCategories          =   function(
         expensesCategoriesResource.save(
             $scope.item,
             function(){
-                $location.url( '/expenses-categories?notice=done' );
+                if( $location.search().fallback ) {
+                    $location.url( $location.search().fallback );
+                } else {
+                    $location.url( '/expenses-categories?notice=done' );
+                }
             },function( returned ){
 
                 $scope.submitDisabled   =   false;
