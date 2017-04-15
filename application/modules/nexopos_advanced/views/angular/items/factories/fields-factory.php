@@ -34,7 +34,7 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
             },
             buttons     :   [{
                 class   :   'default',
-                click   :   function() {
+                click   :   function( item ) {
                     $location.url( 'units/add/?fallback=items/add/' + item.namespace );
                 },
                 icon    :   'fa fa-plus'

@@ -24,9 +24,6 @@ class NexoPOS_Assets extends Tendoo_Module
         // Sweet Alert CSS
         $this->enqueue->css( $bower_url . 'sweetalert/dist/sweetalert' );
 
-        // Scroll
-        $this->enqueue->css( $bower_url . 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min' );
-
         $this->enqueue->js_namespace( 'dashboard_footer' );
         $this->enqueue->js( 'js/string.format', module_url( 'nexopos_advanced' ) );
         $this->enqueue->js( site_url([ 'dashboard', 'nexopos', 'shared_factories', 'currency' ]), '' );
@@ -68,8 +65,7 @@ class NexoPOS_Assets extends Tendoo_Module
         // Numeral JS
         $this->enqueue->js( $bower_url . 'numeral/min/numeral.min');
 
-        // Scroll
-        $this->enqueue->js( $bower_url . 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min' );
-        $this->enqueue->js( $bower_url . 'ng-scrollbars/dist/scrollbars.min' );
+        // Local Storage
+        $this->enqueue->js( $bower_url . 'angular-local-storage/dist/angular-local-storage.min');
     }
 }

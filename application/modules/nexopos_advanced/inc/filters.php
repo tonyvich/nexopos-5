@@ -26,7 +26,7 @@ class NexoPOS_Filters extends Tendoo_Module
         $deps[]     =   'oitozero.ngSweetAlert';
         $deps[]     =   'ngNumeraljs';
         $deps[]     =   'amo.multiselect';
-        $deps[]     =   'ngScrollbars';
+        $deps[]     =   'LocalStorageModule';
         return $deps;
     }
 }

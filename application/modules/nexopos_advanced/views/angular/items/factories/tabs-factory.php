@@ -1,6 +1,6 @@
 tendooApp.factory( 'item', function(){
-    return {
-        getTabs        :   function(){
+    return function() {
+        this.getTabs    =   () => {
             var tabs    =   new Array;
                 tabs    =   [{
                     'namespace'     :   'coupon',
@@ -42,5 +42,5 @@ tendooApp.factory( 'item', function(){
                 }];
             return tabs;
         }
-    };
+    }
 });

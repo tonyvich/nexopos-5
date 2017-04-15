@@ -2,7 +2,6 @@ tendooApp.factory( 'itemsAdvancedFields', [
     '$location',
     'sharedOptions',
     'barcodeOptions',
-    'item',
     'sharedRawToOptions',
     'itemsResource',
     'itemsVariationsResource',
@@ -11,7 +10,6 @@ tendooApp.factory( 'itemsAdvancedFields', [
         $location,
         sharedOptions,
         barcodeOptions,
-        item,
         sharedRawToOptions,
         itemsResource,
         itemsVariationsResource,
@@ -25,7 +23,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 label   :   '<?php echo _s( 'Assigner à un coupon', 'nexo' );?>',
                 desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexo' );?>',
                 options   : sharedOptions.yesOrNo,
-                show    :   function() {
+                show    :   function( item ) {
                     return item.namespace == 'coupon' ? true : false;
                 }
             }
@@ -35,8 +33,11 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 type        :   'text',
                 label       :   '<?php echo _s( 'Nom de la variation', 'nexo' );?>',
                 model       :   'name',
-                show        :   function(){
-                    return item.variations.length > 1;
+                show        :   function( item ){
+                    if( typeof item.variations != 'undefined' ) {
+                        return item.variations.length > 1;
+                    }
+                    return false;
                 },
                 desc        :   '<?php echo _s( 'Veuillez choisir une désignation unique pour cette variation', 'nexo' );?>',
                 validation  :   {
@@ -238,8 +239,8 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     },
                     buttons     :   [{
                         class   :   'default',
-                        click   :   function() {
-                            $location.path( 'deliveries/add' );
+                        click   :   function( item ) {
+                            $location.url( 'deliveries/add?fallback=items/add/' + item.namespace );
                         },
                         icon    :   'fa fa-plus'
                     }]
@@ -256,8 +257,8 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     },
                     buttons     :   [{
                         class   :   'default',
-                        click   :   function() {
-                            $location.path( 'providers/add' );
+                        click   :   function( item ) {
+                            $location.url( 'providers/add?fallback=items/add/' + item.namespace );
                         },
                         icon    :   'fa fa-plus'
                     }]
@@ -296,9 +297,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                             }, function( returned ) {
                                 // greater than 2 since the object already has system keys : $promise and $resolved
                                 if( _.keys( returned ).length > 2 ) {
-                                    console.log( _.keys( returned ) );
                                     var message     =   '<?php echo _s( 'L\'Unité de gestion de stock : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, car le produit ne sera pas disponible à la vente.', 'nexopos_advanced' );?>';
-
                                     sharedAlert.warning( message.format( item[ field.model ] ) );
                                 }
                             });
@@ -374,9 +373,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                             }, function( returned ) {
                                 // greater than 2 since the object already has system keys : $promise and $resolved
                                 if( _.keys( returned ).length > 2 ) {
-                                    console.log( _.keys( returned ) );
                                     var message     =   '<?php echo _s( 'Le code barre : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, car le produit ne sera pas disponible à la vente.', 'nexopos_advanced' );?>';
-
                                     sharedAlert.warning( message.format( item[ field.model ] ) );
                                 }
                             });

@@ -34,7 +34,6 @@ var categoriesEdit          =   function(
             exclude     :   $route.current.params.id
         },
         function(data){
-            console.log( data.entries );
             $scope.fields[1].options = sharedRawToOptions( data.entries, 'id', 'name');
         }
     );

@@ -11,8 +11,6 @@ var providersEdit      =   function(
     sharedMoment
 ) {
 
-    console.log( sharedDocumentTitle );
-
     sharedDocumentTitle.set( '<?php echo _s( 'Editer un fournisseur', 'nexopos_advanced' );?>');
     $scope.textDomain       =   providersEditTextDomain;
     $scope.fields           =   providersFields;
