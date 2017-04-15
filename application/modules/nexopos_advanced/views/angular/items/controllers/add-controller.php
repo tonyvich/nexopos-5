@@ -380,7 +380,11 @@ var items               =   function(
                 if( typeof localStorageService.get( 'item' ) === 'object' ) {
                     console.log( $scope.item );
                     let savedItem           =   localStorageService.get( 'item' );
-                    $scope.item.name        =   savedItem.name;
+                    _.each( savedItem, ( field, field_name) => {
+                        if( field_name != 'variations' ) {
+                            $scope.item[ field_name ]   =   field;
+                        }
+                    });
 
                     _.each( savedItem.variations, ( savedVariation, key ) => {
                         $scope.item.variations[ key ]   =   {
