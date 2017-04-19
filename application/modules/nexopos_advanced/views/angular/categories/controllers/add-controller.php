@@ -2,12 +2,15 @@
 <script>
 <?php endif;?>
 var categories          =   function(
-    categoriesAddTextDomain,
+    
     $scope,
     $http,
+    $location,
+
     categoriesFields,
     categoriesResource,
-    $location,
+    categoriesAddTextDomain,
+   
     sharedValidate,
     sharedRawToOptions,
     sharedDocumentTitle,
@@ -71,12 +74,12 @@ var categories          =   function(
 }
 
 categories.$inject    =   [
-    'categoriesAddTextDomain',
     '$scope',
     '$http',
+    '$location',
     'categoriesFields',
     'categoriesResource',
-    '$location',
+    'categoriesAddTextDomain',
     'sharedValidate',
     'sharedRawToOptions',
     'sharedDocumentTitle',

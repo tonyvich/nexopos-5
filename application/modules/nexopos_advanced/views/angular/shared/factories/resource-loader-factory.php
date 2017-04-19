@@ -24,27 +24,26 @@ angular.element( document ).ready(function(){
             **/
             
             this.run                =   ( resourceIndex ) => {
-                tendooApp.spinner.start();
                 resourceIndex       =   typeof resourceIndex == 'undefined' ? 0 : resourceIndex;
                 if( typeof this.resourcesArray[ resourceIndex ] != 'undefined' ) {
                     let currentResource     =   this.resourcesArray[ resourceIndex ];
 
                     if( typeof currentResource.params != 'undefined' ) {
                         currentResource.resource.get( currentResource.params, ( data ) => {                         
-                            tendooApp.spinner.stop();
                             currentResource.success( data );                            
                             this.run( resourceIndex + 1 );                            
-                        }, typeof currentResource.error != 'undefined' ? currentResource.error( data ) : null );
+                        }, ( data ) => {
+                            typeof currentResource.error != 'undefined' ? currentResource.error( data ) : null
+                        });
                     } else {
                         currentResource.resource.get( {}, ( data ) => {
-                            tendooApp.spinner.stop();
                             currentResource.success( data );                            
                             this.run( resourceIndex + 1 );                            
-                        }, typeof currentResource.error != 'undefined' ? currentResource.error( data ) : null );
+                        }, ( data ) => {
+                            typeof currentResource.error != 'undefined' ? currentResource.error( data ) : null
+                        });
                     }
                     
-                } else {
-                    tendooApp.spinner.stop();
                 }
             }
         }

@@ -27,7 +27,7 @@ var categoriesEdit          =   function(
     // Get Resource when loading
     $scope.submitDisabled   =   true;
 
-    scope.resourceLoader.push({
+    $scope.resourceLoader.push({
         resource    :   categoriesResource,
         params      :   {
             id  :  $route.current.params.id

@@ -27,6 +27,9 @@ tendooApp.factory( 'sharedTable', [
         // table name
         this.name               =   name;
 
+        this.limit              =   20;
+        this.order_type         =   'asc';
+
         /**
          *  Array of Object To String
          *  @param
@@ -79,6 +82,23 @@ tendooApp.factory( 'sharedTable', [
                     $this.searchModel       =   '';
                 });
             }
+        }
+
+        /**
+         *  Delete Entries
+         *  @param string entry
+         *  @return string
+        **/
+        
+        this.delete             =   function( params ) {
+            this.resource.delete( params, ( data ) => {
+                this.get();
+            },function(){
+                sharedAlert.warning( '<?php echo _s(
+                    'Une erreur s\'est produite durant l\'operation',
+                    'nexopos_advanced'
+                );?>' );
+            });
         }
 
         /**
@@ -156,6 +176,19 @@ tendooApp.factory( 'sharedTable', [
         }
 
         /**
+        *  Table Get
+        *  @param object query object
+        *  @return void
+        **/
+
+        this.get            =   function( params ) {
+            this.resource.get( params, ( data ) => {
+                this.entries        =   data.entries;
+                this.pages          =   Math.ceil( data.num_rows / this.limit );
+            });
+        }
+
+        /**
          *  Get Checked entries
          *  @param void
          *  @return array of object
@@ -197,29 +230,6 @@ tendooApp.factory( 'sharedTable', [
         this.__getNumber        =   function( number ) {
             if( angular.isDefined( number ) ) {
                 return new Array( number );
-            }
-        }
-
-        /**
-         *  Toggle All Entry.
-         *  @param object entries
-         *  @return void
-        **/
-
-        this.toggleAllEntries         =   function( entries, headCheckbox ) {
-            _.each( entries, function( entry ) {
-                entry.checked  =   headCheckbox;
-            });
-        }
-
-        /**
-         *  Trigger Button Export
-         *  @return void
-        **/
-
-        this.triggerExport              =   ()  =>  {
-            if( typeof this.selectedExportOption != 'undefined' ) {
-                this.headerButtons[ this.selectedExportOption ].callback( this );
             }
         }
 
@@ -308,5 +318,29 @@ tendooApp.factory( 'sharedTable', [
                 $location.url( action.path + entry.id );
             }
         }
+
+        /**
+         *  Toggle All Entry.
+         *  @param object entries
+         *  @return void
+        **/
+
+        this.toggleAllEntries         =   function( entries, headCheckbox ) {
+            _.each( entries, function( entry ) {
+                entry.checked  =   headCheckbox;
+            });
+        }
+
+        /**
+         *  Trigger Button Export
+         *  @return void
+        **/
+
+        this.triggerExport              =   ()  =>  {
+            if( typeof this.selectedExportOption != 'undefined' ) {
+                this.headerButtons[ this.selectedExportOption ].callback( this );
+            }
+        }
+
     }
 }])
