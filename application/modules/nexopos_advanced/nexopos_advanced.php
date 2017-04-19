@@ -42,6 +42,7 @@ class NexoPOS_Advanced_Init extends Tendoo_Module {
         $this->events->add_action( 'dashboard_header', [ $this->actions, 'dashboard_header' ] );
         $this->events->add_filter( 'admin_menus', [ $this->menus, 'register' ] );
         $this->events->add_filter( 'dashboard_dependencies', [ $this->filters, 'dependencies' ] );
+        $this->events->add_filter( 'tendoo_spinner', [ $this->filters, 'nexopos_spinner' ] );
         // $this->events->add_filter( 'load_tendoo_app', '__return_false', 99 );
         // $this->events->add_filter( 'dashboard_body_attrs', '__return_false', 99 );
         // unset( $this->enqueue->scripts[ 'common_footer' ][ 'angular.min' ] );

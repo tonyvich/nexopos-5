@@ -13,13 +13,37 @@ if( @$Options[ 'site_language' ] == 'en_US') {
     "use strict";
     moment.locale( '<?phpe echo $locale;?>' );
 
+    tendooApp.spinner       =   new function() {
+        this.timesRun       =   0;
+        this.start          =   () => {
+            if( this.timesRun == 0 ) {
+                angular.element( '.nexopos-spinner' ).removeClass( 'hidden' );
+            }
+            this.timesRun++;
+            // console.log( 'times Start : ' + this.timesRun );
+        }
+
+        this.stop          =   () => {
+            if( this.timesRun == 1 ) {
+                angular.element( '.nexopos-spinner' ).addClass( 'hidden' );
+            }
+            this.timesRun--;
+            // console.log( 'times Stop : ' + this.timesRun );
+        }
+    }
+
     tendooApp.run(function ($rootScope, $location) {
         var history = [];
 
         // Expose Underscore;
         $rootScope._        =   _;
 
+        $rootScope.$on('$routeChangeStart', function() {
+            tendooApp.spinner.start();
+        });
+
         $rootScope.$on('$routeChangeSuccess', function() {
+            tendooApp.spinner.stop();
             // history.push($location.$$path);
             var $menu   =   false;
             angular.element( '.sidebar .sidebar-menu a' ).each(function(){

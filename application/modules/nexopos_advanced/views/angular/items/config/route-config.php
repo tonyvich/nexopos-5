@@ -31,7 +31,8 @@
                     'shared_factories/options.js',
                     'shared_factories/field-editor.js',
                     'shared_factories/alert.js',
-                    'shared_factories/filter-item.js'
+                    'shared_factories/filter-item.js',
+                    'shared_factories/resource-loader.js'
                 ]
             });
         }]

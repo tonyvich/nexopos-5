@@ -12,7 +12,9 @@ var categoriesMain          =   function(
     sharedTableHeaderButtons,
     sharedAlert,
     sharedEntryActions,
-    sharedDocumentTitle)
+    sharedDocumentTitle,
+    sharedResourceLoader
+)
  {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des catégories', 'nexopos_advanced' );?>' );
@@ -83,7 +85,8 @@ categoriesMain.$inject    =   [
     'sharedTableHeaderButtons',
     'sharedAlert',
     'sharedEntryActions',
-    'sharedDocumentTitle'
+    'sharedDocumentTitle',
+    'sharedResourceLoader'
 ];
 
 tendooApp.controller( 'categoriesMain', categoriesMain );
