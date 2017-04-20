@@ -12,28 +12,60 @@ tendooApp.factory( 'expensesCategoriesResource', function( $resource ) {
             limit           :   '@_limit',
             current_page    :   '@_current_page'
         },{
-            get  : {
+            get : {
                 method : 'GET',
-                headers			:	{
-                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                headers : {
+                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                },
+                transformRequest  :     ( data, headersGetter ) => {
+                    tendooApp.spinner.start();
+                    return angular.toJson(data);
+                },
+                transformResponse :     ( data, headersGetter, status ) => {
+                    tendooApp.spinner.stop();
+                    return angular.fromJson( data );
                 }
             },
-            save    :   {
+            save : {
                 method : 'POST',
                 headers : {
-                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                },
+                transformRequest  :     ( data, headersGetter ) => {
+                    tendooApp.spinner.start();
+                    return angular.toJson(data);
+                },
+                transformResponse :     ( data, headersGetter, status ) => {
+                    tendooApp.spinner.stop();
+                    return angular.fromJson( data );
                 }
             },
-            update :    {
+            update : {
                 method : 'PUT',
                 headers : {
-                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                },
+                transformRequest  :     ( data, headersGetter ) => {
+                    tendooApp.spinner.start();
+                    return angular.toJson(data);
+                },
+                transformResponse :     ( data, headersGetter, status ) => {
+                    tendooApp.spinner.stop();
+                    return angular.fromJson( data );
                 }
             },
             delete : {
                 method : 'DELETE',
                 headers : {
-                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                },
+                transformRequest  :     ( data, headersGetter ) => {
+                    tendooApp.spinner.start();
+                    return angular.toJson(data);
+                },
+                transformResponse :     ( data, headersGetter, status ) => {
+                    tendooApp.spinner.stop();
+                    return angular.fromJson( data );
                 }
             }
         }
