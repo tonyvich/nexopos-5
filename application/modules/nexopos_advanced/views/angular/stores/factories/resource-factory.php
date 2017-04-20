@@ -34,7 +34,15 @@ tendooApp.factory( 'storesResource', function( $resource ) {
             delete : {
                 method : 'DELETE',
                 headers : {
-                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                   '<?php echo this->config->item('rest_key_name');?>'	:	'<?php echo @Options[ 'rest_key' ];?>'
+                },
+                transformRequest  :     ( data, headersGetter ) => {
+                    tendooApp.spinner.start();
+                    return angular.toJson(data);
+                },
+                transformResponse :     ( data, headersGetter, status ) => {
+                    tendooApp.spinner.stop();
+                    return angular.fromJson( data );
                 }
             }
         }
