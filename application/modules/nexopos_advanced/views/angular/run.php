@@ -20,7 +20,7 @@ if( @$Options[ 'site_language' ] == 'en_US') {
                 angular.element( '.nexopos-spinner' ).removeClass( 'hidden' );
             }
             this.timesRun++;
-            console.log( 'times Start : ' + this.timesRun );
+            console.log( 'Spinner Start : ' + this.timesRun );
         }
 
         this.stop          =   () => {
@@ -28,7 +28,7 @@ if( @$Options[ 'site_language' ] == 'en_US') {
                 angular.element( '.nexopos-spinner' ).addClass( 'hidden' );
             }
             this.timesRun--;
-            console.log( 'times Stop : ' + this.timesRun );
+            console.log( 'Spinner Stop : ' + this.timesRun );
         }
     }
 
@@ -39,11 +39,13 @@ if( @$Options[ 'site_language' ] == 'en_US') {
         // Expose Underscore;
         $rootScope._        =   _;
 
-        $rootScope.$on('$routeChangeStart', function() {
+        $rootScope.$on('$routeChangeStart', function( event, next, current ) {
+            console.log( next );
             tendooApp.spinner.start();
         });
 
-        $rootScope.$on('$routeChangeSuccess', function() {
+        $rootScope.$on('$routeChangeSuccess', function( event, current, previous ) {
+            console.log( current );
             tendooApp.spinner.stop();
             var $menu   =   false;
             angular.element( '.sidebar .sidebar-menu a' ).each(function(){
