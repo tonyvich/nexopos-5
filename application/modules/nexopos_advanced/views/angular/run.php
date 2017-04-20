@@ -39,14 +39,21 @@ if( @$Options[ 'site_language' ] == 'en_US') {
         // Expose Underscore;
         $rootScope._        =   _;
 
-        $rootScope.$on('$routeChangeStart', function( event, next, current ) {
-            console.log( next );
+        $rootScope.$on( '$routeChangeStart', function( event, previous, next ) {
+            console.log( previous );
             tendooApp.spinner.start();
         });
 
-        $rootScope.$on('$routeChangeSuccess', function( event, current, previous ) {
+        $rootScope.$on( '$routeChangeSuccess', function( event, current, previous ) {
             console.log( current );
             tendooApp.spinner.stop();
+        });
+
+        $rootScope.$on( '$routeChangeError', function( ) {
+            tendooApp.spinner.stop();
+        });
+
+        $rootScope.$on('$routeChangeSuccess', function( event, current, previous ) {
             var $menu   =   false;
             angular.element( '.sidebar .sidebar-menu a' ).each(function(){
                 if( $menu == false ) {

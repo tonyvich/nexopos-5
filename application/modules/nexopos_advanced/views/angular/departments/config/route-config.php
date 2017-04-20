@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/departments/main';
     },
-    controller: 'departmentsMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -38,7 +37,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/departments/edit';
     },
-    controller: 'departmentsEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -70,7 +68,6 @@
         }
         return 'templates/departments/main';
     },
-    controller: 'departmentsAdd',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

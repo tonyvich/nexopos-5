@@ -36,7 +36,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/expenses/edit';
     },
-    controller: 'expensesEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -72,7 +71,6 @@
         }
         return 'templates/expenses/main';
     },
-    controller: 'expenses',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/expenses-categories/main';
     },
-    controller: 'expensesCategoriesMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -37,7 +36,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/expenses-categories/edit';
     },
-    controller: 'expensesCategoriesEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -72,7 +70,6 @@
         }
         return 'templates/expenses-categories/main';
     },
-    controller: 'expensesCategories',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
