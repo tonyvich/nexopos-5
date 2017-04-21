@@ -11,7 +11,7 @@ if( @$Options[ 'site_language' ] == 'en_US') {
 ?>
 <script type="text/javascript">
     "use strict";
-    moment.locale( '<?phpe echo $locale;?>' );
+    moment.locale( '<?php echo $locale;?>' );
 
     tendooApp.spinner       =   new function() {
         this.timeout;
