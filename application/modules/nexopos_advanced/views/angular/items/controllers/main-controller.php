@@ -38,7 +38,6 @@ var itemsMain          =   function(
     **/
 
     $scope.table.get        =   function( params ){
-        console.log( params );
         itemsResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );

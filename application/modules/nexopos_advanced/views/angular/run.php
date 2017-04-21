@@ -14,38 +14,38 @@ if( @$Options[ 'site_language' ] == 'en_US') {
     moment.locale( '<?phpe echo $locale;?>' );
 
     tendooApp.spinner       =   new function() {
+        this.timeout;
         this.timesRun       =   0;
         this.start          =   () => {
+            clearTimeout( this.timeout );
             if( this.timesRun == 0 ) {
                 angular.element( '.nexopos-spinner' ).removeClass( 'hidden' );
             }
             this.timesRun++;
-            console.log( 'Spinner Start : ' + this.timesRun );
         }
 
         this.stop          =   () => {
             if( this.timesRun == 1 ) {
-                angular.element( '.nexopos-spinner' ).addClass( 'hidden' );
+                this.timeout     =   setTimeout( () => {
+                    angular.element( '.nexopos-spinner' ).addClass( 'hidden' );
+                }, 500 );                
             }
             this.timesRun--;
-            console.log( 'Spinner Stop : ' + this.timesRun );
         }
     }
 
 
-    tendooApp.run(function ($rootScope, $location) {
+    tendooApp.run([ '$rootScope', '$locale', function ($rootScope, $location) {
         var history = [];
 
         // Expose Underscore;
         $rootScope._        =   _;
 
         $rootScope.$on( '$routeChangeStart', function( event, previous, next ) {
-            console.log( previous );
             tendooApp.spinner.start();
         });
 
         $rootScope.$on( '$routeChangeSuccess', function( event, current, previous ) {
-            console.log( current );
             tendooApp.spinner.stop();
         });
 
@@ -76,9 +76,9 @@ if( @$Options[ 'site_language' ] == 'en_US') {
         });
 
         $rootScope.back = function () {
-            // var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
-            // $location.path(prevUrl);
+            var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
+            $location.path(prevUrl);
         };
 
-    });
+    }]);
 </script>

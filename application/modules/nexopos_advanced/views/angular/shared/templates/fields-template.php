@@ -40,7 +40,7 @@
                 <option ng-repeat="option in field.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
             </select>
             <span class="input-group-btn" ng-if="field.buttons.length > 0">
-                <button class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-click="button.click( item )"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                <a class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-href="{{ button.url( item ) }}"><i class="{{ button.icon }}"></i> {{ button.label }}</a>
             </span>
         </div>
         <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
@@ -146,7 +146,7 @@
                                     <option ng-repeat="option in subField.options" value="{{ option.value }}">{{ option.label }}</option>
                                 </select>
                                 <span class="input-group-btn" ng-if="subField.buttons.length > 0">
-                                    <button class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-click="button.click( item )"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                                    <a class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-href="{{ button.url( item ) }}"><i class="{{ button.icon }}"></i> {{ button.label }}</a>
                                 </span>
                             </div>
                             <p class="help-block" style="min-height:15px;font-size:12px;">{{ subField.desc }}</p>

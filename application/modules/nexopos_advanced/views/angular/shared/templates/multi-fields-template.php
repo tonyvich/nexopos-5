@@ -31,6 +31,14 @@
                 ng-click="addVariation()">
                     <i class="fa fa-plus"></i>
             </span>
+
+            <span
+                title="<?php echo __( 'Dupliquer cette variation', 'nexo' );?>"
+                class="btn btn-info btn-md"
+                ng-hide="item.disableVariation"
+                ng-click="duplicate( variation, $index )">
+                    <i class="fa fa-copy"></i>
+            </span>
         </li>
 
     </ul>
@@ -47,9 +55,9 @@
         class="tab-pane row">
 
             <div
-                ng-repeat="field in itemAdvancedFields[ variation_tab.namespace ] track by $index"
+                ng-repeat="field in itemsAdvancedFields[ variation_tab.namespace ] track by $index"
                 class="{{ field.class !== undefined ? field.class : 'col-lg-6 col-sm-6 col-xs-12' }}"
-                ng-show="field.show( variation_tab, item, itemAdvancedFields[ variation_tab.namespace ] )"
+                ng-show="field.show( variation_tab, item, itemsAdvancedFields[ variation_tab.namespace ] )"
                 >
 
                 <div class="form-group" ng-if="field.type == 'text'">
@@ -93,13 +101,13 @@
                             <option ng-repeat="option in field.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
                         <span class="input-group-btn" ng-if="field.buttons.length > 0">
-                            <button
+                            <a
                                 class="btn btn-{{ button.class }}"
                                 ng-repeat="button in field.buttons track by $index"
-                                ng-click="button.click( item )"> <!-- Send the item as parameter -->
+                                ng-href="{{ button.url( item ) }}"> <!-- Send the item as parameter -->
                                 <i class="{{ button.icon }}"></i> {{ button.label }}
 
-                            </button>
+                            </a>
                         </span>
                     </div>
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
@@ -243,12 +251,12 @@
                                                 <option ng-repeat="option in subField.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
                                             <span class="input-group-btn" ng-if="subField.buttons.length > 0">
-                                                <button
+                                                <a
                                                     class="btn btn-{{ button.class }}"
                                                     ng-repeat="button in subField.buttons track by $index"
-                                                    ng-click="button.click( item )"> <!-- Send the item as parameter -->
+                                                    ng-href="{{ button.url( item ) }}"> <!-- Send the item as parameter -->
                                                     <i class="{{ button.icon }}"></i> {{ button.label }}
-                                                </button>
+                                                </a>
                                             </span>
                                         </div>
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>

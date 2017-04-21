@@ -9,7 +9,7 @@ var items               =   function(
     // internal dependencies
 
     itemsTypes,
-    item,
+    itemsTabs,
     itemsAdvancedFields,
     itemsFields,
     itemsResource,
@@ -31,6 +31,7 @@ var items               =   function(
     sharedMoment,
     sharedFilterItem,
     sharedResourceLoader,
+    sharedFormManager,
 
     // External dependencies
     localStorageService
@@ -38,10 +39,38 @@ var items               =   function(
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter un article', 'nexopos_advanced' );?>' );
 
+    // checks heritage from sharedFormManager
+    $scope                  =   _.extend( $scope, new sharedFormManager );
     $scope.resourceLoader   =   new sharedResourceLoader;
     $scope.category_desc    =   '<?php echo __( 'Assigner une catégorie permet de regrouper les produits similaires.', 'nexopos_advanced' );?>';
     $scope.validate         =   new sharedValidate();
     $scope.taxes            =   new Array;
+
+    // Add hooks
+    $scope.hooks.addFilter( 'addGroup', ( group ) => {
+        $scope.saveOnLocalStorage(); 
+        return group;
+    });
+
+    $scope.hooks.addFilter( 'addVariation', ( variation ) => {
+        $scope.saveOnLocalStorage(); 
+        return variation;
+    });
+
+    $scope.hooks.addFilter( 'duplicateVariation', ( variation ) => {
+        $scope.saveOnLocalStorage(); 
+        return variation;
+    });
+
+    $scope.hooks.addFilter( 'removeGroup', ( $index ) => {
+        $scope.saveOnLocalStorage(); 
+        return $index;
+    });
+
+    $scope.hooks.addFilter( 'removeVariation', ( $index ) => {
+        $scope.saveOnLocalStorage(); 
+        return $index;
+    });
 
     /**
      *  Blue a specific field
@@ -59,7 +88,7 @@ var items               =   function(
 
         // If visibility is hidden on some fields, validation will be skipped on that.
         if( typeof field.show == 'function' ) {
-            if( ! field.show( variation_tab.models, item ) ) {
+            if( ! field.show( variation_tab.models, $scope.item ) ) {
                 return;
             }
         }
@@ -169,7 +198,7 @@ var items               =   function(
         var global_validation       =   [];
 
         _.each( itemsFields, function( field ) {
-            var validationResult    =   $scope.validate.blur( field, item );
+            var validationResult    =   $scope.validate.blur( field, $scope.item );
             if( validationResult != null ) {
                 global_validation.push( validationResult );
             }
@@ -184,7 +213,7 @@ var items               =   function(
 
                 // We won't validate hidden tabs
                 if( typeof tab.hide == 'function' ) {
-                    if( tab.hide( item ) == true ) {
+                    if( tab.hide( $scope.item ) == true ) {
                         return false;
                     }
                 }
@@ -193,14 +222,14 @@ var items               =   function(
 
                 // We won't validate hidden field
                 _.each( allFields, function( field, variation_field_id ) {
-                    if( field.show( variation, item ) && field.type != 'group' ){
+                    if( field.show( variation, $scope.item ) && field.type != 'group' ){
 
                         var validationResult    =   $scope.validate.blur( field, tab, ids );
                         if( validationResult != null ) {
                             global_validation.push( validationResult );
                         }
 
-                    } else if( field.show( variation, item ) && field.type == 'group' ) {
+                    } else if( field.show( variation, $scope.item ) && field.type == 'group' ) {
                         _.each( field.subFields, function( subField ) {
                             _.each( tab.models[ field.model ], function( group_model, variation_group_id ){
 
@@ -255,85 +284,6 @@ var items               =   function(
     }
 
     /**
-     *  Add Group. Duplicate group fields
-     *  @param  object
-     *  @return void
-    **/
-
-    $scope.addGroup         =   function( group ) {
-        group.push({});
-    }
-
-    /**
-     *  Add Variation
-     *  @param void
-     *  @return void
-    **/
-
-    $scope.addVariation         =   function(){
-        if( $scope.item.variations.length == 10 ) {
-            NexoAPI.Notify().info( '<?php echo _s( 'Attention', 'nexo' );?>', '<?php echo _s( 'Vous ne pouvez pas créer plus de 10 variations d\'un même produit.', 'nexo' );?>')
-            return;
-        }
-
-        var singleVariation         =   {
-            tabs        :   $scope.item.getTabs()
-        };
-
-        _.each( singleVariation, function( variation, $tab_id ) {
-            _.each( variation.tabs, function( tab, $tab_key ) {
-                tab.models      =   {};
-            });
-        });
-
-        $scope.item.variations.push( singleVariation );
-    }
-
-    /**
-     *  Active Tab
-     *  @param
-     *  @return
-    **/
-
-    $scope.activeTab        =   function( $event, variationIndex, tabIndex ) {
-        angular.element( $event.currentTarget )
-        .parent( 'li' )
-        .siblings()
-        .removeClass( 'active' );
-
-        angular.element( $event.currentTarget )
-        .parent( 'li' )
-        .addClass( 'active' );
-
-        _.each( $scope.item.variations[variationIndex].tabs, function( value ) {
-            value.active    =   false;
-        });
-
-        $scope.item.variations[variationIndex].tabs[ tabIndex ].active     =   true;
-    }
-
-    /**
-     *  Count all errors
-     *  @param object variation object
-     *  @return int
-    **/
-
-    $scope.countAllErrors       =   function( variation ) {
-        var errors      =   0;
-        errors  +=  _.keys( variation.errors ).length;
-
-        if( angular.isDefined( variation.groups_errors ) ) {
-            _.each( variation.groups_errors, function( group ) {
-                _.each( group, function( error ){
-                    errors  +=  _.keys( error ).length;
-                })
-            });
-        }
-
-        return errors;
-    }
-
-    /**
      *  Detect Item Namespace
      *  @param void
      *  @return void
@@ -341,7 +291,7 @@ var items               =   function(
 
     $scope.initItem      =   function(a, b){
 
-        $scope.item                 =   new item;
+        $scope.item                 =   new itemsTabs();
         $scope.item.name            =   '';
         $scope.item.variations      =   [{
             models          :       {
@@ -384,11 +334,16 @@ var items               =   function(
                     let savedItem           =   localStorageService.get( 'item' );
                     
                     if( savedItem != null ) {
+
+                        console.log( savedItem );
+                         
                          _.each( savedItem, ( field, field_name) => {
                             if( field_name != 'variations' ) {
                                 $scope.item[ field_name ]   =   field;
                             }
                         });
+
+                        let tabs        =   new itemsTabs;
 
                         _.each( savedItem.variations, ( savedVariation, key ) => {
                             $scope.item.variations[ key ]   =   {
@@ -401,95 +356,11 @@ var items               =   function(
                                 tab.models      =   savedVariation.tabs[ tab_key ].models
                             });
                         });
-                        
-                        $scope.item         =   _.extend( $scope.item, localStorageService.get( 'item' ) );
                     }
                    
                 }
             }
         }
-    }
-
-    /**
-     *  Get Icon using URL
-     *  @param string icon
-     *  @return string
-    **/
-
-    $scope.getIcon          =   function( string ){
-        return '<?php echo module_url( 'nexopos_advanced' ) . 'images/items/'; ?>' + string;
-    }
-
-    /**
-     *  Get Class
-     *  Access ids object and return all ui classe for selecting variation, variation header, variation vontent
-     *  @param  object ids object
-     *  @return object
-    **/
-
-    $scope.getClass         =   function( ids ) {
-
-        // if ids is not default, just return a non defined value.
-        if( typeof ids == 'undefined' ) {
-            return {};
-        }
-
-        var classes_object          =   {
-            variation               :   '.variation-' + ids.variation_id,
-            variation_header        :   '.variation-header-' + ids.variation_id,
-            variation_body          :   '.variation-body-' +   ids.variation_id,
-            // variation_tab           :   '.variation-' + ids.variation_id + '-tab-' + ids.variation_tab_id,
-            variation_tab_header    :   '.variation-' + ids.variation_id + '-tab-header-' + ids.variation_tab_id,
-            variation_tab_body      :   '.variation-' + ids.variation_id + '-tab-body-' + ids.variation_tab_id,
-        }
-
-        if( angular.isDefined( ids.variation_group_id ) ) {
-            // classes_object.variation_group              =   '.variation-' + ids.variation_id + '-tab-' +  ids.variation_tab_id + '-group-' + ids.variation_group_id;
-            classes_object.variation_group_header       =   '.variation-' + ids.variation_id + '-tab-' + ids.variation_tab_id + '-group-header-' + ids.variation_group_id;
-            classes_object.variation_group_body         =   '.variation-' + ids.variation_id + '-tab-' + ids.variation_tab_id + '-group-body-' + ids.variation_group_id;
-        }
-
-        return classes_object;
-    }
-
-    /**
-     *  Purify Item
-     *  @param object item
-     *  @return object purified item
-    **/
-
-    $scope.purifyItem           =   function( item ) {
-        // nothing
-    }
-
-    /**
-     *  Render Attrs
-     *  @param
-     *  @return
-    **/
-
-    $scope.renderAttributes         =   function( object ) {
-        if( angular.isDefined( object ) ) {
-            var attrs   =   '';
-            _.each( object, function( value, key ) {
-                attrs   +=  key + '="' + value + '" ';
-            });
-
-            return attrs;
-        }
-    }
-
-    /**
-     *  Reset Group if not defined
-     *  @param object group object
-     *  @return void
-    **/
-
-    $scope.resetGroup               =   function( group ) {
-        if( angular.isUndefined( group ) ) {
-            return [{}];
-        }
-        return group
     }
 
     /**
@@ -503,37 +374,6 @@ var items               =   function(
     }
 
     /**
-     *  Remove Group
-     *  @param int group index
-     *  @return void
-    **/
-
-    $scope.removeGroup      =   function( $index, $groups, ids ) {
-        sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ce groupe ?', 'nexopos_advanced' );?>', function( action ) {
-            if( action ) {
-                // delete all error related to the deleted group
-                $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors[ ids.variation_tab.namespace ].splice( $index, 1 );
-
-                $groups.splice( $index, 1 );
-            }
-        });
-    }
-
-    /**
-     *  Remove Variation
-     *  @param int variation index
-     *  @return void
-    **/
-
-    $scope.removeVariation  =   function( $index ){
-        sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer cette variation ?', 'nexopos_advanced' );?>', function( action ) {
-            if( action ) {
-                $scope.item.variations.splice( $index, 1 );
-            }
-        });
-    }
-
-    /**
      *  Save On Local Storage
      *  @param void
      *  @return void
@@ -544,7 +384,6 @@ var items               =   function(
             // We'll only save if localStore is enabled
             if( localStorageService.getStorageType() == 'localStorage' ) {
                 $scope.$watch( 'item', ( before, after ) => {
-                    // console.log( $scope.item );
                     localStorageService.set( 'item', $scope.item );
                 });
             }
@@ -559,20 +398,6 @@ var items               =   function(
 
     $scope.selectType       =   function( type ){
         $location.path( type );
-    }
-
-    /**
-     *  Show or Hide UI
-     *  @param string ui namespace
-     *  @return void
-    **/
-
-    $scope.show             =   function( namespace ) {
-        if( namespace == 'selectType' ) {
-            $scope.showItemUI       =   false;
-        } else if( namespace == 'showItemUI' ){
-            $scope.showItemUI       =   true;
-        }
     }
 
     /**
@@ -593,7 +418,7 @@ var items               =   function(
 
         // When submiting item
         var itemToSubmit                    =   sharedFilterItem(
-            item,
+            $scope.item,
             itemsFields,
             itemsAdvancedFields
         );
@@ -606,53 +431,6 @@ var items               =   function(
         itemsResource.save( itemToSubmit, function( returned ){
             $location.path( 'items' );
         });
-    }
-
-    /**
-     *  Select Tab
-     *  @param object tabs
-     *  @param string tab naemspace
-     *  @return object
-    **/
-
-    $scope.selectTab        =   function( tabs, namespace ) {
-        var tabToReturn;
-        _.each( tabs, function( tab, key ) {
-            if( tab.namespace == namespace ) {
-                tabToReturn =   key;
-            }
-        });
-        return tabs[ tabToReturn ];
-    }
-
-    /**
-     *  tabContent is active, check whether a tab is already active
-     *  @param
-     *  @return
-    **/
-
-    $scope.tabContentIsActive   =   function( tabActive, index ) {
-        if( angular.isDefined( tabActive ) ) {
-            return tabActive;
-        }
-
-        if( index == 0 ) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *  Toggle Tip
-     *  @param object field
-     *  @return boolean
-    **/
-
-    $scope.toggleFieldTip           =   function( field ) {
-        if( angular.isUndefined( field.tip ) ) {
-            field.tip   =   false;
-        }
-        return field.tip  = ! field.tip;
     }
 
     /**
@@ -770,7 +548,7 @@ items.$inject           =   [
     '$http',
     '$location',
     'itemsTypes',
-    'item',
+    'itemsTabs',
     'itemsAdvancedFields',
     'itemsFields',
     'itemsResource',
@@ -789,6 +567,7 @@ items.$inject           =   [
     'sharedMoment',
     'sharedFilterItem',
     'sharedResourceLoader',
+    'sharedFormManager',
     'localStorageService'
 ];
 

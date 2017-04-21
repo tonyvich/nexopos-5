@@ -23,7 +23,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 label   :   '<?php echo _s( 'Assigner à un coupon', 'nexo' );?>',
                 desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexo' );?>',
                 options   : sharedOptions.yesOrNo,
-                show    :   function( item ) {
+                show    :   function( variation, item ) {
                     return item.namespace == 'coupon' ? true : false;
                 }
             }
@@ -33,7 +33,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 type        :   'text',
                 label       :   '<?php echo _s( 'Nom de la variation', 'nexo' );?>',
                 model       :   'name',
-                show        :   function( item ){
+                show        :   function( variation, item ){
                     if( typeof item.variations != 'undefined' ) {
                         return item.variations.length > 1;
                     }
@@ -49,7 +49,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 label       :   '<?php echo _s( 'Prix de vente', 'nexo' );?>',
                 model       :   'sale_price',
                 desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit sera vendu.' ,'nexo' );?>',
-                show        :   function( item ){
+                show        :   function( variation, item ){
                     return true;
                 },
                 validation  :   {
@@ -239,8 +239,8 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     },
                     buttons     :   [{
                         class   :   'default',
-                        click   :   function( item ) {
-                            $location.url( 'deliveries/add?fallback=items/add/' + item.namespace );
+                        url   :   function( item ) {
+                            return 'deliveries/add?fallback=items/add/' + item.namespace;
                         },
                         icon    :   'fa fa-plus'
                     }]
@@ -257,8 +257,8 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     },
                     buttons     :   [{
                         class   :   'default',
-                        click   :   function( item ) {
-                            $location.url( 'providers/add?fallback=items/add/' + item.namespace );
+                        url   :   function( item ) {
+                            return 'providers/add?fallback=items/add/' + item.namespace;
                         },
                         icon    :   'fa fa-plus'
                     }]

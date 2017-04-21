@@ -1,4 +1,4 @@
-tendooApp.factory( 'item', function(){
+tendooApp.factory( 'itemsTabs', function(){
     return function() {
         this.getTabs    =   () => {
             var tabs    =   new Array;

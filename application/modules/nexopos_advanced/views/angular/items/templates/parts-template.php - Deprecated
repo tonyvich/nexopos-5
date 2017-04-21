@@ -73,6 +73,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">{{ field.label }}</span>
                         <select
+                            id = "{{ field.model }}-input-id"
                             class="form-control"
                             ng-model="variation_tab.models[ field.model ]"
                             ng-blur="validate.blur( field, variation_tab, {
@@ -87,7 +88,7 @@
                             <option ng-repeat="option in field.options" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
                         <span class="input-group-btn" ng-if="field.buttons.length > 0">
-                            <button class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-click="button.click( item )"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                            <a class="btn btn-{{ button.class }}" ng-repeat="button in field.buttons" ng-href="{{ button.url( item ) }}"><i class="{{ button.icon }}"></i> {{ button.label }}</a>
                         </span>
                     </div>
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
@@ -233,7 +234,7 @@
                                                 <option ng-repeat="option in subField.options" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
                                             <span class="input-group-btn" ng-if="subField.buttons.length > 0">
-                                                <button class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-click="button.click( item )"><i class="{{ button.icon }}"></i> {{ button.label }}</button>
+                                                <a class="btn btn-{{ button.class }}" ng-repeat="button in subField.buttons" ng-href="{{ button.url( item ) }}"><i class="{{ button.icon }}"></i> {{ button.label }}</a>
                                             </span>
                                         </div>
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
