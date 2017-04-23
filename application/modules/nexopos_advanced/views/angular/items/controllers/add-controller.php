@@ -19,6 +19,7 @@ var items               =   function(
     deliveriesResource,
     unitsResource,
     taxesResource,
+    departmentsResource,
     $routeParams,
 
     // Shared Dependencies
@@ -32,6 +33,7 @@ var items               =   function(
     sharedFilterItem,
     sharedResourceLoader,
     sharedFormManager,
+    sharedCurrency,
 
     // External dependencies
     localStorageService
@@ -335,8 +337,6 @@ var items               =   function(
                     
                     if( savedItem != null ) {
 
-                        console.log( savedItem );
-                         
                          _.each( savedItem, ( field, field_name) => {
                             if( field_name != 'variations' ) {
                                 $scope.item[ field_name ]   =   field;
@@ -456,10 +456,10 @@ var items               =   function(
                         if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
                             var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
                             var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
-                            this.addon          =   newPrice;
+                            this.addon          =   sharedCurrency.toAmount( newPrice )
                         } else {
                             var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
-                            this.addon          =   newPrice;
+                            this.addon          =   sharedCurrency.toAmount( newPrice )
                         }
                     }
                 }
@@ -470,16 +470,14 @@ var items               =   function(
                             if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
                                 var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
                                 var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
-                                this.addon          =   newPrice;
+                                this.addon          =   sharedCurrency.toAmount( newPrice )
                             } else {
                                 var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
-                                this.addon          =   newPrice;
+                                this.addon          =   sharedCurrency.toAmount( newPrice )
                             }
                         }
                     }
                 }
-
-
             }
             return true;
         }
@@ -491,10 +489,10 @@ var items               =   function(
     // Yes No Options
     $scope.YesNoOptions     =   [{
             value       :   'yes',
-            label       :   '<?php echo _s( 'Oui', 'nexo' );?>'
+            label       :   '<?php echo _s( 'Oui', 'nexopos_advanced' );?>'
         },{
             value       :   'no',
-            label       :   '<?php echo _s( 'Non', 'nexo' );?>'
+            label       :   '<?php echo _s( 'Non', 'nexopos_advanced' );?>'
     }];
 
     $scope.groupLengthLimit     =   10;
@@ -526,6 +524,11 @@ var items               =   function(
         resource    :   taxesResource,
         success    :   function( data ) {
             sharedFieldEditor( 'ref_taxe', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+        }
+    }).push({
+        resource    :   departmentsResource,
+        success    :   function( data ) {
+            sharedFieldEditor( 'ref_department', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
             $scope.closeInit();
         }
     });
@@ -558,6 +561,7 @@ items.$inject           =   [
     'deliveriesResource',
     'unitsResource',
     'taxesResource',
+    'departmentsResource',
     '$routeParams',
     'sharedDocumentTitle',
     'sharedValidate',
@@ -568,6 +572,7 @@ items.$inject           =   [
     'sharedFilterItem',
     'sharedResourceLoader',
     'sharedFormManager',
+    'sharedCurrency',
     'localStorageService'
 ];
 

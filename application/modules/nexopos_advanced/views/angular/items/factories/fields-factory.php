@@ -19,8 +19,8 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
             },
             buttons     :   [{
                 class   :   'default',
-                url   :   function( item ) {
-                   return 'categories/add?fallback=items/add/' + item.namespace;
+                click   :   function( item ) {
+                   return $location.url( 'categories/add?fallback=items/add/' + item.namespace );
                 },
                 icon    :   'fa fa-plus'
             }]
@@ -34,8 +34,8 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
             },
             buttons     :   [{
                 class   :   'default',
-                url   :   function( item ) {
-                    return 'units/add?fallback=items/add/' + item.namespace;
+                click   :   function( item ) {
+                    return $location.url( 'units/add?fallback=items/add/' + item.namespace );
                 },
                 icon    :   'fa fa-plus'
             }]
@@ -49,8 +49,20 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
             },
             buttons     :   [{
                 class   :   'default',
-                url   :   function( item ) {
-                    return 'taxes/add?fallback=items/add/' + item.namespace;
+                click   :   function( item ) {
+                    return $location.url( 'taxes/add?fallback=items/add/' + item.namespace );
+                },
+                icon    :   'fa fa-plus'
+            }]
+        },{
+            type    :   'select',
+            label   :   '<?php echo _s( 'Rayon', "nexopos_advanced" );?>',
+            model   :   'ref_department',
+            desc    :   '<?php echo _s( 'Vous permet de regrouper les produits par rayon (ou département).', 'nexopos_advanced' );?>',
+            buttons     :   [{
+                class   :   'default',
+                click   :   function( item ) {
+                    return $location.url( 'departments/add?fallback=items/add/' + item.namespace );
                 },
                 icon    :   'fa fa-plus'
             }]

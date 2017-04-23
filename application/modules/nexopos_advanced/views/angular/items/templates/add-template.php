@@ -1,7 +1,7 @@
 <div ng-controller="items">
     <div class="row">
         <div class="col-md-12">
-            <h3 style="margin-top:0px;"><?php echo __( 'Créer un nouveau produit', 'nexo' );?><a href="<?php echo site_url([ 'dashboard', 'nexopos', 'items', 'types' ] );?>" class="btn btn-primary btn-sm pull-right"><?php echo __( 'Changer de type', 'nexo' );?></a></h3>
+            <h3 style="margin-top:0px;"><?php echo __( 'Créer un nouveau produit', 'nexopos_advanced' );?><a href="<?php echo site_url([ 'dashboard', 'nexopos', 'items', 'types' ] );?>" class="btn btn-primary btn-sm pull-right"><?php echo __( 'Changer de type', 'nexopos_advanced' );?></a></h3>
         </div>
         <div class="col-md-9 advanced-fields-wrapper">
             <div class="form-group default-fields-wrapper">
@@ -10,13 +10,13 @@
                         <span class="ng-hide"></span>
                     </span>
                     <input
-                        placeholder="<?php echo __( 'Nom du produit', 'nexo' );?>"
+                        placeholder="<?php echo __( 'Nom du produit', 'nexopos_advanced' );?>"
                         type="text" class="form-control" style="line-height:40px;font-size:25px;" ng-model="item[ fields[0].model ]"
                         ng-blur="validate.blur( fields[0], item )"
                         ng-focus="validate.focus( fields[0], item )"
                         >
                     <span class="input-group-btn ">
-                        <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexo' );?></button>
+                        <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexopos_advanced' );?></button>
                         <span class="ng-hide"></span>
                     </span>
                 </div>
@@ -28,7 +28,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-title">
-                        <span><?php echo __( 'General', 'nexo' );?></span>
+                        <span><?php echo __( 'General', 'nexopos_advanced' );?></span>
                     </div>
                     <div class="box-tools pull-right">
                         <button ng-click="" type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

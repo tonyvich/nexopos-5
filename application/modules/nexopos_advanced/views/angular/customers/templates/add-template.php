@@ -20,7 +20,7 @@
                         type="text" class="form-control"
                         style="line-height:40px;font-size:25px;" ng-model="item[ fields[0].model ]">
                     <span class="input-group-btn">
-                        <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexo' );?></button>
+                        <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexopos_advanced' );?></button>
                         <span class="ng-hide"></span>
                     </span>
                 </div>
@@ -46,7 +46,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-title">
-                        <span><?php echo __( 'Informations Personnelles', 'nexo' );?></span>
+                        <span><?php echo __( 'Informations Personnelles', 'nexopos_advanced' );?></span>
                     </div>
                     <div class="box-tools pull-right">
                         <button ng-click="" type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

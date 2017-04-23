@@ -3,10 +3,10 @@ tendooApp.factory( 'sharedOptions', function(){
         yesOrNo         :   [
             {
                 value       :   'yes',
-                label       :   '<?php echo _s( 'Oui', 'nexo' );?>'
+                label       :   '<?php echo _s( 'Oui', 'nexopos_advanced' );?>'
             },{
                 value       :   'no',
-                label       :   '<?php echo _s( 'Non', 'nexo' );?>'
+                label       :   '<?php echo _s( 'Non', 'nexopos_advanced' );?>'
             }
         ]
     }

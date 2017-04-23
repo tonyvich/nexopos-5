@@ -1,3 +1,5 @@
 tendooApp.factory( 'itemsTableActions', function(){
-    return [];
+    return [{
+        foo     :   'bar'
+    }];
 });

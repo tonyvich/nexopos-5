@@ -41,7 +41,7 @@ tendooApp.factory( 'sharedFormManager', [
 
         this.addVariation         =   function(){
             if( this.item.variations.length == 10 ) {
-                NexoAPI.Notify().info( '<?php echo _s( 'Attention', 'nexo' );?>', '<?php echo _s( 'Vous ne pouvez pas créer plus de 10 variations d\'un même produit.', 'nexo' );?>')
+                NexoAPI.Notify().info( '<?php echo _s( 'Attention', 'nexopos_advanced' );?>', '<?php echo _s( 'Vous ne pouvez pas créer plus de 10 variations d\'un même produit.', 'nexopos_advanced' );?>')
                 return;
             }
 
