@@ -20,10 +20,10 @@ tendooApp.factory( 'itemsAdvancedFields', [
             {
                 type    :   'select',
                 model   :   'ref_coupon',
-                label   :   '<?php echo _s( 'Assigner à un coupon', 'nexo' );?>',
-                desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexo' );?>',
+                label   :   '<?php echo _s( 'Assigner à un coupon', 'nexopos_advanced' );?>',
+                desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexopos_advanced' );?>',
                 options   : sharedOptions.yesOrNo,
-                show    :   function( item ) {
+                show    :   function( variation, item ) {
                     return item.namespace == 'coupon' ? true : false;
                 }
             }
@@ -31,25 +31,25 @@ tendooApp.factory( 'itemsAdvancedFields', [
         basic           :   [
             {
                 type        :   'text',
-                label       :   '<?php echo _s( 'Nom de la variation', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Nom de la variation', 'nexopos_advanced' );?>',
                 model       :   'name',
-                show        :   function( item ){
+                show        :   function( variation, item ){
                     if( typeof item.variations != 'undefined' ) {
                         return item.variations.length > 1;
                     }
                     return false;
                 },
-                desc        :   '<?php echo _s( 'Veuillez choisir une désignation unique pour cette variation', 'nexo' );?>',
+                desc        :   '<?php echo _s( 'Veuillez choisir une désignation unique pour cette variation', 'nexopos_advanced' );?>',
                 validation  :   {
                     required    :   true,
                     min_length  :   5
                 }
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Prix de vente', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Prix de vente', 'nexopos_advanced' );?>',
                 model       :   'sale_price',
-                desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit sera vendu.' ,'nexo' );?>',
-                show        :   function( item ){
+                desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit sera vendu.' ,'nexopos_advanced' );?>',
+                show        :   function( variation, item ){
                     return true;
                 },
                 validation  :   {
@@ -58,9 +58,9 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 }
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Prix d\'achat', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Prix d\'achat', 'nexopos_advanced' );?>',
                 model       :   'purchase_price',
-                desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit a été acheté.' ,'nexo' );?>',
+                desc        :   '<?php echo _s( 'Définissez la valeur à laquelle le produit a été acheté.' ,'nexopos_advanced' );?>',
                 show        :   function( variation, item ){
                     return _.indexOf( [ 'coupon' ], item.namespace ) == -1 ? true : false;
                 },
@@ -69,18 +69,18 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 }
             },{
                 type        :   'select',
-                label       :   '<?php echo _s( 'Activer les Promotion', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Activer les Promotion', 'nexopos_advanced' );?>',
                 model       :   'enable_special_price',
-                desc        :   '<?php echo _s( 'Vous permet de vendre le produit à un prix spéciale.' ,'nexo' );?>',
+                desc        :   '<?php echo _s( 'Vous permet de vendre le produit à un prix spéciale.' ,'nexopos_advanced' );?>',
                 options     :   sharedOptions.yesOrNo,
                 show        :   function(){
                     return true;
                 }
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Prix spécial', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Prix spécial', 'nexopos_advanced' );?>',
                 model       :   'special_price',
-                desc        :   '<?php echo _s( 'Ce prix sera utilisé lorsque le prix promotionel sera valable.' ,'nexo' );?>',
+                desc        :   '<?php echo _s( 'Ce prix sera utilisé lorsque le prix promotionel sera valable.' ,'nexopos_advanced' );?>',
                 show        :   function( variation, item, fields ){
                     if( _.propertyOf( variation.models )( 'enable_special_price' ) == 'yes' ) {
                         return true;
@@ -89,9 +89,9 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 }
             },{
                 type        :   'datepick',
-                label       :   '<?php echo _s( 'Date de départ', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Date de départ', 'nexopos_advanced' );?>',
                 model       :   'special_price_starts',
-                desc        :   '<?php echo _s( 'Vous permet de définir la date de début de la promotion.' ,'nexo' );?>',
+                desc        :   '<?php echo _s( 'Vous permet de définir la date de début de la promotion.' ,'nexopos_advanced' );?>',
                 show        :   function( variation ){
                     if( _.propertyOf( variation.models )( 'enable_special_price' ) == 'yes' ) {
                         return true;
@@ -123,9 +123,9 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 }
             },{
                 type        :   'datepick',
-                label       :   '<?php echo _s( 'Date de fin', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Date de fin', 'nexopos_advanced' );?>',
                 model       :   'special_price_ends',
-                desc        :   '<?php echo _s( 'Vous permet de définir la date de fin de la promotion.' ,'nexo' );?>',
+                desc        :   '<?php echo _s( 'Vous permet de définir la date de fin de la promotion.' ,'nexopos_advanced' );?>',
                 show        :   function( variation ){
                     if( _.propertyOf( variation.models )( 'enable_special_price' ) == 'yes' ) {
                         return true;
@@ -161,65 +161,65 @@ tendooApp.factory( 'itemsAdvancedFields', [
         shipping        :   [
             {
                 type        :   'text',
-                label       :   '<?php echo _s( 'Poids', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Poids', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
                 model       :   'weight',
-                desc        :   '<?php echo _s( 'Si le produit a un poid significatif, vous pouvez le mentionner.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Si le produit a un poid significatif, vous pouvez le mentionner.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Taille', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Taille', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
                 model       :   'height',
-                desc        :   '<?php echo _s( 'Si le produit a une taille significative, vous pouvez la mentionner.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Si le produit a une taille significative, vous pouvez la mentionner.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Largeur', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Largeur', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
                 model       :   'width',
-                desc        :   '<?php echo _s( 'Si le produit a une largeur significative, vous pouvez la mentionner.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Si le produit a une largeur significative, vous pouvez la mentionner.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Longueur', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Longueur', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
                 model       :   'length',
-                desc        :   '<?php echo _s( 'Si le produit a une longueur significative, vous pouvez la mentionner.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Si le produit a une longueur significative, vous pouvez la mentionner.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Couleur', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Couleur', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
                 model       :   'color',
-                desc        :   '<?php echo _s( 'Chaque variation peut avoir une coleur qui la distingue des autres.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Chaque variation peut avoir une coleur qui la distingue des autres.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Contenance', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Contenance', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
                 model       :   'capacity',
-                desc        :   '<?php echo _s( 'Si le produit à une contenance liquide, vous pouvez la spécifier ici.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Si le produit à une contenance liquide, vous pouvez la spécifier ici.', 'nexopos_advanced' );?>'
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Volume', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Volume', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
                 model       :   'volume',
-                desc        :   '<?php echo _s( 'Si le produit se mesure en volume, vous pouvez le spécifier ici.', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Si le produit se mesure en volume, vous pouvez le spécifier ici.', 'nexopos_advanced' );?>'
             }
         ],
         stock           :   [{
             type        :   'group',
-            label       :   '<?php echo _s( 'Stock', 'nexo' );?>',
+            label       :   '<?php echo _s( 'Stock', 'nexopos_advanced' );?>',
             show        :   function(){
                 return true;
             },
@@ -229,47 +229,47 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 {
                     type        :   'select',
                     model       :   'ref_delivery',
-                    label       :   '<?php echo _s( 'Livraison', 'nexo' );?>',
+                    label       :   '<?php echo _s( 'Livraison', 'nexopos_advanced' );?>',
                     show        :   function(){
                         return true;
                     },
-                    desc        :   '<?php echo _s( 'Les livraisons permettent de regrouper les approvisionnement.', 'nexo' );?>',
+                    desc        :   '<?php echo _s( 'Les livraisons permettent de regrouper les approvisionnement.', 'nexopos_advanced' );?>',
                     validation  :   {
                         required    :   true
                     },
                     buttons     :   [{
                         class   :   'default',
                         click   :   function( item ) {
-                            $location.url( 'deliveries/add?fallback=items/add/' + item.namespace );
+                            return $location.url( 'deliveries/add?fallback=items/add/' + item.namespace );
                         },
                         icon    :   'fa fa-plus'
                     }]
                 },{
                     type        :   'select',
                     model       :   'ref_provider',
-                    label       :   '<?php echo _s( 'Fournisseur', 'nexo' );?>',
+                    label       :   '<?php echo _s( 'Fournisseur', 'nexopos_advanced' );?>',
                     show        :   function(){
                         return true;
                     },
-                    desc        :   '<?php echo _s( 'Si cette variation dispose d\'un stock provenant de plusieurs founisseurs, vous pouvez affecter chaque quantité à un fournisseur.', 'nexo' );?>',
+                    desc        :   '<?php echo _s( 'Si cette variation dispose d\'un stock provenant de plusieurs founisseurs, vous pouvez affecter chaque quantité à un fournisseur.', 'nexopos_advanced' );?>',
                     validation  :   {
                         required    :   true
                     },
                     buttons     :   [{
                         class   :   'default',
                         click   :   function( item ) {
-                            $location.url( 'providers/add?fallback=items/add/' + item.namespace );
+                            return $location.url( 'providers/add?fallback=items/add/' + item.namespace );
                         },
                         icon    :   'fa fa-plus'
                     }]
                 },{
                     type        :   'text',
-                    label       :   '<?php echo _s( 'Quantité', 'nexo' );?>',
+                    label       :   '<?php echo _s( 'Quantité', 'nexopos_advanced' );?>',
                     model       :   'quantity',
                     show        :   function(){
                         return true;
                     },
-                    desc        :   '<?php echo _s( 'Définissez une valeur numérique.', 'nexo' );?>',
+                    desc        :   '<?php echo _s( 'Définissez une valeur numérique.', 'nexopos_advanced' );?>',
                     validation  :   {
                         required    :   true,
                         numeric     :   true
@@ -280,12 +280,12 @@ tendooApp.factory( 'itemsAdvancedFields', [
         barcode         :   [
             {
                 type        :   'text',
-                label       :   '<?php echo _s( 'Unité de Gestion de Stock', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Unité de Gestion de Stock', 'nexopos_advanced' );?>',
                 model       :   'sku',
                 show        :   function(){
                     return true;
                 },
-                desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexo' );?>',
+                desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexopos_advanced' );?>',
                 validation  :   {
                     required    :   true,
                     callback    :   function( item, field, $event ){
@@ -306,63 +306,24 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 }
             },{
                 type        :   'select',
-                label       :   '<?php echo _s( 'Type du Codebarre', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Type du Codebarre', 'nexopos_advanced' );?>',
                 model       :   'barcode_type',
                 show        :   function(){
                     return true;
                 },
-                options         :   [{
-                    value       :   'ean8',
-                    label       :   'EAN 8'
-                },{
-                    value       :   'ean13',
-                    label       :   'EAN 13'
-                },{
-                    value       :   'codabar',
-                    label       :   'Codabar'
-                },{
-                    value       :   'upc_a',
-                    label       :   'UPC A'
-                },{
-                    value       :   'upc_e',
-                    label       :   'UPC E'
-                },{
-                    value       :   'jan_13',
-                    label       :   'JAN-13'
-                },{
-                    value       :   'isbn',
-                    label       :   'ISBN'
-                },{
-                    value       :   'issn',
-                    label       :   'ISSN'
-                },{
-                    value       :   'code_39',
-                    label       :   'CODE 39'
-                },{
-                    value       :   'code_128',
-                    label       :   'Code 128'
-                },{
-                    value       :   'msi_plessey',
-                    label       :   'MSI Plessey'
-                },{
-                    value       :   'qr_code',
-                    label       :   'QR COde'
-                },{
-                    value       :   'data_matrix',
-                    label       :   'Data Matrix'
-                }],
-                desc        :   '<?php echo _s( 'Vous pouvez utiliser le type du code barre déjà dans le produit.', 'nexo' );?>',
+                options         :   <?php echo json_encode( $this->events->apply_filters( 'nexopos_barcodes', $this->config->item( 'nexopos_barcodes' ) ) );?>,
+                desc        :   '<?php echo _s( 'Vous pouvez utiliser le type du code barre déjà dans le produit.', 'nexopos_advanced' );?>',
                 validation  :   {
                     required    :   true
                 }
             },{
                 type        :   'text',
-                label       :   '<?php echo _s( 'Code Barre', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Code Barre', 'nexopos_advanced' );?>',
                 model       :   'barcode',
                 show        :   function(){
                     return true;
                 },
-                desc        :   '<?php echo _s( 'La valeur du codebarre peut être spécifiée dans ce champ.', 'nexo' );?>',
+                desc        :   '<?php echo _s( 'La valeur du codebarre peut être spécifiée dans ce champ.', 'nexopos_advanced' );?>',
                 validation    :   {
                     callback    :   function( item, field, $event ){
                         // Validation run only if the field is not empty
@@ -379,16 +340,28 @@ tendooApp.factory( 'itemsAdvancedFields', [
                             });
                         }
                     }
-                }
+                },
+                buttons         :   [{
+                    click         :   ( item, variation ) => {
+                        variation.tabs.forEach( ( tab ) => {
+                            if( tab.namespace == 'barcode' ) {
+                                tab.models.barcode  =   'Ready !!!';
+                            }
+                        });
+                        
+                    },
+                    icon        :   'fa fa-refresh',
+                    class       :   'default'
+                }]
             },{
                 type        :   'select',
-                label       :   '<?php echo _s( 'Etiquette', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Etiquette', 'nexopos_advanced' );?>',
                 model       :   'barcode_action',
                 show        :   function(){
                     return true;
                 },
                 options     :   barcodeOptions,
-                desc        :   '<?php echo _s( 'Vous pouvez générer une étiquette pour ce produit durant l\'enregistrement.', 'nexo' );?>',
+                desc        :   '<?php echo _s( 'Vous pouvez générer une étiquette pour ce produit durant l\'enregistrement.', 'nexopos_advanced' );?>',
                 validation  :   {
                     required    :   true
                 }
@@ -397,18 +370,18 @@ tendooApp.factory( 'itemsAdvancedFields', [
         images          :   [
             {
                 type        :   'image_select',
-                label       :   '<?php echo _s( 'image principale', 'nexo' );?>',
+                label       :   '<?php echo _s( 'image principale', 'nexopos_advanced' );?>',
                 model       :   'featured_image',
                 show        :   function(){
                     return true;
                 },
-                desc        :   '<?php echo _s( 'Veuillez choisir une image à la une pour cette variation', 'nexo' );?>'
+                desc        :   '<?php echo _s( 'Veuillez choisir une image à la une pour cette variation', 'nexopos_advanced' );?>'
             }
         ],
         galleries          :   [
             {
                 type        :   'group',
-                label       :   '<?php echo _s( 'Image', 'nexo' );?>',
+                label       :   '<?php echo _s( 'Image', 'nexopos_advanced' );?>',
                 show        :   function(){
                     return true;
                 },
@@ -417,12 +390,12 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 subFields   :   [
                     {
                         type        :   'image_select',
-                        label       :   '<?php echo _s( 'Image', 'nexo' );?>',
+                        label       :   '<?php echo _s( 'Image', 'nexopos_advanced' );?>',
                         model       :   'gallery',
                         show        :   function(){
                             return true;
                         },
-                        desc        :   '<?php echo _s( 'Veuillez choisir une image à la une pour cette variation', 'nexo' );?>'
+                        desc        :   '<?php echo _s( 'Veuillez choisir une image à la une pour cette variation', 'nexopos_advanced' );?>'
                     }
                 ]
             }

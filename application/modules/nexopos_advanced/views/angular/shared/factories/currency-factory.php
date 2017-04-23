@@ -1,4 +1,5 @@
 <?php global $Options;?>
+<?php if( true == false ):?><script><?php endif;?>
 angular.element( document ).ready( function(){
     tendooApp.factory( 'sharedCurrency', function(){
         return new function(){
@@ -24,6 +25,19 @@ angular.element( document ).ready( function(){
                 }
 
                 return format;
+            }
+
+            /**
+             * Turn a String into a money
+             * @param string current amount
+             * @return string formated amount
+            **/
+            
+            this.toAmount 	=	function( money ) {
+                if( parseInt( money ) >= 0 ) {
+                    return numeral( money ).format( this.format() );
+                }
+                return money;
             }
 
         }

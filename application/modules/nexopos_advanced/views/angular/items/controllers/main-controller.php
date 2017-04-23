@@ -26,7 +26,8 @@ var itemsMain          =   function(
     /** Adjust Entry actions **/
     _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
-            $scope.table.entryActions[ key ].path      =    '/items/edit/';
+            $scope.table.entryActions[ key ].name      =    '<?php echo _s( 'Consulter', 'nexopos_advanced' );?>';
+            $scope.table.entryActions[ key ].path      =    '/items/view/';
         }
     });
 
@@ -38,7 +39,6 @@ var itemsMain          =   function(
     **/
 
     $scope.table.get        =   function( params ){
-        console.log( params );
         itemsResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );

@@ -16,8 +16,8 @@ tendooApp.factory( 'categoriesResource', function( $resource ) {
         },{
             get : {
                 method : 'GET',
-                headers : {
-                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                headers			:	{
+                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
                 },
                 transformRequest  :     ( data, headersGetter ) => {
                     tendooApp.spinner.start();
@@ -31,7 +31,7 @@ tendooApp.factory( 'categoriesResource', function( $resource ) {
             save : {
                 method : 'POST',
                 headers : {
-                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
                 },
                 transformRequest  :     ( data, headersGetter ) => {
                     tendooApp.spinner.start();
@@ -45,7 +45,7 @@ tendooApp.factory( 'categoriesResource', function( $resource ) {
             update : {
                 method : 'PUT',
                 headers : {
-                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
                 },
                 transformRequest  :     ( data, headersGetter ) => {
                     tendooApp.spinner.start();
@@ -59,7 +59,7 @@ tendooApp.factory( 'categoriesResource', function( $resource ) {
             delete : {
                 method : 'DELETE',
                 headers : {
-                   '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                    '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
                 },
                 transformRequest  :     ( data, headersGetter ) => {
                     tendooApp.spinner.start();

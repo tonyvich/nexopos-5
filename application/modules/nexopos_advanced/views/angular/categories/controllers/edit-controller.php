@@ -1,3 +1,6 @@
+<?php if( true == false ):?>
+<script>
+<?php endif;?>
 var categoriesEdit          =   function(
     categoriesEditTextDomain,
     $scope,
@@ -9,7 +12,8 @@ var categoriesEdit          =   function(
     sharedValidate,
     sharedRawToOptions,
     sharedDocumentTitle,
-    sharedMoment
+    sharedMoment,
+    sharedResourceLoader
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Editer une catégorie', 'nexopos_advanced' );?>' );
@@ -17,26 +21,33 @@ var categoriesEdit          =   function(
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
+    $scope.resourceLoader   =   new sharedResourceLoader();
+    
 
     // Get Resource when loading
     $scope.submitDisabled   =   true;
-    categoriesResource.get({
-        id  :  $route.current.params.id // make sure route is added as dependency
-    },function( entry ){
-        $scope.submitDisabled   =   false;
-        $scope.item             =   entry;
-    },function(){
-        $location.path( '/nexopos/error/404' )
-    })
 
-    // Setting options for ref_parent select
-    categoriesResource.get({
+    $scope.resourceLoader.push({
+        resource    :   categoriesResource,
+        params      :   {
+            id  :  $route.current.params.id
+        },
+        success     :   function( entry ){
+            $scope.submitDisabled   =   false;
+            $scope.item             =   entry;
+        },
+        error       :   function(){
+            $location.path( '/nexopos/error/404' )
+        }
+    }).push({ // Setting options for ref_parent select
+        resource    :   categoriesResource,
+        params      :   {
             exclude     :   $route.current.params.id
         },
-        function(data){
+        success     :   function(data){
             $scope.fields[1].options = sharedRawToOptions( data.entries, 'id', 'name');
         }
-    );
+    }).run();
 
     //Submitting Form
 
@@ -81,7 +92,8 @@ categoriesEdit.$inject    =   [
     'sharedValidate',
     'sharedRawToOptions',
     'sharedDocumentTitle',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedResourceLoader'
 ];
 
 tendooApp.controller( 'categoriesEdit', categoriesEdit );

@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/coupons/main';
     },
-    controller: 'couponsMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -37,7 +36,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/coupons/edit';
     },
-    controller: 'couponsEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -75,7 +73,6 @@
         }
         return 'templates/coupons/main';
     },
-    controller: 'coupons',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

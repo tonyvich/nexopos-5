@@ -18,18 +18,26 @@
             >
             <span
                 ng-show="item.variations.length > 1"
-                title="<?php echo __( 'Supprimer une variation', 'nexo' );?>"
+                title="<?php echo __( 'Supprimer une variation', 'nexopos_advanced' );?>"
                 class="btn btn-danger btn-md"
                 ng-click="removeVariation( variation_id )">
                     <i class="fa fa-remove"></i>
             </span>
 
             <span
-                title="<?php echo __( 'Ajouter une variation', 'nexo' );?>"
+                title="<?php echo __( 'Ajouter une variation', 'nexopos_advanced' );?>"
                 class="btn btn-info btn-md"
                 ng-hide="item.disableVariation"
                 ng-click="addVariation()">
                     <i class="fa fa-plus"></i>
+            </span>
+
+            <span
+                title="<?php echo __( 'Dupliquer cette variation', 'nexopos_advanced' );?>"
+                class="btn btn-info btn-md"
+                ng-hide="item.disableVariation"
+                ng-click="duplicate( variation, $index )">
+                    <i class="fa fa-copy"></i>
             </span>
         </li>
 
@@ -47,9 +55,9 @@
         class="tab-pane row">
 
             <div
-                ng-repeat="field in itemAdvancedFields[ variation_tab.namespace ] track by $index"
+                ng-repeat="field in itemsAdvancedFields[ variation_tab.namespace ] track by $index"
                 class="{{ field.class !== undefined ? field.class : 'col-lg-6 col-sm-6 col-xs-12' }}"
-                ng-show="field.show( variation_tab, item, itemAdvancedFields[ variation_tab.namespace ] )"
+                ng-show="field.show( variation_tab, item, itemsAdvancedFields[ variation_tab.namespace ] )"
                 >
 
                 <div class="form-group" ng-if="field.type == 'text'">
@@ -70,6 +78,16 @@
                         })"
                         >
                         <span ng-show="field.addon" class="input-group-addon">{{ field.addon }}</span>
+                        
+                        <span class="input-group-btn" ng-if="field.buttons.length > 0">
+                            <a
+                                class="btn btn-{{ button.class }}"
+                                ng-repeat="button in field.buttons track by $index"
+                                ng-click="button.click( item, variation )"> <!-- Send the item as parameter -->
+                                <i class="{{ button.icon }}"></i> {{ button.label }}
+
+                            </a>
+                        </span>
                     </div>
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
                 </div>
@@ -92,14 +110,15 @@
                         >
                             <option ng-repeat="option in field.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
+                        
                         <span class="input-group-btn" ng-if="field.buttons.length > 0">
-                            <button
+                            <a
                                 class="btn btn-{{ button.class }}"
                                 ng-repeat="button in field.buttons track by $index"
-                                ng-click="button.click( item )"> <!-- Send the item as parameter -->
+                                ng-click="button.click( item, variation )"> <!-- Send the item as parameter -->
                                 <i class="{{ button.icon }}"></i> {{ button.label }}
 
-                            </button>
+                            </a>
                         </span>
                     </div>
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
@@ -219,6 +238,16 @@
                                             >
                                             <span ng-show="subField.addon" class="input-group-addon">{{ subField.addon }}</span>
 
+                                            <span class="input-group-btn" ng-if="subField.buttons.length > 0">
+                                                <a
+                                                    class="btn btn-{{ button.class }}"
+                                                    ng-repeat="button in subField.buttons track by $index"
+                                                    ng-click="button.click( item, variation )"> <!-- Send the item as parameter -->
+                                                    <i class="{{ button.icon }}"></i> {{ button.label }}
+
+                                                </a>
+                                            </span>
+
                                         </div>
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>
                                     </div>
@@ -243,12 +272,12 @@
                                                 <option ng-repeat="option in subField.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
                                             <span class="input-group-btn" ng-if="subField.buttons.length > 0">
-                                                <button
+                                                <a
                                                     class="btn btn-{{ button.class }}"
                                                     ng-repeat="button in subField.buttons track by $index"
-                                                    ng-click="button.click( item )"> <!-- Send the item as parameter -->
+                                                    ng-click="button.click( item, variation )"> <!-- Send the item as parameter -->
                                                     <i class="{{ button.icon }}"></i> {{ button.label }}
-                                                </button>
+                                                </a>
                                             </span>
                                         </div>
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>

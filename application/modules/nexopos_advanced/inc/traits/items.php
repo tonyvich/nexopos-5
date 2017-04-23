@@ -67,6 +67,7 @@ Trait items
             'ref_category'      =>  $this->post( 'ref_category' ),
             'ref_taxe'          =>  $this->post( 'ref_taxe' ),
             'ref_unit'          =>  $this->post( 'ref_unit' ),
+            'ref_department'    =>  $this->post( 'ref_department' ),
             'status'            =>  $this->post( 'status' ),
             'author'            =>  $this->post( 'author' ),
             'date_creation'     =>  $this->post( 'date_creation' ),
@@ -89,7 +90,7 @@ Trait items
 
             foreach( $variation as $name     =>  $field ) {
                 // exclude from variation fields
-                if( ! in_array( $name, [ 'images', 'stock' ] ) ) {
+                if( ! in_array( $name, [ 'images', 'stock', 'models' ] ) ) {
                     $variation_data[ $name ]    =   $field;
                 }
             }

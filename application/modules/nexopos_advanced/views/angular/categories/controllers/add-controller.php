@@ -1,14 +1,21 @@
+<?php if( true == false ):?>
+<script>
+<?php endif;?>
 var categories          =   function(
-    categoriesAddTextDomain,
+    
     $scope,
     $http,
+    $location,
+
     categoriesFields,
     categoriesResource,
-    $location,
+    categoriesAddTextDomain,
+   
     sharedValidate,
     sharedRawToOptions,
     sharedDocumentTitle,
-    sharedMoment
+    sharedMoment,
+    sharedResourceLoader
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Ajouter une catégorie', 'nexopos_advanced' );?>' );
@@ -16,14 +23,16 @@ var categories          =   function(
     $scope.fields           =   categoriesFields;
     $scope.item             =   {};
     $scope.validate         =   new sharedValidate();
+    $scope.resourceLoader   =   new sharedResourceLoader();
 
     // Setting options for ref_parent select
 
-    categoriesResource.get(
-        function(data){
+    $scope.resourceLoader.push({
+        resource    :   categoriesResource,
+        success     :   function(data){
             $scope.fields[1].options = sharedRawToOptions(data.entries, 'id', 'name');
         }
-    );
+    }).run();
 
     //Submitting Form
 
@@ -65,16 +74,17 @@ var categories          =   function(
 }
 
 categories.$inject    =   [
-    'categoriesAddTextDomain',
     '$scope',
     '$http',
+    '$location',
     'categoriesFields',
     'categoriesResource',
-    '$location',
+    'categoriesAddTextDomain',
     'sharedValidate',
     'sharedRawToOptions',
     'sharedDocumentTitle',
-    'sharedMoment'
+    'sharedMoment',
+    'sharedResourceLoader'
 ];
 
 tendooApp.controller( 'categories', categories );

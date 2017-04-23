@@ -1,2 +1,5 @@
 nexopos_categories_fields :
 regroupe tous les champs du formulaire de création et d'édition des catégories
+
+item_view_files         :   
+contient la liste des fichiers chargé durant la vue des produits

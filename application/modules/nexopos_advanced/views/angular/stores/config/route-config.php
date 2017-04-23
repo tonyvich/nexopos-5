@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/stores/main';
     },
-    controller: 'storesMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -32,7 +31,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/stores/edit';
     },
-    controller: 'storesEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -64,7 +62,6 @@
         }
         return 'templates/stores/main';
     },
-    controller: 'stores',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

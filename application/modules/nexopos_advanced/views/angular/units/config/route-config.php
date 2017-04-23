@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/units/main';
     },
-    controller: 'unitsMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -37,7 +36,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/units/edit';
     },
-    controller: 'unitsEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -68,7 +66,6 @@
         }
         return 'templates/units/main';
     },
-    controller: 'units',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

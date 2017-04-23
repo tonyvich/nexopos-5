@@ -2,7 +2,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/categories/main';
     },
-    controller: 'categoriesMain',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -33,7 +32,6 @@
     templateUrl: function( urlattr ) {
         return 'templates/categories/edit';
     },
-    controller: 'categoriesEdit',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -63,7 +61,6 @@
         }
         return 'templates/categories/main';
     },
-    controller: 'categories',
     resolve: {
         lazy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load({

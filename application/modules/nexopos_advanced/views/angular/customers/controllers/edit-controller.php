@@ -31,13 +31,13 @@ var customersEdit               =   function(
     $scope.groupLengthLimit         =   10;
     $scope.tabs                     =   customersTabs.getTabs();
     $scope.fields                   =   customersFields;
-    $scope.itemAdvancedFields       =   customersAdvancedFields;
+    $scope.itemsAdvancedFields       =   customersAdvancedFields;
     $scope.countries                =   sharedCountries.countries;
     $scope.states                   =   sharedStates.states
 
-    sharedFieldEditor( 'billing_country', $scope.itemAdvancedFields.billing ).options     =   $scope.countries;
+    sharedFieldEditor( 'billing_country', $scope.itemsAdvancedFields.billing ).options     =   $scope.countries;
 
-    sharedFieldEditor( 'shipping_country', $scope.itemAdvancedFields.shipping ).options     =   $scope.countries;
+    sharedFieldEditor( 'shipping_country', $scope.itemsAdvancedFields.shipping ).options     =   $scope.countries;
 
     // Setting customer group options
     customersGroupsResource.get(
@@ -91,9 +91,9 @@ var customersEdit               =   function(
             });
 
             if( field.model == 'billing_country' ) {
-                sharedFieldEditor( 'billing_state', $scope.itemAdvancedFields.billing ).options     =   country_states;
+                sharedFieldEditor( 'billing_state', $scope.itemsAdvancedFields.billing ).options     =   country_states;
             } else { // for shipping obvisouly
-                sharedFieldEditor( 'shipping_state', $scope.itemAdvancedFields.shipping ).options     =   country_states;
+                sharedFieldEditor( 'shipping_state', $scope.itemsAdvancedFields.shipping ).options     =   country_states;
             }
         }
 
@@ -274,8 +274,8 @@ var customersEdit               =   function(
 
     $scope.validate.focus      =   function( field, model, ids ) {
 
-        // sharedCountries($scope.itemAdvancedFields.billing);
-        // sharedCountries($scope.itemAdvancedFields.shipping);
+        // sharedCountries($scope.itemsAdvancedFields.billing);
+        // sharedCountries($scope.itemsAdvancedFields.shipping);
 
         var fieldClass                  =   '.' + field.model + '-helper';
 
@@ -377,7 +377,7 @@ var customersEdit               =   function(
         $scope.finalItem                    = sharedFilterItem(
             $scope.item,
             $scope.fields,
-            $scope.itemAdvancedFields
+            $scope.itemsAdvancedFields
         );
 
         $scope.finalItem.author             = <?= User::id()?>;

@@ -29,4 +29,15 @@ class NexoPOS_Filters extends Tendoo_Module
         $deps[]     =   'LocalStorageModule';
         return $deps;
     }
+
+    /**
+     * replace default tendoo spinner
+     * @param void
+     * @return string
+    **/
+    
+    public function nexopos_spinner()
+    {
+        return '<div class="sp-40 sp-circle-light sp-margin-5 nexopos-spinner"></div>';
+    }
 }
