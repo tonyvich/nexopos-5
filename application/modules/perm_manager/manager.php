@@ -29,10 +29,18 @@ class PermManagerModule extends Tendoo_Module
             if( @$menus[ 'settings' ] != null ) {
                 $menus  =   array_insert_before( 'modules', $menus, 'perm_manager', [
                     [
-                        'title' =>  'Permission Manager',
+                        'title'    =>  'Permission Manager',
+                        'icon'     =>  'fa fa-file',
+                        'disable'  =>  'true'
+                    ],
+                    [
+                        'title'  => 'Manage permission',
                         'href'   =>  site_url( array( 'dashboard', 'perm_manager', 'mainboard' ) ),
-                        'icon'  =>  'fa fa-file'
-                    ]
+                    ],
+                    [
+                        'title'  => 'Add permission',
+                        'href'   =>  site_url( array( 'dashboard', 'perm_manager', 'add' ) ),
+                    ],
                 ]);
             }            
         }
