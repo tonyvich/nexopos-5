@@ -65,6 +65,9 @@ class PermManagerController extends Tendoo_Module
     }
 
     public function add_permission (){
+
+        exit( $this->input->post());
+        
         $group       = $this->input->post('group_par');
         $permission  = $this->input->post('perms_par');
         if( $this->users->auth->is_group_allowed( $permission, $group) ){
@@ -77,5 +80,17 @@ class PermManagerController extends Tendoo_Module
             $notify = array( 'type' => 'error','message' => 'An unattended event happened');
             $this->mainboard( $notify );
         }
+    }
+
+    public function get(){
+        
+        $data = $this->users->auth->list_groups();
+        foreach ( $data as &$d){
+            $perms = $this->users->auth->list_perms( $d->id );
+            $d->permissions = $perms;
+        }
+        $data[ 'roles' ] = $data;
+        $data[ 'permissions' ] =  $this->users->auth->list_perms();
+        echo json_encode( $data );
     }
 }
