@@ -3,7 +3,10 @@
     class="{{ field.class !== undefined ? field.class : 'col-lg-12 col-sm-12 col-xs-12' }}"
     >
 
-    <div class="form-group" ng-if="field.type == 'text'">
+    <div 
+        class="form-group" 
+        ng-if="field.type == 'text'"
+        ng-hide="field.hide( item )">
         <div class="input-group">
           <span class="input-group-addon">{{ field.label }}</span>
           <input
@@ -17,7 +20,10 @@
         <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
-    <div class="form-group" ng-if="field.type == 'textarea'">
+    <div 
+        class="form-group" 
+        ng-if="field.type == 'textarea'"
+        ng-hide="field.hide( item )">
         <label>{{ field.label }}</label>
         <textarea
             ng-model="item[ field.model ]"
@@ -27,7 +33,10 @@
         <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
-    <div class="form-group" ng-if="field.type == 'select'">
+    <div 
+        class="form-group" 
+        ng-if="field.type == 'select'"
+        ng-hide="field.hide( item )">
         <div class="input-group">
             <span class="input-group-addon">{{ field.label }}</span>
             <select
@@ -46,7 +55,10 @@
         <p class="help-block {{ field.model }}-helper" style="min-height:15px;font-size:12px;">{{ field.desc }}</p>
     </div>
 
-    <div class="form-group" ng-if="field.type == 'datepick'">
+    <div 
+        class="form-group" 
+        ng-if="field.type == 'datepick'"
+        ng-hide="field.hide( item )">
         <div class="input-group">
             <span class="input-group-addon">{{ field.label }}</span>
             <input
@@ -66,7 +78,10 @@
 
     <!-- For multiselect -->
 
-    <div class="form-group" ng-if="field.type == 'dropdown_multiselect'" >
+    <div 
+        class="form-group" 
+        ng-if="field.type == 'dropdown_multiselect'"
+        ng-hide="field.hide( item )">
         <label>{{ field.label }}</label><br>
         <amo-multiselect
             ng-blur="validate.blur( field, item )"
@@ -77,7 +92,10 @@
         <p class="help-block {{ field.model }}-helper" style="font-size:12px;">{{ field.desc }}</p>
     </div>
 
-    <div class="form-group" ng-if="field.type == 'datetime-popup'">
+    <div 
+        class="form-group" 
+        ng-if="field.type == 'datetime-popup'"
+        ng-hide="field.hide( item )">
         <p class="input-group">
           <input
             type="text"
@@ -98,6 +116,7 @@
         class="row"
         ng-if="field.type == 'group'"
         ng-init="item[ field.model ] = resetGroup( item[ field.model ] )"
+        ng-hide="field.hide( item )"
     >
 
         <div
@@ -105,7 +124,10 @@
             ng-repeat="(group_index,group_value) in item[ field.model ]"
         >
 
-            <div class="box box-primary" style="background:#F1F1F1;" >
+            <div 
+                class="box box-primary" 
+                style="background:#F1F1F1;"
+                ng-hide="field.hide( item )">
                 <div class="box-header with-border">
                     <!-- .groups" -->
                     <div class="box-title">
@@ -122,7 +144,10 @@
                         ng-show="subField.show( variation, item, field.subFields )"
                     >
 
-                        <div class="form-group" ng-if="subField.type == 'text'">
+                        <div 
+                            class="form-group" 
+                            ng-if="subField.type == 'text'"
+                            ng-hide="field.hide( item, item[ field.model ][ group_index ] )">
 
                             <div class="input-group">
 
@@ -139,7 +164,10 @@
                             <p class="help-block" style="min-height:15px;font-size:12px;">{{ subField.desc }}</p>
                         </div>
 
-                        <div class="form-group" ng-if="subField.type == 'select'">
+                        <div 
+                            class="form-group" 
+                            ng-if="subField.type == 'select'"
+                            ng-hide="field.hide( item, item[ field.model ][ group_index ] )">
                             <div class="input-group">
                                 <span class="input-group-addon">{{ subField.label }}</span>
                                 <select class="form-control" ng-model="item[ field.model ][ group_index ][ subField.model ]">
@@ -154,7 +182,10 @@
 
                         <!--  Image Select -->
 
-                        <div class="input-group" ng-if="subField.type == 'image_select'">
+                        <div 
+                            class="input-group" 
+                            ng-if="subField.type == 'image_select'"
+                            ng-hide="field.hide( item, item[ field.model ][ group_index ] )">
                           <span class="input-group-addon">{{ subField.label }}</span>
                           <input ng-model="item[ field.model ][ group_index ][ subField.model ]" type="text" class="form-control" placeholder="">
                         </div>
@@ -167,7 +198,10 @@
 
     </div>
 
-    <div class="form-group" ng-if="field.type == 'image_select'">
+    <div 
+        class="form-group" 
+        ng-if="field.type == 'image_select'"
+        ng-hide="field.hide( item, item[ field.model ][ group_index ] )">
         <div class="input-group">
           <span class="input-group-addon">{{ field.label }}</span>
           <input
