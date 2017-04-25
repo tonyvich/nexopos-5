@@ -31,14 +31,18 @@ tendooApp.factory( 'couponsFields', [ 'sharedOptions', function( sharedOptions )
         desc        :    '<?php echo _s( 'Si vous avez choisi une réduction en pourcentage', 'nexopos_advanced' );?>',
         validation  :   {
             decimal  : true
+        },
+        hide        :   function( item ) {
+            console.log( item );
+            return item.discount_type != 'percent' ? true : false;
         }
     },{
         type        :   'text',
         label       :   '<?php echo _s( 'Montant', 'nexopos_advanced' );?>',
         model       :   'discount_amount',
         desc        :    '<?php echo _s( 'Si vous avez choisi une réduction en montant', 'nexopos_advanced' );?>',
-        validation  :   {
-            decimal  : true
+        hide        :   function( item ) {
+            return item.discount_type != 'flat' ? true : false;
         }
     },{
         type        :   'text',

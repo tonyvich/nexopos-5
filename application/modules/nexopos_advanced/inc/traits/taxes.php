@@ -15,8 +15,9 @@ Trait taxes
             $this->db->select( '
                 nexopos_taxes.id as id,
                 nexopos_taxes.name as name,
-                nexopos_taxes.type as type,
-                nexopos_taxes.value as value,
+                nexopos_taxes.tax_type as tax_type,
+                nexopos_taxes.tax_percent as tax_percent,
+                nexopos_taxes.tax_amount as tax_amount,
                 nexopos_taxes.description as description,
                 nexopos_taxes.date_creation as date_creation,
                 nexopos_taxes.date_modification as date_modification,
@@ -70,11 +71,12 @@ Trait taxes
 
         $this->db->insert( 'nexopos_taxes', [
             'name'                  =>  $this->post( 'name' ),
-            'value'                 =>  $this->post( 'value' ),
+            'tax_amount'            =>  $this->post( 'tax_amount' ),
+            'tax_percent'           =>  $this->post( 'tax_percent' ),
             'description'           =>  $this->post( 'description' ),
             'author'                =>  $this->post( 'author' ),
             'date_creation'         =>  $this->post( 'date_creation' ),
-            'type'                  =>  $this->post( 'type' )
+            'tax_type'              =>  $this->post( 'tax_type' )
         ]);
 
         $this->__success();
@@ -110,12 +112,12 @@ Trait taxes
         }
 
         $this->db->where( 'id', $id )->update( 'nexopos_taxes', [
-            'name'                  =>  $this->put( 'name' ),
-            'value'                  =>  $this->put( 'value' ),
+            'tax_amount'            =>  $this->put( 'tax_amount' ),
+            'tax_percent'           =>  $this->put( 'tax_percent' ),
             'description'           =>  $this->put( 'description' ),
             'author'                =>  $this->put( 'author' ),
             'date_modification'     =>  $this->put( 'date_modification' ),
-            'type'                  =>  $this->put( 'type' )
+            'tax_type'              =>  $this->put( 'tax_type' )
         ]);
 
         $this->__success();

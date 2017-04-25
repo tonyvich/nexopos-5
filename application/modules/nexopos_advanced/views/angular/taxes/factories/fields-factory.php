@@ -11,7 +11,7 @@ tendooApp.factory( 'taxesFields', [ 'sharedOptions', function( sharedOptions ){
     },{
         type    :   'select',
         label   :   '<?php echo __( 'Type de la taxe', 'nexopos_advanced' );?>',
-        model   :   'type',
+        model   :   'tax_type',
         options     :   sharedOptions.percentOrFlat,
         validation : {
             required : true
@@ -19,13 +19,26 @@ tendooApp.factory( 'taxesFields', [ 'sharedOptions', function( sharedOptions ){
         desc        :   '<?php echo _s( 'Veuillez choisir le type de la taxe.', 'nexopos_advanced' );?>'
     },{
         type    :   'text',
-        label   :   '<?php echo _s( 'Valeur', "nexopos_advanced" );?>',
-        model   :   'value',
+        label   :   '<?php echo _s( 'Pourcentage', "nexopos_advanced" );?>',
+        model   :   'tax_percent',
         validation : {
             decimal : true,
-            required: true
         },
-        desc        :   '<?php echo _s( 'Veuillez définir la valeur de la taxe. Vous devez définir une valeur qui correspond au type de taxe choisi plus tôt.', 'nexopos_advanced' );?>'
+        desc        :   '<?php echo _s( 'Pour une taxe calculée en pourcentage', 'nexopos_advanced' );?>',
+        hide        :   function( item ) {
+            return item.tax_type != 'percent' ? true : false;
+        }
+    },{
+        type    :   'text',
+        label   :   '<?php echo _s( 'Montant', "nexopos_advanced" );?>',
+        model   :   'tax_amount',
+        validation : {
+            decimal : true,
+        },
+        desc        :   '<?php echo _s( 'Pour une taxe fixe en montant', 'nexopos_advanced' );?>',
+        hide        :   function( item ) {
+            return item.tax_type != 'flat' ? true : false;
+        }
     },{
         type    :   'textarea',
         label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',

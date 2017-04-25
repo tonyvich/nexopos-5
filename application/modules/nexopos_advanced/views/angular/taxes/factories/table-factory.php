@@ -7,13 +7,18 @@ tendooApp.factory( 'taxesTable', ['sharedOptions', function( sharedOptions ){
             },
             {
                 text    :   '<?php echo _s( 'Type', 'nexopos_advanced' );?>',
-                namespace   :   'type',
+                namespace   :   'tax_type',
                 is          :   'object',
                 object      :   sharedOptions.percentOrFlat
             },
             {
                 text    :   '<?php echo _s( 'Valeur', 'nexopos_advanced' );?>',
-                namespace   :   'value'
+                namespace   :   'tax_percent'
+            },
+            {
+                text    :   '<?php echo _s( 'Valeur', 'nexopos_advanced' );?>',
+                namespace   :   'tax_amount',
+                is          :   'money'
             },
             {
                 text    :   '<?php echo _s( 'Date de creation', 'nexopos_advanced' );?>',
