@@ -14,6 +14,7 @@
             var csrf_code           =   '<?php echo $this->security->get_csrf_hash(); ?>';
             formData.append( '<?php echo $this->security->get_csrf_token_name(); ?>' , csrf_code );
         }
+        $scope.searchInput          =   "";
 
         /**
          *  Enable Bulk Select
@@ -107,5 +108,18 @@
 
 
         // $scope.remainigHeight   =   $scope.remainigHeight == 0 ? $scope.contentHeight : $scope.remainigHeight;
+
+        /**
+         *  Search
+         *  @param
+         *  @return
+        **/
+
+        $scope.search              =     function(){
+            var search = $scope.searchInput;
+            $http.get( "<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>?search=" + search ).then(function( returned ) {
+                $scope.entries  =   returned.data;
+            });
+        }
     }]);
 </script>

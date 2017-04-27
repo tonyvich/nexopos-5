@@ -14,9 +14,9 @@
                               <div class="col-md-12">
                                   <div class="input-group input-group-lg">
                                     <span class="input-group-addon"><?php echo __( 'Search', 'media-manager' );?></span>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" ng-model="searchInput">
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-primary" name="button"><i class="fa fa-search"></i></button>
+                                        <button type="button" class="btn btn-primary" name="button" ng-click="search()"><i class="fa fa-search"></i></button>
                                         <button ng-click="enableBulkSelect()" ng-if="multiselect == false" class="btn btn-default"><?php echo __( 'Bulk Select', 'media-manager' );?></button>
                                         <button ng-click="cancelBulkSelect()" ng-if="multiselect == true" class="btn btn-default"><?php echo __( 'Cancel', 'media-manager' );?></button>
                                     </div>
