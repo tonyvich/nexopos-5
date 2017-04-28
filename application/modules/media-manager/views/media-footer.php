@@ -5,7 +5,85 @@
             maxFilesize     : '10'
         });
     });
-    tendooApp.controller( 'mediaManagerCTRL', [ '$scope', '$http', function( $scope, $http ) {
+
+    tendooApp.factory( 'sharedAlert', [ 'SweetAlert', function( SweetAlert ){
+        return new function(){
+
+            /**
+             *  Alert Text
+             *  @param string message
+             *  @return void
+            **/
+
+            this.alert      =   function( message ) {
+                return SweetAlert.swal( message );
+            }
+
+            /**
+             *  Confirmation
+             *  @param string message
+             *  @param function callback
+             *  @return void
+            **/
+
+            this.confirm    =   function( message, callback ) {
+                return SweetAlert.swal({
+                    title                : "Confirmez votre action",
+                    text                 : message,
+                    type                 : "warning",
+                    showCancelButton     : true,
+                    confirmButtonColor   : "#DD6B55",
+                    confirmButtonText    : "Oui",
+                    closeOnConfirm       : typeof callback == 'function'
+                }, function( isConfirm ) {
+                    callback( isConfirm );
+                });
+            }
+
+            /**
+             *  Alert Warning
+             *  @param string message
+             *  @return void
+            **/
+
+            this.warning            =   function( message ) {
+                return SweetAlert.swal(
+                    {
+                    title                : "Attention",
+                    text                 : message,
+                    type                 : "warning",
+                    showCancelButton     : false,
+                    confirmButtonColor   : "#DD6B55",
+                    confirmButtonText    : "Ok",
+                    closeOnConfirm       : true
+                }
+                );
+            }
+        }
+    }]);
+
+
+    <?php
+        global $Options;
+        $this->load->config( 'rest' );
+    ?>
+    tendooApp.factory( 'mediasResource', function( $resource ) {
+        return $resource(
+            '<?php echo site_url( [ 'rest', 'media_manager', 'medias']); ?>',
+            {
+            },
+            {
+               delete : {
+                    method : 'DELETE',
+                    headers : {
+                        '<?php echo $this->config->item('rest_key_name');?>'	:	'<?php echo @$Options[ 'rest_key' ];?>'
+                    }
+                }
+            }
+        );
+    });
+
+    tendooApp.controller( 'mediaManagerCTRL', [ '$scope', '$http', 'mediasResource', 'sharedAlert', function( $scope, $http, mediasResource, sharedAlert ) {
         $scope.entries              =   [];
         $scope.multiselect          =   false;
         $scope.dzCallbacks          =   new Object;
@@ -104,13 +182,13 @@
             console.log( $scope.dropZoneHeight );
         }
 
-        // $scope.loadAssets();
+        $scope.loadAssets();
 
 
         // $scope.remainigHeight   =   $scope.remainigHeight == 0 ? $scope.contentHeight : $scope.remainigHeight;
 
         /**
-         *  Search
+         *  search
          *  @param
          *  @return
         **/
@@ -119,6 +197,26 @@
             var search = $scope.searchInput;
             $http.get( "<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>?search=" + search ).then(function( returned ) {
                 $scope.entries  =   returned.data;
+            });
+        }
+
+        /**
+         *  delete  delete selected element
+         *  @param
+         *  @return
+        **/
+
+        $scope.delete             =     function(){
+            var selectedItem = [];
+            _.each( $scope.entries, function( entry ) {
+                if( entry.selected ) {
+                    selectedItem.push( entry );
+                }
+            });
+            mediasResource.delete( { 'entries[]' : selectedItem }, function( data ) {
+                $scope.loadAssets();
+            },function(){
+                alert( "ndem" );
             });
         }
     }]);

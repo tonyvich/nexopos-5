@@ -19,6 +19,7 @@
                                         <button type="button" class="btn btn-primary" name="button" ng-click="search()"><i class="fa fa-search"></i></button>
                                         <button ng-click="enableBulkSelect()" ng-if="multiselect == false" class="btn btn-default"><?php echo __( 'Bulk Select', 'media-manager' );?></button>
                                         <button ng-click="cancelBulkSelect()" ng-if="multiselect == true" class="btn btn-default"><?php echo __( 'Cancel', 'media-manager' );?></button>
+                                        <button type="button" class="btn btn-danger" ng-click="delete()" ng-show="countSelected() > 0"><i class="fa fa-trash"></i></button>
                                     </div>
                                   </div>
                                   <br>
