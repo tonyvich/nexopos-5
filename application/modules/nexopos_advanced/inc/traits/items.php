@@ -64,7 +64,7 @@ Trait items
                 ->get( 'nexopos_items_variations_stock' )
                 ->result_array();
 
-                $variation[ 'galleries' ]       =   $this->db->where( 'ref_variation', $variation[ 'id' ] )
+                $variation[ 'images' ]          =   $this->db->where( 'ref_variation', $variation[ 'id' ] )
                 ->get( 'nexopos_items_variations_galleries' )
                 ->result_array();
 
