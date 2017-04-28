@@ -1,3 +1,4 @@
+<?php if( true == false ):?><script><?php endif;?>
 tendooApp.directive( 'itemEdit', function(){
     return {
         restrict        :   'E',
@@ -80,6 +81,7 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.groupLengthLimit     =   10;
             $scope.itemsTypes           =   itemsTypes;
             $scope.fields               =   itemsFields;
+            $scope.advancedFields       =   itemsAdvancedFields;
 
             /**
             *  Detect Item Namespace
@@ -122,6 +124,7 @@ tendooApp.directive( 'itemEdit', function(){
 
                 // When everything seems to be done, then we can check if the item exist on the local store
                 if( localStorageService.isSupported ) {
+                    return;
                     // The item is reset if you access from type selection
                     // Maybe a prompt can ask whether the saved item should be deleted :\ ?
                     if( $location.path() == '/items/types' ) {
@@ -212,6 +215,83 @@ tendooApp.directive( 'itemEdit', function(){
                 $scope.initItem();
             }
 
+            /**
+            * Load Item
+            * @param void
+            * @return void
+            **/
+            
+            $scope.loadItem 	            =   function(){
+                itemsResource.get({
+                    id  :   $routeParams.id
+                }, ( item ) => {
+                    $scope.closeInit();
+
+                    // Assign available field to the item
+                    // When the item is completely loaded
+                    $scope.fields.forEach( ( field ) => {
+                        $scope.item[ field.model ]   =   item[ field.model ];
+                    });
+
+                    let emptyVariation              =   angular.copy( $scope.item.variations[0] );
+                    // $scope.item.variations          =   [];
+
+                    item.variations.forEach( ( variation, index ) => {
+                        
+                        $scope.item.variations[ index ]     =   angular.copy( emptyVariation );
+
+                        // Browse field model name and add it to the item variation
+                        for( let tab in $scope.advancedFields ) {
+
+                            // get the right tab index
+                            let tabIndex    =   null;
+                            $scope.item.variations[ index ].tabs.forEach( ( variationTab, tabId ) => {
+                                if( variationTab.namespace == tab ) {
+                                    tabIndex    =   tabId;
+                                }
+                            });
+                            
+                            $scope.advancedFields[ tab ].forEach( ( field, fieldIndex ) => {
+
+                                if( field.type != 'group' ) {
+
+                                    $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ]   =   variation[ field.model ];
+                                    
+                                } else {
+                                    // This works for groups
+                                    $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ]     =   [];
+
+                                    if( variation[ field.model ].length > 0 ) {
+                                        // Looping groups
+                                        for( let groupIndex in variation[ field.model ] ) {
+                                            
+                                            // Looping the subField to get their model name
+                                            if( typeof field.subFields != 'undefined' ) {
+
+                                                // create group model
+                                                $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][ groupIndex ]           =   {}
+                                                $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][ groupIndex ].models    =   {};
+
+                                                field.subFields.forEach( ( subField ) => {
+                                                    $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][ groupIndex ].models[ subField.model ]     =   variation[ field.model ][ groupIndex ][ subField.model ];   
+                                                });
+                                            }
+                                        }
+                                    } else {
+                                        $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ]              =   [];
+                                        $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][0]           =   {}
+                                        $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][0].models    =   {}
+                                        field.subFields.forEach( ( subField ) => {
+                                            $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][0].models[ subField.model ]     =   null;
+                                        });
+                                    }                                    
+                                }                                
+                            });   
+                        };
+                    });   
+                });            
+            }
+
             // Resources Loading
             $scope.resourceLoader.push({
                 resource    :   providersResource,
@@ -242,7 +322,7 @@ tendooApp.directive( 'itemEdit', function(){
                 resource    :   departmentsResource,
                 success    :   function( data ) {
                     sharedFieldEditor( 'ref_department', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
-                    $scope.closeInit();
+                    $scope.loadItem();
                 }
             });
 
