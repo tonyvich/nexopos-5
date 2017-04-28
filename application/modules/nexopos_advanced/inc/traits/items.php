@@ -52,7 +52,7 @@ Trait items
         $result     =   $this->db->get( 'nexopos_items' )->result();
 
         // If we're loading specific item, then we can also load variations when the item is already loaded.
-        if( $id != null ) {
+        if( $id != null && $result ) {
             
             // get variations
             $result[0]->variations      =   $this->db->where( 'ref_item', $id )
@@ -73,7 +73,7 @@ Trait items
             }            
         }
 
-        return $this->response( $result[0], 200 );
+        return ( $result ) ? $this->response( $result[0], 200 ) : $this->__404();
     }
 
     /**
@@ -83,6 +83,28 @@ Trait items
 
     public function items_post()
     {
+        $variation_errors       =   [];
+        // Initial Checks
+        foreach( $this->post( 'variations' ) as $variation ) {
+            $sku_checks     =   $this->db->where( 'sku', $variation[ 'sku' ] )
+            ->get( 'nexopos_items_variations' )->result_array();
+
+            $barcode_checks     =   $this->db->where( 'barcode', $variation[ 'barcode' ] )
+            ->get( 'nexopos_items_variations' )->result_array();
+
+            if( $sku_checks || $barcode_checks ) {
+                $variation_errors[]     =   [
+                    'variation'     =>      $variation, 
+                    'sku'           =>      $sku_checks,
+                    'barcode'       =>      $barcode_checks
+                ];
+            }            
+        }
+
+        if( $variation_errors ) {
+            return $this->response( $variation_errors, 403 );
+        }
+
         $this->db->insert( 'nexopos_items',[
             'name'              =>  $this->post( 'name' ),
             'namespace'         =>  $this->post( 'namespace' ),
@@ -146,7 +168,7 @@ Trait items
             // if there are images
             foreach( $variation[ 'images' ] as $key     =>  $images ) {
                 // Since it's not required, it may be empty, in such case, we don't save it
-                if( $images[ 'gallery' ] ) {
+                if( $images[ 'image' ] ) {
                     $images[ 'ref_variation' ]      =   $last_variation_entry[0][ 'id' ];
 
                     // inset individually since it can be empty. It's inserted only when it's not empty
@@ -185,6 +207,4 @@ Trait items
     {
 
     }
-
-
 }

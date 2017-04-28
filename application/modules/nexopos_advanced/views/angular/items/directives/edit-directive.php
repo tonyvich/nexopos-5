@@ -128,11 +128,11 @@ tendooApp.directive( 'itemEdit', function(){
                     // The item is reset if you access from type selection
                     // Maybe a prompt can ask whether the saved item should be deleted :\ ?
                     if( $location.path() == '/items/types' ) {
-                        localStorageService.remove( 'item' );
+                        localStorageService.remove( 'item_' + $routeParams.id );
                     } else {
-                        if( typeof localStorageService.get( 'item' ) === 'object' ) {
+                        if( typeof localStorageService.get( 'item_' + $routeParams.id ) === 'object' ) {
 
-                            let savedItem           =   localStorageService.get( 'item' );
+                            let savedItem           =   localStorageService.get( 'item_'  + $routeParams.id );
                             
                             if( savedItem != null ) {
 
@@ -225,6 +225,7 @@ tendooApp.directive( 'itemEdit', function(){
                 itemsResource.get({
                     id  :   $routeParams.id
                 }, ( item ) => {
+
                     $scope.closeInit();
 
                     // Assign available field to the item
@@ -245,6 +246,7 @@ tendooApp.directive( 'itemEdit', function(){
 
                             // get the right tab index
                             let tabIndex    =   null;
+
                             $scope.item.variations[ index ].tabs.forEach( ( variationTab, tabId ) => {
                                 if( variationTab.namespace == tab ) {
                                     tabIndex    =   tabId;
@@ -278,6 +280,7 @@ tendooApp.directive( 'itemEdit', function(){
                                             }
                                         }
                                     } else {
+                                        // To handle empty values
                                         $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ]              =   [];
                                         $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][0]           =   {}
                                         $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][0].models    =   {}
@@ -289,7 +292,28 @@ tendooApp.directive( 'itemEdit', function(){
                             });   
                         };
                     });   
+                }, ( data ) => {
+                    if( data.status == '404' ) {
+                        $location.path( '/errors/404' );
+                    }
                 });            
+            }
+
+            /**
+            *  Save On Local Storage
+            *  @param void
+            *  @return void
+            **/
+
+            $scope.saveOnLocalStorage   =   ()  => {
+                if( localStorageService.isSupported ) {
+                    // We'll only save if localStore is enabled
+                    if( localStorageService.getStorageType() == 'localStorage' ) {
+                        $scope.$watch( 'item', ( before, after ) => {
+                            localStorageService.set( 'item', $scope.item );
+                        });
+                    }
+                }
             }
 
             // Resources Loading

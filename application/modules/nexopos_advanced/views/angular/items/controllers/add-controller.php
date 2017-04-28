@@ -454,11 +454,11 @@ var items               =   function(
 
                     if( angular.isDefined( tab.models.sale_price ) ) {
                         if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
-                            var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
+                            var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
                             var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                             this.addon          =   sharedCurrency.toAmount( newPrice )
                         } else {
-                            var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
+                            var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_amount );
                             this.addon          =   sharedCurrency.toAmount( newPrice )
                         }
                     }
@@ -468,11 +468,11 @@ var items               =   function(
                     if( angular.isDefined( tab.models ) ) {
                         if( angular.isDefined( tab.models.sale_price ) ) {
                             if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
-                                var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
+                                var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
                                 var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                 this.addon          =   sharedCurrency.toAmount( newPrice )
                             } else {
-                                var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
+                                var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_amount );
                                 this.addon          =   sharedCurrency.toAmount( newPrice )
                             }
                         }

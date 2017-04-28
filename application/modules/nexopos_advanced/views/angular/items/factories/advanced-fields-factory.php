@@ -297,7 +297,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                             }, function( returned ) {
                                 // greater than 2 since the object already has system keys : $promise and $resolved
                                 if( _.keys( returned ).length > 2 ) {
-                                    var message     =   '<?php echo _s( 'L\'Unité de gestion de stock : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, car le produit ne sera pas disponible à la vente.', 'nexopos_advanced' );?>';
+                                    var message     =   '<?php echo _s( 'L\'Unité de gestion de stock : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, sinon il sera impossible de sauvegarder le produit.', 'nexopos_advanced' );?>';
                                     sharedAlert.warning( message.format( item[ field.model ] ) );
                                 }
                             });
@@ -334,14 +334,14 @@ tendooApp.factory( 'itemsAdvancedFields', [
                             }, function( returned ) {
                                 // greater than 2 since the object already has system keys : $promise and $resolved
                                 if( _.keys( returned ).length > 2 ) {
-                                    var message     =   '<?php echo _s( 'Le code barre : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, car le produit ne sera pas disponible à la vente.', 'nexopos_advanced' );?>';
+                                    var message     =   '<?php echo _s( 'Le code barre : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, sinon il sera impossible de sauvegarder le produit.', 'nexopos_advanced' );?>';
                                     sharedAlert.warning( message.format( item[ field.model ] ) );
                                 }
                             });
                         }
                     }
-                },
-                buttons         :   [{
+                }
+                /** ,buttons         :   [{
                     click         :   ( item, variation ) => {
                         variation.tabs.forEach( ( tab ) => {
                             if( tab.namespace == 'barcode' ) {
@@ -352,7 +352,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     },
                     icon        :   'fa fa-refresh',
                     class       :   'default'
-                }]
+                }]**/
             },{
                 type        :   'select',
                 label       :   '<?php echo _s( 'Etiquette', 'nexopos_advanced' );?>',
@@ -391,7 +391,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     {
                         type        :   'image_select',
                         label       :   '<?php echo _s( 'Image', 'nexopos_advanced' );?>',
-                        model       :   'gallery',
+                        model       :   'image',
                         show        :   function(){
                             return true;
                         },
