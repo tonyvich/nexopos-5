@@ -1,3 +1,4 @@
+<?php if( true == false ):?><script><?php endif;?>
 tendooApp.directive( 'itemEdit', function(){
     return {
         restrict        :   'E',
@@ -80,6 +81,7 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.groupLengthLimit     =   10;
             $scope.itemsTypes           =   itemsTypes;
             $scope.fields               =   itemsFields;
+            $scope.advancedFields       =   itemsAdvancedFields;
 
             /**
             *  Detect Item Namespace
@@ -212,6 +214,73 @@ tendooApp.directive( 'itemEdit', function(){
                 $scope.initItem();
             }
 
+            /**
+            * Load Item
+            * @param void
+            * @return void
+            **/
+            
+            $scope.loadItem 	            =   function(){
+                itemsResource.get({
+                    id  :   $routeParams.id
+                }, ( item ) => {
+                    $scope.closeInit();
+
+                    // Assign available field to the item
+                    // When the item is completely loaded
+                    $scope.fields.forEach( ( field ) => {
+                        $scope.item[ field.model ]   =   item[ field.model ];
+                    });
+
+                    let emptyVariation              =   angular.copy( $scope.item.variations[0] );
+                    $scope.item.variations          =   [];
+
+                    item.variations.forEach( ( variation, index ) => {
+                        
+                        $scope.item.variations[ index ]     =   emptyVariation;
+
+                        // Browse field model name and add it to the item variation
+                        let tabId       =   0;
+
+                        for( let tab in $scope.advancedFields ) {
+                            
+                            $scope.advancedFields[ tab ].forEach( ( field ) => {
+
+                                if( field.type != 'group' ) {
+                                    console.log( tabId );
+                                    $scope.item.variations[ index ].tabs[ tabId ].models[ field.model ]   =   variation[ field.model ];
+                                    // console.log( variation[ field.model ] );
+                                } else {
+                                    alert ('okkk' );
+                                    // This works for groups
+                                    /** 
+                                    $scope.item.variations[ index ].tabs[ tabId ].models[ field.model ]     =   [];
+                                    
+                                    // Looping groups
+                                    for( let groupIndex in variation[ field.model ] ) {
+                                        
+                                        // Looping the subField to get their model name
+                                        if( typeof field.subFields != 'undefined' ) {
+
+                                            // create group model
+                                            $scope.item.variations[ index ].tabs[ tabId ].models[ field.model ][ groupIndex ]           =   {}
+                                            $scope.item.variations[ index ].tabs[ tabId ].models[ field.model ][ groupIndex ].models    =   {};
+
+                                            field.subFields.forEach( ( subField ) => {
+                                                // [ subField.model ] );
+                                                $scope.item.variations[ index ].tabs[ tabId ].models[ field.model ][ groupIndex ].models[ subField.model ]     =   variation[ field.model ][ groupIndex ][ subField.model ];   
+                                            });
+                                        }
+                                    }
+                                    **/
+                                }                                
+                            });   
+                            tabId++;                       
+                        };
+                    });   
+                });            
+            }
+
             // Resources Loading
             $scope.resourceLoader.push({
                 resource    :   providersResource,
@@ -242,7 +311,7 @@ tendooApp.directive( 'itemEdit', function(){
                 resource    :   departmentsResource,
                 success    :   function( data ) {
                     sharedFieldEditor( 'ref_department', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
-                    $scope.closeInit();
+                    $scope.loadItem();
                 }
             });
 

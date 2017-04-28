@@ -51,6 +51,28 @@ Trait items
 
         $result     =   $this->db->get( 'nexopos_items' )->result();
 
+        // If we're loading specific item, then we can also load variations when the item is already loaded.
+        if( $id != null ) {
+            
+            // get variations
+            $result[0]->variations      =   $this->db->where( 'ref_item', $id )
+            ->get( 'nexopos_items_variations' )
+            ->result_array();
+
+            foreach( $result[0]->variations as &$variation ) {
+                $variation[ 'stock' ]           =   $this->db->where( 'ref_variation', $variation[ 'id' ] )
+                ->get( 'nexopos_items_variations_stock' )
+                ->result_array();
+
+                $variation[ 'galleries' ]       =   $this->db->where( 'ref_variation', $variation[ 'id' ] )
+                ->get( 'nexopos_items_variations_galleries' )
+                ->result_array();
+
+                // $variation[ 'metas' ]           =   $this->db->where( 'ref_variation', $variation[ 'id' ] )
+                // ->get( 'nexopos_variations_metas' );
+            }            
+        }
+
         return $this->response( $result[0], 200 );
     }
 
