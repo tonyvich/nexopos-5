@@ -47,8 +47,8 @@ class Media_Manager_Controller extends Tendoo_module
 
         if( ! is_dir( $this->config->item( 'mm-upload-path' ) . $year ) ) {
             mkdir( $this->config->item( 'mm-upload-path' ) . $year );
-            if( ! is_dir( $path . $month ) ) {
-                mkdir( $path . $month );
+            if( ! is_dir( $path ) ) {
+                mkdir( $path );
             }
         }
 

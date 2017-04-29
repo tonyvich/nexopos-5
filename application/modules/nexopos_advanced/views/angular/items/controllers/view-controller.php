@@ -31,7 +31,11 @@ var itemsView      =   function(
         });
 
         if( angular.element( tab.namespace ).length == 0 ) {
+            
             angular.element( '.tab-' + tab.namespace ).append( '<' + tab.namespace + '></' + tab.namespace + '>' );
+
+            console.log( $( '.tab-' + tab.namespace ).length );
+            console.log( '.tab-' + tab.namespace );
 
             angular.element( '.tab-' + tab.namespace ).html( 
                 $compile( angular.element( '.tab-' + tab.namespace ).html() )( $scope ) 
@@ -40,6 +44,10 @@ var itemsView      =   function(
         tab.active      =   true;
     }
 
+    // Enable first tab
+    setTimeout( () => {
+        $scope.enableTab( $scope.tabs[0] );
+    }, 100 );
 }
 
 itemsView.$inject          =   [
