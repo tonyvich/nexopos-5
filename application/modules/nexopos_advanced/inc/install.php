@@ -69,7 +69,7 @@ class NexoPOS_Install extends Tendoo_Module
         $this->db->query('CREATE TABLE IF NOT EXISTS `'.$table_prefix.'nexopos_items_variations` (
     		  `id` int(11) NOT NULL AUTO_INCREMENT,
     		  `name` varchar(200) NOT NULL,
-          `barcode_action` varchar(200) NOT NULL,
+          `generate_barcode` varchar(200) NOT NULL,
     		  `sale_price` float NOT NULL,
     		  `special_price` float NOT NULL,
           `purchase_price` float NOT NULL,
@@ -92,7 +92,12 @@ class NexoPOS_Install extends Tendoo_Module
           `special_price_ends` datetime,
           `ref_item` int(11) NOT NULL,
           `available_quantity` int(11) NOT NULL,
+          `sold_quantity` int(11) NOT NULL,
+          `defective_quantity` int(11) NOT NULL,
           `featured_image` varchar(200) NOT NULL,
+          `stock_alert` varchar(200) NOT NULL,
+          `min_quantity` int(11) NOT NULL,
+          `percentage_quantity` float(11) NOT NULL,
 		      PRIMARY KEY (`id`)
 		  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;');
 

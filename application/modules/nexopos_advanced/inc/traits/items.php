@@ -12,35 +12,81 @@ Trait items
     {
         if( $id == null ) {
 
-            $this->db->select( '
-                nexopos_items.id as id,
-                nexopos_items.name as name,
-                nexopos_items.namespace as namespace,
-                nexopos_items.status as status,
-                nexopos_items.date_creation as date_creation,
-                nexopos_items.date_modification as date_modification,
-                aauth_users.name        as author_name,
-                (SELECT COUNT(*) from `' . $this->db->dbprefix . 'nexopos_items_variations` WHERE `ref_item`  = `' . $this->db->dbprefix . 'nexopos_items`.`id`) as variations_nbr
-            ' );
+            if( $this->get( 'variations' ) == 'true' ) {
+                
+                $this->db->select( '
+                    nexopos_items.id as id,
+                    nexopos_items.name as name,
+                    nexopos_items.namespace as namespace,
+                    nexopos_items.status as status,
+                    nexopos_items.date_creation as date_creation,
+                    nexopos_items.date_modification as date_modification,
+                    nexopos_items_variations.name as variation_name,
+                    nexopos_items_variations.sale_price as sale_price,
+                    nexopos_items_variations.purchase_price as purchase_price,
+                    nexopos_items_variations.available_quantity as available_quantity,
+                    nexopos_items_variations.sold_quantity as sold_quantity,
+                    nexopos_items_variations.defective_quantity as defective_quantity,
+                    aauth_users.name        as author_name
+                ' );
 
-            $this->db->from( 'nexopos_items' );
-            // Order Request
-            if( $this->get( 'order_by' ) ) {
-                $this->db->order_by( $this->get( 'order_by' ), $this->get( 'order_type' ) );
+
+                $this->db->from( 'nexopos_items' );
+
+                $this->db->join( 'nexopos_items_variations', 'nexopos_items_variations.ref_item = nexopos_items.id' );
+
+                // Order Request
+                if( $this->get( 'order_by' ) ) {
+                    $this->db->order_by( $this->get( 'order_by' ), $this->get( 'order_type' ) );
+                }
+
+                if( $this->get( 'limit' ) ) {
+                    $this->db->limit( $this->get( 'limit' ), $this->get( 'limit' ) * $this->get( 'current_page' ) );
+                }
+
+                $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_items.author' );
+
+                $query      =   $this->db->get();
+
+                return $this->response([
+                    'entries'   =>  $query->result(),
+                    'num_rows'  =>  $this->db->get( 'nexopos_items' )->num_rows()
+                ], 200 );
+
+            } else {
+
+                $this->db->select( '
+                    nexopos_items.id as id,
+                    nexopos_items.name as name,
+                    nexopos_items.namespace as namespace,
+                    nexopos_items.status as status,
+                    nexopos_items.date_creation as date_creation,
+                    nexopos_items.date_modification as date_modification,
+                    aauth_users.name        as author_name,
+                    (SELECT COUNT(*) from `' . $this->db->dbprefix . 'nexopos_items_variations` WHERE `ref_item`  = `' . $this->db->dbprefix . 'nexopos_items`.`id`) as variations_nbr
+                ' );
+
+                $this->db->from( 'nexopos_items' );
+
+                // Order Request
+                if( $this->get( 'order_by' ) ) {
+                    $this->db->order_by( $this->get( 'order_by' ), $this->get( 'order_type' ) );
+                }
+
+                if( $this->get( 'limit' ) ) {
+                    $this->db->limit( $this->get( 'limit' ), $this->get( 'limit' ) * $this->get( 'current_page' ) );
+                }
+
+                $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_items.author' );
+
+                $query      =   $this->db->get();
+
+                return $this->response([
+                    'entries'   =>  $query->result(),
+                    'num_rows'  =>  $this->db->get( 'nexopos_items' )->num_rows()
+                ], 200 );
+
             }
-
-            if( $this->get( 'limit' ) ) {
-                $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
-            }
-
-            $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_items.author' );
-
-            $query      =   $this->db->get();
-
-            return $this->response([
-                'entries'   =>  $query->result(),
-                'num_rows'  =>  $this->db->get( 'nexopos_items' )->num_rows()
-            ], 200 );
         }
 
         if( $filter != null ) {
@@ -89,8 +135,13 @@ Trait items
             $sku_checks     =   $this->db->where( 'sku', $variation[ 'sku' ] )
             ->get( 'nexopos_items_variations' )->result_array();
 
-            $barcode_checks     =   $this->db->where( 'barcode', $variation[ 'barcode' ] )
-            ->get( 'nexopos_items_variations' )->result_array();
+            // if barcode generation is disabled
+            if( $variation[ 'generate_barcode' ] != 'yes' ) {
+                $barcode_checks     =   $this->db->where( 'barcode', $variation[ 'barcode' ] )
+                ->get( 'nexopos_items_variations' )->result_array();
+            } else {
+                $barcode_checks     =   [];
+            }
 
             if( $sku_checks || $barcode_checks ) {
                 $variation_errors[]     =   [
@@ -125,19 +176,25 @@ Trait items
         // item with error can't be submited
         $item_status            =   'yes';
 
+        $variations                 =   $this->post( 'variations' );
         // saving variations
-        foreach( $this->post( 'variations' ) as $variation ) {
+        foreach( $variations as $variation ) {
 
             $variation_data     =   [
                 'ref_item'      =>  $last_entry[0][ 'id' ]
             ];
 
+            // Looping fields
             foreach( $variation as $name     =>  $field ) {
                 // exclude from variation fields
                 if( ! in_array( $name, [ 'images', 'stock', 'models' ] ) ) {
                     $variation_data[ $name ]    =   $field;
                 }
             }
+
+            // Special treatment for names
+            // if the variation name is not set, then we'll use the parent name
+            $variation_data[ 'name' ]       =   strlen( $variation_data[ 'name' ] ) == 0 ? $this->post( 'name' ) : $variation_data[ 'name' ];
 
             // Checks if the sku and the barcode already exists
             // if the sku and barcode already exists, then the item won't be ready for sale.
@@ -156,11 +213,20 @@ Trait items
             $last_variation_entry             =    $this->db->order_by( 'id', 'desc' )
             ->get( 'nexopos_items_variations' )->result_array();
 
+            // Available Stock
+            $available_quantity                =   0;
             foreach( $variation[ 'stock' ] as $key     =>  $stock ) {
                 $variation[ 'stock' ][ $key ][ 'author' ]          =   $this->post( 'author' );
                 $variation[ 'stock' ][ $key ][ 'stock_type' ]      =   'supplying';
                 $variation[ 'stock' ][ $key ][ 'ref_variation' ]   =   $last_variation_entry[0][ 'id' ];
+                $available_quantity            +=  $stock[ 'quantity' ];
             }
+
+            // Update available quantity
+            $this->db->where( 'id', $last_variation_entry[0][ 'id' ] )
+            ->update( 'nexopos_items_variations', [
+                'available_quantity'    =>  $available_quantity
+            ]);
 
             // Should not be empty
             $this->db->insert_batch( 'nexopos_items_variations_stock', $variation[ 'stock' ] );

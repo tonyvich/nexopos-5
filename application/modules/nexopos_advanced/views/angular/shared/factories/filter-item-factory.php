@@ -30,6 +30,8 @@ tendooApp.factory( 'sharedFilterItem', function(){
                         delete group.errors;
                         delete group.models;
                     });
+                } else if( angular.isObject( field ) ) {
+                    delete group[ field ];
                 }
             })
         })

@@ -47,6 +47,7 @@ var items               =   function(
     $scope.category_desc    =   '<?php echo __( 'Assigner une catégorie permet de regrouper les produits similaires.', 'nexopos_advanced' );?>';
     $scope.validate         =   new sharedValidate();
     $scope.taxes            =   new Array;
+    $scope.advancedFields   =   new itemsAdvancedFields();
 
     // Add hooks
     $scope.hooks.addFilter( 'addGroup', ( group ) => {
@@ -220,7 +221,7 @@ var items               =   function(
                     }
                 }
 
-                var allFields       =   itemsAdvancedFields[ tab.namespace ];
+                var allFields       =   $scope.advancedFields[ tab.namespace ];
 
                 // We won't validate hidden field
                 _.each( allFields, function( field, variation_field_id ) {
@@ -296,9 +297,6 @@ var items               =   function(
         $scope.item                 =   new itemsTabs();
         $scope.item.name            =   '';
         $scope.item.variations      =   [{
-            models          :       {
-                name        :   $scope.item.name
-            },
             tabs            :       $scope.item.getTabs()
         }];
 
@@ -346,6 +344,7 @@ var items               =   function(
                         let tabs        =   new itemsTabs;
 
                         _.each( savedItem.variations, ( savedVariation, key ) => {
+                            // is that really useful ?
                             $scope.item.variations[ key ]   =   {
                                 models          :   savedVariation.models,
                                 tabs            :   $scope.item.getTabs()
@@ -420,7 +419,7 @@ var items               =   function(
         var itemToSubmit                    =   sharedFilterItem(
             $scope.item,
             itemsFields,
-            itemsAdvancedFields
+            $scope.advancedFields
         );
 
         itemToSubmit[ 'author' ]            =   '<?php echo User::id();?>';
@@ -441,7 +440,7 @@ var items               =   function(
     
     $scope.closeInit                =   function () {
         // Display a dynamic price when a taxes is selected
-        sharedFieldEditor( 'sale_price', itemsAdvancedFields.basic ).show          =   function( tab, item ) {
+        sharedFieldEditor( 'sale_price', $scope.advancedFields.basic ).show          =   function( tab, item ) {
             if( $scope.item.ref_taxe ) {
                 if( angular.isUndefined( $scope.taxes[ $scope.item.ref_taxe ] ) ) {
                     // To Avoid several calls to the database
@@ -453,7 +452,7 @@ var items               =   function(
                     });
 
                     if( angular.isDefined( tab.models.sale_price ) ) {
-                        if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
+                        if( $scope.taxes[ $scope.item.ref_taxe ].tax_type == 'percent' ) {
                             var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
                             var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                             this.addon          =   sharedCurrency.toAmount( newPrice )
@@ -467,7 +466,7 @@ var items               =   function(
                 if( _.keys( $scope.taxes[ $scope.item.ref_taxe ] ).length > 0 ) {
                     if( angular.isDefined( tab.models ) ) {
                         if( angular.isDefined( tab.models.sale_price ) ) {
-                            if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
+                            if( $scope.taxes[ $scope.item.ref_taxe ].tax_type == 'percent' ) {
                                 var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
                                 var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                 this.addon          =   sharedCurrency.toAmount( newPrice )
@@ -503,7 +502,7 @@ var items               =   function(
     $scope.resourceLoader.push({
         resource    :   providersResource,
         success    :   function( data ) {
-            sharedFieldEditor( 'ref_provider', itemsAdvancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+            sharedFieldEditor( 'ref_provider', $scope.advancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
         }   
     }).push({
         resource    :   categoriesResource,
@@ -513,7 +512,7 @@ var items               =   function(
     }).push({
         resource    :   deliveriesResource,
         success    :   function( data ) {
-            sharedFieldEditor( 'ref_delivery', itemsAdvancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
+            sharedFieldEditor( 'ref_delivery', $scope.advancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
         }
     }).push({
         resource    :   unitsResource,

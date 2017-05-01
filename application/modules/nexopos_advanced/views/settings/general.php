@@ -100,18 +100,34 @@ $this->Gui->add_meta( array(
     'gui_saver' =>  true
 ) );
 
+$rawCurrencies      =   json_decode( file_get_contents( MODULESPATH . '/nexopos_advanced/inc/currencies.json' ), true );
+
+$currencies[ 'custom' ]     =   __( 'Devise Personnalisée', 'nexopos_advanced' );
+
+foreach( $rawCurrencies as $code => $currency ) {
+    $currencies[ $code ]    =   $currency[ 'name' ];
+}
+
+$this->Gui->add_item([ 
+    'type'      =>  'select',
+    'options'   =>  $currencies,
+    'name'      =>  'shop_currency',
+    'label'     =>  __( 'Définir une devise', 'nexopos_advanced' ),
+    'description'   =>  __( 'Vous pouvez définir une devise à appliquer à la boutique.', 'nexopos_advanced' )
+], 'nexopos-advanced-general-currency', 2 );
+
 $this->Gui->add_item(array(
     'type' => 'text',
-    'label' => __("Symbole de la devise",'nexopos_advanced'),
+    'label' => __("Symbole Personnalisée",'nexopos_advanced'),
     'name'  => 'shop_currency_symbol',
     'description' => __("Symbole de la devise du pays de localisation Exemple: €","nexopos")
 ),'nexopos-advanced-general-currency', 2 );
 
 $this->Gui->add_item(array(
     'type' => 'text',
-    'label' => __("Format ISO de la devise",'nexopos_advanced'),
+    'label' => __("Code Personnalisée",'nexopos_advanced'),
     'name'  => 'shop_currency_iso',
-    'description' => __("Representation ISO de la devise Exemple : EUR","nexopos")
+    'description' => __("Representation personnalisée ISO de la devise Exemple : EUR","nexopos")
 ),'nexopos-advanced-general-currency', 2 );
 
 $this->Gui->add_item(array(
@@ -126,6 +142,11 @@ $this->Gui->add_item(array(
     ),
     'description' => __("Avant ou après le montant","nexopos_advanced")
 ),'nexopos-advanced-general-currency', 2 );
+
+$this->Gui->add_item( array(
+    'type'          =>    'dom',
+    'content'       =>    $this->load->module_view( 'nexopos_advanced', 'scripts/general-setting', null, true )
+), 'nexopos-advanced-general-currency', 2 );
 
 // $this->Gui->add_item(array(
 //     'type' => 'text',

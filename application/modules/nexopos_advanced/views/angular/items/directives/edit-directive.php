@@ -81,7 +81,7 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.groupLengthLimit     =   10;
             $scope.itemsTypes           =   itemsTypes;
             $scope.fields               =   itemsFields;
-            $scope.advancedFields       =   itemsAdvancedFields;
+            $scope.advancedFields       =   new itemsAdvancedFields();
 
             /**
             *  Detect Item Namespace
@@ -170,7 +170,7 @@ tendooApp.directive( 'itemEdit', function(){
             
             $scope.closeInit                =   function () {
                 // Display a dynamic price when a taxes is selected
-                sharedFieldEditor( 'sale_price', itemsAdvancedFields.basic ).show          =   function( tab, item ) {
+                sharedFieldEditor( 'sale_price', $scope.advancedFields.basic ).show          =   function( tab, item ) {
                     if( $scope.item.ref_taxe ) {
                         if( angular.isUndefined( $scope.taxes[ $scope.item.ref_taxe ] ) ) {
                             // To Avoid several calls to the database
@@ -182,12 +182,12 @@ tendooApp.directive( 'itemEdit', function(){
                             });
 
                             if( angular.isDefined( tab.models.sale_price ) ) {
-                                if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
-                                    var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
+                                if( $scope.taxes[ $scope.item.ref_taxe ].tax_type == 'percent' ) {
+                                    var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
                                     var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                     this.addon          =   sharedCurrency.toAmount( newPrice )
                                 } else {
-                                    var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
+                                    var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_amount );
                                     this.addon          =   sharedCurrency.toAmount( newPrice )
                                 }
                             }
@@ -196,12 +196,12 @@ tendooApp.directive( 'itemEdit', function(){
                         if( _.keys( $scope.taxes[ $scope.item.ref_taxe ] ).length > 0 ) {
                             if( angular.isDefined( tab.models ) ) {
                                 if( angular.isDefined( tab.models.sale_price ) ) {
-                                    if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
-                                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
+                                    if( $scope.taxes[ $scope.item.ref_taxe ].tax_type == 'percent' ) {
+                                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
                                         var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                         this.addon          =   sharedCurrency.toAmount( newPrice )
                                     } else {
-                                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
+                                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_amount );
                                         this.addon          =   sharedCurrency.toAmount( newPrice )
                                     }
                                 }
@@ -320,7 +320,7 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.resourceLoader.push({
                 resource    :   providersResource,
                 success    :   function( data ) {
-                    sharedFieldEditor( 'ref_provider', itemsAdvancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+                    sharedFieldEditor( 'ref_provider', $scope.advancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
                 }   
             }).push({
                 resource    :   categoriesResource,
@@ -330,7 +330,7 @@ tendooApp.directive( 'itemEdit', function(){
             }).push({
                 resource    :   deliveriesResource,
                 success    :   function( data ) {
-                    sharedFieldEditor( 'ref_delivery', itemsAdvancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
+                    sharedFieldEditor( 'ref_delivery', $scope.advancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
                 }
             }).push({
                 resource    :   unitsResource,

@@ -1,6 +1,8 @@
 {
     "require": {
         "phpoffice/phpexcel": "^1.8",
-        "dompdf/dompdf": "^0.8.0"
+        "dompdf/dompdf": "^0.8.0",
+        "tecnickcom/tcpdf": "^6.2",
+        "picqer/php-barcode-generator": "^0.2.1"
     }
 }
