@@ -55,16 +55,16 @@ class Media_ManagerV2_Controller extends Tendoo_module
                 if( $size === true ) {
                     $this->image->fromFile( $data[ 'full_path' ] )
                     ->resize( $data[ 'image_width' ], $data[ 'image_height' ] )
-                    ->toFile( $path . url_slug( $data[ 'raw_name' ] ) . '-' . $namespace . $data[ 'file_ext' ] );
+                    ->toFile( $path . $data[ 'raw_name' ] . '-' . $namespace . $data[ 'file_ext' ] );
                 } else {
                     if( @$size[2] == 'thumbnail' ) {
                         $this->image->fromFile( $data[ 'full_path' ] )
                         ->thumbnail( $size[0], $size[1] )
-                        ->toFile( $path . url_slug( $data[ 'raw_name' ] ) . '-' . $namespace . $data[ 'file_ext' ] );
+                        ->toFile( $path . $data[ 'raw_name' ] . '-' . $namespace . $data[ 'file_ext' ] );
                     } else {
                         $this->image->fromFile( $data[ 'full_path' ] )
                         ->resize( $size[0], $size[1] )
-                        ->toFile( $path . url_slug( $data[ 'raw_name' ] ) . '-' . $namespace . $data[ 'file_ext' ] );
+                        ->toFile( $path . $data[ 'raw_name' ] . '-' . $namespace . $data[ 'file_ext' ] );
                     }
                 }
             }
