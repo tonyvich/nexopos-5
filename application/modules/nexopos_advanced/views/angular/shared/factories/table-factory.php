@@ -117,7 +117,7 @@ tendooApp.factory( 'sharedTable', [
          *  @return string
         **/
 
-        this.filter             =   function( value, filter, col ) {
+        this.filter             =   function( value, filter, col, entry ) {
             if( filter == 'array_of_object' ) {
                 return this.arrayOfObjectToString( value )
             } else if( filter == 'money' ) {
@@ -126,6 +126,8 @@ tendooApp.factory( 'sharedTable', [
                 return sharedMoment.timeFromNow( value );
             } else if( filter == 'object'){
                 return this.objectToString( value, col.object );
+            } else if( filter == 'filter' ) {
+                return col.filter( value, filter, col, entry );
             }
             return value;
         }

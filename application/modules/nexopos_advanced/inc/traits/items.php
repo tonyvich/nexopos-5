@@ -147,9 +147,24 @@ Trait items
 
     public function items_post()
     {
+        $raw_options                =   $this->db->get( 'options' )->result_array(); 
+        $options                    =   [];
+        foreach( $raw_options as $raw_option ) {
+            $options[ $raw_option[ 'KEY' ] ]  =   $raw_option[ 'VALUE' ];
+        }
+
+        if( @$options[ 'generated_barcodes' ] !=  null ) {
+            $generated_barcodes      =  json_decode( $options[ 'generated_barcodes' ], true );
+        } else {
+            $generated_barcodes      =   [];
+        }
+
+        // loading barcode library
+        $this->load->module_library( 'nexopos_advanced', 'nexopos_barcode_library' );
+
         $variation_errors       =   [];
         // Initial Checks
-        foreach( $this->post( 'variations' ) as $variation ) {
+        foreach( $this->post( 'variations' ) as &$variation ) {
             $sku_checks     =   $this->db->where( 'sku', $variation[ 'sku' ] )
             ->get( 'nexopos_items_variations' )->result_array();
 
@@ -157,7 +172,19 @@ Trait items
             if( $variation[ 'generate_barcode' ] != 'yes' ) {
                 $barcode_checks     =   $this->db->where( 'barcode', $variation[ 'barcode' ] )
                 ->get( 'nexopos_items_variations' )->result_array();
+
+                // if the submited barcode doesn't exist
+                if( ! $barcode_checks ) {
+                    $generated_barcodes[]    =   $variation[ 'barcode' ];
+                }
             } else {
+                // let generate a barcode
+                $random_barcode         =   $this->nexopos_barcode_library->generate_barcode();
+                if( $random_barcode ) {
+                    $generated_barcodes[]        =   $random_barcode;
+                    $variation[ 'barcode' ]     =   $random_barcode;
+                }
+
                 $barcode_checks     =   [];
             }
 
@@ -173,6 +200,11 @@ Trait items
         if( $variation_errors ) {
             return $this->response( $variation_errors, 403 );
         }
+
+        // since all variation has been checked, the barcode saved is now updated
+        $this->db->where( 'KEY', 'generated_barcodes' )->update( 'options', [
+            'VALUE'     =>  json_encode( $generated_barcodes )
+        ]);
 
         $this->db->insert( 'nexopos_items',[
             'name'              =>  $this->post( 'name' ),
