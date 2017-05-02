@@ -197,7 +197,7 @@
         </div>
 
     </div>
-
+    
     <div 
         class="form-group" 
         ng-if="field.type == 'image_select'"
@@ -211,7 +211,9 @@
             type="text"
             class="form-control"
             placeholder="">
-
+            <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="showMedia( field.model )" type="button"><i class="fa fa-search"></i></button>
+            </span>
         </div>
         <p
           class="help-block {{ field.model }}-helper"

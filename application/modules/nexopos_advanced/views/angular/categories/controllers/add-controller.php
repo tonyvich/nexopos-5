@@ -25,6 +25,11 @@ var categories          =   function(
     $scope.validate         =   new sharedValidate();
     $scope.resourceLoader   =   new sharedResourceLoader();
 
+    
+    $http.get( '<?php echo site_url( [ 'dashboard', 'media-managerv2', 'get' ] );?>' ).then(function( returned ) {
+        $scope.mediaEntries = returned.data;
+    });
+
     // Setting options for ref_parent select
 
     $scope.resourceLoader.push({
