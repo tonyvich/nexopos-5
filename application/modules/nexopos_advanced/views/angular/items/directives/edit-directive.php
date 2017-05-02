@@ -171,37 +171,37 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.closeInit                =   function () {
                 // Display a dynamic price when a taxes is selected
                 sharedFieldEditor( 'sale_price', $scope.advancedFields.basic ).show          =   function( tab, item ) {
-                    if( $scope.item.ref_taxe ) {
-                        if( angular.isUndefined( $scope.taxes[ $scope.item.ref_taxe ] ) ) {
+                    if( $scope.item.ref_tax ) {
+                        if( angular.isUndefined( $scope.taxes[ $scope.item.ref_tax ] ) ) {
                             // To Avoid several calls to the database
-                            $scope.taxes[ $scope.item.ref_taxe ]           =   {};
+                            $scope.taxes[ $scope.item.ref_tax ]           =   {};
                             taxesResource.get({
-                                id      :   $scope.item.ref_taxe
+                                id      :   $scope.item.ref_tax
                             },function( entries ) {
-                                $scope.taxes[ $scope.item.ref_taxe ]       =   entries;
+                                $scope.taxes[ $scope.item.ref_tax ]       =   entries;
                             });
 
                             if( angular.isDefined( tab.models.sale_price ) ) {
-                                if( $scope.taxes[ $scope.item.ref_taxe ].tax_type == 'percent' ) {
-                                    var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
+                                if( $scope.taxes[ $scope.item.ref_tax ].tax_type == 'percent' ) {
+                                    var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_percent ) ) / 100;
                                     var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                     this.addon          =   sharedCurrency.toAmount( newPrice )
                                 } else {
-                                    var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_amount );
+                                    var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_amount );
                                     this.addon          =   sharedCurrency.toAmount( newPrice )
                                 }
                             }
                         }
 
-                        if( _.keys( $scope.taxes[ $scope.item.ref_taxe ] ).length > 0 ) {
+                        if( _.keys( $scope.taxes[ $scope.item.ref_tax ] ).length > 0 ) {
                             if( angular.isDefined( tab.models ) ) {
                                 if( angular.isDefined( tab.models.sale_price ) ) {
-                                    if( $scope.taxes[ $scope.item.ref_taxe ].tax_type == 'percent' ) {
-                                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_percent ) ) / 100;
+                                    if( $scope.taxes[ $scope.item.ref_tax ].tax_type == 'percent' ) {
+                                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_percent ) ) / 100;
                                         var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                         this.addon          =   sharedCurrency.toAmount( newPrice )
                                     } else {
-                                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].tax_amount );
+                                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_amount );
                                         this.addon          =   sharedCurrency.toAmount( newPrice )
                                     }
                                 }
@@ -340,7 +340,7 @@ tendooApp.directive( 'itemEdit', function(){
             }).push({
                 resource    :   taxesResource,
                 success    :   function( data ) {
-                    sharedFieldEditor( 'ref_taxe', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+                    sharedFieldEditor( 'ref_tax', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
                 }
             }).push({
                 resource    :   departmentsResource,

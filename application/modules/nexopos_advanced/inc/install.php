@@ -37,7 +37,7 @@ class NexoPOS_Install extends Tendoo_Module
             `author` int(11) NOT NULL,
             `ref_category` int(11) NOT NULL,
             `ref_department` int(11) NOT NULL,
-            `ref_taxe` int(11) NOT NULL,
+            `ref_tax` int(11) NOT NULL,
             `ref_unit` int(11) NOT NULL,
             `ref_ids` varchar(200) NOT NULL,
             `ref_coupon` int(11) NOT NULL,

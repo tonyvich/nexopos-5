@@ -1,21 +1,25 @@
-tendooApp.factory( 'itemsTable', [ 'sharedOptions', function( sharedOptions ){
+tendooApp.factory( 'itemsTable', [ 
+    'sharedOptions', 
+    'sharedRawToOptions', 
+    'itemsTypes', 
+    function( 
+        sharedOptions, 
+        sharedRawToOptions,
+        itemsTypes
+    ){
     return {
         columns     :   [
             {
-                text    :   '<?php echo _s( 'Variation', 'nexopos_advanced' );?>',
-                namespace   :   'variation_name'
+                text    :   '<?php echo _s( 'Produit', 'nexopos_advanced' );?>',
+                namespace   :   'name'
             },
             {
-                text    :   '<?php echo _s( 'Prix de vente', 'nexopos_advanced' );?>',
-                namespace   :   'sale_price',
-                is          :   'money',
-                width       :   110
+                text    :   '<?php echo _s( 'Variations', 'nexopos_advanced' );?>',
+                namespace   :   'variation_quantity'
             },
             {
-                text    :   '<?php echo _s( 'Prix d\'achat', 'nexopos_advanced' );?>',
-                namespace   :   'purchase_price',
-                is          :   'money',
-                width       :   120
+                text    :   '<?php echo _s( 'Categorie', 'nexopos_advanced' );?>',
+                namespace   :   'category_name'
             },
             {
                 text    :   '<?php echo _s( 'Qte', 'nexopos_advanced' );?>',
@@ -28,13 +32,10 @@ tendooApp.factory( 'itemsTable', [ 'sharedOptions', function( sharedOptions ){
                 width       :   50
             },
             {
-                text    :   '<?php echo _s( 'Damaged', 'nexopos_advanced' );?>',
-                namespace   :   'defective_quantity',
-                width       :   50
-            },
-            {
                 text    :   '<?php echo _s( 'Type', 'nexopos_advanced' );?>',
-                namespace   :   'namespace'
+                namespace   :   'namespace',
+                is          :   'object',
+                object      :   sharedRawToOptions( itemsTypes, 'namespace', 'text' )
             },{
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
                 namespace   :   'status',

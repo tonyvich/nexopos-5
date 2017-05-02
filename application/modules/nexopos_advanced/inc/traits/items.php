@@ -15,7 +15,10 @@ Trait items
             if( $this->get( 'variations' ) == 'true' ) {
                 
                 $this->db->select( '
-                    nexopos_items.id as id,
+                    nexopos_categories.name as category_name,
+                    nexopos_departments.name as department_name,
+                    nexopos_taxes.name as tax_name,
+                    nexopos_items.id as id,7
                     nexopos_items.name as name,
                     nexopos_items.namespace as namespace,
                     nexopos_items.status as status,
@@ -34,6 +37,9 @@ Trait items
                 $this->db->from( 'nexopos_items' );
 
                 $this->db->join( 'nexopos_items_variations', 'nexopos_items_variations.ref_item = nexopos_items.id' );
+                $this->db->join( 'nexopos_categories', 'nexopos_items.ref_category = nexopos_categories.id' );
+                $this->db->join( 'nexopos_departments', 'nexopos_items.ref_department = nexopos_departments.id' );
+                $this->db->join( 'nexopos_taxes', 'nexopos_items.ref_tax = nexopos_taxes.id' );
 
                 // Order Request
                 if( $this->get( 'order_by' ) ) {
@@ -45,6 +51,9 @@ Trait items
                 }
 
                 $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_items.author' );
+                $this->db->join( 'nexopos_categories', 'nexopos_items.ref_category = nexopos_categories.id' );
+                $this->db->join( 'nexopos_departments', 'nexopos_items.ref_department = nexopos_departments.id' );
+                $this->db->join( 'nexopos_taxes', 'nexopos_items.ref_tax = nexopos_taxes.id' );
 
                 $query      =   $this->db->get();
 
@@ -56,6 +65,9 @@ Trait items
             } else {
 
                 $this->db->select( '
+                    nexopos_categories.name as category_name,
+                    nexopos_departments.name as department_name,
+                    nexopos_taxes.name as tax_name,
                     nexopos_items.id as id,
                     nexopos_items.name as name,
                     nexopos_items.namespace as namespace,
@@ -63,7 +75,10 @@ Trait items
                     nexopos_items.date_creation as date_creation,
                     nexopos_items.date_modification as date_modification,
                     aauth_users.name        as author_name,
-                    (SELECT COUNT(*) from `' . $this->db->dbprefix . 'nexopos_items_variations` WHERE `ref_item`  = `' . $this->db->dbprefix . 'nexopos_items`.`id`) as variations_nbr
+                    (SELECT COUNT(*) from `' . $this->db->dbprefix . 'nexopos_items_variations` WHERE `ref_item`  = `' . $this->db->dbprefix . 'nexopos_items`.`id`) as variation_quantity,
+                    (SELECT SUM( available_quantity ) from `' . $this->db->dbprefix . 'nexopos_items_variations` WHERE `ref_item`  = `' . $this->db->dbprefix . 'nexopos_items`.`id`) as available_quantity,
+                    (SELECT SUM( defective_quantity ) from `' . $this->db->dbprefix . 'nexopos_items_variations` WHERE `ref_item`  = `' . $this->db->dbprefix . 'nexopos_items`.`id`) as defective_quantity,
+                    (SELECT SUM( sold_quantity ) from `' . $this->db->dbprefix . 'nexopos_items_variations` WHERE `ref_item`  = `' . $this->db->dbprefix . 'nexopos_items`.`id`) as sold_quantity
                 ' );
 
                 $this->db->from( 'nexopos_items' );
@@ -78,6 +93,9 @@ Trait items
                 }
 
                 $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_items.author' );
+                $this->db->join( 'nexopos_categories', 'nexopos_items.ref_category = nexopos_categories.id' );
+                $this->db->join( 'nexopos_departments', 'nexopos_items.ref_department = nexopos_departments.id' );
+                $this->db->join( 'nexopos_taxes', 'nexopos_items.ref_tax = nexopos_taxes.id' );
 
                 $query      =   $this->db->get();
 
@@ -160,7 +178,7 @@ Trait items
             'name'              =>  $this->post( 'name' ),
             'namespace'         =>  $this->post( 'namespace' ),
             'ref_category'      =>  $this->post( 'ref_category' ),
-            'ref_taxe'          =>  $this->post( 'ref_taxe' ),
+            'ref_tax'          =>  $this->post( 'ref_tax' ),
             'ref_unit'          =>  $this->post( 'ref_unit' ),
             'ref_department'    =>  $this->post( 'ref_department' ),
             'status'            =>  $this->post( 'status' ),

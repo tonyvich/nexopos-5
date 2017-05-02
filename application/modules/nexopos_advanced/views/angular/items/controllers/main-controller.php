@@ -46,9 +46,6 @@ var itemsMain          =   function(
             params      =   new Object;
         }
 
-        // add load variations
-        params.variations   =   true;
-        
         itemsResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );
