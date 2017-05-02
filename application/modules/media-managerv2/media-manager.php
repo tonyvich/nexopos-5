@@ -4,14 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once( dirname( __FILE__ ) . '/inc/filters.php' );
 include_once( dirname( __FILE__ ) . '/inc/actions.php' );
 include_once( dirname( __FILE__ ) . '/inc/assets.php' );
-class Media_Manager_Main extends Tendoo_Module
+class Media_ManagerV2_Main extends Tendoo_Module
 {
     public function __construct()
     {
         parent::__construct();
-        $this->actions  =   new Media_Manager_Actions;
-        $this->filters  =   new Media_Manager_Filters;
-        $this->assets   =   new Media_Manager_Assets;
+        $this->actions  =   new Media_ManagerV2_Actions;
+        $this->filters  =   new Media_ManagerV2_Filters;
+        $this->assets   =   new Media_ManagerV2_Assets;
         $this->assets->register();
         $this->load->module_config( 'media-manager' );
         $this->events->add_filter( 'admin_menus', [ $this->filters, 'admin_menus' ]);
@@ -21,4 +21,4 @@ class Media_Manager_Main extends Tendoo_Module
     }
 }
 
-new Media_Manager_Main;
+new Media_ManagerV2_Main;

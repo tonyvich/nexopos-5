@@ -5,12 +5,12 @@ include_once( dirname( __FILE__ ) . '/controller.php' );
 include_once( dirname( __FILE__ ) . '/assets.php' );
 include_once( dirname( __FILE__ ) . '/install.php' );
 
-class Media_Manager_Actions extends Tendoo_Module
+class Media_ManagerV2_Actions extends Tendoo_Module
 {
     public function __construct()
     {
         parent::__construct();
-        $this->install          =   new Media_Manager_Install;
+        $this->install          =   new Media_ManagerV2_Install;
     }
 
     /**
@@ -21,7 +21,7 @@ class Media_Manager_Actions extends Tendoo_Module
 
     public function load_dashboard()
     {
-        $this->Gui->register_page_object( 'media-managerv2', new Media_Manager_Controller );
+        $this->Gui->register_page_object( 'media-managerv2', new Media_ManagerV2_Controller );
     }
 
     /**

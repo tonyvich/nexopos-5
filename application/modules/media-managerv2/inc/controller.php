@@ -3,12 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once( dirname( __FILE__ ) . '/../vendor/autoload.php' );
 
-class Media_Manager_Controller extends Tendoo_module
+class Media_ManagerV2_Controller extends Tendoo_module
 {
     public function __construct()
     {
         parent::__construct();
-        $this->actions  =   new Media_Manager_Actions;
+        $this->actions  =   new Media_ManagerV2_Actions;
     }
 
     /**
@@ -45,11 +45,8 @@ class Media_Manager_Controller extends Tendoo_module
         $path                               =   $this->config->item( 'mm-upload-path' ) . $year . '/' . $month . '/';
         $url                                =   upload_url() . '/' . $year . '/' . $month . '/';
 
-        if( ! is_dir( $this->config->item( 'mm-upload-path' ) . $year ) ) {
-            mkdir( $this->config->item( 'mm-upload-path' ) . $year );
-            if( ! is_dir( $path ) ) {
-                mkdir( $path , 0777, true );
-            }
+        if( ! is_dir( $path ) ) {
+            mkdir( $path , 0777, true );
         }
 
         if ( $this->upload->do_upload( 'file' ) ) {
