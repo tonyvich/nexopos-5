@@ -42,7 +42,7 @@ Trait medias
 
                 // Delete database entries
                  $this->db->where( 'id', $entry['id']);
-                 $this->db->delete( 'media_manager' );
+                 $this->db->delete( 'media_managerv2' );
             }
 
             return $this->__success();

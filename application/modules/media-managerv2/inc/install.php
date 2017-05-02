@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Media_Manager_Install extends Tendoo_Module
+class Media_ManagerV2_Install extends Tendoo_Module
 {
     public function __construct()
     {

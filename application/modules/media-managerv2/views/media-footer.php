@@ -213,10 +213,17 @@
                     selectedItem.push( entry );
                 }
             });
-            mediasResource.delete( { 'entries[]' : selectedItem }, function( data ) {
-                $scope.loadAssets();
-            },function(){
-                alert( "Erreur" );
+            sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ces élément ?', 'perm_manager' );?>', function( action ) {
+                if( action ) {
+                    mediasResource.delete( { 'entries[]' : selectedItem }, function( data ) {
+                        $scope.loadAssets();
+                    },function(){
+                        sharedAlert.warning( '<?php echo _s(
+                            'Une erreur s\'est produite durant l\'operation',
+                            'media-manager'
+                        );?>' );
+                    });
+                }
             });
         }
     }]);
