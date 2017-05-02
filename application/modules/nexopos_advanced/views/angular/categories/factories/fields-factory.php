@@ -15,7 +15,7 @@ tendooApp.factory( 'categoriesFields', [ 'sharedOptions', function( sharedOption
             'options'           =>   'sharedOptions.yesOrNo',
             'desc'              =>   __( 'Une catégorie peut appartenir à une autre Exemple : Femmes > Robes > Soirées.', 'nexopos_advanced' )
         ], [
-            'type'              =>   'text',
+            'type'              =>   'image_select',
             'label'             =>   __( 'Image Descriptive', "nexopos_advanced" ),
             'model'             =>   'image_url',
             'desc'              =>   __( 'Veuillez une image à cette catégorie.', 'nexopos_advanced' )

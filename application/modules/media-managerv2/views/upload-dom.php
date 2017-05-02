@@ -64,25 +64,3 @@
           </div>
     </div>
 </div>
-<style media="screen">
-    .media-manager-entry-box {
-        border: solid 1px #999;
-        margin-bottom: 15px;
-        float:left;
-        width:150px;
-        height:150px;
-        margin-right:15px;
-    }
-
-    .media-manager-entry-box:hover {
-        cursor : pointer;
-    }
-
-    .media-manager-entry-box:active {
-        box-shadow: 0px 0px 5px 3px #a2c9e4;
-    }
-
-    .media-manager-entry-box.selected {
-        box-shadow: 0 0 0 1px #fff, 0 0 0 5px #0073aa;
-    }
-</style>

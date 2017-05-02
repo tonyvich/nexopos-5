@@ -20,7 +20,6 @@
         </div>
         <p class="help-block {{ fields[0].model }}-helper" style="font-size:12px;">{{ fields[0].desc }}</p>
     </div>
-
     <div class="box">
         <div class="box-header with-border">
             <div class="box-title">
@@ -29,10 +28,11 @@
         </div>
         <div class="box-body">
             <div class="row">
-
                 <?php include_once( dirname( __FILE__ ) . '/fields-template.php' );?>
 
             </div>
         </div>
     </div>
 </div>
+
+<media-modal></media-modal>

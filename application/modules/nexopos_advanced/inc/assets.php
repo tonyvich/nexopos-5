@@ -32,6 +32,7 @@ class NexoPOS_Assets extends Tendoo_Module
         $this->enqueue->js( site_url([ 'dashboard', 'nexopos', 'shared_factories', 'hooks' ]), '' );
         $this->enqueue->js( site_url([ 'dashboard', 'nexopos', 'shared_factories', 'validate' ]), '' );
         $this->enqueue->js( site_url([ 'dashboard', 'nexopos', 'shared_directives', 'spinner' ]), '' );
+        $this->enqueue->js( site_url([ 'dashboard', 'nexopos', 'shared_factories', 'media' ]), '' );
 
         $this->enqueue->js( '../bower_components/angular-route/angular-route.min' );
         $this->enqueue->js( '../bower_components/angular-resource/angular-resource.min' );
