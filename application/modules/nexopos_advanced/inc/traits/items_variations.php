@@ -47,7 +47,7 @@ Trait items_variations
             }
 
             if( $this->get( 'limit' ) ) {
-                $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
+                $this->db->limit( $this->get( 'limit' ), $this->get( 'limit' ) * $this->get( 'current_page' ) );
             }
 
             // $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_items_variations.author' );

@@ -11,7 +11,8 @@ var itemsMain          =   function(
     sharedEntryActions,
     sharedDocumentTitle,
     sharedValidate,
-    sharedTable
+    sharedTable,
+    sharedTableHeaderButtons
 ) {
 
     sharedDocumentTitle.set( '<?php echo _s( 'Liste des articles', 'nexopos_advanced' );?>' );
@@ -19,6 +20,7 @@ var itemsMain          =   function(
     $scope.table                =   new sharedTable( '<?php echo _s( 'Liste des articles', 'nexopos_advanced' );?>' );
     $scope.table.entryActions   =   new sharedEntryActions();
     $scope.table.actions        =   new sharedTableActions();
+    $scope.table.headerButtons  =   new sharedTableHeaderButtons( itemsResource, itemsTable.columns );
     $scope.table.columns        =   itemsTable.columns;
     $scope.textDomain           =   itemsTextDomain;
     $scope.table.resource       =   itemsResource;
@@ -39,6 +41,11 @@ var itemsMain          =   function(
     **/
 
     $scope.table.get        =   function( params ){
+        // If params is not set, let set it a default value
+        if( typeof  params == 'undefined' ) {
+            params      =   new Object;
+        }
+
         itemsResource.get( params,function( data ) {
             $scope.table.entries        =   data.entries;
             $scope.table.pages          =   Math.ceil( data.num_rows / $scope.table.limit );
@@ -63,7 +70,6 @@ var itemsMain          =   function(
     }
 
     // Get Results
-    $scope.table.limit      =   10;
     $scope.table.getPage(0);
 }
 
@@ -75,12 +81,14 @@ itemsMain.$inject    =   [
     'itemsResource',
     'itemsTable',
     'paginationFactory',
+
     'sharedTableActions',
     'sharedAlert',
     'sharedEntryActions',
     'sharedDocumentTitle',
     'sharedValidate',
-    'sharedTable'
+    'sharedTable',
+    'sharedTableHeaderButtons'
 ];
 
 tendooApp.controller( 'itemsMain', itemsMain );

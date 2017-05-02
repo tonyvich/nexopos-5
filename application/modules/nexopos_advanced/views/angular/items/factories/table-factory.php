@@ -1,17 +1,41 @@
-tendooApp.factory( 'itemsTable', [ 'sharedOptions', function( sharedOptions ){
+tendooApp.factory( 'itemsTable', [ 
+    'sharedOptions', 
+    'sharedRawToOptions', 
+    'itemsTypes', 
+    function( 
+        sharedOptions, 
+        sharedRawToOptions,
+        itemsTypes
+    ){
     return {
         columns     :   [
             {
-                text    :   '<?php echo _s( 'Nom', 'nexopos_advanced' );?>',
+                text    :   '<?php echo _s( 'Produit', 'nexopos_advanced' );?>',
                 namespace   :   'name'
             },
             {
+                text    :   '<?php echo _s( 'Variations', 'nexopos_advanced' );?>',
+                namespace   :   'variation_quantity'
+            },
+            {
+                text    :   '<?php echo _s( 'Categorie', 'nexopos_advanced' );?>',
+                namespace   :   'category_name'
+            },
+            {
+                text    :   '<?php echo _s( 'Qte', 'nexopos_advanced' );?>',
+                namespace   :   'available_quantity',
+                width       :   50
+            },
+            {
+                text    :   '<?php echo _s( 'Sold', 'nexopos_advanced' );?>',
+                namespace   :   'sold_quantity',
+                width       :   50
+            },
+            {
                 text    :   '<?php echo _s( 'Type', 'nexopos_advanced' );?>',
-                namespace   :   'namespace'
-            }, {
-                text        :   '<?php echo _s( 'Variations', 'nexopos_advanced' );?>',
-                namespace   :   'variations_nbr',
-                width   :   120
+                namespace   :   'namespace',
+                is          :   'object',
+                object      :   sharedRawToOptions( itemsTypes, 'namespace', 'text' )
             },{
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
                 namespace   :   'status',
@@ -21,13 +45,13 @@ tendooApp.factory( 'itemsTable', [ 'sharedOptions', function( sharedOptions ){
                 text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
                 is          :   'date_span',
-                width       :   170
+                width       :   120
             },
             {
                 text    :   '<?php echo _s( 'Modifié le', 'nexopos_advanced' );?>',
                 namespace   :   'date_modification',
                 is          :   'date_span',
-                width       :   170
+                width       :   120
             },
             {
                 text    :   '<?php echo _s( 'Par', 'nexopos_advanced' );?>',

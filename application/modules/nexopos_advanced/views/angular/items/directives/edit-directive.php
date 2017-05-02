@@ -81,7 +81,7 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.groupLengthLimit     =   10;
             $scope.itemsTypes           =   itemsTypes;
             $scope.fields               =   itemsFields;
-            $scope.advancedFields       =   itemsAdvancedFields;
+            $scope.advancedFields       =   new itemsAdvancedFields();
 
             /**
             *  Detect Item Namespace
@@ -128,11 +128,11 @@ tendooApp.directive( 'itemEdit', function(){
                     // The item is reset if you access from type selection
                     // Maybe a prompt can ask whether the saved item should be deleted :\ ?
                     if( $location.path() == '/items/types' ) {
-                        localStorageService.remove( 'item' );
+                        localStorageService.remove( 'item_' + $routeParams.id );
                     } else {
-                        if( typeof localStorageService.get( 'item' ) === 'object' ) {
+                        if( typeof localStorageService.get( 'item_' + $routeParams.id ) === 'object' ) {
 
-                            let savedItem           =   localStorageService.get( 'item' );
+                            let savedItem           =   localStorageService.get( 'item_'  + $routeParams.id );
                             
                             if( savedItem != null ) {
 
@@ -170,38 +170,38 @@ tendooApp.directive( 'itemEdit', function(){
             
             $scope.closeInit                =   function () {
                 // Display a dynamic price when a taxes is selected
-                sharedFieldEditor( 'sale_price', itemsAdvancedFields.basic ).show          =   function( tab, item ) {
-                    if( $scope.item.ref_taxe ) {
-                        if( angular.isUndefined( $scope.taxes[ $scope.item.ref_taxe ] ) ) {
+                sharedFieldEditor( 'sale_price', $scope.advancedFields.basic ).show          =   function( tab, item ) {
+                    if( $scope.item.ref_tax ) {
+                        if( angular.isUndefined( $scope.taxes[ $scope.item.ref_tax ] ) ) {
                             // To Avoid several calls to the database
-                            $scope.taxes[ $scope.item.ref_taxe ]           =   {};
+                            $scope.taxes[ $scope.item.ref_tax ]           =   {};
                             taxesResource.get({
-                                id      :   $scope.item.ref_taxe
+                                id      :   $scope.item.ref_tax
                             },function( entries ) {
-                                $scope.taxes[ $scope.item.ref_taxe ]       =   entries;
+                                $scope.taxes[ $scope.item.ref_tax ]       =   entries;
                             });
 
                             if( angular.isDefined( tab.models.sale_price ) ) {
-                                if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
-                                    var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
+                                if( $scope.taxes[ $scope.item.ref_tax ].tax_type == 'percent' ) {
+                                    var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_percent ) ) / 100;
                                     var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                     this.addon          =   sharedCurrency.toAmount( newPrice )
                                 } else {
-                                    var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
+                                    var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_amount );
                                     this.addon          =   sharedCurrency.toAmount( newPrice )
                                 }
                             }
                         }
 
-                        if( _.keys( $scope.taxes[ $scope.item.ref_taxe ] ).length > 0 ) {
+                        if( _.keys( $scope.taxes[ $scope.item.ref_tax ] ).length > 0 ) {
                             if( angular.isDefined( tab.models ) ) {
                                 if( angular.isDefined( tab.models.sale_price ) ) {
-                                    if( $scope.taxes[ $scope.item.ref_taxe ].type == 'percent' ) {
-                                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value ) ) / 100;
+                                    if( $scope.taxes[ $scope.item.ref_tax ].tax_type == 'percent' ) {
+                                        var percentage      =   ( parseFloat( tab.models.sale_price ) * parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_percent ) ) / 100;
                                         var newPrice        =   parseFloat( tab.models.sale_price ) + percentage;
                                         this.addon          =   sharedCurrency.toAmount( newPrice )
                                     } else {
-                                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_taxe ].value );
+                                        var newPrice        =   parseFloat( tab.models.sale_price ) + parseFloat( $scope.taxes[ $scope.item.ref_tax ].tax_amount );
                                         this.addon          =   sharedCurrency.toAmount( newPrice )
                                     }
                                 }
@@ -225,6 +225,7 @@ tendooApp.directive( 'itemEdit', function(){
                 itemsResource.get({
                     id  :   $routeParams.id
                 }, ( item ) => {
+
                     $scope.closeInit();
 
                     // Assign available field to the item
@@ -245,6 +246,7 @@ tendooApp.directive( 'itemEdit', function(){
 
                             // get the right tab index
                             let tabIndex    =   null;
+
                             $scope.item.variations[ index ].tabs.forEach( ( variationTab, tabId ) => {
                                 if( variationTab.namespace == tab ) {
                                     tabIndex    =   tabId;
@@ -278,6 +280,7 @@ tendooApp.directive( 'itemEdit', function(){
                                             }
                                         }
                                     } else {
+                                        // To handle empty values
                                         $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ]              =   [];
                                         $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][0]           =   {}
                                         $scope.item.variations[ index ].tabs[ tabIndex ].models[ field.model ][0].models    =   {}
@@ -289,14 +292,35 @@ tendooApp.directive( 'itemEdit', function(){
                             });   
                         };
                     });   
+                }, ( data ) => {
+                    if( data.status == '404' ) {
+                        $location.path( '/errors/404' );
+                    }
                 });            
+            }
+
+            /**
+            *  Save On Local Storage
+            *  @param void
+            *  @return void
+            **/
+
+            $scope.saveOnLocalStorage   =   ()  => {
+                if( localStorageService.isSupported ) {
+                    // We'll only save if localStore is enabled
+                    if( localStorageService.getStorageType() == 'localStorage' ) {
+                        $scope.$watch( 'item', ( before, after ) => {
+                            localStorageService.set( 'item', $scope.item );
+                        });
+                    }
+                }
             }
 
             // Resources Loading
             $scope.resourceLoader.push({
                 resource    :   providersResource,
                 success    :   function( data ) {
-                    sharedFieldEditor( 'ref_provider', itemsAdvancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+                    sharedFieldEditor( 'ref_provider', $scope.advancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
                 }   
             }).push({
                 resource    :   categoriesResource,
@@ -306,7 +330,7 @@ tendooApp.directive( 'itemEdit', function(){
             }).push({
                 resource    :   deliveriesResource,
                 success    :   function( data ) {
-                    sharedFieldEditor( 'ref_delivery', itemsAdvancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
+                    sharedFieldEditor( 'ref_delivery', $scope.advancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
                 }
             }).push({
                 resource    :   unitsResource,
@@ -316,7 +340,7 @@ tendooApp.directive( 'itemEdit', function(){
             }).push({
                 resource    :   taxesResource,
                 success    :   function( data ) {
-                    sharedFieldEditor( 'ref_taxe', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+                    sharedFieldEditor( 'ref_tax', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
                 }
             }).push({
                 resource    :   departmentsResource,

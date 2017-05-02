@@ -42,7 +42,7 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
         },{
             type    :   'select',
             label   :   '<?php echo _s( 'Taxe', "nexopos_advanced" );?>',
-            model   :   'ref_taxe',
+            model   :   'ref_tax',
             desc    :   '<?php echo _s( 'Le prix de vente variera en fonction de la taxe que vous appliquerez au produit.', 'nexopos_advanced' );?>',
             validation  :   {
                 required        :   true

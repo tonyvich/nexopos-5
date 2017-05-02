@@ -121,7 +121,7 @@ tendooApp.factory( 'sharedTable', [
             if( filter == 'array_of_object' ) {
                 return this.arrayOfObjectToString( value )
             } else if( filter == 'money' ) {
-                return numeral( value ).format( sharedCurrency.format() );
+                return sharedCurrency.toAmount( value );
             } else if( filter == 'date_span' ) {
                 return sharedMoment.timeFromNow( value );
             } else if( filter == 'object'){
