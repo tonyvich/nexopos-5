@@ -194,6 +194,7 @@ var items               =   function(
      *  Blur all fields to display errors
      *  @param object fields
      *  @return void
+     *  @deprecated
     **/
 
     $scope.validate.blurAll         =   function() {
@@ -385,8 +386,43 @@ var items               =   function(
 
     $scope.submitItem               =   function(){
 
+        let test =  $scope.validate.walker( itemsFields, $scope.item ).then( function(){
+            let item_variations         =   {};
+            item_variations.tabs        =   [];
+
+            _.each( $scope.item.variations, function( variation, variation_id ) {
+                _.each( variation.tabs, function( tab, variation_tab_id ) {
+                    var ids             =   {
+                        variation_id        :   variation_id,
+                        variation_tab_id    :   variation_tab_id
+                    };
+
+                    // We won't validate hidden tabs
+                    if( typeof tab.hide == 'function' ) {
+                        if( tab.hide( $scope.item ) == true ) {
+                            return false;
+                        }
+                    }
+
+                    item_variations.tabs[ variation_tab_id ]  = {
+                        fields  :   $scope.advancedFields[ tab.namespace ],
+                        ids,
+                        model   :   tab     
+                    };
+                })
+            });
+
+            console.log( item_variations );
+        });
+
+        return;
+
         // validating
         var global_validation       =   $scope.validate.blurAll();
+        
+        // Must be removed
+        return;
+
         var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
 
         if( global_validation.length > 0 ) {

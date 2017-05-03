@@ -292,19 +292,29 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexopos_advanced' );?>',
                 validation  :   {
                     required    :   true,
-                    callback    :   function( item, field, $event ){
-                        // Validation run only if the field is not empty
+                    callback    :   function( field, item, $event ){
+                        // runs only if the fields is not empty
                         if( item[ field.model ] != '' ) {
-                            itemsVariationsResource.get({
-                                id      :   item[ field.model ],
-                                as      :   'sku'
-                            }, function( returned ) {
-                                // greater than 2 since the object already has system keys : $promise and $resolved
-                                if( _.keys( returned ).length > 2 ) {
-                                    var message     =   '<?php echo _s( 'L\'Unité de gestion de stock : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, sinon il sera impossible de sauvegarder le produit.', 'nexopos_advanced' );?>';
-                                    sharedAlert.warning( message.format( item[ field.model ] ) );
-                                }
+
+                            // it will be a promise
+                            let promise         =   new Promise( function( resolved, rejected ) {
+                                itemsVariationsResource.get({
+                                    id      :   item[ field.model ],
+                                    as      :   'sku'
+                                }, function( returned ) {
+                                    // greater than 2 since the object already has system keys : $promise and $resolved
+                                    if( _.keys( returned ).length > 2 ) {
+                                        let error           =     {};
+                                        error.msg           =   '<?php echo _s( 'L\'Unité de gestion de stock : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, sinon il sera impossible de sauvegarder le produit.', 'nexopos_advanced' );?>'.format( item[ field.model ] );
+                                        error.label         =   field.label;
+                                        rejected( error );
+                                    } else {
+                                        resolve();
+                                    }
+                                });
                             });
+
+                            return promise;
                         }
                     }
                 }

@@ -1,3 +1,6 @@
+<?php if( true == false ):?>
+<script type="text/javascript">
+<?php endif;?>
 angular.element( document ).ready( () => {
     tendooApp.factory( 'sharedValidate', function(){
         return function(){
@@ -125,7 +128,7 @@ angular.element( document ).ready( () => {
                         **/
 
                         if( rule == "callback" ) {
-                            value( item, field, errors );
+                            errors[ field.model ].callback  =   value;
                         }
 
                     });
@@ -137,6 +140,8 @@ angular.element( document ).ready( () => {
             }
 
             this.run        =   function( fields, item ) {
+
+                return;
                 var errors          =   {};
 
                 _.each( fields, function( field ){
@@ -225,6 +230,112 @@ angular.element( document ).ready( () => {
                     errors[ key ].msg   =   value.msg.replace( '%%', value.label );
                 });
                 return errors;
+            }
+
+            this.walker                 =   function( fields, item, index, mainResolve ) {
+                return new Promise( ( resolve, reject ) => {
+
+                    index                   =   typeof index == 'undefined' ? 0 : index;
+                    let length              =   fields.length;
+                    let field               =   fields[ index ];
+
+                    // to avoid mainResolve overwrithing
+                    if( index == 0 ) {
+                        mainResolve     =   resolve;
+                    }
+
+                    // probably when the walker reach the end
+                    if( typeof field == 'undefined' ) {
+                        // when the walker has done
+                        return mainResolve();
+                    }
+
+                    let promise             =   new Promise( ( _resolve, _reject ) => {
+                        let run             =   this.__run( field, item );
+                        if( _.keys( run ).length > 0 ) {
+                            // before rejecting, let make sure it's not a callback
+                            if( typeof run.callback != 'undefined' ) {
+                                // Test Callback Promise
+                                let callbackPromise     =   run.callback( field, item );
+                                callbackPromise.then(()=>{
+                                    _resolve({
+                                        fiedls  :   fields, 
+                                        item    :   item, 
+                                        index   :   index+1
+                                    });
+                                }, ( error ) => {
+                                    _reject({
+                                        error   :   run,
+                                        fields  :   fields, 
+                                        item    :   item, 
+                                        index   :   index+1
+                                    });
+                                });
+                            } else {
+                                // index + 1 to move to the next fields
+                                _reject({
+                                    error   :   run,
+                                    fields  :   fields, 
+                                    item    :   item, 
+                                    index   :   index+1
+                                }); 
+                            }                        
+                        } else {
+                            _resolve({
+                                fields  :   fields, 
+                                item    :   item, 
+                                index   :   index+1
+                            });
+                        }
+                    });
+
+                    // Run Template Remplacement
+                    promise.then( ({ fields, item, index }) => {
+                        // if there is no error, just validate next fields
+                        if( typeof fields[ index ] != 'undefined' ) {
+                            this.walker( fields, item, index, mainResolve );
+                        }
+                    }, ({ error, fields, item, index }) => {
+                        error               =   this.__replaceTemplate( error );
+                        let response        =   this.__response( error );                    
+                        let fieldClass      =   '.' + field.model + '-helper';
+
+                        if( ! response.isValid ) {
+                            angular.element( fieldClass ).closest( '.form-group' ).removeClass( 'has-success' );
+                            angular.element( fieldClass ).text( error[ field.model ].msg );
+                            angular.element( fieldClass ).closest( '.form-group' ).addClass( 'has-error' );
+                        }
+
+                        this.walker( fields, item, index, mainResolve );
+                    });
+                });
+            }
+
+            this.variation_walker       =   function( variations, item, index = 0, mainResolve ) {
+                return new Promise( ( resolve, reject ) => {
+                    this.tab_walker( variations[ index ], item, index ).then( ({ tabs, item, index }) => {
+                        this.tab_walker( tabs, item, index )
+                    })
+                })
+            }
+
+            this.tab_walker             =   function( tabs, item, index = 0, mainResolve ) {
+                return new Promise( ( resolve, reject ) => {
+                    if( index = 0 ) {
+                        mainResolve     =   resolve;
+                    }
+
+                    if( typeof tabs[ index ] == 'undefined' ) {
+                        return mainResolve();
+                    }
+
+                    let promise         =   new Promise( ( _resolve, _reject ) => {
+                        console.log( tabs );
+                        _resolve({ tabs, item, index : index + 1 });
+                    })
+
+
+                })
             }
         }
     });

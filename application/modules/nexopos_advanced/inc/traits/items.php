@@ -149,22 +149,27 @@ Trait items
     {
         $raw_options                =   $this->db->get( 'options' )->result_array(); 
         $options                    =   [];
+
         foreach( $raw_options as $raw_option ) {
-            $options[ $raw_option[ 'KEY' ] ]  =   $raw_option[ 'VALUE' ];
+            $options[ $raw_option[ 'key' ] ]  =   $raw_option[ 'value' ];
         }
 
         if( @$options[ 'generated_barcodes' ] !=  null ) {
             $generated_barcodes      =  json_decode( $options[ 'generated_barcodes' ], true );
+            $firstBarcodes          =   false;
         } else {
             $generated_barcodes      =   [];
+            $firstBarcodes          =   true;
+
         }
 
         // loading barcode library
         $this->load->module_library( 'nexopos_advanced', 'nexopos_barcode_library' );
 
         $variation_errors       =   [];
+        $variations             =   $this->post( 'variations' );
         // Initial Checks
-        foreach( $this->post( 'variations' ) as &$variation ) {
+        foreach( $variations as &$variation ) {
             $sku_checks     =   $this->db->where( 'sku', $variation[ 'sku' ] )
             ->get( 'nexopos_items_variations' )->result_array();
 
@@ -179,7 +184,7 @@ Trait items
                 }
             } else {
                 // let generate a barcode
-                $random_barcode         =   $this->nexopos_barcode_library->generate_barcode();
+                $random_barcode         =   $this->nexopos_barcode_library->generate_barcode( 13, $generated_barcodes );
                 if( $random_barcode ) {
                     $generated_barcodes[]        =   $random_barcode;
                     $variation[ 'barcode' ]     =   $random_barcode;
@@ -201,11 +206,24 @@ Trait items
             return $this->response( $variation_errors, 403 );
         }
 
-        // since all variation has been checked, the barcode saved is now updated
-        $this->db->where( 'KEY', 'generated_barcodes' )->update( 'options', [
-            'VALUE'     =>  json_encode( $generated_barcodes )
-        ]);
+        // if it's the first time a barcode is saved'
+        if( $firstBarcodes ) {
+            // since all variation has been checked, the barcode saved is now updated
+            $this->db->insert( 'options', [
+                'key'       =>  'generated_barcodes',
+                'value'     =>  json_encode( $generated_barcodes ),
+                'autoload'  =>  1,
+                'user'      =>  0,
+                'app'       =>  'nexopos_advanced'
+            ]);
 
+        } else {
+            // since all variation has been checked, the barcode saved is now updated
+            $this->db->where( 'key', 'generated_barcodes' )->update( 'options', [
+                'value'       =>  json_encode( $generated_barcodes )
+            ]);
+        }
+        
         $this->db->insert( 'nexopos_items',[
             'name'              =>  $this->post( 'name' ),
             'namespace'         =>  $this->post( 'namespace' ),
@@ -226,7 +244,6 @@ Trait items
         // item with error can't be submited
         $item_status            =   'yes';
 
-        $variations                 =   $this->post( 'variations' );
         // saving variations
         foreach( $variations as $variation ) {
 
@@ -244,7 +261,7 @@ Trait items
 
             // Special treatment for names
             // if the variation name is not set, then we'll use the parent name
-            $variation_data[ 'name' ]       =   strlen( $variation_data[ 'name' ] ) == 0 ? $this->post( 'name' ) : $variation_data[ 'name' ];
+            $variation_data[ 'name' ]       =   strlen( ( string ) @$variation_data[ 'name' ] ) == 0 ? $this->post( 'name' ) : $variation_data[ 'name' ];
 
             // Checks if the sku and the barcode already exists
             // if the sku and barcode already exists, then the item won't be ready for sale.
