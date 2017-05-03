@@ -1,4 +1,11 @@
 <script type="text/javascript">
+    tendooApp.config(function(dropzoneOpsProvider){
+        dropzoneOpsProvider.setOptions({
+            url             : '<?php echo site_url([ 'dashboard', 'media-manager', 'upload' ] );?>',
+            maxFilesize     : '10'
+        });
+    });
+
     tendooApp.directive('mediaModal', function(){
         return {
              
@@ -18,12 +25,26 @@
                 function( $scope, $http, $attrs, $compile ){
                     $scope.mediaEntries   = {};
                     var model = $attrs.model;
+                    $scope.mediaSize = "full";
+                    $scope.dzCallbacks          =   new Object;
+                    
+                    $scope.dzCallbacks.sending  =   function( file, XHR, formData ) {
+                        var csrf_code           =   '<?php echo $this->security->get_csrf_hash(); ?>';
+                        formData.append( '<?php echo $this->security->get_csrf_token_name(); ?>' , csrf_code );
+                    }
 
-                    console.log(  );
+                    /**
+                     *  Load Assets 
+                     *  @param
+                     *  @return
+                    **/
 
-                    $http.get( '<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>' ).then(function( returned ) {
-                        $scope.mediaEntries = returned.data;
-                    });
+                    $scope.loadAssets = function(){
+                        alert('call load');
+                        $http.get( '<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>' ).then(function( returned ) {
+                            $scope.mediaEntries = returned.data;
+                        });
+                    }
                     
                     /**
                      *  Show media (trigger the modal for the file selection) 
@@ -32,9 +53,10 @@
                     **/
 
                     $scope.showMedia = function(){
+                        $scope.loadAssets();
                         var tpl     = <?php echo json_encode( $this->load->module_view( 'media-manager', 'media-window', null, true ) );?>;
                         var message = $compile(tpl)($scope);
-
+                        
                         bootbox.alert({ 
                             size: "large",
                             title: "<?php echo _s('Select a file','media-manager');?>",
@@ -90,11 +112,16 @@
                     **/
 
                     $scope.modalHide = function(){
+                        if( $scope.mediaSize == null){
+                            $scope.mediaSize = 'full';
+                        }
                         _.each( $scope.$parent.item, function( value, key ){
                             if( value == "inMediaUse" ){
                                 _.each( $scope.mediaEntries, function( entry ){
                                     if( entry.selected == true ){
-                                        $scope.$parent.item[ key ] = entry.url;
+                                        var url = entry.url;
+                                        var newUrl = url.replace("#NAMESPACE#",'-' + $scope.mediaSize );
+                                        $scope.$parent.item[ key ] = newUrl;
                                     }
                                 });
                             }
@@ -106,7 +133,7 @@
                             }
                         });
                     }
-                
+                    
                 /* Controller end */
                 }
             ]    

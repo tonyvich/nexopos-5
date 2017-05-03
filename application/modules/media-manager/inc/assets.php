@@ -25,6 +25,7 @@ class Media_Manager_Assets extends Tendoo_Module
         $this->enqueue->css( $bower_url . 'dropzone/dist/min/dropzone.min' );
         $this->enqueue->css( $bower_url . 'ng-dropzone/dist/ng-dropzone.min' );
         $this->enqueue->css( $css_url . 'media-manager' );
+        $this->enqueue->css( $bower_url . 'bootstrap-vertical-tabs/bootstrap.vertical-tabs' );
 
         $this->enqueue->js_namespace( 'dashboard_footer' );
         $this->enqueue->js( $bower_url . 'dropzone/dist/min/dropzone.min' );
