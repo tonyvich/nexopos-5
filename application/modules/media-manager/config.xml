@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application>
-    <name>Media Manager</name>
+    <name>Media Manager </name>
     <namespace>media-manager</namespace>
     <version>1.0</version>
-    <author>Blair Jersyer</author>
+    <author>Tiny Skillz</author>
     <description></description>
     <language>/language</language>
     <main>media-manager.php</main>

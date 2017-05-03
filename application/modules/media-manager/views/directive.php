@@ -21,7 +21,7 @@
 
                     console.log(  );
 
-                    $http.get( '<?php echo site_url( [ 'dashboard', 'media-managerv2', 'get' ] );?>' ).then(function( returned ) {
+                    $http.get( '<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>' ).then(function( returned ) {
                         $scope.mediaEntries = returned.data;
                     });
                     
@@ -32,7 +32,7 @@
                     **/
 
                     $scope.showMedia = function(){
-                        var tpl     = <?php echo json_encode( $this->load->module_view( 'media-managerv2', 'media-window', null, true ) );?>;
+                        var tpl     = <?php echo json_encode( $this->load->module_view( 'media-manager', 'media-window', null, true ) );?>;
                         var message = $compile(tpl)($scope);
 
                         bootbox.alert({ 

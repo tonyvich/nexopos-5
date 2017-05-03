@@ -331,7 +331,7 @@ angular.element( document ).ready( () => {
                         });                        
                     });
 
-                    promise.then({ variations, item, index, mainResolve } => {
+                    promise.then( ({ variations, item, index, mainResolve }) => {
                         this.variations_walker( variations, item, index, mainResolve );
                     })
                 })
@@ -349,6 +349,10 @@ angular.element( document ).ready( () => {
 
                     let promise         =   new Promise( ( _resolve, _reject ) => {
                         _resolve({ tabs, item, index : index + 1 });
+                    })
+
+                    promise.then( ({ tabs, item, index, mainResolve }) => {
+                        
                     })
                 })
             }

@@ -45,12 +45,8 @@ class Media_Manager_Controller extends Tendoo_module
         $path                               =   $this->config->item( 'mm-upload-path' ) . $year . '/' . $month . '/';
         $url                                =   upload_url() . '/' . $year . '/' . $month . '/';
 
-        if( ! is_dir( $this->config->item( 'mm-upload-path' ) . $year ) ) {
-            mkdir( $this->config->item( 'mm-upload-path' ) . $year );
-        }
-
         if( ! is_dir( $path ) ) {
-            mkdir( $path );
+            mkdir( $path , 0777, true );
         }
 
         if ( $this->upload->do_upload( 'file' ) ) {
@@ -59,16 +55,16 @@ class Media_Manager_Controller extends Tendoo_module
                 if( $size === true ) {
                     $this->image->fromFile( $data[ 'full_path' ] )
                     ->resize( $data[ 'image_width' ], $data[ 'image_height' ] )
-                    ->toFile( $path . url_slug( $data[ 'raw_name' ] ) . '-' . $namespace . $data[ 'file_ext' ] );
+                    ->toFile( $path . url_slug($data['raw_name'], array( 'lowercase' => true )) . '-' . $namespace . $data[ 'file_ext' ] );
                 } else {
                     if( @$size[2] == 'thumbnail' ) {
                         $this->image->fromFile( $data[ 'full_path' ] )
                         ->thumbnail( $size[0], $size[1] )
-                        ->toFile( $path . url_slug( $data[ 'raw_name' ] ) . '-' . $namespace . $data[ 'file_ext' ] );
+                        ->toFile( $path . url_slug($data['raw_name'], array( 'lowercase' => true )) . '-' . $namespace . $data[ 'file_ext' ] );
                     } else {
                         $this->image->fromFile( $data[ 'full_path' ] )
                         ->resize( $size[0], $size[1] )
-                        ->toFile( $path . url_slug( $data[ 'raw_name' ] ) . '-' . $namespace . $data[ 'file_ext' ] );
+                        ->toFile( $path . url_slug($data['raw_name'], array( 'lowercase' => true )) . '-' . $namespace . $data[ 'file_ext' ] );
                     }
                 }
             }
@@ -78,9 +74,9 @@ class Media_Manager_Controller extends Tendoo_module
 
             // Save to databse
             $this->db->insert( $this->events->apply_filters( 'mm-table-prefix', '' ) . 'media_manager', [
-                'name'              =>  $data[ 'raw_name' ],
+                'name'              =>  url_slug($data['raw_name'], array( 'lowercase' => true )),
                 'mime'              =>  $data[ 'image_type' ],
-                'url'               =>  $url . url_slug( $data[ 'raw_name' ] ) . '#NAMESPACE#' . $data[ 'file_ext' ],
+                'url'               =>  $url . url_slug($data['raw_name'], array( 'lowercase' => true )) . '#NAMESPACE#' . $data[ 'file_ext' ],
                 'author'            =>  User::id(),
                 'date_creation'     =>  date_now(),
             ]);
@@ -95,6 +91,10 @@ class Media_Manager_Controller extends Tendoo_module
 
     public function get()
     {
+        if ( isset( $_GET['search'] ) ){
+            $this->db->like('name', $_GET['search'] );
+        }
+        
         $results  =   $this->db->get(
             $this->events->apply_filters( 'mm-table-prefix', '' ) . 'media_manager'
         )->result_array();
