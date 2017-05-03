@@ -18,9 +18,8 @@
                 function( $scope, $http, $attrs, $compile ){
                     $scope.mediaEntries   = {};
                     var model = $attrs.model;
-
-                    console.log(  );
-
+                    $scope.mediaSize = "full";
+                    
                     $http.get( '<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>' ).then(function( returned ) {
                         $scope.mediaEntries = returned.data;
                     });
@@ -34,7 +33,7 @@
                     $scope.showMedia = function(){
                         var tpl     = <?php echo json_encode( $this->load->module_view( 'media-manager', 'media-window', null, true ) );?>;
                         var message = $compile(tpl)($scope);
-
+                        
                         bootbox.alert({ 
                             size: "large",
                             title: "<?php echo _s('Select a file','media-manager');?>",
@@ -90,11 +89,16 @@
                     **/
 
                     $scope.modalHide = function(){
+                        if( $scope.mediaSize == null){
+                            $scope.mediaSize = 'full';
+                        }
                         _.each( $scope.$parent.item, function( value, key ){
                             if( value == "inMediaUse" ){
                                 _.each( $scope.mediaEntries, function( entry ){
                                     if( entry.selected == true ){
-                                        $scope.$parent.item[ key ] = entry.url;
+                                        var url = entry.url;
+                                        var newUrl = url.replace("#NAMESPACE#",'-' + $scope.mediaSize );
+                                        $scope.$parent.item[ key ] = newUrl;
                                     }
                                 });
                             }
