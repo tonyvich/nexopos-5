@@ -40,7 +40,7 @@ Trait coupons
             }
 
             if( $this->get( 'limit' ) ) {
-                $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
+                $this->db->limit( $this->get( 'limit' ), $this->get( 'limit' ) * $this->get( 'current_page' ) );
             }
 
             // Search

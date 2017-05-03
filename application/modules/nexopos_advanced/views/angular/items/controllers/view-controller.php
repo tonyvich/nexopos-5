@@ -30,17 +30,12 @@ var itemsView      =   function(
             tab.active  =   false;
         });
 
-        if( angular.element( tab.namespace ).length == 0 ) {
-            
-            angular.element( '.tab-' + tab.namespace ).append( '<' + tab.namespace + '></' + tab.namespace + '>' );
+        angular.element( tab.namespace ).remove();
+        angular.element( '.tab-' + tab.namespace ).append( '<' + tab.namespace + '></' + tab.namespace + '>' );
+        angular.element( '.tab-' + tab.namespace ).html( 
+            $compile( angular.element( '.tab-' + tab.namespace ).html() )( $scope ) 
+        );
 
-            console.log( $( '.tab-' + tab.namespace ).length );
-            console.log( '.tab-' + tab.namespace );
-
-            angular.element( '.tab-' + tab.namespace ).html( 
-                $compile( angular.element( '.tab-' + tab.namespace ).html() )( $scope ) 
-            );
-        }
         tab.active      =   true;
     }
 

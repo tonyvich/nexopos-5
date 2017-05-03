@@ -55,9 +55,9 @@
         class="tab-pane row">
 
             <div
-                ng-repeat="field in itemsAdvancedFields[ variation_tab.namespace ] track by $index"
+                ng-repeat="field in advancedFields[ variation_tab.namespace ] track by $index"
                 class="{{ field.class !== undefined ? field.class : 'col-lg-6 col-sm-6 col-xs-12' }}"
-                ng-show="field.show( variation_tab, item, itemsAdvancedFields[ variation_tab.namespace ] )"
+                ng-show="field.show( variation_tab, item, advancedFields[ variation_tab.namespace ] )"
                 >
 
                 <div class="form-group" ng-if="field.type == 'text'">
@@ -76,6 +76,7 @@
                             variation_id        :  variation_id,
                             variation_tab_id    :   variation_tab_id
                         })"
+                        ng-disabled="field.disabled( field, variation_tab )"
                         >
                         <span ng-show="field.addon" class="input-group-addon">{{ field.addon }}</span>
                         
@@ -107,6 +108,7 @@
                                 variation_id        :  variation_id,
                                 variation_tab_id    :   variation_tab_id
                             })"
+                            ng-disabled="field.disabled( field, variation_tab )"
                         >
                             <option ng-repeat="option in field.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                         </select>
@@ -138,6 +140,7 @@
                                 variation_id        :  variation_id,
                                 variation_tab_id    :   variation_tab_id
                             })"
+                            ng-disabled="field.disabled( field, variation_tab )"
                              />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -159,8 +162,9 @@
                             variation_id        :  variation_id,
                             variation_tab_id    :   variation_tab_id
                         })"
+                        ng-disabled="field.disabled( field, variation_tab )"
                         type="text"
-                        class="form-control"
+                        class="form-control"                        
                         placeholder="">
                     </div>
                     <p class="help-block {{ field.model }}-helper" style="height:30px;font-size:12px;">{{ field.desc }}</p>
@@ -205,6 +209,7 @@
 
                                 </div>
                             </div>
+                            
                             <div class="box-body variation-{{ variation_id }}-tab-{{ variation_tab_id }}-group-body-{{ variation_group_id }}">
 
                                 <div
@@ -234,6 +239,7 @@
                                               variation_group_id  :   variation_group_id,
                                               variation_tab       :   variation_tab
                                             })"
+                                            ng-disabled="subField.disabled( subField, variation_tab.models[ field.model ][ variation_group_id ] )"
                                             placeholder="{{ subField.placeholder }}"
                                             >
                                             <span ng-show="subField.addon" class="input-group-addon">{{ subField.addon }}</span>
@@ -268,6 +274,7 @@
                                                   variation_group_id  :   variation_group_id,
                                                   variation_tab       :   variation_tab
                                                 })"
+                                                ng-disabled="subField.disabled( subField, variation_tab.models[ field.model ][ variation_group_id ] )"
                                                 ng-model="variation_tab.models[ field.model ][ variation_group_id ].models[ subField.model ]">
                                                 <option ng-repeat="option in subField.options track by $index" value="{{ option.value }}">{{ option.label }}</option>
                                             </select>
@@ -300,6 +307,7 @@
                                               variation_group_id  :   variation_group_id,
                                               variation_tab       :   variation_tab
                                             })"
+                                            ng-disabled="subField.disabled( subField, variation_tab.models[ field.model ][ variation_group_id ] )"
                                             type="text" class="form-control" placeholder="">
                                         </div>
                                         <p class="help-block {{ subField.model }}-helper" style="height:30px;font-size:12px;">{{ subField.desc }}</p>

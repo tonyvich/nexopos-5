@@ -11,6 +11,7 @@
                     'factories/items/add-text-domain.js',
                     'factories/items/resource.js',
                     'factories/items/table.js',
+                    'factories/items/types.js',
                     'shared_factories/options.js',
                     'shared_factories/raw-to-options.js',
                     'shared_factories/validate.js',
@@ -19,7 +20,9 @@
                     'shared_factories/table-actions.js',
                     'shared_factories/alert.js',
                     'shared_factories/entry-actions.js',
-                    'shared_factories/document-title.js'
+                    'shared_factories/document-title.js',
+                    'shared_factories/table-header-buttons.js',
+                    'shared_factories/raw-to-options.js',
                 ]
             });
         }]

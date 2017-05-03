@@ -112,13 +112,13 @@ tendooApp.factory( 'sharedFormManager', [
         this.duplicate 	=	function( variation, $index ) {
             let copied_variation;
             copied_variation    =   {
-                models      :   variation.models,
+                models      :   angular.copy( variation.models ),
                 tabs        :   this.item.getTabs()
             };
 
             // copy only models from original 
             copied_variation.tabs.forEach( ( value, key ) => {
-                value.models    =   variation.tabs[ key ].models;
+                value.models    =   angular.copy( variation.tabs[ key ].models );
             });
 
             this.hooks.applyFilters( 'duplicateVariation', copied_variation );
@@ -211,10 +211,13 @@ tendooApp.factory( 'sharedFormManager', [
         **/
 
         this.removeGroup      =   function( $index, $groups, ids ) {
-            sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ce groupe ?', 'nexopos_advanced' );?>', function( action ) {
+            sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ce groupe ?', 'nexopos_advanced' );?>', ( action ) => {
                 if( action ) {
-                    // delete all error related to the deleted group
-                    this.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors[ ids.variation_tab.namespace ].splice( $index, 1 );
+
+                    if( typeof this.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors != 'undefined' ) {
+                        // delete all error related to the deleted group
+                        this.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors[ ids.variation_tab.namespace ].splice( $index, 1 );
+                    }                    
 
                     $groups.splice( this.hooks.applyFilters( 'removeGroup', $index ), 1 );
                 }

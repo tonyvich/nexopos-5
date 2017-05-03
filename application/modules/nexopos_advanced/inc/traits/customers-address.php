@@ -32,7 +32,7 @@ Trait customers_address
             }
 
             if( $this->get( 'limit' ) ) {
-                $this->db->limit( $this->get( 'limit' ), $this->get( 'current_page' ) );
+                $this->db->limit( $this->get( 'limit' ), $this->get( 'limit' ) * $this->get( 'current_page' ) );
             }
 
             $this->db->join( 'nexopos_customers', 'nexopos_customers.id = nexopos_customers_address.ref_customer' );

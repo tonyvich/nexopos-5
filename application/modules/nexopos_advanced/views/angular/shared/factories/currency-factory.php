@@ -6,7 +6,21 @@ angular.element( document ).ready( function(){
 
             this.currencyPosition   =   '<?php echo @$Options[ 'shop_currency_position' ] == null ? 'before' : @$Options[ 'shop_currency_position' ];?>';
             this.currencyFormat     =   '<?php echo @$Options[ 'shop_currency_formating' ] == null ? '0,0.00' : @$Options[ 'shop_currency_formating' ];?>';
-            this.currencySymbol     =   '<?php echo @$Options[ 'shop_currency_symbol' ] == null ? '' : @$Options[ 'shop_currency_symbol' ];?>';
+            this.currencySymbol     =   '<?php echo $this->nexopos_misc_library->get_currencies()->symbol;?>';
+            this.currencyISO        =   '<?php echo $this->nexopos_misc_library->get_currencies()->iso;?>';
+            this.defaultFormat      =   '0,0.0';
+
+            /** numeral.register( 'locale', 'EUR', {
+                currency: {
+                    symbol: '€'
+                }
+            });
+
+            numeral.register( 'locale', 'USD', {
+                currency: {
+                    symbol: '€'
+                }
+            }); **/
 
             /**
              *  Currency Position on Format
@@ -14,17 +28,18 @@ angular.element( document ).ready( function(){
             **/
 
             this.format     =   function() {
+                let value;
                 if( this.currencyPosition == 'before' ) {
-                    return this.currencySymbol + ' ' + this.currencyFormat;
+                     value  =   '$' + ' ' + this.currencyFormat;
                 } else if( this.currencyPosition == 'before_close' ) {
-                    return this.currencySymbol + this.currencyFormat;
+                    value   =   '$' + this.currencyFormat;
                 } else if( this.currencyPosition == 'after' ) {
-                    return this.currencyFormat + ' ' + this.currencySymbol;
+                    value   =   this.currencyFormat + ' ' + '$';
                 } else if( this.currencyPosition == 'after_close' ) {
-                    return this.currencyFormat + this.currencySymbol;
+                    value   =   this.currencyFormat + '$';
                 }
 
-                return format;
+                return typeof value != undefined ? value : this.defaultFormat;
             }
 
             /**
@@ -35,8 +50,11 @@ angular.element( document ).ready( function(){
             
             this.toAmount 	=	function( money ) {
                 if( parseInt( money ) >= 0 ) {
-                    return numeral( money ).format( this.format() );
+                    value   =   numeral( parseFloat( money ), this.currencyISO ).format( this.format() );
+                    value   =   value.replace( '$', this.currencySymbol );
+                    return value;
                 }
+
                 return money;
             }
 
