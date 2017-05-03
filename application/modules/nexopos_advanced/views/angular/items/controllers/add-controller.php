@@ -194,6 +194,7 @@ var items               =   function(
      *  Blur all fields to display errors
      *  @param object fields
      *  @return void
+     *  @deprecated
     **/
 
     $scope.validate.blurAll         =   function() {
@@ -319,50 +320,35 @@ var items               =   function(
         if( localStorageService.isSupported ) {
             // The item is reset if you access from type selection
             // Maybe a prompt can ask whether the saved item should be deleted :\ ?
-            if( $location.path() == '/items/types' ) {
-                localStorageService.remove( 'item' );
-            } else {
-                if( typeof localStorageService.get( 'item' ) === 'object' ) {
+            if( typeof localStorageService.get( 'item' ) === 'object' ) {
 
-                    let savedItem           =   localStorageService.get( 'item' );
-                    
-                    if( savedItem != null ) {
+                let savedItem           =   localStorageService.get( 'item' );
+                
+                if( savedItem != null ) {
 
-                         _.each( savedItem, ( field, field_name) => {
-                            if( field_name != 'variations' ) {
-                                $scope.item[ field_name ]   =   field;
-                            }
+                        _.each( savedItem, ( field, field_name) => {
+                        if( field_name != 'variations' ) {
+                            $scope.item[ field_name ]   =   field;
+                        }
+                    });
+
+                    let tabs        =   new itemsTabs;
+
+                    _.each( savedItem.variations, ( savedVariation, key ) => {
+                        // is that really useful ?
+                        $scope.item.variations[ key ]   =   {
+                            models          :   savedVariation.models,
+                            tabs            :   $scope.item.getTabs()
+                        };
+
+                        //Looping tabs
+                        _.each( $scope.item.variations[ key ].tabs, ( tab, tab_key ) => {
+                            tab.models      =   savedVariation.tabs[ tab_key ].models
                         });
-
-                        let tabs        =   new itemsTabs;
-
-                        _.each( savedItem.variations, ( savedVariation, key ) => {
-                            // is that really useful ?
-                            $scope.item.variations[ key ]   =   {
-                                models          :   savedVariation.models,
-                                tabs            :   $scope.item.getTabs()
-                            };
-
-                            //Looping tabs
-                            _.each( $scope.item.variations[ key ].tabs, ( tab, tab_key ) => {
-                                tab.models      =   savedVariation.tabs[ tab_key ].models
-                            });
-                        });
-                    }
-                   
+                    });
                 }
             }
         }
-    }
-
-    /**
-     *  Restore Slashes on item Type
-     *  @param string item slash
-     *  @return string
-    **/
-
-    $scope.restoreSlashes           =   function( string ) {
-        return string.replace( '.', '/' );
     }
 
     /**
@@ -400,8 +386,43 @@ var items               =   function(
 
     $scope.submitItem               =   function(){
 
+        let test =  $scope.validate.walker( itemsFields, $scope.item ).then( function(){
+            let item_variations         =   {};
+            item_variations.tabs        =   [];
+
+            _.each( $scope.item.variations, function( variation, variation_id ) {
+                _.each( variation.tabs, function( tab, variation_tab_id ) {
+                    var ids             =   {
+                        variation_id        :   variation_id,
+                        variation_tab_id    :   variation_tab_id
+                    };
+
+                    // We won't validate hidden tabs
+                    if( typeof tab.hide == 'function' ) {
+                        if( tab.hide( $scope.item ) == true ) {
+                            return false;
+                        }
+                    }
+
+                    item_variations.tabs[ variation_tab_id ]  = {
+                        fields  :   $scope.advancedFields[ tab.namespace ],
+                        ids,
+                        model   :   tab     
+                    };
+                })
+            });
+
+            console.log( item_variations );
+        });
+
+        return;
+
         // validating
         var global_validation       =   $scope.validate.blurAll();
+        
+        // Must be removed
+        return;
+
         var warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
 
         if( global_validation.length > 0 ) {
@@ -421,6 +442,7 @@ var items               =   function(
 
         // Item Resource POST*
         itemsResource.save( itemToSubmit, function( returned ){
+            localStorageService.remove( 'item' );
             $location.path( 'items' );
         });
     }
@@ -491,43 +513,44 @@ var items               =   function(
     $scope.itemsTypes           =   itemsTypes;
     $scope.fields               =   itemsFields;
 
-    // Resources Loading
-    $scope.resourceLoader.push({
-        resource    :   providersResource,
-        success    :   function( data ) {
-            sharedFieldEditor( 'ref_provider', $scope.advancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
-        }   
-    }).push({
-        resource    :   categoriesResource,
-        success    :   function( data ) {
-            sharedFieldEditor( 'ref_category', $scope.fields ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
-        }
-    }).push({
-        resource    :   deliveriesResource,
-        success    :   function( data ) {
-            sharedFieldEditor( 'ref_delivery', $scope.advancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
-        }
-    }).push({
-        resource    :   unitsResource,
-        success    :   function( data ) {
-            sharedFieldEditor( 'ref_unit', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
-        }
-    }).push({
-        resource    :   taxesResource,
-        success    :   function( data ) {
-            sharedFieldEditor( 'ref_tax', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
-        }
-    }).push({
-        resource    :   departmentsResource,
-        success    :   function( data ) {
-            sharedFieldEditor( 'ref_department', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
-            $scope.closeInit();
-        }
-    });
-
-    $scope.$on('$routeChangeSuccess', function(next, current) {
-        
-    });
+    if( typeof $routeParams.types != 'undefined' ) {
+        // Resources Loading
+        $scope.resourceLoader.push({
+            resource    :   providersResource,
+            success    :   function( data ) {
+                sharedFieldEditor( 'ref_provider', $scope.advancedFields.stock ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+            }   
+        }).push({
+            resource    :   categoriesResource,
+            success    :   function( data ) {
+                sharedFieldEditor( 'ref_category', $scope.fields ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
+            }
+        }).push({
+            resource    :   deliveriesResource,
+            success    :   function( data ) {
+                sharedFieldEditor( 'ref_delivery', $scope.advancedFields.stock ).options   =   sharedRawToOptions( data.entries, 'id', 'name' );
+            }
+        }).push({
+            resource    :   unitsResource,
+            success    :   function( data ) {
+                sharedFieldEditor( 'ref_unit', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+            }
+        }).push({
+            resource    :   taxesResource,
+            success    :   function( data ) {
+                sharedFieldEditor( 'ref_tax', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+            }
+        }).push({
+            resource    :   departmentsResource,
+            success    :   function( data ) {
+                sharedFieldEditor( 'ref_department', $scope.fields ).options        =   sharedRawToOptions( data.entries, 'id', 'name' );
+                $scope.closeInit();
+            }
+        });
+    } else {
+        // delete cached item
+        localStorageService.remove( 'item' );
+    }
 
     $scope.$on('$routeChangeStart', function(next, current) {
         $scope.previousPath    =   $location.path();

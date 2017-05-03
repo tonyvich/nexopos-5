@@ -10,16 +10,17 @@ tendooApp.factory( 'itemsTable', [
     return {
         columns     :   [
             {
-                text    :   '<?php echo _s( 'Produit', 'nexopos_advanced' );?>',
-                namespace   :   'name'
-            },
-            {
-                text    :   '<?php echo _s( 'Variations', 'nexopos_advanced' );?>',
-                namespace   :   'variation_quantity'
+                text    :   '<?php echo _s( 'Produit / Var.', 'nexopos_advanced' );?>',
+                namespace   :   'name',
+                is      :   'filter',
+                filter      :   ( value, filter, col, entry ) => {
+                    return value + ' (' + entry.variation_quantity + ')';
+                }
             },
             {
                 text    :   '<?php echo _s( 'Categorie', 'nexopos_advanced' );?>',
-                namespace   :   'category_name'
+                namespace   :   'category_name',
+                width       :   150
             },
             {
                 text    :   '<?php echo _s( 'Qte', 'nexopos_advanced' );?>',
@@ -36,11 +37,13 @@ tendooApp.factory( 'itemsTable', [
                 namespace   :   'namespace',
                 is          :   'object',
                 object      :   sharedRawToOptions( itemsTypes, 'namespace', 'text' )
-            },{
+            },
+            /** 
+            {
                 text    :   '<?php echo _s( 'Statut', 'nexopos_advanced' );?>',
                 namespace   :   'status',
                 width   :   100
-            },
+            },**/
             {
                 text    :   '<?php echo _s( 'Crée le', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',

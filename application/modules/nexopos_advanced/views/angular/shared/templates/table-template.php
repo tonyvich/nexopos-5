@@ -67,7 +67,7 @@
                             </td>
                             <td ng-repeat="col in table.columns" style="line-height: 30px;" title="{{ entry[ col.namespace ] }}">
                                 {{
-                                    table.filter( entry[ col.namespace ], col.is, col)
+                                    table.filter( entry[ col.namespace ], col.is, col, entry )
                                 }}
                             </td>
                             <td width="50" ng-hide="table.isDisabled( 'entry-actions' )">

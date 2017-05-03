@@ -19,6 +19,8 @@
                     $scope.mediaEntries   = {};
                     var model = $attrs.model;
 
+                    console.log(  );
+
                     $http.get( '<?php echo site_url( [ 'dashboard', 'media-managerv2', 'get' ] );?>' ).then(function( returned ) {
                         $scope.mediaEntries = returned.data;
                     });
@@ -30,18 +32,37 @@
                     **/
 
                     $scope.showMedia = function(){
-                        var tpl = '<div style="margin-top:10px;padding:5px;overflow-y:scroll;"> <div ng-click="selectEntry( entry )" ng-class="{ \'selected\' : entry.selected }" class="media-manager-entry-box" ng-repeat="(index, entry) in mediaEntries"> <img ng-src="{{ entry.thumb }}"/> </div> </div> </div>';
+                        var tpl     = <?php echo json_encode( $this->load->module_view( 'media-managerv2', 'media-window', null, true ) );?>;
                         var message = $compile(tpl)($scope);
+
                         bootbox.alert({ 
                             size: "large",
-                            title: "<?php echo __('Select a file','media-manager');?>",
+                            title: "<?php echo _s('Select a file','media-manager');?>",
                             message: message,
                             callback: function(){ 
                                 $scope.modalHide();
                                 $scope.$apply();
                             }
                         });
+
                         $scope.$parent.item[ $scope.model ] = "inMediaUse"; 
+
+                        angular.element( '.modal-dialog' ).css({
+                            width           :   '95%'
+                        });
+
+                        // timeout before the window appear
+                        setTimeout( () => {
+                            let height      =   
+                            window.innerHeight - 
+                            60 - // is the modal-dialog margin
+                            30 - // is the modal-body padding
+                            angular.element( '.modal-header' ).outerHeight() -
+                            angular.element( '.modal-footer' ).outerHeight();
+                            angular.element( '.modal-body' ).height( 
+                                height
+                            );
+                        }, 200x );
                     }
 
                     /**
