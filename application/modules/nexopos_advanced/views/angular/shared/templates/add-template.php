@@ -34,5 +34,3 @@
         </div>
     </div>
 </div>
-
-<media-modal></media-modal>

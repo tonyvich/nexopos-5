@@ -29,6 +29,5 @@ class Media_ManagerV2_Assets extends Tendoo_Module
         $this->enqueue->js_namespace( 'dashboard_footer' );
         $this->enqueue->js( $bower_url . 'dropzone/dist/min/dropzone.min' );
         $this->enqueue->js( $bower_url . 'ng-dropzone/dist/ng-dropzone.min' );
-        $this->enqueue->js( $js_url . 'media-managerv2-directive' );
     }
 }
