@@ -62,7 +62,7 @@
                             angular.element( '.modal-body' ).height( 
                                 height
                             );
-                        }, 200x );
+                        }, 200 );
                     }
 
                     /**

@@ -292,9 +292,7 @@ angular.element( document ).ready( () => {
                     // Run Template Remplacement
                     promise.then( ({ fields, item, index }) => {
                         // if there is no error, just validate next fields
-                        if( typeof fields[ index ] != 'undefined' ) {
-                            this.walker( fields, item, index, mainResolve );
-                        }
+                        this.walker( fields, item, index, mainResolve );
                     }, ({ error, fields, item, index }) => {
                         error               =   this.__replaceTemplate( error );
                         let response        =   this.__response( error );                    
@@ -311,15 +309,35 @@ angular.element( document ).ready( () => {
                 });
             }
 
-            this.variation_walker       =   function( variations, item, index = 0, mainResolve ) {
+            this.variations_walker       =   function( variations, item, index = 0, mainResolve ) {
                 return new Promise( ( resolve, reject ) => {
-                    this.tab_walker( variations[ index ], item, index ).then( ({ tabs, item, index }) => {
-                        this.tab_walker( tabs, item, index )
+                    if( index == 0 ) {
+                        mainResolve     =   resolve;
+                    }
+
+                    if( typeof variations[ index ] == 'undefined' ) {
+                        return mainResolve();
+                    }
+
+                    let promise         =   new Promise( ( _resolve, _reject ) => {
+                        this.tabs_walker( variations[ index ].tabs, item, index ).then( () => {
+                            // When all variation tab has been walked over
+                            _resolve({
+                                variations,
+                                item,
+                                index   :   index+1,
+                                mainResolve
+                            });
+                        });                        
+                    });
+
+                    promise.then({ variations, item, index, mainResolve } => {
+                        this.variations_walker( variations, item, index, mainResolve );
                     })
                 })
             }
 
-            this.tab_walker             =   function( tabs, item, index = 0, mainResolve ) {
+            this.tabs_walker             =   function( tabs, item, index = 0, mainResolve ) {
                 return new Promise( ( resolve, reject ) => {
                     if( index = 0 ) {
                         mainResolve     =   resolve;
@@ -330,11 +348,8 @@ angular.element( document ).ready( () => {
                     }
 
                     let promise         =   new Promise( ( _resolve, _reject ) => {
-                        console.log( tabs );
                         _resolve({ tabs, item, index : index + 1 });
                     })
-
-
                 })
             }
         }
