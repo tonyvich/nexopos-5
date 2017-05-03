@@ -1,4 +1,11 @@
 <script type="text/javascript">
+    tendooApp.config(function(dropzoneOpsProvider){
+        dropzoneOpsProvider.setOptions({
+            url             : '<?php echo site_url([ 'dashboard', 'media-manager', 'upload' ] );?>',
+            maxFilesize     : '10'
+        });
+    });
+
     tendooApp.directive('mediaModal', function(){
         return {
              
@@ -19,10 +26,25 @@
                     $scope.mediaEntries   = {};
                     var model = $attrs.model;
                     $scope.mediaSize = "full";
+                    $scope.dzCallbacks          =   new Object;
                     
-                    $http.get( '<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>' ).then(function( returned ) {
-                        $scope.mediaEntries = returned.data;
-                    });
+                    $scope.dzCallbacks.sending  =   function( file, XHR, formData ) {
+                        var csrf_code           =   '<?php echo $this->security->get_csrf_hash(); ?>';
+                        formData.append( '<?php echo $this->security->get_csrf_token_name(); ?>' , csrf_code );
+                    }
+
+                    /**
+                     *  Load Assets 
+                     *  @param
+                     *  @return
+                    **/
+
+                    $scope.loadAssets = function(){
+                        alert('call load');
+                        $http.get( '<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>' ).then(function( returned ) {
+                            $scope.mediaEntries = returned.data;
+                        });
+                    }
                     
                     /**
                      *  Show media (trigger the modal for the file selection) 
@@ -31,6 +53,7 @@
                     **/
 
                     $scope.showMedia = function(){
+                        $scope.loadAssets();
                         var tpl     = <?php echo json_encode( $this->load->module_view( 'media-manager', 'media-window', null, true ) );?>;
                         var message = $compile(tpl)($scope);
                         
@@ -110,7 +133,7 @@
                             }
                         });
                     }
-                
+                    
                 /* Controller end */
                 }
             ]    

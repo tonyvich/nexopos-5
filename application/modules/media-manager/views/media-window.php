@@ -1,7 +1,8 @@
+<div class="row">
 <div class="col-xs-2"> <!-- required for floating -->
 <!-- Nav tabs -->
     <ul class="nav nav-tabs tabs-left">
-        <li class="active"><a href="#selectDiv" data-toggle="tab"><?php echo __('Select a file','media-manager');?></a></li>
+        <li class="active"><a href="#selectDiv" ng-click="loadAssets()" data-toggle="tab"><?php echo __('Select a file','media-manager');?></a></li>
         <li><a href="#uploadDiv" data-toggle="tab"><?php echo __('Upload','media-manager');?></a></li>
     </ul>
 </div>
@@ -12,7 +13,7 @@
         <div class="tab-pane active" id="selectDiv">
             <div class="row">
                 <div class="col-md-9">
-                    <div style="margin-top:10px;padding:5px;overflow-y:scroll;"> 
+                    <div style="margin-top:10px;padding:5px;overflow-y:scroll; max-height:400px;"> 
                         <div ng-click="selectEntry( entry )" ng-class="{ 'selected' : entry.selected }" class="media-manager-entry-box" ng-repeat="(index, entry) in mediaEntries"> 
                             <img ng-src="{{ entry.thumb }}"/> 
                         </div> 
@@ -34,7 +35,8 @@
             </div> 
         </div>
         <div class="tab-pane" id="uploadDiv">
-            
+            <ng-dropzone style="height:400px" class="dropzone" callbacks="dzCallbacks"/>
         </div>
     </div>
+</div>
 </div>
