@@ -232,10 +232,9 @@ angular.element( document ).ready( () => {
                 return errors;
             }
 
-            this.walker                 =   function( fields, item, index, mainResolve ) {
+            this.walker                 =   function( fields, item, index = 0, mainResolve ) {
                 return new Promise( ( resolve, reject ) => {
 
-                    index                   =   typeof index == 'undefined' ? 0 : index;
                     let length              =   fields.length;
                     let field               =   fields[ index ];
 
@@ -309,30 +308,39 @@ angular.element( document ).ready( () => {
                 });
             }
 
-            this.variations_walker       =   function( variations, item, index = 0, mainResolve ) {
+            this.variations_walker       =   function( variation_fields, variations, index = 0, mainResolve ) {
+
                 return new Promise( ( resolve, reject ) => {
+
+                    let variation       =   variations[ index ];
+
                     if( index == 0 ) {
                         mainResolve     =   resolve;
                     }
 
-                    if( typeof variations[ index ] == 'undefined' ) {
+                    if( typeof variation == 'undefined' ) {
                         return mainResolve();
                     }
 
+                    console.log( variation );
+
                     let promise         =   new Promise( ( _resolve, _reject ) => {
-                        this.tabs_walker( variations[ index ].tabs, item, index ).then( () => {
+
+                        _resolve({
+                            variation_fields,
+                            variations,
+                            index   :   index+1,
+                            mainResolve
+                        });
+
+                        /** this.tabs_walker( variation_fields, variations, index ).then( () => {
                             // When all variation tab has been walked over
-                            _resolve({
-                                variations,
-                                item,
-                                index   :   index+1,
-                                mainResolve
-                            });
-                        });                        
+                            
+                        });  **/                       
                     });
 
-                    promise.then( ({ variations, item, index, mainResolve }) => {
-                        this.variations_walker( variations, item, index, mainResolve );
+                    promise.then( ({ variation_fields, variations, index, mainResolve }) => {
+                        this.variations_walker( variation_fields, variations, index, mainResolve );
                     })
                 })
             }
@@ -343,17 +351,21 @@ angular.element( document ).ready( () => {
                         mainResolve     =   resolve;
                     }
 
+                    console.log( tabs );
+
                     if( typeof tabs[ index ] == 'undefined' ) {
                         return mainResolve();
                     }
 
                     let promise         =   new Promise( ( _resolve, _reject ) => {
-                        _resolve({ tabs, item, index : index + 1 });
+                        
+                        _resolve({ tabs, item, index : index + 1, mainResolve });
                     })
 
                     promise.then( ({ tabs, item, index, mainResolve }) => {
-                        
-                    })
+                        console.log( tabs );
+                        // this.tabs_walker( tabs, item, index, mainResolve );
+                    });
                 })
             }
         }
