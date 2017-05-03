@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once(APPPATH . '/libraries/REST_Controller.php'); // Include Rest Controller
 
-include_once(APPPATH . '/modules/media-managerv2/inc/traits_loader.php'); // Include media_manager traits
+include_once(APPPATH . '/modules/media-manager/inc/traits_loader.php'); // Include media_manager traits
 
 class media_manager extends REST_Controller
 {
