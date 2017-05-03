@@ -93,6 +93,8 @@
             formData.append( '<?php echo $this->security->get_csrf_token_name(); ?>' , csrf_code );
         }
         $scope.searchInput          =   "";
+        $scope.mainMediaDivHeight   =   12;
+        $scope.showDetails          =   false;
 
         /**
          *  Enable Bulk Select
@@ -226,5 +228,21 @@
                 }
             });
         }
+
+        /**
+         *  Watch Count Selected
+         *  @param
+         *  @return
+        **/
+
+        $scope.$watch('countSelected()', function(){
+            if($scope.countSelected() != 0){
+                $scope.showDetails = true;
+                $scope.mainMediaDivHeight = 9;
+            } else {
+                $scope.showDetails = false;
+                $scope.mainMediaDivHeight = 12;
+            }
+        });
     }]);
 </script>
