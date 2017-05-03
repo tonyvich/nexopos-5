@@ -18,6 +18,9 @@ class Media_Manager_Main extends Tendoo_Module
         $this->events->add_filter( 'dashboard_dependencies', [ $this->filters, 'dependencies' ]);
         $this->events->add_action( 'load_dashboard', [ $this->actions, 'load_dashboard' ]);
         $this->events->add_action( 'do_enable_module', [ $this->actions, 'enable_module' ]);
+        $this->events->add_action( 'dashboard_footer', function() {
+            get_instance()->load->module_view( 'media-manager', 'directive' );
+        });
     }
 }
 
