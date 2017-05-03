@@ -386,33 +386,10 @@ var items               =   function(
 
     $scope.submitItem               =   function(){
 
-        let test =  $scope.validate.walker( itemsFields, $scope.item ).then( function(){
-            let item_variations         =   {};
-            item_variations.tabs        =   [];
-
-            _.each( $scope.item.variations, function( variation, variation_id ) {
-                _.each( variation.tabs, function( tab, variation_tab_id ) {
-                    var ids             =   {
-                        variation_id        :   variation_id,
-                        variation_tab_id    :   variation_tab_id
-                    };
-
-                    // We won't validate hidden tabs
-                    if( typeof tab.hide == 'function' ) {
-                        if( tab.hide( $scope.item ) == true ) {
-                            return false;
-                        }
-                    }
-
-                    item_variations.tabs[ variation_tab_id ]  = {
-                        fields  :   $scope.advancedFields[ tab.namespace ],
-                        ids,
-                        model   :   tab     
-                    };
-                })
-            });
-
-            console.log( item_variations );
+        $scope.validate.walker( itemsFields, $scope.item ).then( function(){
+            $scope.validate.variations_walker( $scope.item.variations ).then( function() {
+                // We can submit the item
+            })
         });
 
         return;
