@@ -387,7 +387,7 @@ var items               =   function(
     $scope.submitItem               =   function(){
 
         $scope.validate.walker( itemsFields, $scope.item ).then( function(){
-            $scope.validate.variations_walker( $scope.item.variations ).then( function() {
+            $scope.validate.variations_walker( $scope.advancedFields, $scope.item.variations ).then( function() {
                 // We can submit the item
             })
         });
