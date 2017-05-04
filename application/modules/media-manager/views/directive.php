@@ -40,7 +40,6 @@
                     **/
 
                     $scope.loadAssets = function(){
-                        alert('call load');
                         $http.get( '<?php echo site_url( [ 'dashboard', 'media-manager', 'get' ] );?>' ).then(function( returned ) {
                             $scope.mediaEntries = returned.data;
                         });
