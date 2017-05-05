@@ -16,7 +16,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
         sharedAlert
     ){
     return function(){
-        this.coupon         =   [
+        /** this.coupon         =   [
             {
                 type    :   'select',
                 model   :   'ref_coupon',
@@ -158,7 +158,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     return date;
                 }
             }
-        ];
+        ]; 
 
         this.shipping       =   [
             {
@@ -218,7 +218,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 model       :   'volume',
                 desc        :   '<?php echo _s( 'Si le produit se mesure en volume, vous pouvez le spécifier ici.', 'nexopos_advanced' );?>'
             }
-        ];
+        ]; 
 
         this.stock          =   [{
             type        :   'group',
@@ -279,7 +279,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     }
                 }
             ]
-        }];
+        }]; **/
 
         this.barcode        =   [
             {
@@ -340,6 +340,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 desc        :   '<?php echo _s( 'La valeur du codebarre peut être spécifiée dans ce champ. Où ce code peut être généré automatiquement.', 'nexopos_advanced' );?>',
                 validation    :   {
                     callback    :   function( item, field, $event ){
+                        alert( 'Im Running' );
                         // Validation run only if the field is not empty
                         if( item[ field.model ] != '' ) {
                             itemsVariationsResource.get({
@@ -387,7 +388,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
             }
         ];
 
-        this.images          =   [
+        /** this.images          =   [
             {
                 type        :   'image_select',
                 label       :   '<?php echo _s( 'image principale', 'nexopos_advanced' );?>',
@@ -420,6 +421,6 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     }
                 ]
             }
-        ];
+        ]; **/
     }
 }]);
