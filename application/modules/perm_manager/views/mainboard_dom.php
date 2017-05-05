@@ -1,41 +1,49 @@
 <div class="row" ng-controller="permManagerController">
-    <div class="col-md-6" style="background-color : white;">
-        <div>
-            <h4>Permissions By role</h4>
-            <button class="btn btn-danger pull-right" type="button" ng-click="bulkDelete()"> Delete selected </button>
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-title">
+                    <?php echo __( 'Permissions', 'perm_manager' );?>
+                </div>
+                <div class="box-tools">
+                    <button class="btn btn-danger pull-right btn-sm" type="button" ng-click="bulkDelete()"> Delete selected </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <uib-tabset active="tab_active">
+                    <uib-tab index="role.name" ng-repeat="role in roles" heading="{{role.name}}">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Permission</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="permission in role.permissions" >
+                                    <td><input type="checkbox" ng-model ="permission.checked" ng-checked ="permission.checked" value="{{ permission.perm_name }}"></td>
+                                    <td><h4>{{ permission.perm_desc }}</h4></td>
+                                    <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  role.name)"> Delete </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
         </div>
-        <uib-tabset active="tab_active">
-            <uib-tab index="role.name" ng-repeat="role in roles" heading="{{role.name}}">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Permission</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="permission in role.permissions" >
-                            <td><input type="checkbox" ng-model ="permission.checked" ng-checked ="permission.checked" value="{{ permission.perm_name }}"></td>
-                            <td><span class="label bg-blue">{{ permission.perm_name }}</span></td>
-                            <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  role.name)"> Delete </button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </uib-tab>
-        </uib-tabset>
     </div>
     <div class="col-md-6">
         <div class="box">
             <div class="box-header with-border">
                 <div class="box-title">
-                    <h3> Add a permission</h3>
+                    <?php echo __( 'Add a permission', 'perm_manager' );?>
                 </div>
             </div>
             <div class="box-body">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon"> Permission </span>
+                        <span class="input-group-addon"> <?php echo __( 'Permission', 'perm_manager' );?> </span>
                         <select
                         class="form-control"
                         ng-model="add['permission']"
@@ -46,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon"> Role </span>
+                        <span class="input-group-addon"> <?php echo __( 'Role', 'perm_manager' );?> </span>
                         <select
                             class="form-control"
                             ng-model="add['group']"
