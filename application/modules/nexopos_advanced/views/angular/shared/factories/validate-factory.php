@@ -232,7 +232,7 @@ angular.element( document ).ready( () => {
                 return errors;
             }
 
-            this.walker                 =   function( fields, item, index = 0, mainResolve ) {
+            this.walker                 =   function( fields, item, index = 0, mainResolve, errors = {} ) {
                 return new Promise( ( resolve, reject ) => {
 
                     let length              =   fields.length;
@@ -246,64 +246,73 @@ angular.element( document ).ready( () => {
                     // probably when the walker reach the end
                     if( typeof field == 'undefined' ) {
                         // when the walker has done
-                        return mainResolve();
+                        errors              =   this.__replaceTemplate( errors );
+                        let response        =   this.__response( errors ); 
+
+                        _.each( fields, ( field ) => {
+                            if( typeof response.errors[ field.model ] != 'undefined' ) {
+                                let fieldClass      =   '.' + field.model + '-helper';
+                                if( ! response.isValid ) {
+                                    
+                                    angular.element( fieldClass ).closest( '.form-group' ).removeClass( 'has-success' );
+                                    angular.element( fieldClass ).text( errors[ field.model ].msg );
+                                    angular.element( fieldClass ).closest( '.form-group' ).addClass( 'has-error' );
+                                }
+                            }                            
+                        });
+
+                        return mainResolve( errors );
                     }
 
                     let promise             =   new Promise( ( _resolve, _reject ) => {
                         let run             =   this.__run( field, item );
+                        errors              =   _.extend( errors, run );
                         if( _.keys( run ).length > 0 ) {
                             // before rejecting, let make sure it's not a callback
                             if( typeof run.callback != 'undefined' ) {
                                 // Test Callback Promise
                                 let callbackPromise     =   run.callback( field, item );
-                                callbackPromise.then(()=>{
+                                callbackPromise.then( ( errors )=>{
                                     _resolve({
-                                        fiedls  :   fields, 
-                                        item    :   item, 
-                                        index   :   index+1
+                                        fields, 
+                                        item, 
+                                        index   :   index+1,
+                                        errors
                                     });
-                                }, ( error ) => {
+                                }, ( errors ) => {
                                     _reject({
-                                        error   :   run,
-                                        fields  :   fields, 
-                                        item    :   item, 
-                                        index   :   index+1
+                                        fields, 
+                                        item, 
+                                        index   :   index+1,
+                                        errors
                                     });
                                 });
                             } else {
                                 // index + 1 to move to the next fields
                                 _reject({
-                                    error   :   run,
-                                    fields  :   fields, 
-                                    item    :   item, 
-                                    index   :   index+1
+                                    fields, 
+                                    item, 
+                                    index   :   index+1,
+                                    errors
                                 }); 
                             }                        
                         } else {
                             _resolve({
                                 fields  :   fields, 
                                 item    :   item, 
-                                index   :   index+1
+                                index   :   index+1,
+                                errors
                             });
                         }
                     });
 
                     // Run Template Remplacement
-                    promise.then( ({ fields, item, index }) => {
+                    promise.then( ({ fields, item, index, errors }) => {
                         // if there is no error, just validate next fields
-                        this.walker( fields, item, index, mainResolve );
-                    }, ({ error, fields, item, index }) => {
-                        error               =   this.__replaceTemplate( error );
-                        let response        =   this.__response( error );                    
-                        let fieldClass      =   '.' + field.model + '-helper';
+                        this.walker( fields, item, index, mainResolve, errors );
+                    }, ({ fields, item, index, errors }) => {
 
-                        if( ! response.isValid ) {
-                            angular.element( fieldClass ).closest( '.form-group' ).removeClass( 'has-success' );
-                            angular.element( fieldClass ).text( error[ field.model ].msg );
-                            angular.element( fieldClass ).closest( '.form-group' ).addClass( 'has-error' );
-                        }
-
-                        this.walker( fields, item, index, mainResolve );
+                        this.walker( fields, item, index, mainResolve, errors );
                     });
                 });
             }
@@ -322,21 +331,18 @@ angular.element( document ).ready( () => {
                         return mainResolve();
                     }
 
-                    console.log( variation );
-
                     let promise         =   new Promise( ( _resolve, _reject ) => {
 
-                        _resolve({
-                            variation_fields,
-                            variations,
-                            index   :   index+1,
-                            mainResolve
-                        });
-
-                        /** this.tabs_walker( variation_fields, variations, index ).then( () => {
+                        this.tabs_walker( variation_fields, variations[ index ].tabs ).then( () => {
                             // When all variation tab has been walked over
-                            
-                        });  **/                       
+                            _resolve({
+                                variation_fields,
+                                variations,
+                                index   :   index+1,
+                                mainResolve
+                            });
+                        }); 
+
                     });
 
                     promise.then( ({ variation_fields, variations, index, mainResolve }) => {
@@ -345,28 +351,36 @@ angular.element( document ).ready( () => {
                 })
             }
 
-            this.tabs_walker             =   function( tabs, item, index = 0, mainResolve ) {
+            this.tabs_walker             =   function( fields, tabs, index = 0, mainResolve ) {
+
                 return new Promise( ( resolve, reject ) => {
-                    if( index = 0 ) {
+                    if( index == 0 ) {
                         mainResolve     =   resolve;
                     }
-
-                    console.log( tabs );
 
                     if( typeof tabs[ index ] == 'undefined' ) {
                         return mainResolve();
                     }
 
-                    let promise         =   new Promise( ( _resolve, _reject ) => {
-                        
-                        _resolve({ tabs, item, index : index + 1, mainResolve });
+                    let promise         =   new Promise( ( _resolve, _reject ) => { 
+                        _.each( fields[ tabs[ index ].namespace ], ( field ) => {
+                            if( typeof tabs[ index ].models[ field.model ] == 'undefined' ) {
+                                tabs[ index ].models[ field.model ]     =   '';    
+                            }
+                        });
+
+                        console.log( fields, tabs[ index ].namespace );
+
+                        this.walker( fields[ tabs[ index ].namespace ], tabs[ index ].models ).then( function( errors ){
+                            _resolve({ fields, tabs, index : index + 1, mainResolve });
+                        });                
                     })
 
                     promise.then( ({ tabs, item, index, mainResolve }) => {
-                        console.log( tabs );
-                        // this.tabs_walker( tabs, item, index, mainResolve );
+                        this.tabs_walker( fields, tabs, index, mainResolve );
                     });
                 })
+
             }
         }
     });
