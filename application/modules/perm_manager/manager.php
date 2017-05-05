@@ -13,6 +13,7 @@ class PermManagerModule extends Tendoo_Module
         $this->events->add_action( 'dashboard_footer', [ $this, 'perm_footer' ] );
         $this->events->add_filter( 'admin_menus', [ $this, 'menus' ], 20);
         $this->events->add_filter( 'admin_menus', [ $this, 'menus' ], 20);
+        $this->register();
     }
 
     /**
@@ -21,6 +22,8 @@ class PermManagerModule extends Tendoo_Module
 
     public function dashboard_loader()
     {
+        $this->events->add_filter( 'dashboard_dependencies', [ $this, 'dependencies' ] );
+        
         include_once( dirname( __FILE__ ) . '/inc/controller.php' );
         $this->Gui->register_page_object( 'perm_manager', new PermManagerController );
     }
@@ -35,18 +38,9 @@ class PermManagerModule extends Tendoo_Module
             if( @$menus[ 'settings' ] != null ) {
                 $menus  =   array_insert_before( 'modules', $menus, 'perm_manager', [
                     [
-                        'title'    =>  'Permission Manager',
-                        'icon'     =>  'fa fa-file',
-                        'disable'  =>  'true'
-                    ],
-                    [
                         'title'  => 'Manage permission',
                         'href'   =>  site_url( array( 'dashboard', 'perm_manager', 'mainboard' ) ),
-                    ],
-                    [
-                        'title'  => 'Add permission',
-                        'href'   =>  site_url( array( 'dashboard', 'perm_manager', 'add' ) ),
-                    ],
+                    ]
                 ]);
             }            
         }
@@ -56,6 +50,25 @@ class PermManagerModule extends Tendoo_Module
     public function perm_footer()
     {
         $this->load->module_view( 'perm_manager', 'mainboard_footer' );
+    }
+
+    public function register()
+    {
+        $bower_url      =   '../modules/perm_manager/bower_components/';
+        $js_url         =   '../modules/perm_manager/js/';
+        $css_url        =   '../modules/perm_manager/css/';
+        $root_url       =   '../bower_components/';
+
+        $this->enqueue->css_namespace( 'dashboard_header' ); 
+        $this->enqueue->css( $bower_url . 'bootstrap-vertical-tabs/bootstrap.vertical-tabs' );
+
+        $this->enqueue->js_namespace( 'dashboard_footer' );
+        $this->enqueue->js( $js_url . 'ui-bootstrap-tpls-2.5.0.min' );
+    }
+
+    public function dependencies( $deps ){
+        $deps[] = 'ui.bootstrap';
+        return $deps;
     }
 
 }
