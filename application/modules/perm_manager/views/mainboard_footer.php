@@ -89,13 +89,11 @@
         );
     });
 
-
-    tendooApp.controller( 'permManagerController', [ '$scope', '$http', 'sharedAlert', 'permissionsResource', function ( $scope, $http, sharedAlert, permissionsResource ){
+    tendooApp.controller( 'permManagerController', [ '$scope', '$http', '$element', 'sharedAlert', 'permissionsResource', function ( $scope, $http, $element, sharedAlert, permissionsResource ){
         
         $scope.roles = {};
         $scope.permissions = {};
         $scope.add = {};
-
         /**
          * Load Data
          **/
@@ -104,6 +102,8 @@
              $http.get( '<?php echo site_url( [ 'dashboard', 'perm_manager', 'get' ] );?>' ).then( function( returned ){
                 $scope.roles = returned.data.roles;
                 $scope.permissions = returned.data.permissions;
+                var name = $scope.roles[0].name;
+                $scope.tab_active = name;
              });
          }
 

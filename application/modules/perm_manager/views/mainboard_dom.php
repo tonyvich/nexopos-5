@@ -1,14 +1,11 @@
 <div class="row" ng-controller="permManagerController">
-    <div class="col-md-6">
-        <div class="box box-info" ng-repeat="role in roles">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{ role.name }} permissions</h3>
-                <button class="btn btn-danger" type="button" ng-click="bulkDelete()"> Delete selected </button>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool"  data-widget="collapse"><i class="fa fa-plus"></i></button>
-                </div>
-            </div>
-            <div class="box-body">
+    <div class="col-md-6" style="background-color : white;">
+        <div>
+            <h4>Permissions By role</h4>
+            <button class="btn btn-danger pull-right" type="button" ng-click="bulkDelete()"> Delete selected </button>
+        </div>
+        <uib-tabset active="tab_active">
+            <uib-tab index="role.name" ng-repeat="role in roles" heading="{{role.name}}">
                 <table class="table">
                     <thead>
                         <tr>
@@ -25,8 +22,8 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
+            </uib-tab>
+        </uib-tabset>
     </div>
     <div class="col-md-6">
         <div class="box">
@@ -40,28 +37,28 @@
                     <div class="input-group">
                         <span class="input-group-addon"> Permission </span>
                         <select
-                            class="form-control"
-                            ng-model="add['permission']"
+                        class="form-control"
+                        ng-model="add['permission']"
                         >
                             <option ng-repeat="option in permissions" value="{{ option.id }}">{{ option.name }}</option>
                         </select>
                     </div>
-                <div>
+                </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"> Role </span>
                         <select
                             class="form-control"
                             ng-model="add['group']"
-                        >
+                            >
                             <option ng-repeat="option in roles" value="{{ option.id }}">{{ option.name }}</option>
                         </select>
                     </div>
-                <div>
-                <br>
-                <button class="btn btn-info" type="button" ng-click="addPermission()"> Add </button>
+                </div>
+                <p>
+                    <button class="btn btn-info" type="button" ng-click="addPermission()"> Add </button>
+                </p>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
-

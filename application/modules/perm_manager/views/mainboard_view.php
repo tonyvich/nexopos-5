@@ -5,8 +5,8 @@
 
     $this->Gui->add_meta(array(
         'namespace'        =>    'perm_manager',
-        'type'             =>    'unwrapped',
-        'col_id'           =>    1
+        'col_id'           =>    1,
+        'type'             =>    'unwrapped'
     ));
 
     $this->Gui->add_item(array(
