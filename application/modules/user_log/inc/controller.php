@@ -9,8 +9,8 @@ class UserLogController extends Tendoo_Module
     }
 
     public function log_session(){
-        $ip        = $this->input->get("ip_address");
-        $user_id   = $this->input->get("user_id");
+        $ip        = $this->input->ip_address();
+        $user_id   = User::id();
 
         // Closing sessions 
         $this->db->select("
@@ -25,9 +25,6 @@ class UserLogController extends Tendoo_Module
 
         $this->db->where("TIMESTAMPDIFF(MINUTE, date_connexion, date_deconnexion) > 5");
         $query = $this->db->get("user_log_sessions");
-        
-        echo $query->num_rows();
-
         if( $query->num_rows() > 0 ){
             foreach( $query->result() as $row ){
                 $this->db->where("id",$row->id);

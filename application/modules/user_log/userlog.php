@@ -10,8 +10,10 @@ class UserLogModule extends Tendoo_Module
     {
         parent::__construct();
         $this->events->add_action( 'load_dashboard', [ $this, 'dashboard_loader' ] );
-        $this->events->add_action( 'dashboard_footer', [ $this, 'perm_footer' ] );
         $this->events->add_action( 'do_enable_module', [ $this, 'enable_module' ]);
+        $this->events->add_action( 'dashboard_footer', function() {
+            get_instance()->load->module_view( 'user_log', 'directive' );
+        });
     }
 
     /**
