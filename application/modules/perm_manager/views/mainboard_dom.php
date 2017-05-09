@@ -6,7 +6,7 @@
                     <?php echo __( 'Permissions', 'perm_manager' );?>
                 </div>
                 <div class="box-tools">
-                    <button class="btn btn-danger pull-right btn-sm" type="button" ng-click="bulkDelete()"> Delete selected </button>
+                    <button class="btn btn-danger pull-right btn-sm" type="button" ng-click="bulkDelete()"> <?php echo __('Supprimer sélectionnés','perm_manager'); ?> </button>
                 </div>
             </div>
             <div class="box-body">
@@ -16,15 +16,15 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Permission</th>
-                                    <th>Action</th>
+                                    <th><?php echo __('Permission','perm_manager'); ?></th>
+                                    <th><?php echo __('Action','perm_manager'); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="permission in role.permissions" >
                                     <td><input type="checkbox" ng-model ="permission.checked" ng-checked ="permission.checked" value="{{ permission.perm_name }}"></td>
                                     <td><h4>{{ permission.perm_desc }}</h4></td>
-                                    <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  role.name)"> Delete </button></td>
+                                    <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  role.name)"> <?php echo __('Supprimer','perm_manager'); ?> </button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <p>
-                    <button class="btn btn-info" type="button" ng-click="addPermission()"> Add </button>
+                    <button class="btn btn-info" type="button" ng-click="addPermission()"><?php echo __('Ajouter','perm_manager'); ?></button>
                 </p>
             </div>
         </div>

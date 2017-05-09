@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application>
+	<name>User log module</name>
+	<namespace>user_log</namespace>
+	<main>userlog.php</main>
+	<version>1.0</version>
+	<author>Tiny Skillz</author>
+	<description>Module for logging of the users actions</description>
+</application>
