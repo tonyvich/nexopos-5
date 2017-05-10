@@ -31,7 +31,8 @@
 
                     $scope.timerIncrement = function (){
                         $scope.idleTime = $scope.idleTime + 1;
-                        if ($scope.idleTime > 10) { // 10 minutes
+                        if ($scope.idleTime > 1) { // faisons un test sur 1 minute
+                            // pourquoi ne pas utiliser le sign-out déjà existant [ 'sign-out' ] ?
                             window.location.assign("<?php echo site_url( [ 'dashboard', 'user_log', 'outer' ] ); ?>");
                             return;
                         }
