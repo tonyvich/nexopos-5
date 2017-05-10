@@ -30,7 +30,7 @@
                     });
 
                     $scope.timerIncrement = function (){
-                        $scope.idleTime = $scope.idleTime + 1;
+                        $scope.idleTime++;
                         if ($scope.idleTime > 1) { // faisons un test sur 1 minute
                             window.location.assign("<?php echo site_url( [ 'dashboard', 'user_log', 'outer' ] ); ?>");
                             return;
