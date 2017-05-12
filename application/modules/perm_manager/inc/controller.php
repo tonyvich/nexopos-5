@@ -21,6 +21,11 @@ class PermManagerController extends Tendoo_Module
         }
 
         $groups = $this->users->auth->list_groups();
+        
+        $this->events->add_action( 'dashboard_footer', 
+        function() {
+            get_instance()->load->module_view( 'perm_manager', 'mainboard_footer' );
+        });
         $this->Gui->set_title ( 'Permission Manager' );
         $this->load->module_view('perm_manager', 'mainboard_view', array( 
                 'groups'          => $groups
