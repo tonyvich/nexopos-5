@@ -20,8 +20,8 @@
             'name'             =>    'user_log_enable_disconnect',
             'label'            =>    __('Déconnecter les utilisateurs inactifs','user_log'),
             'options'          =>    array(
-                'true'   => __('Oui','user_log'),
-                'false'  => __('Non','user_log')    
+                'enabled'   => __('Oui','user_log'),
+                'disabled'  => __('Non','user_log')    
             )
         ), 
         'settings', 
