@@ -8,6 +8,9 @@ tendooApp.factory( 'unitTable', ['sharedOptions', function( sharedOptions ){
                 text    :   '<?php echo _s( 'Code', 'nexopos_advanced' );?>',
                 namespace   :   'code'
             },{
+                text    :   '<?php echo _s( 'Quantité retranchée', 'nexopos_advanced' );?>',
+                namespace   :   'quantite_retranchee'
+            },{
                 text    :   '<?php echo _s( 'Date de creation', 'nexopos_advanced' );?>',
                 namespace   :   'date_creation',
                 is          :   'date_span'
