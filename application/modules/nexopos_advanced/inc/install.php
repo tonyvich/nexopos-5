@@ -198,6 +198,7 @@ class NexoPOS_Install extends Tendoo_Module
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `name` varchar(200) NOT NULL,
         `code` varchar(200) NOT NULL,
+        `quantite_retranchee` INT(11) NOT NULL,
         `description` varchar(200) NOT NULL,
         `author` int(11) NOT NULL,
         `date_creation` datetime NOT NULL,

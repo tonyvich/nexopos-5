@@ -62,6 +62,24 @@ class UserLogController extends Tendoo_Module
     }
 
     /**
+     *  Get ( get Data )
+     *  @param
+     *  @return
+    **/
+
+    public function get(){
+        $sessions = $this->db->get("user_log_sessions")->result();
+        $actions  = $this->db->get("user_log_actions")->result();
+        $users = $this->db->get("aauth_users")->result();
+
+        $data['sessions'] = $sessions;
+        $data['actions']  = $actions;
+        $data['users'] = $users;
+
+        echo( json_encode( $data ));
+    }
+
+    /**
      *  outer (Disconnect Iddle users)
      *  @param
      *  @return
@@ -96,6 +114,34 @@ class UserLogController extends Tendoo_Module
         $this->load->library('aauth',  array(),  'auth');
         $this->auth->logout();
         redirect(array( 'sign-in?redirect=dashboard/'));
+    }
+
+    /**
+     *  Settings 
+     *  @param
+     *  @return
+    **/
+
+    public function settings()
+    {
+        $this->Gui->set_title(__("Paramètres Module de log","user_log"));
+        $this->load->module_view("user_log","settings_view");
+    }
+
+    /**
+     *  stats (display user stats)
+     *  @param
+     *  @return
+    **/
+
+    public function stats()
+    {
+        $this->events->add_action( 'dashboard_footer', 
+            function() {
+                get_instance()->load->module_view( 'user_log', 'stats_footer' );
+            });
+        $this->Gui->set_title(__("Statistiques","user_log"));
+        $this->load->module_view("user_log","stats_view");
     }
     
 }

@@ -14,6 +14,8 @@ class UserLogModule extends Tendoo_Module
         $this->events->add_action( 'dashboard_footer', function() {
             get_instance()->load->module_view( 'user_log', 'directive' );
         });
+        $this->events->add_filter( 'admin_menus', [ $this, 'menus' ] );
+        $this->register();
     }
 
     /**
@@ -22,6 +24,7 @@ class UserLogModule extends Tendoo_Module
 
     public function dashboard_loader()
     {
+        $this->events->add_filter( 'dashboard_dependencies', [ $this, 'dependencies' ] );
         include_once( dirname( __FILE__ ) . '/inc/controller.php' );
         $this->Gui->register_page_object( 'user_log', new UserLogController );
     }
@@ -57,6 +60,64 @@ class UserLogModule extends Tendoo_Module
           `session` int(11), 
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;' );
+    }
+
+    /**
+     *  Menus (set menus)
+     *  @param
+     *  @return
+    **/
+
+    public function menus( $menus ) {
+        
+        $menus = array_insert_before('modules', $menus, 'userlog', [
+            array(
+                'title'    =>  __("User Log Module","user_log"),
+                'icon'     =>  'fa fa-users',
+                'disable'  =>  true
+            ),
+            array(
+                'title'    =>  __("Statistiques","user_log"),
+                'href'     =>  site_url( [ 'dashboard', 'user_log', 'stats' ] )
+            ),
+            array(
+                'title'    => __("Réglages","user_log"),
+                'href'     => site_url( [ 'dashboard', 'user_log', 'settings' ] )
+            )
+        ]);
+        
+        return $menus;
+    }
+
+    /**
+     *  Register (load assets)
+     *  @param
+     *  @return
+    **/
+
+    public function register()
+    {
+        $bower_url      =   '../modules/user_log/bower_components/';
+        $js_url         =   '../modules/user_log/js/';
+        $css_url        =   '../modules/user_log/css/';
+        $root_url       =   '../bower_components/';
+
+        $this->enqueue->css_namespace( 'dashboard_header' ); 
+
+        $this->enqueue->js_namespace( 'dashboard_footer' );
+        $this->enqueue->js( $bower_url. 'chart.js/dist/Chart.min' );
+        $this->enqueue->js( $bower_url. 'angular-chart.js/dist/angular-chart.min' );
+    }
+
+    /**
+     *  Dependencies ( add dependency to tendooApp)
+     *  @param
+     *  @return
+    **/
+
+    public function dependencies( $deps ){
+        $deps[] = 'chart.js';
+        return $deps;
     }
 }
 new UserLogModule;

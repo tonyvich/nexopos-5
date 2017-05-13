@@ -13,9 +13,17 @@ tendooApp.factory( 'unitsFields', [ 'sharedOptions', function( sharedOptions ){
         model   :   'code',
         desc        :   '<?php echo _s( 'veuillez spécifier le code de l\'unité.', 'nexopos_advanced' );?>'
     },{
+        type        :   'text',
+        label       :   '<?php echo _s( 'Quantité retranchée', "nexopos_advanced" );?>',
+        model       :   'quantite_retranchee',
+        desc        :   '<?php echo _s( 'Le nombre de quantité retranchée du stock', 'nexopos_advanced' );?>',
+        validation  :   {
+            number  :   true
+        } 
+    },{
         type    :   'textarea',
         label   :   '<?php echo _s( 'Description', "nexopos_advanced" );?>',
         model   :   'description',
-        desc        :   '<?php echo _s( 'Fournir une description à la taxe.', 'nexopos_advanced' );?>'
+        desc        :   '<?php echo _s( 'Fournir une description à l\'unité.', 'nexopos_advanced' );?>'
     }]
 }]);

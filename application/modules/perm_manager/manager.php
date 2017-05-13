@@ -10,7 +10,6 @@ class PermManagerModule extends Tendoo_Module
     {
         parent::__construct();
         $this->events->add_action( 'load_dashboard', [ $this, 'dashboard_loader' ] );
-        $this->events->add_action( 'dashboard_footer', [ $this, 'perm_footer' ] );
         $this->events->add_filter( 'admin_menus', [ $this, 'menus' ], 20);
         $this->events->add_filter( 'admin_menus', [ $this, 'menus' ], 20);
         $this->register();
@@ -45,11 +44,6 @@ class PermManagerModule extends Tendoo_Module
             }            
         }
         return $menus;
-    }
-
-    public function perm_footer()
-    {
-        $this->load->module_view( 'perm_manager', 'mainboard_footer' );
     }
 
     public function register()
