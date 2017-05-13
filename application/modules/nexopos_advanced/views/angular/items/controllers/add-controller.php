@@ -48,6 +48,7 @@ var items               =   function(
     $scope.validate         =   new sharedValidate();
     $scope.taxes            =   new Array;
     $scope.advancedFields   =   new itemsAdvancedFields();
+    $scope.fields           =   itemsFields;
 
     // Add hooks
     $scope.hooks.addFilter( 'addGroup', ( group ) => {
@@ -386,19 +387,16 @@ var items               =   function(
 
     $scope.submitItem               =   function(){
 
-        $scope.validate.variations_walker( $scope.advancedFields, $scope.item.variations ).then( function() {
-            // We can submit the item
-        });
-
-        return;
-
-        $scope.validate.walker( itemsFields, $scope.item ).then( ( errors ) => {
-            // console.log( errors );
-
-            
-            $scope.validate.variations_walker( $scope.advancedFields, $scope.item.variations ).then( function() {
-                // We can submit the item
-            })
+        $scope.validate.walker({
+            fields : $scope.fields,
+            models : $scope.item
+        }).then( ( errors ) => {
+            $scope.validate.variations_walker({
+                fields      :   $scope.advancedFields,
+                item        :   $scope.item
+            }).then( function() {
+                // console.log( $scope.item.variations );
+            });
         });
 
         return;

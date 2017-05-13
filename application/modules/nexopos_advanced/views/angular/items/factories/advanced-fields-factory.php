@@ -16,15 +16,138 @@ tendooApp.factory( 'itemsAdvancedFields', [
         sharedAlert
     ){
     return function(){
-        /** this.coupon         =   [
+
+        this.stock          =   [{
+            type        :   'group',
+            label       :   '<?php echo _s( 'Stock', 'nexopos_advanced' );?>',
+            show        :   function(){
+                return true;
+            },
+            class       :   'col-lg-12 col-sm-12 col-xs-12',
+            model       :   'stock',
+            subFields      :   [
+                {
+                    type        :   'select',
+                    model       :   'ref_delivery',
+                    label       :   '<?php echo _s( 'Livraison', 'nexopos_advanced' );?>',
+                    show        :   function(){
+                        return true;
+                    },
+                    desc        :   '<?php echo _s( 'Les livraisons permettent de regrouper les approvisionnement.', 'nexopos_advanced' );?>',
+                    validation  :   {
+                        required    :   true
+                    },
+                    buttons     :   [{
+                        class   :   'default',
+                        click   :   function( item ) {
+                            return $location.url( 'deliveries/add?fallback=items/add/' + item.namespace );
+                        },
+                        icon    :   'fa fa-plus'
+                    }]
+                },{
+                    type        :   'select',
+                    model       :   'ref_provider',
+                    label       :   '<?php echo _s( 'Fournisseur', 'nexopos_advanced' );?>',
+                    show        :   function(){
+                        return true;
+                    },
+                    desc        :   '<?php echo _s( 'Si cette variation dispose d\'un stock provenant de plusieurs founisseurs, vous pouvez affecter chaque quantité à un fournisseur.', 'nexopos_advanced' );?>',
+                    validation  :   {
+                        required    :   true
+                    },
+                    buttons     :   [{
+                        class   :   'default',
+                        click   :   function( item ) {
+                            return $location.url( 'providers/add?fallback=items/add/' + item.namespace );
+                        },
+                        icon    :   'fa fa-plus'
+                    }]
+                },{
+                    type        :   'text',
+                    label       :   '<?php echo _s( 'Quantité', 'nexopos_advanced' );?>',
+                    model       :   'quantity',
+                    show        :   function(){
+                        return true;
+                    },
+                    desc        :   '<?php echo _s( 'Définissez une valeur numérique.', 'nexopos_advanced' );?>',
+                    validation  :   {
+                        required    :   true,
+                        numeric     :   true
+                    }
+                }
+            ]
+        }];
+
+        return;
+
+        this.barcode        =   [
             {
-                type    :   'select',
-                model   :   'ref_coupon',
-                label   :   '<?php echo _s( 'Assigner à un coupon', 'nexopos_advanced' );?>',
-                desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexopos_advanced' );?>',
-                options   : sharedOptions.yesOrNo,
-                show    :   function( variation, item ) {
-                    return item.namespace == 'coupon' ? true : false;
+                type        :   'text',
+                label       :   '<?php echo _s( 'Unité de Gestion de Stock', 'nexopos_advanced' );?>',
+                model       :   'sku',
+                show        :   function(){
+                    return true;
+                },
+                desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexopos_advanced' );?>',
+                validation  :   {
+                    required    :   true
+                }
+            },{
+                type        :   'select',
+                label       :   '<?php echo _s( 'Type du Codebarre', 'nexopos_advanced' );?>',
+                model       :   'barcode_type',
+                show        :   function(){
+                    return true;
+                },
+                options         :   <?php echo json_encode( $this->events->apply_filters( 'nexopos_barcodes', $this->config->item( 'nexopos_barcodes' ) ) );?>,
+                desc        :   '<?php echo _s( 'Vous pouvez utiliser le type du code barre déjà dans le produit.', 'nexopos_advanced' );?>',
+                validation  :   {
+                    required    :   true
+                }
+            },{
+                type        :   'text',
+                label       :   '<?php echo _s( 'Code Barre', 'nexopos_advanced' );?>',
+                model       :   'barcode',
+                show        :   function(){
+                    return true;
+                },
+                desc        :   '<?php echo _s( 'La valeur du codebarre peut être spécifiée dans ce champ. Où ce code peut être généré automatiquement.', 'nexopos_advanced' );?>',
+                validation    :   {
+                    callback    :   ( field, item, errors ) => {
+                        let promise     =   new Promise( ( resolve, reject ) => {
+                            resolve( errors );
+                        });
+                        return promise;
+                    }
+                },
+                buttons         :   [{
+                    click         :   ( item, variation ) => {
+                        variation.tabs.forEach( ( tab ) => {
+                            if( tab.namespace == 'barcode' ) {
+                                if( typeof  tab.models.generate_barcode == undefined ) {
+                                    tab.models.generate_barcode   =   'no';
+                                } else {
+                                    if( tab.models.generate_barcode == 'yes' ) {
+                                        tab.models.generate_barcode  =   'no';
+                                    } else {
+                                        tab.models.generate_barcode  =   'yes';
+                                    }
+                                }                          
+                            }
+                        });
+                    },
+                    class       :   'default',
+                    label       :   '<?php echo _s( 'Manuel', 'nexopos_advanced' );?>'
+                }],
+                disabled        :   ( field, tab ) => {
+                    if( typeof tab.models != 'undefined' ) {
+                        if( tab.models.generate_barcode == 'yes' ) {
+                            field.buttons[0].label      =   '<?php echo _s( 'Automatique', 'nexopos_advanced' );?>';
+                            return true;
+                        }
+                    }
+                    field.buttons[0].label      =   '<?php echo _s( 'Manuel', 'nexopos_advanced' );?>';
+                    return false;                    
                 }
             }
         ];
@@ -160,6 +283,21 @@ tendooApp.factory( 'itemsAdvancedFields', [
             }
         ]; 
 
+        this.coupon         =   [
+            {
+                type    :   'select',
+                model   :   'ref_coupon',
+                label   :   '<?php echo _s( 'Assigner à un coupon', 'nexopos_advanced' );?>',
+                desc    :   '<?php echo _s( 'Si vous souhaitez vendre des coupons/bon de commande/cartes cadeau, vous pouvez assigner ce produit à un coupon', 'nexopos_advanced' );?>',
+                options   : sharedOptions.yesOrNo,
+                show    :   function( variation, item ) {
+                    return item.namespace == 'coupon' ? true : false;
+                }
+            }
+        ];
+
+         
+
         this.shipping       =   [
             {
                 type        :   'text',
@@ -220,175 +358,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
             }
         ]; 
 
-        this.stock          =   [{
-            type        :   'group',
-            label       :   '<?php echo _s( 'Stock', 'nexopos_advanced' );?>',
-            show        :   function(){
-                return true;
-            },
-            class       :   'col-lg-12 col-sm-12 col-xs-12',
-            model       :   'stock',
-            subFields      :   [
-                {
-                    type        :   'select',
-                    model       :   'ref_delivery',
-                    label       :   '<?php echo _s( 'Livraison', 'nexopos_advanced' );?>',
-                    show        :   function(){
-                        return true;
-                    },
-                    desc        :   '<?php echo _s( 'Les livraisons permettent de regrouper les approvisionnement.', 'nexopos_advanced' );?>',
-                    validation  :   {
-                        required    :   true
-                    },
-                    buttons     :   [{
-                        class   :   'default',
-                        click   :   function( item ) {
-                            return $location.url( 'deliveries/add?fallback=items/add/' + item.namespace );
-                        },
-                        icon    :   'fa fa-plus'
-                    }]
-                },{
-                    type        :   'select',
-                    model       :   'ref_provider',
-                    label       :   '<?php echo _s( 'Fournisseur', 'nexopos_advanced' );?>',
-                    show        :   function(){
-                        return true;
-                    },
-                    desc        :   '<?php echo _s( 'Si cette variation dispose d\'un stock provenant de plusieurs founisseurs, vous pouvez affecter chaque quantité à un fournisseur.', 'nexopos_advanced' );?>',
-                    validation  :   {
-                        required    :   true
-                    },
-                    buttons     :   [{
-                        class   :   'default',
-                        click   :   function( item ) {
-                            return $location.url( 'providers/add?fallback=items/add/' + item.namespace );
-                        },
-                        icon    :   'fa fa-plus'
-                    }]
-                },{
-                    type        :   'text',
-                    label       :   '<?php echo _s( 'Quantité', 'nexopos_advanced' );?>',
-                    model       :   'quantity',
-                    show        :   function(){
-                        return true;
-                    },
-                    desc        :   '<?php echo _s( 'Définissez une valeur numérique.', 'nexopos_advanced' );?>',
-                    validation  :   {
-                        required    :   true,
-                        numeric     :   true
-                    }
-                }
-            ]
-        }]; **/
-
-        this.barcode        =   [
-            {
-                type        :   'text',
-                label       :   '<?php echo _s( 'Unité de Gestion de Stock', 'nexopos_advanced' );?>',
-                model       :   'sku',
-                show        :   function(){
-                    return true;
-                },
-                desc        :   '<?php echo _s( 'L\'unité de gestion de stock permet de distinguer les variations (ou les produits)', 'nexopos_advanced' );?>',
-                validation  :   {
-                    required    :   true,
-                    callback    :   function( field, item, $event ){
-                        // runs only if the fields is not empty
-                        if( item[ field.model ] != '' ) {
-
-                            // it will be a promise
-                            let promise         =   new Promise( function( resolved, rejected ) {
-                                itemsVariationsResource.get({
-                                    id      :   item[ field.model ],
-                                    as      :   'sku'
-                                }, function( returned ) {
-                                    // greater than 2 since the object already has system keys : $promise and $resolved
-                                    if( _.keys( returned ).length > 2 ) {
-                                        let error           =     {};
-                                        error.msg           =   '<?php echo _s( 'L\'Unité de gestion de stock : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, sinon il sera impossible de sauvegarder le produit.', 'nexopos_advanced' );?>'.format( item[ field.model ] );
-                                        error.label         =   field.label;
-                                        rejected( error );
-                                    } else {
-                                        resolve();
-                                    }
-                                });
-                            });
-
-                            return promise;
-                        }
-                    }
-                }
-            },{
-                type        :   'select',
-                label       :   '<?php echo _s( 'Type du Codebarre', 'nexopos_advanced' );?>',
-                model       :   'barcode_type',
-                show        :   function(){
-                    return true;
-                },
-                options         :   <?php echo json_encode( $this->events->apply_filters( 'nexopos_barcodes', $this->config->item( 'nexopos_barcodes' ) ) );?>,
-                desc        :   '<?php echo _s( 'Vous pouvez utiliser le type du code barre déjà dans le produit.', 'nexopos_advanced' );?>',
-                validation  :   {
-                    required    :   true
-                }
-            },{
-                type        :   'text',
-                label       :   '<?php echo _s( 'Code Barre', 'nexopos_advanced' );?>',
-                model       :   'barcode',
-                show        :   function(){
-                    return true;
-                },
-                desc        :   '<?php echo _s( 'La valeur du codebarre peut être spécifiée dans ce champ. Où ce code peut être généré automatiquement.', 'nexopos_advanced' );?>',
-                validation    :   {
-                    callback    :   function( item, field, $event ){
-                        alert( 'Im Running' );
-                        // Validation run only if the field is not empty
-                        if( item[ field.model ] != '' ) {
-                            itemsVariationsResource.get({
-                                id      :   item[ field.model ],
-                                as      :   'barcode'
-                            }, function( returned ) {
-                                // greater than 2 since the object already has system keys : $promise and $resolved
-                                if( _.keys( returned ).length > 2 ) {
-                                    var message     =   '<?php echo _s( 'Le code barre : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, sinon il sera impossible de sauvegarder le produit.', 'nexopos_advanced' );?>';
-                                    sharedAlert.warning( message.format( item[ field.model ] ) );
-                                }
-                            });
-                        }
-                    }
-                },
-                buttons         :   [{
-                    click         :   ( item, variation ) => {
-                        variation.tabs.forEach( ( tab ) => {
-                            if( tab.namespace == 'barcode' ) {
-                                if( typeof  tab.models.generate_barcode == undefined ) {
-                                    tab.models.generate_barcode   =   'no';
-                                } else {
-                                    if( tab.models.generate_barcode == 'yes' ) {
-                                        tab.models.generate_barcode  =   'no';
-                                    } else {
-                                        tab.models.generate_barcode  =   'yes';
-                                    }
-                                }                          
-                            }
-                        });
-                    },
-                    class       :   'default',
-                    label       :   '<?php echo _s( 'Manuel', 'nexopos_advanced' );?>'
-                }],
-                disabled        :   ( field, tab ) => {
-                    if( typeof tab.models != 'undefined' ) {
-                        if( tab.models.generate_barcode == 'yes' ) {
-                            field.buttons[0].label      =   '<?php echo _s( 'Automatique', 'nexopos_advanced' );?>';
-                            return true;
-                        }
-                    }
-                    field.buttons[0].label      =   '<?php echo _s( 'Manuel', 'nexopos_advanced' );?>';
-                    return false;                    
-                }
-            }
-        ];
-
-        /** this.images          =   [
+        this.images          =   [
             {
                 type        :   'image_select',
                 label       :   '<?php echo _s( 'image principale', 'nexopos_advanced' );?>',
@@ -421,6 +391,6 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     }
                 ]
             }
-        ]; **/
+        ];
     }
 }]);

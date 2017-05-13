@@ -103,7 +103,7 @@ tendooApp.factory( 'sharedFormManager', [
         }
 
         /**
-         * Duplicated a given variatino
+         * Duplicated a given variation
          * @param object variation
          * @param int variation index
          * @return void

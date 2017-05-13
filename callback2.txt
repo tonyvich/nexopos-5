@@ -1,0 +1,17 @@
+/**
+                        function( item, field, $event ){
+                            alert( 'Im Running' );
+                            // Validation run only if the field is not empty
+                            if( item[ field.model ] != '' ) {
+                                itemsVariationsResource.get({
+                                    id      :   item[ field.model ],
+                                    as      :   'barcode'
+                                }, function( returned ) {
+                                    // greater than 2 since the object already has system keys : $promise and $resolved
+                                    if( _.keys( returned ).length > 2 ) {
+                                        var message     =   '<?php echo _s( 'Le code barre : {0}, est déjà en cours d\'utilisation. Veuillez remplacer cette valeur, sinon il sera impossible de sauvegarder le produit.', 'nexopos_advanced' );?>';
+                                        sharedAlert.warning( message.format( item[ field.model ] ) );
+                                    }
+                                });
+                            }
+                        }**/
