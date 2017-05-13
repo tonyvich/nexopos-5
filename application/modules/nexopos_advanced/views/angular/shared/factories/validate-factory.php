@@ -29,7 +29,6 @@ angular.element( document ).ready( () => {
                 var errors      =   {};
 
                 if( angular.isDefined( field.validation ) ) {
-
                     _.each( field.validation, function( value, rule ) {
 
                         // If a field has a specific formating, let's apply this before validating
@@ -127,13 +126,17 @@ angular.element( document ).ready( () => {
                         * Define a callback on a field, which can make an http request.
                         **/
 
-                        if( rule == "callback" ) {
+                        if( rule == "callback" ) { 
+                            errors[ field.model ]           =   {};
                             errors[ field.model ].callback  =   value;
+                            errors[ field.model ].label     =   field.label;   
+                            errors[ field.model ].msg       =   ''; 
                         }
-
+                        
                     });
-                }
 
+                }
+                
                 item[ field.model ]     =   angular.isUndefined( item[ field.model ]  ) ? '' : item[ field.model ];
 
                 return errors;
@@ -232,7 +235,18 @@ angular.element( document ).ready( () => {
                 return errors;
             }
 
-            this.walker                 =   function( fields, item, index = 0, mainResolve, errors = {} ) {
+            this.walker                 =   function( { 
+                fields, 
+                models, 
+                item    =   null, 
+                index   =   0, 
+                mainResolve, 
+                errors  =   {} 
+            }) {
+
+                // if no item is defined
+                item    =   item == null ? models : item;
+
                 return new Promise( ( resolve, reject ) => {
 
                     let length              =   fields.length;
@@ -245,6 +259,7 @@ angular.element( document ).ready( () => {
 
                     // probably when the walker reach the end
                     if( typeof field == 'undefined' ) {
+
                         // when the walker has done
                         errors              =   this.__replaceTemplate( errors );
                         let response        =   this.__response( errors ); 
@@ -253,7 +268,6 @@ angular.element( document ).ready( () => {
                             if( typeof response.errors[ field.model ] != 'undefined' ) {
                                 let fieldClass      =   '.' + field.model + '-helper';
                                 if( ! response.isValid ) {
-                                    
                                     angular.element( fieldClass ).closest( '.form-group' ).removeClass( 'has-success' );
                                     angular.element( fieldClass ).text( errors[ field.model ].msg );
                                     angular.element( fieldClass ).closest( '.form-group' ).addClass( 'has-error' );
@@ -264,64 +278,119 @@ angular.element( document ).ready( () => {
                         return mainResolve( errors );
                     }
 
-                    let promise             =   new Promise( ( _resolve, _reject ) => {
-                        let run             =   this.__run( field, item );
-                        errors              =   _.extend( errors, run );
+                    let promise         =   new Promise( ( _resolve, _reject ) => {
+
+                        if( field.type == 'group' ) {
+
+                            _.each( models[ field.model ], ( group ) => {
+                                _.each( field.subFields, ( subField ) => {
+                                    if( typeof group.models == 'undefined' ) {          
+                                        group.models    =   {};
+                                    }
+                                    
+                                    if( typeof group.models[ subField.model ] == 'undefined' ) {
+                                        group.models[ subField.model ] = '';
+                                    }
+                                });
+                            });
+
+                            return this.groups_walker({
+                                subFields       :   field.subFields,
+                                item,
+                                groups          :   models[ field.model ]  
+                            }).then( ( groups_errors ) => {
+                                
+                                field.groups_errors    =   groups_errors;
+
+                                return _resolve ({
+                                    index   :   index+1,
+                                    errors
+                                });
+                            });
+                        }
+
+                        // if the field doesn't have a validation rules, just skip that.
+                        if ( typeof field.validation == 'undefined' ) {
+                            return _resolve({
+                                index   :   index+1,
+                                errors
+                            });
+                        }
+
+                        // don't run over hidden fields
+                        if( typeof field.show != 'undefined' ) {
+                            if( field.show( models, item ) == false ) {
+                                
+                                return _resolve({
+                                    index   :   index+1,
+                                    errors
+                                });
+                            }
+                        }
+
+                        let run         =   this.__run( field, models );
+                        errors          =   _.extend( errors, run ); 
+
                         if( _.keys( run ).length > 0 ) {
+
                             // before rejecting, let make sure it's not a callback
                             if( typeof run.callback != 'undefined' ) {
+
+                                return _resolve({
+                                    index   :   index+1,
+                                    errors
+                                });
+                                
                                 // Test Callback Promise
-                                let callbackPromise     =   run.callback( field, item );
+                                let callbackPromise     =   run.callback( field, models, errors );
                                 callbackPromise.then( ( errors )=>{
-                                    _resolve({
-                                        fields, 
-                                        item, 
+                                    return _resolve({
                                         index   :   index+1,
                                         errors
                                     });
                                 }, ( errors ) => {
-                                    _reject({
-                                        fields, 
-                                        item, 
+                                    return _reject({
                                         index   :   index+1,
                                         errors
                                     });
                                 });
                             } else {
+
                                 // index + 1 to move to the next fields
-                                _reject({
-                                    fields, 
-                                    item, 
+                                return _reject({
                                     index   :   index+1,
                                     errors
                                 }); 
                             }                        
                         } else {
-                            _resolve({
-                                fields  :   fields, 
-                                item    :   item, 
-                                index   :   index+1,
+
+                            return _resolve({
+                                index       :   index+1,
                                 errors
                             });
-                        }
+                        }                          
                     });
 
                     // Run Template Remplacement
-                    promise.then( ({ fields, item, index, errors }) => {
+                    promise.then( ({ index, errors }) => {
                         // if there is no error, just validate next fields
-                        this.walker( fields, item, index, mainResolve, errors );
-                    }, ({ fields, item, index, errors }) => {
-
-                        this.walker( fields, item, index, mainResolve, errors );
+                        this.walker({ fields, models, item, index, mainResolve, errors });
+                    }, ({ index, errors }) => {
+                        this.walker({ fields, models, item, index, mainResolve, errors });
                     });
                 });
             }
 
-            this.variations_walker       =   function( variation_fields, variations, index = 0, mainResolve ) {
+            this.variations_walker       =   function({
+                fields,
+                item, 
+                index   =   0,
+                mainResolve
+            }) {
 
                 return new Promise( ( resolve, reject ) => {
 
-                    let variation       =   variations[ index ];
+                    let variation       =   item.variations[ index ];
 
                     if( index == 0 ) {
                         mainResolve     =   resolve;
@@ -333,11 +402,13 @@ angular.element( document ).ready( () => {
 
                     let promise         =   new Promise( ( _resolve, _reject ) => {
 
-                        this.tabs_walker( variation_fields, variations[ index ].tabs ).then( () => {
+                        this.tabs_walker({
+                            fields,
+                            item, 
+                            variation_index : index,
+                        }).then( () => {
                             // When all variation tab has been walked over
                             _resolve({
-                                variation_fields,
-                                variations,
                                 index   :   index+1,
                                 mainResolve
                             });
@@ -345,42 +416,126 @@ angular.element( document ).ready( () => {
 
                     });
 
-                    promise.then( ({ variation_fields, variations, index, mainResolve }) => {
-                        this.variations_walker( variation_fields, variations, index, mainResolve );
+                    promise.then( ({ index, mainResolve }) => {
+                        this.variations_walker({
+                            fields,
+                            item, 
+                            index,
+                            mainResolve
+                        });
                     })
                 })
             }
 
-            this.tabs_walker             =   function( fields, tabs, index = 0, mainResolve ) {
+            this.tabs_walker             =   function({
+                fields,
+                item,
+                variation_index,
+                index       =   0,
+                mainResolve
+            }) {
 
                 return new Promise( ( resolve, reject ) => {
                     if( index == 0 ) {
                         mainResolve     =   resolve;
                     }
 
-                    if( typeof tabs[ index ] == 'undefined' ) {
+                    if( typeof item.variations[ variation_index ].tabs[ index ] == 'undefined' ) {
                         return mainResolve();
                     }
 
                     let promise         =   new Promise( ( _resolve, _reject ) => { 
-                        _.each( fields[ tabs[ index ].namespace ], ( field ) => {
-                            if( typeof tabs[ index ].models[ field.model ] == 'undefined' ) {
-                                tabs[ index ].models[ field.model ]     =   '';    
+                        let tab         =   item.variations[ variation_index ].tabs[ index ];
+
+                        // Don't run over hidden tabs
+                        if( typeof tab.hide != 'undefined' ) {
+                            if( tab.hide( item ) == true ) {
+                                return _resolve({ index : index + 1, mainResolve });
+                            }
+                        }
+
+                        // if models is not set
+                        if( typeof tab.models == 'undefined' ) {
+                            tab.models    =   new Object;
+                        }                        
+
+                        _.each( fields[ tab.namespace ], ( field ) => {
+                            if( typeof tab.models[ field.model ] == 'undefined' ) {
+                                tab.models[ field.model ]     =   '';    
                             }
                         });
 
-                        console.log( fields, tabs[ index ].namespace );
+                        // Skip each tab, if fields doesn't belong to it
+                        if( typeof fields[ tab.namespace ] == 'undefined' ) {
+                            _resolve({ index : index + 1, mainResolve });
+                        } else {
+                            // fields, item, index = 0, mainResolve, errors = {}
+                            this.walker({
+                                fields  :   fields[ tab.namespace ],
+                                models  :   tab.models, 
+                                item,
+                                variation_index                                
+                            }).then( function( errors ){
+                                // when all tabs fields has been checked
+                                tab.errors    =   errors;
+                                _resolve({ index : index + 1, mainResolve });
+                            });
+                        }                                       
+                    });
 
-                        this.walker( fields[ tabs[ index ].namespace ], tabs[ index ].models ).then( function( errors ){
-                            _resolve({ fields, tabs, index : index + 1, mainResolve });
-                        });                
-                    })
-
-                    promise.then( ({ tabs, item, index, mainResolve }) => {
-                        this.tabs_walker( fields, tabs, index, mainResolve );
+                    promise.then( ({ index, mainResolve }) => {
+                        this.tabs_walker({ fields, item, variation_index, index, mainResolve });
                     });
                 })
+            }
 
+            this.groups_walker          =   function({
+                subFields, 
+                item, 
+                groups,
+                index   =   0,
+                mainResolve     =   null,
+                errors          =   []
+            }) {
+                return new Promise( ( resolve, reject ) => {
+                    
+                    if( mainResolve == null ) {
+                        mainResolve     =   resolve;
+                    }
+
+                    // has finish
+                    if( typeof groups[ index ] == 'undefined' ) {
+                        return mainResolve( errors );
+                    }
+
+                    let promise         =   new Promise( ( _resolve, _reject ) => {
+
+                        return this.walker({
+                            fields      :   subFields, 
+                            models      :   groups[ index ].models,
+                            item
+                        }).then( ( walker_errors ) => {
+                            errors.push( walker_errors );
+                            console.log( walker_errors );
+                            return _resolve({
+                                index       :   index + 1,
+                                errors
+                            });
+                        });     
+
+                    });
+
+                    promise.then( ({ index, errors }) => { 
+                        return this.groups_walker({
+                            subFields,
+                            item, 
+                            groups,
+                            index,
+                            mainResolve, 
+                            errors
+                        });
+                    });
+                });
             }
         }
     });

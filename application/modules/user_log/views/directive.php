@@ -33,7 +33,7 @@
                         body.keypress(function (e) {
                             $scope.idleTime = 0;
                         });
-
+                      
                         $scope.timerIncrement = function (){
                             $scope.idleTime = $scope.idleTime + 1;
                             if ($scope.idleTime > <?php if( isset( $Options["user_log_idle_time"]) and is_numeric( $Options["user_log_idle_time"] ) ){ echo $Options["user_log_idle_time"]; } else { echo 20; }?>) { // Default 20 minutes 
