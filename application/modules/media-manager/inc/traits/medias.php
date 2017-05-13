@@ -13,7 +13,7 @@ Trait medias
     {
         if( isset( $_GET['entries'])){
             $entries = $_GET['entries'];
-
+            $user_id = $_GET['uid'];
             foreach ( $entries as $entry ){
                 $entry = json_decode( $entry, true );
                 
@@ -43,6 +43,14 @@ Trait medias
                 // Delete database entries
                  $this->db->where( 'id', $entry['id']);
                  $this->db->delete( 'media_manager' );
+
+                 // Log action 
+                 $logger = new user_log_library();
+                 $logger->log_action(array(
+                        "user"        => $user_id,
+                        "action"      => "Delete a media"
+                     )
+                 );
             }
 
             return $this->__success();

@@ -3,7 +3,7 @@
         <div class="box">
             <div class="box-header with-border">
                 <div class="box-title">
-                    <?php echo __( 'Heures de travail des utilisateurs par mois Année courante', 'perm_manager' );?>
+                    <?php echo __( ' Durée de connexion des utilisateurs par année', 'perm_manager' );?>
                 </div>
                 <div class="box-tools">
                 

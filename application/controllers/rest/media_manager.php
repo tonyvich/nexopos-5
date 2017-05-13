@@ -16,6 +16,7 @@ class media_manager extends REST_Controller
         parent::__construct();
           
         $this->load->database();
+        $this->load->module_library( 'user_log', 'user_log_library');
 
         if (! $this->oauthlibrary->checkScope('core')) {
             $this->__forbidden();
