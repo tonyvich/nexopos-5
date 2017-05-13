@@ -217,7 +217,8 @@
             });
             sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ces élément ?', 'perm_manager' );?>', function( action ) {
                 if( action ) {
-                    mediasResource.delete( { 'entries[]' : selectedItem }, function( data ) {
+                    var params = { 'entries[]' : selectedItem,'uid' : <?php echo User::id(); ?> };
+                    mediasResource.delete( params, function( data ) {
                         $scope.loadAssets();
                     },function(){
                         sharedAlert.warning( '<?php echo _s(
