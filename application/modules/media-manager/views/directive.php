@@ -155,6 +155,11 @@
                     **/
 
                     $scope.selectEntry      =   function( entry ) {
+                        if( entry.selected ) {
+                            entry.selected  =  false; 
+                            return;
+                        }
+
                         _.each( $scope.mediaEntries, function( entry ) {
                             entry.selected  =   false;
                         });
