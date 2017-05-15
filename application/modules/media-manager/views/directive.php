@@ -33,6 +33,13 @@
                         formData.append( '<?php echo $this->security->get_csrf_token_name(); ?>' , csrf_code );
                     }
 
+                    $scope.dzCallbacks.success = function(file, xhr){
+                        alert("call");
+                        $scope.loadAssets();
+                        var tpl     = <?php echo json_encode( $this->load->module_view( 'media-manager', 'media-window', null, true ) );?>;
+                        $compile(tpl)($scope);
+                    }
+
                     /**
                      *  Load Assets 
                      *  @param
