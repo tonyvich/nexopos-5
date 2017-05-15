@@ -94,6 +94,7 @@
         $scope.roles = {};
         $scope.permissions = {};
         $scope.add = {};
+        
         /**
          * Load Data
          **/
@@ -102,8 +103,22 @@
              $http.get( '<?php echo site_url( [ 'dashboard', 'perm_manager', 'get' ] );?>' ).then( function( returned ){
                 $scope.roles = returned.data.roles;
                 $scope.permissions = returned.data.permissions;
-                var name = $scope.roles[0].name;
-                $scope.tab_active = name;
+                $scope.selectedUser = $scope.roles[0].name;
+                $scope.selectedRole = $scope.roles[0];
+             });
+         }
+
+         /**
+          *  change Selected Role
+          *  @param
+          *  @return
+         **/
+
+         $scope.changeSelectedRole =  function(){
+             _.each( $scope.roles, function( role ){
+                 if( role.name == $scope.selectedUser ){
+                     $scope.selectedRole = role;
+                 }
              });
          }
 

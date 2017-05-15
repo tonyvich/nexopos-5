@@ -10,7 +10,37 @@
                 </div>
             </div>
             <div class="box-body">
-                <uib-tabset active="tab_active">
+                <div class="form-group col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"> <?php echo __( 'Utilisateur', 'perm_manager' );?> </span>
+                        <select
+                        class="form-control"
+                        ng-model = "selectedUser"
+                        ng-change = "changeSelectedRole()"
+                        >
+                            <option ng-repeat="role in roles" value="{{ role.name }}">{{ role.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th><?php echo __('Permission','perm_manager'); ?></th>
+                                <th><?php echo __('Action','perm_manager'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="permission in selectedRole.permissions" >
+                                <td><input type="checkbox" ng-model ="permission.checked" ng-checked ="permission.checked" value="{{ permission.perm_name }}"></td>
+                                <td><h4>{{ permission.perm_desc }}</h4></td>
+                                <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  role.name)"> <?php echo __('Supprimer','perm_manager'); ?> </button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--<uib-tabset active="tab_active">
                     <uib-tab index="role.name" ng-repeat="role in roles" heading="{{role.name}}">
                         <table class="table">
                             <thead>
@@ -29,7 +59,7 @@
                             </tbody>
                         </table>
                     </uib-tab>
-                </uib-tabset>
+                </uib-tabset>-->
             </div>
         </div>
     </div>
