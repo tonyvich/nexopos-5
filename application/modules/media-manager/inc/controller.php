@@ -95,7 +95,7 @@ class Media_Manager_Controller extends Tendoo_module
             $this->db->like('name', $_GET['search'] );
         }
         
-        $results  =   $this->db->get(
+        $results  =   $this->db->order_by( 'id', 'desc' )->get(
             $this->events->apply_filters( 'mm-table-prefix', '' ) . 'media_manager'
         )->result_array();
 
