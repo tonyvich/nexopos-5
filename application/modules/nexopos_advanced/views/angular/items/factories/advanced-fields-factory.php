@@ -78,8 +78,6 @@ tendooApp.factory( 'itemsAdvancedFields', [
             ]
         }];
 
-        return;
-
         this.barcode        =   [
             {
                 type        :   'text',
@@ -115,6 +113,21 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 validation    :   {
                     callback    :   ( field, item, errors ) => {
                         let promise     =   new Promise( ( resolve, reject ) => {
+                            if( item.barcode != '' ) {
+                                itemsVariationsResource.get({
+                                    id      :   item.barcode,
+                                    as      :   'barcode'
+                                }, ( returned ) => {
+                                    // if here is a result, then that's mean the barcode already exist
+                                    if( ! angular.equals({}, returned ) ) {
+                                        errors[ 'barcode' ]     =   {
+                                            msg     :   '<?php echo __( 'Le code barre est déjà utilisé, veuillez le remplacer par une valeur diffente', 'nexopos_adavanced' );?>',
+                                            label   :   '<?php echo _s( 'CodeBar', 'nexopos_adavanced' );?>'
+                                        };
+                                    }
+                                    resolve( errors );
+                                })
+                            }
                             resolve( errors );
                         });
                         return promise;
@@ -131,6 +144,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                                         tab.models.generate_barcode  =   'no';
                                     } else {
                                         tab.models.generate_barcode  =   'yes';
+                                        tab.models.barcode      =   '';
                                     }
                                 }                          
                             }
@@ -148,6 +162,22 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     }
                     field.buttons[0].label      =   '<?php echo _s( 'Manuel', 'nexopos_advanced' );?>';
                     return false;                    
+                }
+            },{
+                type        :   'hidden',
+                model       :   'generate_barcode',
+                show        :   () => true,
+                validation  :   {
+                    // if generate barcode is empty, then set a default value to "auto";
+                    callback    :   ( field, item, errors ) => {
+                        let promise     =   new Promise( ( resolve, reject ) => {
+                            if( item[ 'generate_barcode' ] == '' ) {
+                                item[ 'generate_barcode' ]  =   'yes';
+                            }
+                            resolve( errors );
+                        });
+                        return promise;
+                    }
                 }
             }
         ];

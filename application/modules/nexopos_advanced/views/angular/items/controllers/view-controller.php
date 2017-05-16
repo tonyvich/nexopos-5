@@ -4,6 +4,8 @@ var itemsView      =   function(
     $http,
     $compile,
     $location,
+    $routeParams,
+    $timeout,
     itemsTextDomain,
     itemsResource,
     itemsTable,
@@ -25,13 +27,13 @@ var itemsView      =   function(
      * @return void
     **/
     
-    $scope.enableTab 	= function( tab ){
+    $scope.enableTab 	= function({ tab }){
         $scope.tabs.forEach( ( tab ) => {
             tab.active  =   false;
         });
 
-        angular.element( tab.namespace ).remove();
-        angular.element( '.tab-' + tab.namespace ).append( '<' + tab.namespace + '></' + tab.namespace + '>' );
+        angular.element( 'item-' + tab.namespace ).remove();
+        angular.element( '.tab-' + tab.namespace ).append( '<item-' + tab.namespace + '></item-' + tab.namespace + '>' );
         angular.element( '.tab-' + tab.namespace ).html( 
             $compile( angular.element( '.tab-' + tab.namespace ).html() )( $scope ) 
         );
@@ -40,8 +42,26 @@ var itemsView      =   function(
     }
 
     // Enable first tab
-    setTimeout( () => {
-        $scope.enableTab( $scope.tabs[0] );
+    $timeout( () => {
+        if( typeof $routeParams.tab == 'undefined' ) {
+            $scope.enableTab({
+                tab     :    $scope.tabs[0]
+            });
+        } else {
+            let tabExist    =   false;
+            _.each( $scope.tabs, ( tab ) => {
+                if( tab.namespace == $routeParams.tab ) {
+                    $scope.enableTab({ tab });
+                    tabExist    =   true;
+                } 
+            });
+
+            if( ! tabExist ) {
+                $scope.enableTab({
+                    tab     :    $scope.tabs[0]
+                });
+            }
+        }        
     }, 100 );
 }
 
@@ -50,6 +70,8 @@ itemsView.$inject          =   [
     '$http',
     '$compile',
     '$location',
+    '$routeParams',
+    '$timeout',
     'itemsTextDomain',
     'itemsResource',
     'itemsTable',

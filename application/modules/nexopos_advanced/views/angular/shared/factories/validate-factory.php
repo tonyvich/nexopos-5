@@ -144,7 +144,6 @@ angular.element( document ).ready( () => {
 
             this.run        =   function( fields, item ) {
 
-                return;
                 var errors          =   {};
 
                 _.each( fields, function( field ){
@@ -230,18 +229,24 @@ angular.element( document ).ready( () => {
 
             this.__replaceTemplate    =   function( errors ) {
                 _.each( errors, function( value, key ) {
-                    errors[ key ].msg   =   value.msg.replace( '%%', value.label );
+                    // We'll skip array since it may comes from group and has already been parsed.
+                    if( ! Array.isArray( value ) ) {
+                        errors[ key ].msg   =   value.msg.replace( '%%', value.label );
+                    }                     
                 });
+
                 return errors;
             }
 
             this.walker                 =   function( { 
                 fields, 
-                models, 
-                item    =   null, 
-                index   =   0, 
+                models,
+                item            =   null, 
+                variation       =   null,
+                tab             =   null, 
+                index           =   0, 
                 mainResolve, 
-                errors  =   {} 
+                errors          =   {} 
             }) {
 
                 // if no item is defined
@@ -299,15 +304,22 @@ angular.element( document ).ready( () => {
                                 item,
                                 groups          :   models[ field.model ]  
                             }).then( ( groups_errors ) => {
-                                
-                                field.groups_errors    =   groups_errors;
 
-                                return _resolve ({
+                                if( typeof tab.groups_errors == 'undefined' ){
+                                    tab.groups_errors       =   new Object;
+                                }
+
+                                tab.groups_errors[ field.model ]    =   groups_errors;
+
+                                return _resolve({
                                     index   :   index+1,
                                     errors
                                 });
                             });
                         }
+
+                        // put before to make sure any undefined field has an empty string.
+                        let run         =   this.__run( field, models );
 
                         // if the field doesn't have a validation rules, just skip that.
                         if ( typeof field.validation == 'undefined' ) {
@@ -328,34 +340,26 @@ angular.element( document ).ready( () => {
                             }
                         }
 
-                        let run         =   this.__run( field, models );
-                        errors          =   _.extend( errors, run ); 
-
                         if( _.keys( run ).length > 0 ) {
 
                             // before rejecting, let make sure it's not a callback
-                            if( typeof run.callback != 'undefined' ) {
-
-                                return _resolve({
-                                    index   :   index+1,
-                                    errors
-                                });
-                                
+                            if( typeof run[ field.model ].callback != 'undefined' ) {                                
                                 // Test Callback Promise
-                                let callbackPromise     =   run.callback( field, models, errors );
+                                let callbackPromise     =   run[ field.model ].callback( field, models, errors );
                                 callbackPromise.then( ( errors )=>{
                                     return _resolve({
                                         index   :   index+1,
                                         errors
                                     });
-                                }, ( errors ) => {
+                                }, ( callback_errors ) => {
+                                    errors          =   _.extend( errors, callback_errors ); 
                                     return _reject({
                                         index   :   index+1,
                                         errors
                                     });
                                 });
                             } else {
-
+                                errors          =   _.extend( errors, run ); 
                                 // index + 1 to move to the next fields
                                 return _reject({
                                     index   :   index+1,
@@ -374,9 +378,9 @@ angular.element( document ).ready( () => {
                     // Run Template Remplacement
                     promise.then( ({ index, errors }) => {
                         // if there is no error, just validate next fields
-                        this.walker({ fields, models, item, index, mainResolve, errors });
+                        this.walker({ fields, models, item, variation, tab, index, mainResolve, errors });
                     }, ({ index, errors }) => {
-                        this.walker({ fields, models, item, index, mainResolve, errors });
+                        this.walker({ fields, models, item, variation, tab, index, mainResolve, errors });
                     });
                 });
             }
@@ -405,9 +409,25 @@ angular.element( document ).ready( () => {
                         this.tabs_walker({
                             fields,
                             item, 
-                            variation_index : index,
+                            variation
                         }).then( () => {
                             // When all variation tab has been walked over
+                            // let put all errors and groups_errors on this variations
+                            variation.errors               =   new Object;
+                            variation.groups_errors        =   new Object;
+                            _.each( variation.tabs, ( tab ) => {
+                                if( typeof tab.errors != 'undefined' ){
+                                    variation.errors           =   _.extend( variation.errors, tab.errors );
+                                }
+
+                                if( typeof tab.groups_errors != 'undefined' ) {
+                                    variation.groups_errors    =   _.extend( 
+                                        variation.groups_errors,
+                                        tab.groups_errors 
+                                    );
+                                }                                
+                            });
+
                             _resolve({
                                 index   :   index+1,
                                 mainResolve
@@ -430,9 +450,11 @@ angular.element( document ).ready( () => {
             this.tabs_walker             =   function({
                 fields,
                 item,
-                variation_index,
-                index       =   0,
-                mainResolve
+                variation,
+                mainResolve,
+                index           =   0,
+                errors          =   {},
+                groups_errors   =   {}
             }) {
 
                 return new Promise( ( resolve, reject ) => {
@@ -440,12 +462,13 @@ angular.element( document ).ready( () => {
                         mainResolve     =   resolve;
                     }
 
-                    if( typeof item.variations[ variation_index ].tabs[ index ] == 'undefined' ) {
+                    if( typeof variation.tabs[ index ] == 'undefined' ) {
                         return mainResolve();
                     }
 
                     let promise         =   new Promise( ( _resolve, _reject ) => { 
-                        let tab         =   item.variations[ variation_index ].tabs[ index ];
+                        
+                        let tab         =   variation.tabs[ index ];
 
                         // Don't run over hidden tabs
                         if( typeof tab.hide != 'undefined' ) {
@@ -474,7 +497,8 @@ angular.element( document ).ready( () => {
                                 fields  :   fields[ tab.namespace ],
                                 models  :   tab.models, 
                                 item,
-                                variation_index                                
+                                variation,
+                                tab                               
                             }).then( function( errors ){
                                 // when all tabs fields has been checked
                                 tab.errors    =   errors;
@@ -484,7 +508,7 @@ angular.element( document ).ready( () => {
                     });
 
                     promise.then( ({ index, mainResolve }) => {
-                        this.tabs_walker({ fields, item, variation_index, index, mainResolve });
+                        this.tabs_walker({ fields, item, variation, index, mainResolve });
                     });
                 })
             }
@@ -493,9 +517,9 @@ angular.element( document ).ready( () => {
                 subFields, 
                 item, 
                 groups,
-                index   =   0,
-                mainResolve     =   null,
-                errors          =   []
+                index                   =   0,
+                mainResolve             =   null,
+                errors                  =   []
             }) {
                 return new Promise( ( resolve, reject ) => {
                     
@@ -509,20 +533,20 @@ angular.element( document ).ready( () => {
                     }
 
                     let promise         =   new Promise( ( _resolve, _reject ) => {
-
                         return this.walker({
                             fields      :   subFields, 
                             models      :   groups[ index ].models,
                             item
                         }).then( ( walker_errors ) => {
-                            errors.push( walker_errors );
-                            console.log( walker_errors );
+                            
+                            groups[ index ].errors  =   walker_errors;
+                            errors[ index ]         =   walker_errors;
+                            
                             return _resolve({
                                 index       :   index + 1,
                                 errors
                             });
-                        });     
-
+                        }); 
                     });
 
                     promise.then( ({ index, errors }) => { 
@@ -539,5 +563,4 @@ angular.element( document ).ready( () => {
             }
         }
     });
-
 });

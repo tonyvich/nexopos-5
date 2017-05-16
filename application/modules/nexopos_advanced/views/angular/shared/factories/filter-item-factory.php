@@ -23,6 +23,8 @@ tendooApp.factory( 'sharedFilterItem', function(){
 
         _.each( item.variations, function( variation, variation_index ){
             delete variation.tabs;
+            delete variation.errors;
+            delete variation.groups_errors
             _.each( variation, function( field, group_namespace ){
                 if( angular.isArray( field ) ) {
                     _.each( field, function( group ) {
@@ -31,10 +33,11 @@ tendooApp.factory( 'sharedFilterItem', function(){
                         delete group.models;
                     });
                 } else if( angular.isObject( field ) ) {
-                    delete group[ field ];
+                    console.log( field );
+                    // delete group[ field ];
                 }
             })
-        })
+        });
 
         return item;
     }
