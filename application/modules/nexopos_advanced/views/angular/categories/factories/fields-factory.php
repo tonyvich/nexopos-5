@@ -18,7 +18,8 @@ tendooApp.factory( 'categoriesFields', [ 'sharedOptions', function( sharedOption
             'type'              =>   'image_select',
             'label'             =>   __( 'Image Descriptive', "nexopos_advanced" ),
             'model'             =>   'image_url',
-            'desc'              =>   __( 'Veuillez une image à cette catégorie.', 'nexopos_advanced' )
+            'desc'              =>   __( 'Veuillez assigner une image à cette catégorie.', 'nexopos_advanced' ),
+            'size'              =>   'original'
         ], [
             'type'              =>   'textarea',
             'label'             =>   __( 'Description', "nexopos_advanced" ),

@@ -13,7 +13,8 @@
             replace: true,
             template: '<span class="input-group-btn"> <button class="btn btn-default" ng-click="showMedia()" type="button"><i class="fa fa-search"></i></button> </span>',
             scope: {
-                model : '=model',
+                model          : '=?',
+                selectedSize   : '='
             },
             transclude : true,
             controller : [
@@ -31,6 +32,22 @@
                         namespace   :   'upload'
                     }];
 
+                    var model = $scope.model;
+                    var selectedSize = $scope.selectedSize;
+
+                    $scope.sizes = ['full','medium','original','thumb'];
+                    
+                    console.log( model );
+                    console.log( selectedSize );
+
+                    $scope.mediaEntries   = {};
+                    $scope.mediaSize = "full";
+
+                    if( typeof(selectedSize) != 'undefined' ){
+                        $scope.sizes = [ selectedSize ];
+                        $scope.mediaSize = selectedSize;
+                    }
+
                     /**
                      * Select Current Tab
                      * @param object tab
@@ -47,9 +64,7 @@
                         $scope.currentTab   =   tab;
                     };
                     
-                    $scope.mediaEntries   = {};
-                    var model = $attrs.model;
-                    $scope.mediaSize = "full";
+                    
                     $scope.dzCallbacks          =   new Object;
                     
                     $scope.dzCallbacks.sending  =   function( file, XHR, formData ) {
@@ -76,7 +91,7 @@
                             } else {
                                 $scope.mediaEntries = returned.data;
                             }
-                            $scope.$apply();
+                            //$scope.$apply(); There is the rootScope in progress when applying here
                         });
                     }
                     
@@ -155,6 +170,11 @@
                     **/
 
                     $scope.selectEntry      =   function( entry ) {
+                        if( entry.selected == true ){
+                            entry.selected = false;
+                            return;
+                        }
+
                         _.each( $scope.mediaEntries, function( entry ) {
                             entry.selected  =   false;
                         });

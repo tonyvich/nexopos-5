@@ -22,10 +22,7 @@
                             <h3><?php echo __('Choose media size','media-manager');?></h3>
                             <div class="form-group">
                                 <select class="form-control" ng-model="mediaSize">
-                                    <option value="full" selected="selected"><?php echo __('Full size','media-manager');?></option>
-                                    <option value="medium"><?php echo __('Medium size','media-manager');?></option>
-                                    <option value="original"><?php echo __('Original size','media-manager');?></option>
-                                    <option value="thumb"><?php echo __('Thumbnails size','media-manager');?></option>
+                                    <option ng-repeat="size in sizes" value="{{ size }}"> {{ size }} </option>
                                 </select>
                             </div>
                         </p>
