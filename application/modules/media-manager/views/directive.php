@@ -37,11 +37,7 @@
 
                     $scope.sizes = ['full','medium','original','thumb'];
                     
-                    console.log( model );
-                    console.log( selectedSize );
-
                     $scope.mediaEntries   = {};
-                    $scope.mediaSize = "full";
 
                     if( typeof(selectedSize) != 'undefined' ){
                         $scope.sizes = [ selectedSize ];
@@ -109,7 +105,8 @@
                             size: "large",
                             title: "<?php echo _s('Select a file','media-manager');?>",
                             message: content,
-                            callback: function(){ 
+                            callback: function(){
+                                console.log( $scope.mediaSize ); 
                                 $scope.modalHide();
                                 $scope.$apply();
                             }
@@ -193,15 +190,13 @@
                     **/
 
                     $scope.modalHide = function(){
-                        if( $scope.mediaSize == null){
-                            $scope.mediaSize = 'full';
-                        }
+                        var size = angular.element( '#selectSize' ).val();
                         _.each( $scope.$parent.item, function( value, key ){
                             if( value == "inMediaUse" ){
                                 _.each( $scope.mediaEntries, function( entry ){
                                     if( entry.selected == true ){
                                         var url = entry.url;
-                                        var newUrl = url.replace("#NAMESPACE#",'-' + $scope.mediaSize );
+                                        var newUrl = url.replace("#NAMESPACE#",'-' + size );
                                         $scope.$parent.item[ key ] = newUrl;
                                     }
                                 });
@@ -214,6 +209,7 @@
                             }
                         });
                     }
+                    
                     
                 /* Controller end */
                 }

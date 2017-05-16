@@ -21,7 +21,7 @@
                         <p>
                             <h3><?php echo __('Choose media size','media-manager');?></h3>
                             <div class="form-group">
-                                <select class="form-control" ng-model="mediaSize">
+                                <select class="form-control" id="selectSize">
                                     <option ng-repeat="size in sizes" value="{{ size }}"> {{ size }} </option>
                                 </select>
                             </div>
