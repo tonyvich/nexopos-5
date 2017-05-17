@@ -193,15 +193,17 @@ var items               =   function(
             this.__run( field, variation_tab );
 
         // this only run if the field has a callback method.
-        if( typeof validation[ field.model ].callback != 'undefined' ) {
-            let promise         =   validation[ field.model ].callback( field, variation_tab.models, {} );
-            return promise.then( ( errors ) => {
-                if( ! angular.equals({}, errors ) ) {
-                    validation[ field.model ].msg      =   "<?php echo _s( 'Ce code barre est déjà en cours d\'utilisation.', 'nexopos_advanced' );?>";
-                    let response                        =  showErrors({ validation, ids });
-                }
-            });
-        } 
+        if( typeof validation[ field.model ] != 'undefined' ) {
+            if( typeof validation[ field.model ].callback != 'undefined' ) {
+                let promise         =   validation[ field.model ].callback( field, variation_tab.models, {} );
+                return promise.then( ( errors ) => {
+                    if( ! angular.equals({}, errors ) ) {
+                        validation[ field.model ].msg      =   "<?php echo _s( 'Ce code barre est déjà en cours d\'utilisation.', 'nexopos_advanced' );?>";
+                        let response                        =  showErrors({ validation, ids });
+                    }
+                });
+            }
+        }
 
         let response        =   showErrors({ validation, ids });
         

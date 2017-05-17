@@ -24,7 +24,8 @@ tendooApp.factory( 'sharedFilterItem', function(){
         _.each( item.variations, function( variation, variation_index ){
             delete variation.tabs;
             delete variation.errors;
-            delete variation.groups_errors
+            delete variation.groups_errors;
+            delete variation.models;
             _.each( variation, function( field, group_namespace ){
                 if( angular.isArray( field ) ) {
                     _.each( field, function( group ) {

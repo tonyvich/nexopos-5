@@ -33,8 +33,6 @@ var itemsMain          =   function(
         }
     });
 
-    console.log( $scope.table.entryActions );
-
     // custom entry actions
     $scope.table.entryActions.push({
         name        :   '<?php echo _s( 'Approvisionnement', 'nexopos_advanced' );?>',

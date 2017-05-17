@@ -339,6 +339,29 @@ Trait items
 
     public function items_put( $id )
     {
+        $item           =   [];
+        foreach( $this->put() as $input => $value ) {
+            if( $input != 'variations' ) {
+                $item[ $input ]     =   $value;
+            }
+        }
 
+        $this->db->where( 'id', $id )->update( 'nexopos_items', $item );
+
+        // updating variations
+        $variations         =   [];
+        foreach( $this->put( 'variations' ) as $raw_variation ) {
+            $variation      =   [];
+            foreach( $raw_variation as $input => $value ) {
+                if( ! is_array( $value ) ) {
+                    $variation[ $input ]    =   $value;
+                }
+            } 
+            $variations[]   =   $variation;           
+        }
+
+        $this->db->update_batch( 'nexopos_items_variations', $variations, 'id' );
+
+        return $this->__success();
     }
 }

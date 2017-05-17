@@ -83,6 +83,198 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.fields               =   itemsFields;
             $scope.advancedFields       =   new itemsAdvancedFields();
 
+            // Add hooks
+            $scope.hooks.addFilter( 'addGroup', ( group ) => {
+                $scope.saveOnLocalStorage(); 
+                return group;
+            });
+
+            $scope.hooks.addFilter( 'addVariation', ( variation ) => {
+                $scope.saveOnLocalStorage(); 
+                return variation;
+            });
+
+            $scope.hooks.addFilter( 'duplicateVariation', ( variation ) => {
+                $scope.saveOnLocalStorage(); 
+                return variation;
+            });
+
+            $scope.hooks.addFilter( 'removeGroup', ( $index ) => {
+                $scope.saveOnLocalStorage(); 
+                return $index;
+            });
+
+            $scope.hooks.addFilter( 'removeVariation', ( $index ) => {
+                $scope.saveOnLocalStorage(); 
+                return $index;
+            });
+
+            /**
+             *  Blur a specific field
+             *  @param object field
+             *  @param object field data
+             *  @param object ids
+             *  @return
+            **/
+
+            $scope.validate.blur    =   function( field, variation_tab, ids ) {
+
+                let showErrors      =   () => {
+                    var response        =   this.__response( validation );
+                    var errors          =   this.__replaceTemplate( response.errors );
+                    var fieldClass      =   '.' + field.model + '-helper';
+
+                    if( angular.isDefined( ids ) ) {
+
+                        var variation_selector          =   $scope.getClass( ids ).variation;
+                        var variation_tab_selector      =   $scope.getClass( ids ).variation_tab_body;
+
+                        if( angular.isUndefined( variation_tab.errors ) ) {
+                            variation_tab.errors         =   {};
+                        }
+
+                        variation_tab.errors             =   _.extend( variation_tab.errors, validation );
+
+                        // If we're validating a form within a group, we just make sure that he group selector exists.
+                        if( $scope.getClass( ids ).variation_group_body ) {
+
+                            variation_tab_selector      =   $scope.getClass( ids ).variation_group_body;
+
+                            // if tab groups_errors is not set
+                            if( typeof $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors == 'undefined' ) {
+                                $scope.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors     =   {};
+                            }
+
+                            // Bring validaiton error badge to the tab of the variation
+                            // We just fetch the group name and use it to group errors
+                            var groups_errors   =   $scope.item.variations[ ids.variation_id ]
+                            .tabs[ ids.variation_tab_id ]
+                            .groups_errors[ ids.variation_tab.namespace ];
+
+                            if( typeof groups_errors == 'undefined' ) {
+                                groups_errors    =   [];
+                            }
+
+                            if( typeof groups_errors[ ids.variation_group_id ] == 'undefined' ) {
+                                groups_errors[ ids.variation_group_id ]     =   {};
+                            }
+
+                            groups_errors[ ids.variation_group_id ]     =     _.extend(
+                                groups_errors[ ids.variation_group_id ], validation
+                            );
+
+                            // let refresh variation groups errors;
+                            $scope.item.variations[ ids.variation_id ]
+                            .tabs[ ids.variation_tab_id ]
+                            .groups_errors[ ids.variation_tab.namespace ]    =   groups_errors;
+
+                        }
+                    } else {
+                        var variation_tab_selector      =   '.default-fields-wrapper';
+                    }
+
+                    if( ! response.isValid  ) {
+                        angular.element( variation_tab_selector + ' ' + fieldClass )
+                        .closest( '.form-group' ).removeClass( 'has-success' );
+
+                        angular.element( variation_tab_selector + ' ' + fieldClass )
+                        .text( errors[ field.model ].msg );
+
+                        angular.element( variation_tab_selector + ' ' + fieldClass )
+                        .closest( '.form-group' ).addClass( 'has-error' );
+                    } else {
+                        // delete error for grouped field
+                        if( angular.isDefined( $scope.getClass( ids ).variation_group_body ) ) {
+                            // Delete validaiton error for group in tab object;
+                            var groups_errors   =   $scope.item.variations[ ids.variation_id ]
+                            .tabs[ ids.variation_tab_id ]
+                            .groups_errors[ ids.variation_tab.namespace ];
+
+                            // suppression d'une erreur dans le groupe
+                            delete groups_errors[ ids.variation_group_id ][ field.model ];
+                        }
+
+                        // delete if the tab has an error to avoid error
+                        if( angular.isDefined( variation_tab.errors ) ) {
+                            delete variation_tab.errors[ field.model ]; // delete error for other fields
+                        }
+                    }
+
+                    $scope.saveOnLocalStorage();
+                    return response;
+                }
+
+                if( ! angular.isDefined( variation_tab ) ) {
+                    return false;
+                }
+
+                // If visibility is hidden on some fields, validation will be skipped on that.
+                // @deprecated
+                if( typeof field.show == 'function' ) {
+                    if( ! field.show( variation_tab.models, $scope.item ) ) {
+                        return;
+                    }
+                }
+
+                if( ! angular.isDefined( variation_tab.models ) && angular.isDefined( ids ) ) {
+                    variation_tab.models    =   {};
+                }
+
+                // if validation runs on default fields, we don't fetch models from .models but directly on the object wrapper (specially for default fields)
+                var validation      =   angular.isDefined( ids ) ?
+                    this.__run( field, variation_tab.models ) :
+                    this.__run( field, variation_tab );
+
+                // this only run if the field has a callback method.
+                if( typeof validation[ field.model ] != 'undefined' ) {
+                    if( typeof validation[ field.model ].callback != 'undefined' ) {
+                        let promise         =   validation[ field.model ].callback( field, variation_tab.models, {} );
+                        return promise.then( ( errors ) => {
+                            if( ! angular.equals({}, errors ) ) {
+                                validation[ field.model ].msg       =   "<?php echo _s( 'Ce code barre est déjà en cours d\'utilisation.', 'nexopos_advanced' );?>";
+                                let response                        =   showErrors({ validation, ids });
+                            }
+                        });
+                    }
+                }                 
+
+                let response        =   showErrors({ validation, ids });
+                
+                return response.isValid ? null : validation;
+            }
+
+            /**
+             *  Focus on fields
+             *  @param object field
+             *  @param object field model data
+             *  @param object ids
+             *  @return
+            **/
+
+            $scope.validate.focus      =   function( field, model, ids ) {
+
+                var fieldClass                  =   '.' + field.model + '-helper';
+
+                // for advanced fields
+                if( angular.isDefined( ids ) ) {
+                    var variation_selector          =   $scope.getClass( ids ).variation;
+                    var variation_tab_selector      =   $scope.getClass( ids ).variation_tab_body;
+
+                    // If we're validating a form within a group, we just make sure that he group selector exists.
+                    if( $scope.getClass( ids ).variation_group_body ) {
+                        variation_tab_selector      =   $scope.getClass( ids ).variation_group_body;
+                    }
+                } else { // for default fields
+                    var variation_tab_selector      =   '.default-fields-wrapper';
+                }
+
+                angular.element( variation_tab_selector + ' ' + fieldClass )
+                .closest( '.form-group' ).removeClass( 'has-error' );
+
+                angular.element( variation_tab_selector + ' ' + fieldClass )
+                .text( field.desc );
+            }
+
             /**
             *  Detect Item Namespace
             *  @param void
@@ -104,22 +296,6 @@ tendooApp.directive( 'itemEdit', function(){
                     _.each( variation.tabs, function( tab, $tab_key ) {
                         tab.models      =   {};
                     });
-                });
-
-                switch( $location.path() ) {
-                    case "/items/add/clothes" :
-                        $scope.item.namespace    =   'clothes';
-                    break;
-                    case "/items/add/coupon" :
-                        $scope.item.namespace   =   'coupon';
-                    break;
-                }
-
-                // Selected Type
-                _.each( itemsTypes, function( type, key ) {
-                    if( type.namespace == $scope.item.typeNamespace ) {
-                        $scope.item.selectedType   =   type;
-                    }
                 });
 
                 // When everything seems to be done, then we can check if the item exist on the local store
@@ -160,6 +336,70 @@ tendooApp.directive( 'itemEdit', function(){
                         }
                     }
                 }
+            }
+
+            /**
+             *  Submit Items (needs review)
+             *  @param
+             *  @return
+            **/
+
+            $scope.submitItem               =   function(){
+
+                $scope.validate.walker({
+                    fields : $scope.fields,
+                    models : $scope.item
+                }).then( ( errors ) => {
+                    $scope.validate.variations_walker({
+                        fields      :   $scope.advancedFields,
+                        item        :   $scope.item
+                    }).then( function() {
+                        $scope.$apply();
+                        
+                        // Counting all errors
+                        let allErrors   =   _.keys( errors ).length;
+
+                        // variations errors
+                        _.each( $scope.item.variations, ( variation ) => {
+                            allErrors   +=  _.keys( variation.errors ).length;
+
+                            // looking groups wrapper
+                            _.each( variation.groups_errors, ( group_errors ) => {
+                                // lopping groups errors
+                                _.each( group_errors, ( errors ) => {
+                                    allErrors   +=  _.keys( errors ).length;
+                                });
+                            });
+                        });
+                        
+                        // if the form has some errors
+                        if( allErrors > 0 ) {
+                            let warningMessage          =   '<?php echo _s( 'Le formulaire comprend {0} erreur(s). Assurez-vous que toutes les informations sont correctes.', 'nexopos_advanced' );?>';
+                            return sharedAlert.warning( warningMessage.format( allErrors ) );
+                        }
+
+                        // no errors let's continue
+                        // When submiting item
+                        var itemToSubmit                    =   sharedFilterItem(
+                            $scope.item,
+                            itemsFields,
+                            $scope.advancedFields
+                        );
+
+                        itemToSubmit[ 'author' ]                =   '<?php echo User::id();?>';
+                        itemToSubmit[ 'date_modification' ]     =   sharedMoment.now();
+                        itemToSubmit[ 'namespace' ]             =   $scope.item.namespace;
+
+                        // Item Resource Update
+                        itemsResource.update({
+                            id      :   $routeParams.id
+                        }, itemToSubmit, function( returned ){
+                            localStorageService.remove( 'item' );
+                            $location.path( 'items' );
+                        });
+                    });
+                });
+                
             }
 
             /**

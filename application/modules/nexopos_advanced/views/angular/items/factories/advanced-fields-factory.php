@@ -1,5 +1,6 @@
 tendooApp.factory( 'itemsAdvancedFields', [
     '$location',
+    '$routeParams',
     'sharedOptions',
     'barcodeOptions',
     'sharedRawToOptions',
@@ -8,6 +9,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
     'sharedAlert',
     function(
         $location,
+        $routeParams,
         sharedOptions,
         barcodeOptions,
         sharedRawToOptions,
@@ -114,10 +116,17 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     callback    :   ( field, item, errors ) => {
                         let promise     =   new Promise( ( resolve, reject ) => {
                             if( item.barcode != '' ) {
-                                itemsVariationsResource.get({
+                                let data        =   {
                                     id      :   item.barcode,
                                     as      :   'barcode'
-                                }, ( returned ) => {
+                                };
+
+                                // if id is defined, then we're editing an item and we should skip the variation id
+                                if( typeof $routeParams.id != 'undefined' ) {
+                                    data.exclude    =   $routeParams.id;
+                                }
+
+                                itemsVariationsResource.get( data, ( returned ) => {
                                     // if here is a result, then that's mean the barcode already exist
                                     if( ! angular.equals({}, returned ) ) {
                                         errors[ 'barcode' ]     =   {
@@ -125,10 +134,11 @@ tendooApp.factory( 'itemsAdvancedFields', [
                                             label   :   '<?php echo _s( 'CodeBar', 'nexopos_adavanced' );?>'
                                         };
                                     }
-                                    resolve( errors );
+                                    return resolve( errors, 'foo' );
                                 })
+                            } else {
+                                return resolve( errors );
                             }
-                            resolve( errors );
                         });
                         return promise;
                     }
@@ -179,6 +189,10 @@ tendooApp.factory( 'itemsAdvancedFields', [
                         return promise;
                     }
                 }
+            },{ // this will be used when the item will be update. This represent the variation id
+                type        :   'hidden',
+                model       :   'id',
+                show        :   () => true
             }
         ];
 
