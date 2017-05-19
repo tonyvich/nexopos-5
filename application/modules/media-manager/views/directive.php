@@ -13,7 +13,8 @@
             replace: true,
             template: '<span class="input-group-btn"> <button class="btn btn-default" ng-click="showMedia()" type="button"><i class="fa fa-search"></i></button> </span>',
             scope: {
-                model : '=model',
+                model          : '=?',
+                selectedSize   : '='
             },
             transclude : true,
             controller : [
@@ -31,6 +32,18 @@
                         namespace   :   'upload'
                     }];
 
+                    var model = $scope.model;
+                    var selectedSize = $scope.selectedSize;
+
+                    $scope.sizes = ['full','medium','original','thumb'];
+                    
+                    $scope.mediaEntries   = {};
+
+                    if( typeof(selectedSize) != 'undefined' ){
+                        $scope.sizes = [ selectedSize ];
+                        $scope.mediaSize = selectedSize;
+                    }
+
                     /**
                      * Select Current Tab
                      * @param object tab
@@ -47,9 +60,7 @@
                         $scope.currentTab   =   tab;
                     };
                     
-                    $scope.mediaEntries   = {};
-                    var model = $attrs.model;
-                    $scope.mediaSize = "full";
+                    
                     $scope.dzCallbacks          =   new Object;
                     
                     $scope.dzCallbacks.sending  =   function( file, XHR, formData ) {
@@ -76,7 +87,7 @@
                             } else {
                                 $scope.mediaEntries = returned.data;
                             }
-                            $scope.$apply();
+                            //$scope.$apply(); There is the rootScope in progress when applying here
                         });
                     }
                     
@@ -94,7 +105,8 @@
                             size: "large",
                             title: "<?php echo _s('Select a file','media-manager');?>",
                             message: content,
-                            callback: function(){ 
+                            callback: function(){
+                                console.log( $scope.mediaSize ); 
                                 $scope.modalHide();
                                 $scope.$apply();
                             }
@@ -155,8 +167,8 @@
                     **/
 
                     $scope.selectEntry      =   function( entry ) {
-                        if( entry.selected ) {
-                            entry.selected  =  false; 
+                        if( entry.selected == true ){
+                            entry.selected = false;
                             return;
                         }
 
@@ -178,15 +190,13 @@
                     **/
 
                     $scope.modalHide = function(){
-                        if( $scope.mediaSize == null){
-                            $scope.mediaSize = 'full';
-                        }
+                        var size = angular.element( '#selectSize' ).val();
                         _.each( $scope.$parent.item, function( value, key ){
                             if( value == "inMediaUse" ){
                                 _.each( $scope.mediaEntries, function( entry ){
                                     if( entry.selected == true ){
                                         var url = entry.url;
-                                        var newUrl = url.replace("#NAMESPACE#",'-' + $scope.mediaSize );
+                                        var newUrl = url.replace("#NAMESPACE#",'-' + size );
                                         $scope.$parent.item[ key ] = newUrl;
                                     }
                                 });
@@ -199,6 +209,7 @@
                             }
                         });
                     }
+                    
                     
                 /* Controller end */
                 }

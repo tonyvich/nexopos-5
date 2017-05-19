@@ -211,7 +211,7 @@
             type="text"
             class="form-control"
             placeholder="">
-            <button media-modal model="field.model"></button>
+            <button media-modal model="field.model" selected-size="field.size"></button>
         </div>
         <p
           class="help-block {{ field.model }}-helper"
