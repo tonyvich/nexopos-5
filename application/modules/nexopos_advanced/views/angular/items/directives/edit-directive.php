@@ -83,6 +83,93 @@ tendooApp.directive( 'itemEdit', function(){
             $scope.fields               =   itemsFields;
             $scope.advancedFields       =   new itemsAdvancedFields();
 
+            /**
+            *  Add Variation
+            *  @param void
+            *  @return void
+            **/
+
+            $scope.addVariation         =   function(){
+                if( this.item.variations.length == 10 ) {
+                    NexoAPI.Notify().info( '<?php echo _s( 'Attention', 'nexopos_advanced' );?>', '<?php echo _s( 'Vous ne pouvez pas créer plus de 10 variations d\'un même produit.', 'nexopos_advanced' );?>')
+                    return;
+                }
+
+                var singleVariation         =   {
+                    tabs        :   this.item.getTabs()
+                };
+
+                _.each( singleVariation, function( variation, $tab_id ) {
+                    _.each( variation.tabs, function( tab, $tab_key ) {
+                        tab.models      =   {};
+                    });
+                });
+
+                this.item.variations.push( this.hooks.applyFilters( 'addVariation', singleVariation ) );
+            }
+
+            /**
+            *  Remove Variation
+            *  @param int variation index
+            *  @return void
+            **/
+
+            $scope.removeVariation  =   function( $index ){
+                sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer cette variation ?', 'nexopos_advanced' );?>', ( action ) => {
+                    if( action ) {
+                        this.item.variations.splice( this.hooks.applyFilters( 'removeVariation', $index ), 1 );
+                    }
+                });
+            }
+
+            /**
+            *  Remove Group
+            *  @param int group index
+            *  @return void
+            **/
+
+            $scope.removeGroup      =   function( $index, $groups, ids ) {
+                sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer ce groupe ?', 'nexopos_advanced' );?>', ( action ) => {
+                    if( action ) {
+
+                        if( typeof this.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors != 'undefined' ) {
+                            // delete all error related to the deleted group
+                            this.item.variations[ ids.variation_id ].tabs[ ids.variation_tab_id ].groups_errors[ ids.variation_tab.namespace ].splice( $index, 1 );
+                        }                    
+
+                        $groups.splice( this.hooks.applyFilters( 'removeGroup', $index ), 1 );
+                    }
+                });
+            }
+
+            /**
+             * Duplicated a given variation
+             * @param object variation
+             * @param int variation index
+             * @return void
+            **/
+            
+            $scope.duplicate 	=	function( variation, $index ) {
+                let copied_variation;
+                copied_variation    =   {
+                    models      :   angular.copy( variation.models ),
+                    tabs        :   this.item.getTabs()
+                };
+
+                // copy only models from original 
+                copied_variation.tabs.forEach( ( value, key ) => {
+                    value.models    =   angular.copy( variation.tabs[ key ].models );
+                });
+
+                this.hooks.applyFilters( 'duplicateVariation', copied_variation );
+
+                this.item.variations.splice( $index + 1, 0, copied_variation );
+
+                setTimeout( () => {
+                    angular.element( '.variation-' + ( $index + 1 ) ).hide().fadeIn( 500 );
+                }, 50 );
+            }
+
             // Add hooks
             $scope.hooks.addFilter( 'addGroup', ( group ) => {
                 $scope.saveOnLocalStorage(); 
@@ -554,6 +641,16 @@ tendooApp.directive( 'itemEdit', function(){
                         });
                     }
                 }
+            }
+
+            /**
+             * Overwrite add a new variations
+             * @param void
+             * @return void
+            **/
+
+            $scope.removeVariation      =   ( variation_id ) => {
+
             }
 
             // Resources Loading
