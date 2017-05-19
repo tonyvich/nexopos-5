@@ -29,10 +29,28 @@ var itemsMain          =   function(
     _.each( $scope.table.entryActions, function( value, key ) {
         if( value.namespace == 'edit' ) {
             $scope.table.entryActions[ key ].name      =    '<?php echo _s( 'Consulter', 'nexopos_advanced' );?>';
-            $scope.table.entryActions[ key ].path      =    '/items/view/';
+            $scope.table.entryActions[ key ].path      =    '/items/view/edit/';
         }
     });
 
+    // custom entry actions
+    $scope.table.entryActions.push({
+        name        :   '<?php echo _s( 'Approvisionnement', 'nexopos_advanced' );?>',
+        namespace   :   'stock_income',
+        path        :   '/items/view/stock-income/'
+    });
+
+    $scope.table.entryActions.push({
+        name        :   '<?php echo _s( 'Ajustement du stock', 'nexopos_advanced' );?>',
+        namespace   :   'stock_income',
+        path        :   '/items/view/stock-adjustment/'
+    });
+
+    $scope.table.entryActions.push({
+        name        :   '<?php echo _s( 'Rapports', 'nexopos_advanced' );?>',
+        namespace   :   'stock_income',
+        path        :   '/items/view/reports/'
+    });
 
     /**
      *  Table Get

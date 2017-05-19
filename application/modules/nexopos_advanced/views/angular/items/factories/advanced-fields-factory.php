@@ -1,5 +1,6 @@
 tendooApp.factory( 'itemsAdvancedFields', [
     '$location',
+    '$routeParams',
     'sharedOptions',
     'barcodeOptions',
     'sharedRawToOptions',
@@ -8,6 +9,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
     'sharedAlert',
     function(
         $location,
+        $routeParams,
         sharedOptions,
         barcodeOptions,
         sharedRawToOptions,
@@ -78,8 +80,6 @@ tendooApp.factory( 'itemsAdvancedFields', [
             ]
         }];
 
-        return;
-
         this.barcode        =   [
             {
                 type        :   'text',
@@ -115,7 +115,30 @@ tendooApp.factory( 'itemsAdvancedFields', [
                 validation    :   {
                     callback    :   ( field, item, errors ) => {
                         let promise     =   new Promise( ( resolve, reject ) => {
-                            resolve( errors );
+                            if( item.barcode != '' ) {
+                                let data        =   {
+                                    id      :   item.barcode,
+                                    as      :   'barcode'
+                                };
+
+                                // if id is defined, then we're editing an item and we should skip the variation id
+                                if( typeof $routeParams.id != 'undefined' ) {
+                                    data.exclude    =   $routeParams.id;
+                                }
+
+                                itemsVariationsResource.get( data, ( returned ) => {
+                                    // if here is a result, then that's mean the barcode already exist
+                                    if( ! angular.equals({}, returned ) ) {
+                                        errors[ 'barcode' ]     =   {
+                                            msg     :   '<?php echo __( 'Le code barre est déjà utilisé, veuillez le remplacer par une valeur diffente', 'nexopos_adavanced' );?>',
+                                            label   :   '<?php echo _s( 'CodeBar', 'nexopos_adavanced' );?>'
+                                        };
+                                    }
+                                    return resolve( errors, 'foo' );
+                                })
+                            } else {
+                                return resolve( errors );
+                            }
                         });
                         return promise;
                     }
@@ -131,6 +154,7 @@ tendooApp.factory( 'itemsAdvancedFields', [
                                         tab.models.generate_barcode  =   'no';
                                     } else {
                                         tab.models.generate_barcode  =   'yes';
+                                        tab.models.barcode      =   '';
                                     }
                                 }                          
                             }
@@ -149,6 +173,26 @@ tendooApp.factory( 'itemsAdvancedFields', [
                     field.buttons[0].label      =   '<?php echo _s( 'Manuel', 'nexopos_advanced' );?>';
                     return false;                    
                 }
+            },{
+                type        :   'hidden',
+                model       :   'generate_barcode',
+                show        :   () => true,
+                validation  :   {
+                    // if generate barcode is empty, then set a default value to "auto";
+                    callback    :   ( field, item, errors ) => {
+                        let promise     =   new Promise( ( resolve, reject ) => {
+                            if( item[ 'generate_barcode' ] == '' ) {
+                                item[ 'generate_barcode' ]  =   'yes';
+                            }
+                            resolve( errors );
+                        });
+                        return promise;
+                    }
+                }
+            },{ // this will be used when the item will be update. This represent the variation id
+                type        :   'hidden',
+                model       :   'id',
+                show        :   () => true
             }
         ];
 

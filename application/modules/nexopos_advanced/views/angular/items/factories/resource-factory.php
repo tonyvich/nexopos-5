@@ -4,7 +4,7 @@ $this->load->config( 'rest' );
 ?>
 tendooApp.factory( 'itemsResource', function( $resource ) {
     return $resource(
-        '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'items/:id/:as?order_by=:order_by&order_type=:order_type&limit=:limit&variations=:variations' ]);?>',
+        '<?php echo site_url( [ 'rest', 'nexopos_advanced', 'items/:id/:as?order_by=:order_by&order_type=:order_type&limit=:limit&variations=:variations&exclude=:exclude' ]);?>',
         {
             id              :   '@_id',
             order_by        :   '@_order_by',
@@ -12,7 +12,8 @@ tendooApp.factory( 'itemsResource', function( $resource ) {
             limit           :   '@_limit',
             current_page    :   '@_current_page',
             as              :   '@_as',
-            variations      :   '@_variations'
+            variations      :   '@_variations',
+            exclude         :   '@_exclude' // always exclude id
         },{
             get : {
                 method : 'GET',

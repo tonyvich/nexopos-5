@@ -46,6 +46,11 @@ Trait items_variations
                 $this->db->order_by( $this->get( 'order_by' ), $this->get( 'order_type' ) );
             }
 
+            // exclude an entry
+            if( $this->get( 'exclude' ) ) {
+                $this->db->where( 'nexopos_items_variations.id !=', $this->get( 'exclude' ) );
+            }
+
             if( $this->get( 'limit' ) ) {
                 $this->db->limit( $this->get( 'limit' ), $this->get( 'limit' ) * $this->get( 'current_page' ) );
             }
@@ -64,6 +69,11 @@ Trait items_variations
             $result     =   $this->db->where( $filter, $id );
         } else {
             $result     =   $this->db->where( 'id', $id );
+        }
+
+        // exclude an entry
+        if( $this->get( 'exclude' ) ) {
+            $this->db->where( 'id !=', $this->get( 'exclude' ) );
         }
 
         $result     =   $this->db->get( 'nexopos_items_variations' )->result();

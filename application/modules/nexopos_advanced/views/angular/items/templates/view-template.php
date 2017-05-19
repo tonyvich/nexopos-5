@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li ng-repeat="tab in tabs" ng-class="{ 'active': tab.active }" ng-click="enableTab( tab )"><a href="javascript:void(0)">{{ tab.title }}</a></li>
+              <li ng-repeat="tab in tabs" ng-class="{ 'active': tab.active }" ng-click="enableTab({ tab })"><a href="javascript:void(0)">{{ tab.title }}</a></li>
               <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
             </ul>
             <div class="tab-content">

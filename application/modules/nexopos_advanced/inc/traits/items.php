@@ -94,8 +94,8 @@ Trait items
 
                 $this->db->join( 'aauth_users', 'aauth_users.id = nexopos_items.author' );
                 $this->db->join( 'nexopos_categories', 'nexopos_items.ref_category = nexopos_categories.id' );
-                $this->db->join( 'nexopos_departments', 'nexopos_items.ref_department = nexopos_departments.id' );
-                $this->db->join( 'nexopos_taxes', 'nexopos_items.ref_tax = nexopos_taxes.id' );
+                $this->db->join( 'nexopos_departments', 'nexopos_items.ref_department = nexopos_departments.id', 'left' );
+                $this->db->join( 'nexopos_taxes', 'nexopos_items.ref_tax = nexopos_taxes.id', 'left' );
 
                 $query      =   $this->db->get();
 
@@ -105,6 +105,7 @@ Trait items
                 ], 200 );
 
             }
+
         }
 
         if( $filter != null ) {
@@ -338,6 +339,29 @@ Trait items
 
     public function items_put( $id )
     {
+        $item           =   [];
+        foreach( $this->put() as $input => $value ) {
+            if( $input != 'variations' ) {
+                $item[ $input ]     =   $value;
+            }
+        }
 
+        $this->db->where( 'id', $id )->update( 'nexopos_items', $item );
+
+        // updating variations
+        $variations         =   [];
+        foreach( $this->put( 'variations' ) as $raw_variation ) {
+            $variation      =   [];
+            foreach( $raw_variation as $input => $value ) {
+                if( ! is_array( $value ) ) {
+                    $variation[ $input ]    =   $value;
+                }
+            } 
+            $variations[]   =   $variation;           
+        }
+
+        $this->db->update_batch( 'nexopos_items_variations', $variations, 'id' );
+
+        return $this->__success();
     }
 }

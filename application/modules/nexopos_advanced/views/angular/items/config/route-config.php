@@ -29,7 +29,7 @@
     }
 })
 
-.when('/items/view/:id', {
+.when('/items/view/:tab/:id', {
     templateUrl: function( urlattr ) {
         return 'templates/items/view';
     },

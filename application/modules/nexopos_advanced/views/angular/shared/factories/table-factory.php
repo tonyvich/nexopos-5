@@ -316,7 +316,7 @@ tendooApp.factory( 'sharedTable', [
                     }
                 });
 
-            } else if( action.namespace == 'edit' ) {
+            } else {
                 $location.url( action.path + entry.id );
             }
         }

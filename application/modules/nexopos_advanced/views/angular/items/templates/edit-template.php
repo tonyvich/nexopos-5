@@ -12,7 +12,7 @@
                     ng-focus="validate.focus( fields[0], item )"
                     >
                 <span class="input-group-btn ">
-                    <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Publier', 'nexopos_advanced' );?></button>
+                    <button ng-click="submitItem()" class="btn btn-primary" type="button"><?php echo __( 'Modifier', 'nexopos_advanced' );?></button>
                     <span class="ng-hide"></span>
                 </span>
             </div>

@@ -1,4 +1,7 @@
-tendooApp.factory( 'itemsTabs', function(){
+<?php if( true == false ):?>
+<script>
+<?php endif;?>
+tendooApp.factory( 'itemsTabs', [ '$routeParams', function( $routeParams ){
     return function() {
         this.getTabs    =   () => {
             var tabs    =   new Array;
@@ -22,6 +25,18 @@ tendooApp.factory( 'itemsTabs', function(){
                     'title'         :   '<?php echo _s( 'Stock', 'nexopos_advanced' );?>',
                     active          :   false,
                     hide            :   function( item ){
+                        /**
+                         * If the tab exist, then the current view is the edition. The stock tab is not displayed then
+                        **/
+
+                        if( typeof $routeParams.tab != 'undefined' ) {
+                            return true;
+                        }
+
+                        /**
+                         * hidden if the current item type doesn't need it
+                        **/
+                        
                         return  _.indexOf([ 'services', 'coupon' ], item.namespace ) == -1 ? false : true;
                     }
                 },{
@@ -43,4 +58,4 @@ tendooApp.factory( 'itemsTabs', function(){
             return tabs;
         }
     }
-});
+}]);

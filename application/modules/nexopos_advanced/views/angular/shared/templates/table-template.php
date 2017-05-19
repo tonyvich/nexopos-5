@@ -74,7 +74,7 @@
                                 <!-- Single button -->
                                 <div class="btn-group">
                                   <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Action <span class="caret"></span>
+                                    <?php echo __( 'Actions', 'nexopos_advanced' );?> <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu right-align">
                                     <li ng-repeat="action in table.entryActions">
@@ -82,7 +82,7 @@
                                             ng-if="action.namespace != false"
                                             href="javascript:void(0);"
                                             ng-click="table.submitSingleAction( entry, action )"
-                                        >{{ action.name }}</a>
+                                        >{{ action.name }} </a>
                                     </li>
                                   </ul>
                                 </div>
@@ -95,6 +95,7 @@
                                 ( table.isDisabled( 'entry-actions' ) ? 1 : 0 )
                             }}"><?php echo __( 'Aucune entrée à afficher', 'nexopos_advanced' );?></td>
                         </tr>
+                        
                     </tbody>
                 </table>
             </div>

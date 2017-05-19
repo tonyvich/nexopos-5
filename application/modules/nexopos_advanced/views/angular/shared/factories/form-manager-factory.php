@@ -87,19 +87,20 @@ tendooApp.factory( 'sharedFormManager', [
         *  @return int
         **/
 
-        this.countAllErrors       =   function( variation ) {
-            var errors      =   0;
-            errors  +=  _.keys( variation.errors ).length;
+        this.countAllErrors       =   function( tab ) {
 
-            if( angular.isDefined( variation.groups_errors ) ) {
-                _.each( variation.groups_errors, function( group ) {
-                    _.each( group, function( error ){
-                        errors  +=  _.keys( error ).length;
-                    })
+            var error_count      =   0;
+            error_count         +=  _.keys( tab.errors ).length;
+
+            if( angular.isDefined( tab.groups_errors ) ) {
+                _.each( tab.groups_errors, function( group ) {
+                    _.each( group, function( errors ){
+                        error_count  +=  _.keys( errors ).length;
+                    });
                 });
             }
 
-            return errors;
+            return error_count;
         }
 
         /**

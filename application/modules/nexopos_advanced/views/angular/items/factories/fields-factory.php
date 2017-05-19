@@ -67,6 +67,9 @@ tendooApp.factory( 'itemsFields', [ '$location', 'sharedOptions', function( $loc
                 icon    :   'fa fa-plus'
             }]
         },{
+            type    :   'hidden',
+            model   :   'namespace',
+        },{
             type    :   'select',
             label   :   '<?php echo _s( 'Status', "nexopos_advanced" );?>',
             model   :   'status',
