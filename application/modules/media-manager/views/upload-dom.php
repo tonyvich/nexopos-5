@@ -1,4 +1,4 @@
-<div class="row" ng-controller="mediaManagerCTRL">
+<div class="row parent" ng-controller="mediaManagerCTRL">
     <div class="col-md-12">
         <div class="nav-tabs-custom" style="margin-bottom:0px;">
             <ul class="nav nav-tabs">
@@ -11,8 +11,8 @@
                   <div class="row">
                       <div class="col-md-12">
                           <div class="row">
-                              <div class="col-md-12">
-                                  <div class="input-group input-group-lg">
+                              <div class="col-md-12 mediaDivTool">
+                                  <div class="input-group">
                                     <span class="input-group-addon"><?php echo __( 'Search', 'media-manager' );?></span>
                                     <input type="text" class="form-control" placeholder="" ng-model="searchInput">
                                     <div class="input-group-btn">
@@ -25,8 +25,7 @@
                                   <br>
                               </div>
                               <div class="col-md-12">
-                                  <div class="col-md-{{ mainMediaDivHeight }}">
-                                    <div class="container-fluid" style="padding-top:5px;overflow-y:scroll;height:300px;">
+                                  <div class="container-fluid mediaDivMedia" style="padding-top:5px;overflow-y:scroll;">
                                         <div
                                             ng-click="selectEntry( entry, index )"
                                             ng-class="{ 'selected' : entry.selected }"
@@ -34,28 +33,7 @@
                                             ng-repeat="(index, entry) in entries">
                                             <img ng-src="{{ entry.thumb }}"/>
                                         </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-3" ng-show="showDetails == true">
-                                    <div ng-show="countSelected() == 1">
-                                        <h2 class="page-header">
-                                            <i class="fa fa-globe"></i> <?php echo __( 'Details', 'media-manager' );?>
-                                        </h2>
-                                            <p>
-                                                <strong><?php echo __( 'Name' , 'media-manager' );?> : </strong>
-                                                {{ entries[ selectedIndex ].name }}
-                                            </p>
-                                            <p>
-                                                <strong><?php echo __( 'Uploaded' , 'media-manager' );?> : </strong>
-                                                {{ entries[ selectedIndex ].date_creation }}
-                                            </p>
-                                    </div>
-                                    <div ng-show="countSelected() > 1">
-                                        <h2 class="page-header">
-                                            <i class="fa fa-globe"></i> <?php echo __( 'Details', 'media-manager' );?>
-                                        </h2>
-                                    </div>
-                                </div>
+                                 </div>
                               </div>
                           </div>
                       </div>
@@ -63,10 +41,19 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="upload_tab">
-                  <ng-dropzone style="height:{{ dropZoneHeight }}px" class="dropzone" callbacks="dzCallbacks"/>
+                    <ng-dropzone class="dropzone" callbacks="dzCallbacks"/>
               </div>
             </div>
             <!-- /.tab-content -->
           </div>
     </div>
 </div>
+
+<style>
+    .parent {
+        display: flex;
+    }
+    .child {
+        align-items: stretch;
+    }
+</style>

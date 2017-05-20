@@ -50,6 +50,7 @@ class Media_Manager_Controller extends Tendoo_module
         }
 
         if ( $this->upload->do_upload( 'file' ) ) {
+            
             $data       =   $this->upload->data();
             foreach( $this->events->apply_filters( 'mm-upload-sizes', $this->config->item( 'mm-upload-sizes' ) ) as $namespace => $size ) {
                 if( $size === true ) {
@@ -80,6 +81,8 @@ class Media_Manager_Controller extends Tendoo_module
                 'author'            =>  User::id(),
                 'date_creation'     =>  date_now(),
             ]);
+        } else {
+            echo "not uploaded";
         }
     }
 

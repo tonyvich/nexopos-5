@@ -245,5 +245,12 @@
                 $scope.mainMediaDivHeight = 12;
             }
         });
+
+        // Setting Ui
+        angular.element( '.content-header' ).remove();
+        var contentHeight = angular.element( '.content-wrapper').height(); 
+        var finalHeight = contentHeight - 44;        
+        angular.element( '.mediaDivMedia').height( finalHeight - angular.element( '.mediaDivTool').height() - 55 );
+        angular.element( '.dropzone').height( finalHeight - 65 );
     }]);
 </script>
