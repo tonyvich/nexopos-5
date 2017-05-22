@@ -140,7 +140,8 @@ Trait items_variations
             return $this->__success();
         } else if( is_numeric( $_GET[ 'ids' ] ) ) {
             
-            $variations         =   $this->db->where( 'id', $_GET[ 'ids' ] )->get( 'nexopos_items_variations' )->result();
+            $variation         =   $this->db->where( 'id', $_GET[ 'ids' ] )->get( 'nexopos_items_variations' )->result();
+            $variations         =   $this->db->where( 'ref_item', $variation[0]->ref_item )->get( 'nexopos_items_variations' )->result();
             if( count( $variations ) == 1 ) {
                 return $this->response([
                     'error'     =>  'unable to delete the last variation'
