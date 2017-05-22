@@ -88,8 +88,44 @@ Trait items_variations
 
     public function items_variations_post()
     {
-        // Success
-        return $this->__success();
+        // means we're duplicating a variation
+        if( $this->post( '$duplicate') != null ) {
+            $variation      =   $this->db->where( 'id', $this->post( '$duplicate' ) )
+            ->get( 'nexopos_items_variations' )
+            ->result();
+
+            if( $variation ) {
+                // unset field we don't what to copy
+                unset( $variation[0]->id );
+
+                $this->db->insert( 'nexopos_items_variations', $variation[0] );
+                $variation_id   =   $this->db->insert_id();
+
+                foreach( [ 'galleries', 'stock', 'metas' ] as $var  => $data ) {
+                    $entry      =      $this->db->where( 'ref_variation', $this->post( '$duplicate' ) )
+                    ->get( 'nexopos_items_variations_' . $data )
+                    ->result();
+
+                    unset( $entry[0]->id );
+                    unset( $entry[0]->barcode );
+                    unset( $entry[0]->sku );
+
+                    // to avoid : Message: Creating default object from empty value
+                    if( $entry ) {
+                        $entry[0]->ref_variation    =   $variation_id;
+                        $this->db->insert( 'nexopos_items_variations_' . $data, $entry[0] );
+                    }                    
+                }
+                $this->__success();
+            }
+            $this->__failed();            
+
+        } else {
+            $this->db->insert( 'nexopos_items_variations', $this->post() );
+            return  $this->response([
+                'id'    =>  $this->db->insert_id()
+            ], 200 );
+        }        
     }
 
     public function items_variations_delete()
@@ -97,7 +133,24 @@ Trait items_variations
         if( is_array( $_GET[ 'ids' ] ) ) {
             foreach( $_GET[ 'ids' ] as $id ) {
                 $this->db->where( 'id', ( int ) $id )->delete( 'nexopos_items_variations' );
+                $this->db->where( 'ref_variation', ( int ) $id )->delete( 'nexopos_items_variations_galleries' );
+                $this->db->where( 'ref_variation', ( int ) $id )->delete( 'nexopos_items_variations_metas' );
+                $this->db->where( 'ref_variation', ( int ) $id )->delete( 'nexopos_items_variations_stock' );
             }
+            return $this->__success();
+        } else if( is_numeric( $_GET[ 'ids' ] ) ) {
+            
+            $variations         =   $this->db->where( 'id', $_GET[ 'ids' ] )->get( 'nexopos_items_variations' )->result();
+            if( count( $variations ) == 1 ) {
+                return $this->response([
+                    'error'     =>  'unable to delete the last variation'
+                ], 401 );
+            }
+
+            $this->db->where( 'id', ( int ) $_GET[ 'ids' ] )->delete( 'nexopos_items_variations' );
+            $this->db->where( 'ref_variation', ( int ) $_GET[ 'ids' ] )->delete( 'nexopos_items_variations_galleries' );
+            $this->db->where( 'ref_variation', ( int ) $_GET[ 'ids' ] )->delete( 'nexopos_items_variations_metas' );
+            $this->db->where( 'ref_variation', ( int ) $_GET[ 'ids' ] )->delete( 'nexopos_items_variations_stock' );
             return $this->__success();
         }
         return $this->__failed();

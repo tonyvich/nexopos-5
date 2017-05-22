@@ -42,4 +42,19 @@ tendooApp.factory( 'sharedFilterItem', function(){
 
         return item;
     }
+});
+
+tendooApp.factory( 'sharedFilterVariation', function(){
+    return function( variation, advancedFields ) {
+
+        let _var        =   angular.copy( variation );
+        let models      =   new Object;
+
+        variation.tabs.forEach( ( tab ) => {
+            models      =   _.extend( models, tab.models );
+        });
+
+        return models;
+    }
 })
+

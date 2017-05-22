@@ -8,6 +8,7 @@ tendooApp.directive( 'itemEdit', function(){
             '$scope',
             '$http',
             '$location',
+            '$timeout',
             'itemsTypes',
             'itemsTabs',
             'itemsAdvancedFields',
@@ -28,6 +29,7 @@ tendooApp.directive( 'itemEdit', function(){
             'sharedAlert',
             'sharedMoment',
             'sharedFilterItem',
+            'sharedFilterVariation',
             'sharedResourceLoader',
             'sharedFormManager',
             'sharedCurrency',
@@ -38,6 +40,7 @@ tendooApp.directive( 'itemEdit', function(){
                 $scope,
                 $http,
                 $location,
+                $timeout,
 
                 // internal dependencies
 
@@ -64,6 +67,7 @@ tendooApp.directive( 'itemEdit', function(){
                 sharedAlert,
                 sharedMoment,
                 sharedFilterItem,
+                sharedFilterVariation,
                 sharedResourceLoader,
                 sharedFormManager,
                 sharedCurrency,
@@ -90,22 +94,70 @@ tendooApp.directive( 'itemEdit', function(){
             **/
 
             $scope.addVariation         =   function(){
+
                 if( this.item.variations.length == 10 ) {
                     NexoAPI.Notify().info( '<?php echo _s( 'Attention', 'nexopos_advanced' );?>', '<?php echo _s( 'Vous ne pouvez pas créer plus de 10 variations d\'un même produit.', 'nexopos_advanced' );?>')
                     return;
                 }
 
-                var singleVariation         =   {
-                    tabs        :   this.item.getTabs()
-                };
+                // save on local storage
+                $scope.saveOnLocalStorage();
+                tendooApp.spinner.start();
 
-                _.each( singleVariation, function( variation, $tab_id ) {
-                    _.each( variation.tabs, function( tab, $tab_key ) {
-                        tab.models      =   {};
+                itemsVariationsResource.save({
+                    ref_item    :   $routeParams.id
+                }, ( data ) => {
+                    var singleVariation         =   {
+                        tabs        :   this.item.getTabs()
+                    };
+
+                    _.each( singleVariation.tabs, function( tab, $tab_key ) {
+                        if( tab.namespace   ==  'barcode' ) {
+                            typeof tab.models == 'undefined' ? tab.models   =   new Object : tab.models;
+                            tab.models.id       =   data.id
+                        }
                     });
-                });
 
-                this.item.variations.push( this.hooks.applyFilters( 'addVariation', singleVariation ) );
+                    this.item.variations.push( this.hooks.applyFilters( 'addVariation', singleVariation ) );
+                    
+                    $timeout(() => {
+                        $( '.variation-' + data.id ).hide().fadeIn(500);
+                    }, 200 );
+
+                    tendooApp.spinner.stop();
+                });
+            }
+
+            /**
+            * Duplicated a given variation
+            * @param object variation
+            * @param int variation index
+            * @return void
+            **/
+            
+            $scope.duplicate 	    =	function( variation, $index ) {
+                itemsVariationsResource.save({
+                    '$duplicate'       :   sharedFilterVariation( variation ).id
+                }, ( data ) => {
+                    let copied_variation;
+                    copied_variation    =   {
+                        models      :   angular.copy( variation.models ),
+                        tabs        :   this.item.getTabs()
+                    };
+
+                    // copy only models from original 
+                    copied_variation.tabs.forEach( ( value, key ) => {
+                        value.models    =   angular.copy( variation.tabs[ key ].models );
+                    });
+
+                    this.hooks.applyFilters( 'duplicateVariation', copied_variation );
+
+                    this.item.variations.splice( $index + 1, 0, copied_variation );
+
+                    setTimeout( () => {
+                        angular.element( '.variation-' + ( $index + 1 ) ).hide().fadeIn( 500 );
+                    }, 50 );
+                });
             }
 
             /**
@@ -114,10 +166,17 @@ tendooApp.directive( 'itemEdit', function(){
             *  @return void
             **/
 
-            $scope.removeVariation  =   function( $index ){
-                sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer cette variation ?', 'nexopos_advanced' );?>', ( action ) => {
+            $scope.removeVariation  =   function( $index, variation ){
+                sharedAlert.confirm( '<?php echo _s( 'Souhaitez-vous supprimer cette variation et toutes ses données ?', 'nexopos_advanced' );?>', ( action ) => {
                     if( action ) {
-                        this.item.variations.splice( this.hooks.applyFilters( 'removeVariation', $index ), 1 );
+                        itemsVariationsResource.delete({
+                            ids      :   sharedFilterVariation( variation ).id
+                        }, ( response ) => {
+                            angular.element( '.variation-' + $index ).fadeOut( 500, () => {
+                                this.item.variations.splice( this.hooks.applyFilters( 'removeVariation', $index ), 1 );
+                                $scope.$apply();
+                            });                            
+                        });
                     }
                 });
             }
@@ -140,34 +199,6 @@ tendooApp.directive( 'itemEdit', function(){
                         $groups.splice( this.hooks.applyFilters( 'removeGroup', $index ), 1 );
                     }
                 });
-            }
-
-            /**
-             * Duplicated a given variation
-             * @param object variation
-             * @param int variation index
-             * @return void
-            **/
-            
-            $scope.duplicate 	=	function( variation, $index ) {
-                let copied_variation;
-                copied_variation    =   {
-                    models      :   angular.copy( variation.models ),
-                    tabs        :   this.item.getTabs()
-                };
-
-                // copy only models from original 
-                copied_variation.tabs.forEach( ( value, key ) => {
-                    value.models    =   angular.copy( variation.tabs[ key ].models );
-                });
-
-                this.hooks.applyFilters( 'duplicateVariation', copied_variation );
-
-                this.item.variations.splice( $index + 1, 0, copied_variation );
-
-                setTimeout( () => {
-                    angular.element( '.variation-' + ( $index + 1 ) ).hide().fadeIn( 500 );
-                }, 50 );
             }
 
             // Add hooks
@@ -373,9 +404,6 @@ tendooApp.directive( 'itemEdit', function(){
                 $scope.item                 =   new itemsTabs();
                 $scope.item.name            =   '';
                 $scope.item.variations      =   [{
-                    models          :       {
-                        name        :   $scope.item.name
-                    },
                     tabs            :       $scope.item.getTabs()
                 }];
 
@@ -641,16 +669,6 @@ tendooApp.directive( 'itemEdit', function(){
                         });
                     }
                 }
-            }
-
-            /**
-             * Overwrite add a new variations
-             * @param void
-             * @return void
-            **/
-
-            $scope.removeVariation      =   ( variation_id ) => {
-
             }
 
             // Resources Loading
