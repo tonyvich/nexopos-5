@@ -54,14 +54,16 @@ class PermManagerModule extends Tendoo_Module
         $root_url       =   '../bower_components/';
 
         $this->enqueue->css_namespace( 'dashboard_header' ); 
-        $this->enqueue->css( $bower_url . 'bootstrap-vertical-tabs/bootstrap.vertical-tabs' );
 
         $this->enqueue->js_namespace( 'dashboard_footer' );
-        $this->enqueue->js( $js_url . 'ui-bootstrap-tpls-2.5.0.min' );
+        
+        // Sweeet Alert
+        $this->enqueue->js( $bower_url . 'ngSweetAlert/SweetAlert.min' );
+        $this->enqueue->js( $bower_url . 'sweetalert/dist/sweetalert.min' );
     }
 
     public function dependencies( $deps ){
-        $deps[] = 'ui.bootstrap';
+        $deps[] = 'oitozero.ngSweetAlert';
         return $deps;
     }
 
