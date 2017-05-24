@@ -22,17 +22,16 @@
                                         <button type="button" class="btn btn-danger" ng-click="delete()" ng-show="countSelected() > 0"><i class="fa fa-trash"></i></button>
                                     </div>
                                   </div>
-                                  <br>
                               </div>
-                              <div class="col-md-12">
-                                  <div class="container-fluid mediaDivMedia" style="padding-top:5px;overflow-y:scroll;">
-                                        <div
-                                            ng-click="selectEntry( entry, index )"
-                                            ng-class="{ 'selected' : entry.selected }"
-                                            class="media-manager-entry-box"
-                                            ng-repeat="(index, entry) in entries">
-                                            <img ng-src="{{ entry.thumb }}"/>
-                                        </div>
+                              <div class="col-md-12" style="margin-top:10px">
+                                  <div class="mediaDivMedia" style="padding-top:5px;overflow-y:scroll;padding-left:5px;">
+                                    <div
+                                        ng-click="selectEntry( entry, index )"
+                                        ng-class="{ 'selected' : entry.selected }"
+                                        class="media-manager-entry-box"
+                                        ng-repeat="(index, entry) in entries">
+                                        <img ng-src="{{ entry.thumb }}"/>
+                                    </div>
                                  </div>
                               </div>
                           </div>
@@ -55,5 +54,8 @@
     }
     .child {
         align-items: stretch;
+    }
+    .media-manager-entry-box {
+        box-shadow: 0 0 0 1px #fff, 0 0 0 5px #DDD;
     }
 </style>
