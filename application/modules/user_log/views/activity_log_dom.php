@@ -96,7 +96,7 @@
                             </li>
 
                             <li ng-repeat="( page, v ) in __getNumber( pages ) track by $index" ng-class="{active: currentPage === page }">
-                                <a href="javascript:void(0)" ng-click="getPage( v )">{{ page + 1 }} </a>
+                                <a href="javascript:void(0)" ng-click="getPage( page )">{{ page + 1 }} </a>
                             </li>
 
                             <li ng-class="{disabled: currentPage === pages }">
