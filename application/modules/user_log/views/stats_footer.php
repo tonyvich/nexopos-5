@@ -126,6 +126,12 @@
                 $scope.currentUserStats = $scope.usersStatistics[ $scope.usersName[0]];
             }
 
+            /**
+             *  Handle Users Actions 
+             *  @param void
+             *  @return void
+            **/
+
             $scope.handleUsersActions = ()=>
             {
                 _.each( $scope.users, ( user )=>

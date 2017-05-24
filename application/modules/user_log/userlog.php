@@ -85,6 +85,10 @@ class UserLogModule extends Tendoo_Module
                 'href'     =>  site_url( [ 'dashboard', 'user_log', 'stats' ] )
             ),
             array(
+                'title'    => __("Activity Log","user_log"),
+                'href'     => site_url( [ 'dashboard', 'user_log', 'activity_log' ] )
+            ),
+            array(
                 'title'    => __("Réglages","user_log"),
                 'href'     => site_url( [ 'dashboard', 'user_log', 'settings' ] )
             )
