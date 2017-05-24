@@ -191,6 +191,7 @@
                 {
                     var entry = [];
                     entry.push( [ permission, group ] );
+                    console.log( entry );
                     permissionsResource.delete( {'entries[]' : entry }, function( data ) 
                     {
                         $scope.loadData();
