@@ -60,6 +60,10 @@ class UserLogModule extends Tendoo_Module
           `session` int(11), 
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;' );
+
+        // Setting default options 
+        $this->options->set("user_log_enable_disconnect","enabled",1);
+        $this->options->set("user_log_idle_time","20",1);
     }
 
     /**

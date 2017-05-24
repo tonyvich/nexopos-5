@@ -64,7 +64,7 @@ class PermManagerModule extends Tendoo_Module
     }
 
     public function dependencies( $deps ){
-        $deps[] = 'ui.bootstrap';
+        $deps[] = 'oitozero.ngSweetAlert';
         return $deps;
     }
 
