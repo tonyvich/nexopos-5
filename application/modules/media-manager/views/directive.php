@@ -97,7 +97,7 @@
                      *  @return
                     **/
 
-                    $scope.showMedia = function(){
+                    $scope.showMedia = () => {
                         let tpl             =   <?php echo json_encode( $this->load->module_view( 'media-manager', 'media-window', null, true ) );?>;
                         var content         =   '<div class="media-wrapper">' + tpl + '</div>'; 
                         
@@ -105,8 +105,12 @@
                             size: "large",
                             title: "<?php echo _s('Select a file','media-manager');?>",
                             message: content,
+                            buttons : {
+                                ok : {
+                                    label : "<?php echo _s("Insérer","media-manager"); ?>" 
+                                }
+                            },
                             callback: function(){
-                                console.log( $scope.mediaSize ); 
                                 $scope.modalHide();
                                 $scope.$apply();
                             }
