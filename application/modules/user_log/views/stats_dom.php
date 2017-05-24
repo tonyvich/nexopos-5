@@ -9,7 +9,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="box-title">
-                        <?php echo __( ' Tableau des actions', 'perm_manager' );?>
+                        <?php echo __('Actions', 'perm_manager' );?>
                     </div>
                     <div class="box-tools">
                         

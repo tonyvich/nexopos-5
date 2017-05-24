@@ -84,7 +84,6 @@
 
                     var userHours = []; // Array to contain each session duration for the current user
                     var userTotalHours = 0; // Total of curent user sessions duration
-                    var dateRegex = /<?php echo date('Y');?>/; // A Regex Based on the current year
                     var curUserSession = []; // Array to contain each current user session
                     
                     $scope.usersName.push( user.name ); // Add Current user name to the usersName array
@@ -98,11 +97,9 @@
                     // Getting all sessions of the current user
 
                     _.each( $scope.sessions, function( session ){
-                        if( dateRegex.test(session.date_connexion)){
-                            if( session.user == user.id ){
-                                curUserSession.push( session );
-                                $scope.usersStatistics[ user.name ].total_session_numbers++; // Set current user total number of sessions
-                            }    
+                        if( session.user == user.id ){
+                            $scope.usersStatistics[ user.name ].total_session_numbers++; // Set current user total number of sessions
+                            curUserSession.push( session );
                         }
                     });
 
