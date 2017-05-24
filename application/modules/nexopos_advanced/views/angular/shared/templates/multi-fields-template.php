@@ -20,7 +20,7 @@
                 ng-show="item.variations.length > 1"
                 title="<?php echo __( 'Supprimer une variation', 'nexopos_advanced' );?>"
                 class="btn btn-danger btn-md"
-                ng-click="removeVariation( variation_id )">
+                ng-click="removeVariation( variation_id, variation )">
                     <i class="fa fa-remove"></i>
             </span>
 
