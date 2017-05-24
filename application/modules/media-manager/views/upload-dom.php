@@ -1,5 +1,5 @@
 <div class="row parent" ng-controller="mediaManagerCTRL">
-    <div class="col-md-12 ng-cloack">
+    <div class="col-md-12"  ng-cloack>
         <div class="nav-tabs-custom" style="margin-bottom:0px;">
             <ul class="nav nav-tabs">
               <li ng-click="loadAssets();calculateHeight()" class="active"><a href="#main_page" data-toggle="tab"><?php echo __( 'Medias', 'media-manager' );?></a></li>

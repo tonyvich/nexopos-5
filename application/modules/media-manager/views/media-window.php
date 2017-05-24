@@ -45,4 +45,10 @@
 .dropzone {
     margin-top:15px;
 }
+.media-manager-entry-box {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 5px #EEE;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    float: left;
+}
 </style>

@@ -78,12 +78,46 @@ class UserLogController extends Tendoo_Module
 
     public function get()
     {
-        $sessions = $this->db->get("user_log_sessions")->result();
-        $actions  = $this->db->get("user_log_actions")->result();
-        $users = $this->db->get("aauth_users")->result();
+        $sessions = $this->db->get("user_log_sessions")->result(); // Get Sessions
+        $users = $this->db->get("aauth_users")->result(); // Get Users
+        
+        
+        // Get actions
+        $this->db->start_cache();
+        $this->db->select( '*' );
+        $this->db->from( 'user_log_actions' );
 
+        // Select User 
+
+        if( $this->input->get( 'selected_user' ) ) {
+            $this->db->where( "user", $this->input->get( 'selected_user' ));
+        } else {
+            $this->db->where( "user", User::id());
+        }
+        
+        // Order Request
+        if( $this->input->get( 'order_by' ) ) {
+            $this->db->order_by( $this->input->get( 'order_by' ), $this->input->get( 'order_type' ) );
+        }
+
+        // Search
+        if( $this->input->get( 'search' ) ) {
+            $this->db->like( 'user_log_actions.action', $this->input->get( 'search' ) );
+        }
+
+        $query  = $this->db->get();
+        $data['num_actions'] = $query->num_rows();
+
+        // Limit data
+        if( $this->input->get( 'limit' ) ) {
+            $this->db->limit( $this->input->get( 'limit' ), $this->input->get( 'limit' ) * $this->input->get( 'current_page' ) );
+        }
+
+        $query  = $this->db->get();
+        
         $data['sessions'] = $sessions;
-        $data['actions']  = $actions;
+        $data['actions']  = $query->result();
+        $this->db->stop_cache();
         $data['users'] = $users;
 
         echo( json_encode( $data ));
@@ -158,6 +192,23 @@ class UserLogController extends Tendoo_Module
         
         $this->Gui->set_title(__("Statistiques","user_log"));
         $this->load->module_view("user_log","stats_view");
+    }
+
+    /**
+     *  Activity_log
+     *  @param void
+     *  @return void
+    **/
+
+    public function activity_log()
+    {
+        $this->events->add_action( 'dashboard_footer', 
+            function() {
+                get_instance()->load->module_view( 'user_log', 'activity_log_footer' );
+            });
+        
+        $this->Gui->set_title(__("Statistiques","user_log"));
+        $this->load->module_view("user_log","activity_log_view");
     }
     
 }

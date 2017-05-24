@@ -24,7 +24,7 @@ class user_log_library {
     public function log_action( $action ){
         $user_id = @$action['user'];
         $user_action = @$action['action'];
-        $date_action = date("Y-m-d H:i:s");
+        $date_action = date_now();
         $session_id = 0;
         
         if( $user_id == null ){
