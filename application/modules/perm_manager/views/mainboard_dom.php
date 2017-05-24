@@ -12,7 +12,7 @@
             <div class="box-body">
                 <div class="form-group col-md-12">
                     <div class="input-group">
-                        <span class="input-group-addon"> <?php echo __( 'Utilisateur', 'perm_manager' );?> </span>
+                        <span class="input-group-addon"> <?php echo __( 'Role', 'perm_manager' );?> </span>
                         <select
                         class="form-control"
                         ng-model = "selectedUser"
@@ -35,31 +35,11 @@
                             <tr ng-repeat="permission in selectedRole.permissions" >
                                 <td><input type="checkbox" ng-model ="permission.checked" ng-checked ="permission.checked" value="{{ permission.perm_name }}"></td>
                                 <td><h4>{{ permission.perm_desc }}</h4></td>
-                                <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  role.name)"> <?php echo __('Supprimer','perm_manager'); ?> </button></td>
+                                <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  selectedRole.name)"> <?php echo __('Supprimer','perm_manager'); ?> </button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <!--<uib-tabset active="tab_active">
-                    <uib-tab index="role.name" ng-repeat="role in roles" heading="{{role.name}}">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th><?php echo __('Permission','perm_manager'); ?></th>
-                                    <th><?php echo __('Action','perm_manager'); ?></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="permission in role.permissions" >
-                                    <td><input type="checkbox" ng-model ="permission.checked" ng-checked ="permission.checked" value="{{ permission.perm_name }}"></td>
-                                    <td><h4>{{ permission.perm_desc }}</h4></td>
-                                    <td><button class="btn" type="button" ng-click="delete(permission.perm_name,  role.name)"> <?php echo __('Supprimer','perm_manager'); ?> </button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </uib-tab>
-                </uib-tabset>-->
             </div>
         </div>
     </div>
@@ -67,7 +47,7 @@
         <div class="box">
             <div class="box-header with-border">
                 <div class="box-title">
-                    <?php echo __( 'Add a permission', 'perm_manager' );?>
+                    <?php echo __( 'Ajouter une permission', 'perm_manager' );?>
                 </div>
             </div>
             <div class="box-body">

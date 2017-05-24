@@ -22,6 +22,7 @@ Trait permissions
 
     /**
      *  permission POST
+     *  @param void
      *  @return json
     **/
 
@@ -53,8 +54,8 @@ Trait permissions
     {
         if( isset( $_GET['entries'])){
             $entries = $_GET['entries'];
-            
             foreach ( $entries as $entry ){
+                
                 $entry = json_decode( $entry );
                 
                 $this->db->select('*');
@@ -70,35 +71,13 @@ Trait permissions
                 $this->db->from( 'aauth_groups' );
                 $query = $this->db->get();
                 $row = $query->row();
-                
                 $group_id = $row->id;
-                
                 $this->db->where( array( 'perm_id' => $permission_id, 'group_id' => $group_id) );
-                $this->db->delete( 'aauth_perm_to_group' );        
+                if ( $this->db->delete( 'aauth_perm_to_group' ) )
+                {
+                    return $this->__success();
+                }        
             }
-
-            return $this->__success();
         }
-
-        $this->db->select('*');
-        $this->db->where( 'name', $_GET['permission']);
-        $this->db->from( 'aauth_perms' );
-        $query = $this->db->get();
-        $row = $query->row();
-        
-        $permission_id = $row->id;
-
-        $this->db->select('*');
-        $this->db->where( 'name', $_GET['group']);
-        $this->db->from( 'aauth_groups' );
-        $query = $this->db->get();
-        $row = $query->row();
-        
-        $group_id = $row->id;
-        
-        $this->db->where( array( 'perm_id' => $permission_id, 'group_id' => $group_id) );
-        $this->db->delete( 'aauth_perm_to_group' );
-
-        return $this->__success();
     }
 }
